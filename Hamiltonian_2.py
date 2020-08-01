@@ -3,19 +3,6 @@ import itertools
 from numpy import linalg as LA
 from HFA_Solver import *
 # model parameters
-Model_params = dict(
-N_Dim = 2,
-N_cells = 5,
-Filling = 0.5,
-mat_dim = 2,
-eps = 1,
-t = 1,
-k_spring = 1,
-)
-
-# MFP guesses
-MF_params = [1,1]
-
 
 class Hamiltonian:
 	"""
@@ -66,10 +53,5 @@ class Hamiltonian:
 
 	# def Total_Energy(self,indices):
 		# E = E_o + 2*
-
-
-Model = Hamiltonian(Model_params,MF_params)
-
-Sol = HFA_Solver(Model)
-
-Sol.Itterate()
+	def update_variables(self):
+		pass
