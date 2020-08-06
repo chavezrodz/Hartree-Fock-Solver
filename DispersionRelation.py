@@ -5,7 +5,14 @@ import numpy as np
 import scipy.interpolate
 
 
-from main import *
+# input csv of momentum values and all bands in columns
+
+
+
+
+
+
+# from main import *
 
 
 # fig = plt.figure()

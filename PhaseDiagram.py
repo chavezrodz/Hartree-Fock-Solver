@@ -5,6 +5,7 @@ import numpy as np
 import scipy.interpolate
 
 # Input arrays of two parameters and phase
+
 x = np.random.randint(10,30,size=10)
 y = np.random.randint(10,30,size=10)
 z = np.random.randint(10,30,size=10)
