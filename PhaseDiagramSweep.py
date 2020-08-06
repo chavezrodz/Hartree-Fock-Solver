@@ -14,6 +14,7 @@ print out results in csv
 """
 
 from Hamiltonian_8 import *
+
 # model parameters
 Model_Params = dict(
 N_Dim = 2,
@@ -28,7 +29,7 @@ J = 1)
 
 MF_params = np.array([1,1,1])
 
-################## Phase Diagram ##################
+################## Phase Diagram Sweep ##################
 
 name = str(MF_params)
 U_range = 10
@@ -77,24 +78,6 @@ np.savetxt('Guesses/Guess'+name+'.csv',Es_trial,delimiter=',')
 
 
 
-# print(E)
-
-# Energies = Sol.Energies
-# print(Energies.shape)
-# Sol.save_results('8_hamiltonian_Results')
-
-
-'''
-# Fermi Surface
-x = Sol.indices_array[0]
-y = Sol.indices_array[1]
-z = Sol.occupied_energies
-
-plt.scatter(x, y, c=z
-	, marker="s"
-	)
-# plt.colorbar()
-plt.show()
 '''
 
 '''

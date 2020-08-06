@@ -43,14 +43,16 @@ class Hamiltonian:
 		self.tzz_c = np.zeros((self.N_cells,self.N_cells))		
 		self.tzz_m2 = np.zeros((self.N_cells,self.N_cells))
 
-		qm = 1/2 #1/2
-		qc = 1 #1
+		qm = np.pi/2 
+		qc = np.pi 
 		Q = itertools.product(self.Qx,repeat=self.N_Dim)
 		for q in Q:
-			self.tzz[q] = -2/4*self.t_1*( np.cos(np.pi * (2/self.N_cells * q[0])) + np.cos(np.pi * (2*q[1]/self.N_cells)))
-			self.tzz_m1[q] = -2/4*self.t_1*( np.cos(np.pi * (2/self.N_cells*q[0] +qm) ) + np.cos(np.pi * (2/self.N_cells*q[1] + qm) ) )
-			self.tzz_c[q] = -2/4*self.t_1*( np.cos(np.pi * (2/self.N_cells*q[0] +qc) ) + np.cos(np.pi * (2/self.N_cells*q[1] + qc) ) )
-			self.tzz_m2[q] = -2/4*self.t_1*( np.cos(np.pi * (2/self.N_cells*q[0] -qm) ) + np.cos(np.pi * (2/self.N_cells*q[1] - qm) ) )
+			qx = q[0]*np.pi/self.N_cells - np.pi/2
+			qy = q[1]*np.pi/self.N_cells - np.pi/2
+			self.tzz[q]    = -2/4*self.t_1*( np.cos(qx)       + np.cos(qy)      )
+			self.tzz_m1[q] = -2/4*self.t_1*( np.cos(qx + qm)  + np.cos(qy + qm) )  
+			self.tzz_c[q]  = -2/4*self.t_1*( np.cos(qx + qc)  + np.cos(qy + qc) )  
+			self.tzz_m2[q] = -2/4*self.t_1*( np.cos(qx - qm)  + np.cos(qy - qm) )  
 
 
 	def update_variables(self):
