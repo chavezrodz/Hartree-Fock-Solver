@@ -9,13 +9,13 @@ from Hamiltonian_8 import *
 # model parameters
 Model_Params = dict(
 N_Dim = 2,
-N_cells = 40,
+N_cells = 25,
 Filling = 0.25,
 mat_dim = 8,
 
-eps = 0,
-t_1 = 1,
-U = 1,
+eps = 1,
+t_1 =5,
+U = 5,
 J = 1)
 
 MF_params = np.array([1,1,1])

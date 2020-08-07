@@ -18,7 +18,6 @@ Arrays = []
 for file in filelist:
 	Arrays.append(np.loadtxt(file,delimiter=','))
 a = np.stack(Arrays,axis=0)
-print(a.shape)
 
 # Find Indices of lowest energies across stack
 ind = np.unravel_index(np.argmin(a, axis=0), a.shape )[2]

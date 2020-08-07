@@ -14,7 +14,7 @@ class HFA_Solver:
 
 		if Ham.N_Dim == 2:
 			self.Energies = np.zeros((Ham.N_cells,Ham.N_cells,Ham.mat_dim))
-			self.Eigenvectors = np.zeros((Ham.N_cells,Ham.N_cells,Ham.mat_dim,Ham.mat_dim))
+			self.Eigenvectors = np.zeros((Ham.N_cells,Ham.N_cells,Ham.mat_dim,Ham.mat_dim))#,dtype=complex)
 
 
 		self.N_states = self.Energies.size #Bands x N
@@ -34,7 +34,7 @@ class HFA_Solver:
 
 	def Calculate_new_del(self):
 		for i,ind in enumerate(self.indices):
-			v = self.Eigenvectors[ind]
+			v = self.Eigenvectors[ind[0],ind[1],:,ind[2]]
 			self.sub_params[:,i] = self.Hamiltonian.Consistency(v)
 		a = self.Hamiltonian.MF_params
 		self.Hamiltonian.MF_params = np.sum(self.sub_params,axis=1)

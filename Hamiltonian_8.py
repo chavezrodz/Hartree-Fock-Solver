@@ -8,7 +8,7 @@ class Hamiltonian:
 	Contains: Matrix structure, elements, consistency equations, total energy equation
 	and both static and dynamic parameters
 
-	Model_Params must be a ddictionary and at least contain:
+	Model_Params must be a dictionary and at least contain:
 	N_dim
 	N_cells
 	Filling
@@ -40,7 +40,7 @@ class Hamiltonian:
 
 		self.tzz = np.zeros((self.N_cells,self.N_cells))
 		self.tzz_m1 = np.zeros((self.N_cells,self.N_cells))
-		self.tzz_c = np.zeros((self.N_cells,self.N_cells))		
+		self.tzz_c = np.zeros((self.N_cells,self.N_cells))
 		self.tzz_m2 = np.zeros((self.N_cells,self.N_cells))
 
 		qm = np.pi/2 
