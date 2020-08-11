@@ -1,7 +1,6 @@
 import numpy as np
 import itertools
 from numpy import linalg as LA
-from HFA_Solver import *
 
 class Hamiltonian:
 	"""

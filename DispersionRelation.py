@@ -3,7 +3,7 @@ import matplotlib.cm as cm
 from matplotlib.colors import LogNorm
 import numpy as np
 import scipy.interpolate
-
+from Code.HFA_Solver import *
 from Hamiltonian_8 import *
 
 # model parameters
@@ -46,7 +46,7 @@ for b in range(Model.mat_dim):
 		qys.append(q[1]*np.pi/Model.N_cells - np.pi/2)
 		zs.append(Energies[q][b])
 	
-	ax.scatter(qxs, qys, zs,label='band '+str(b+1))
+	ax.scatter(qxs, qys, zs,label='Band '+str(b+1))
 	
 ax.set_xlabel('$K_x$  ($\pi/a$)')
 ax.set_ylabel('$K_Y$  ($\pi/a$)')

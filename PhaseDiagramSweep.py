@@ -1,17 +1,28 @@
 import numpy as np
 import itertools
+import sys
 from numpy import linalg as LA
 from multiprocessing import Process
 from itertools import product
 from multiprocessing import Pool
 from time import time
-from Hamiltonian_8 import *
 
+from Hamiltonian_8 import *
+# from Code.PhaseDiagramPoint import *
+from Code.HFA_Solver import *
 """
 Need to Check:
 print out results in csv ?
 """
 
+n_threads = 8
+
+# if  len(sys.argv)!=2:
+    # print("Expected input")
+    # exit(2)
+
+# n = int(sys.argv[1])
+n = 4
 # model parameters
 Model_Params = dict(
 N_Dim = 2,
@@ -24,39 +35,35 @@ t_1 = 1,
 U = 1,
 J = 1)
 
-##################### Creating mfp indice###########
+##################### Declare MFP Range ################
+
 Delta_range = np.arange(2,10,1)
 SFM_range = np.arange(2,10,1)
 SAFM_range = np.arange(2,10,1)
-
 
 MFP_itterator = product(Delta_range,SFM_range,SAFM_range)
 
 params_list = []
 for i in MFP_itterator:
 	params_list.append(i)
-####################### Calling MF_params 
 
-import sys
-if  len(sys.argv)!=2:
-    print("Expected input")
-    exit(2)
-n = int(sys.argv[1])
+####################### Calling MF_params ###############
 
 MF_params = np.array(params_list[n])
 
+################## Declare Phase Diagram Grid size ##################
 
-################## Phase Diagram Sweep ##################
+U_range = 10
+J_range = 10
 
-name = str(MF_params)
-
-U_range = 5
-J_range = 5
-
-
+############# Create Energies empty grid
 Es_trial = np.zeros((U_range,J_range))
+
+########## Create Phase Diagram Itterator
 U_range = np.arange(U_range)
 J_range = np.arange(J_range)
+
+Iterator = product(U_range,J_range)
 
 
 def Phase_Diagram_point(v):
@@ -71,16 +78,17 @@ def Phase_Diagram_point(v):
 	Model.E_occ = Sol.total_occupied_energy
 
 	Model.Calculate_Energy()
-	print('Itteration Done')
 	return Model.Final_Total_Energy
 
 
-Iterator = product(U_range,J_range)
 
 # Energies results to list
+
+name = str(MF_params)
+
 a = time()
 
-with Pool(8) as p:
+with Pool(n_threads) as p:
 	results = p.map(Phase_Diagram_point, Iterator)
 
 print('Time to complete model parameters sweep:',round(time() - a,ndigits=3), 'seconds')
@@ -90,9 +98,10 @@ Iterator = product(U_range,J_range)
 for i,v in enumerate(Iterator):
 	Es_trial[v] = results[i]
 
-np.savetxt('Guesses/Guess'+name+'.csv',Es_trial,delimiter=',')
+np.savetxt('Results/Guesses_Results/Guess'+name+'.csv',Es_trial,delimiter=',')
 
 ##################### End of Phase Diagram Sweep ######################
+
 
 '''
 from Hamiltonian_2 import *
