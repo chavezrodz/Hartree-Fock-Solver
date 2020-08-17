@@ -6,6 +6,20 @@ import scipy.interpolate
 
 # Input arrays of two parameters and phase
 
+MF = np.zeros((3,20,20))
+
+for i in range(3):
+	MF[i,:,:] = np.loadtxt('../Results/Final_Results/MF_Solutions/MF'+str(i)+'.csv',delimiter=",")
+
+print(MF)
+
+plt.imshow(MF[1])
+plt.colorbar()
+plt.show()
+
+"""
+print(MF0.shape)
+
 x = np.random.randint(10,30,size=10)
 y = np.random.randint(10,30,size=10)
 z = np.random.randint(10,30,size=10)
@@ -23,3 +37,4 @@ plt.scatter(x, y, c=z)
 
 plt.colorbar()
 plt.show()
+"""

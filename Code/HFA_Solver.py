@@ -16,7 +16,6 @@ class HFA_Solver:
 			self.Energies = np.zeros((Ham.N_cells,Ham.N_cells,Ham.mat_dim))
 			self.Eigenvectors = np.zeros((Ham.N_cells,Ham.N_cells,Ham.mat_dim,Ham.mat_dim),dtype=complex)
 
-
 		self.N_states = self.Energies.size #Bands x N
 		self.N_occ_states = int(Ham.Filling*self.N_states)
 		self.occupied_energies = np.zeros(self.N_occ_states)
@@ -35,7 +34,7 @@ class HFA_Solver:
 	def Calculate_new_del(self):
 		for i,ind in enumerate(self.indices):
 			v = self.Eigenvectors[ind[0],ind[1],:,ind[2]]
-			self.sub_params[:,i] = self.Hamiltonian.Consistency(v)
+			self.sub_params[:,i] = np.real(self.Hamiltonian.Consistency(v))
 		a = self.Hamiltonian.MF_params
 		self.Hamiltonian.MF_params = np.sum(self.sub_params,axis=1)
 		return a, self.Hamiltonian.MF_params
@@ -53,6 +52,7 @@ class HFA_Solver:
 		# Calculate Mean Field Parameters with lowest energies
 		previous_MFP, New_MFP = self.Calculate_new_del()
 		return previous_MFP, New_MFP
+
 
 	def Itterate(self,tol = 1e-3, verbose = True):
 		digits = int(np.abs(np.log10(tol)))
