@@ -13,9 +13,8 @@ class HFA_Solver:
 		self.Hamiltonian = Ham
 
 		if Ham.N_Dim == 2:
-			self.Energies = np.zeros((Ham.N_cells,Ham.N_cells,Ham.mat_dim))
-			self.Eigenvectors = np.zeros((Ham.N_cells,Ham.N_cells,Ham.mat_dim,Ham.mat_dim))
-
+			self.Energies = np.zeros((Ham.Nx,Ham.Ny,Ham.mat_dim))
+			self.Eigenvectors = np.zeros((Ham.Nx,Ham.Ny,Ham.mat_dim,Ham.mat_dim),dtype=complex)
 
 		self.N_states = self.Energies.size #Bands x N
 		self.N_occ_states = int(Ham.Filling*self.N_states)
@@ -34,8 +33,8 @@ class HFA_Solver:
 
 	def Calculate_new_del(self):
 		for i,ind in enumerate(self.indices):
-			v = self.Eigenvectors[ind]
-			self.sub_params[:,i] = self.Hamiltonian.Consistency(v)
+			v = self.Eigenvectors[ind[0],ind[1],:,ind[2]]
+			self.sub_params[:,i] = np.real(self.Hamiltonian.Consistency(v))
 		a = self.Hamiltonian.MF_params
 		self.Hamiltonian.MF_params = np.sum(self.sub_params,axis=1)
 		return a, self.Hamiltonian.MF_params
@@ -45,7 +44,7 @@ class HFA_Solver:
 		# 	Calculate Dynamic Variables
 		self.Hamiltonian.update_variables()
 		# Solve Matrix Across all momenta
-		Q = itertools.product(self.Hamiltonian.Qx,repeat=self.Hamiltonian.N_Dim)
+		Q = itertools.product(self.Hamiltonian.Qx,self.Hamiltonian.Qy)
 		for q in Q:
 			self.Energies[q],self.Eigenvectors[q] = self.Hamiltonian.Mat_q_calc(q)
 		# Find Indices of all required lowest energies
@@ -54,31 +53,25 @@ class HFA_Solver:
 		previous_MFP, New_MFP = self.Calculate_new_del()
 		return previous_MFP, New_MFP
 
+
 	def Itterate(self,tol = 1e-3, verbose = True):
 		digits = int(np.abs(np.log10(tol)))
 
 		a,b = self.Itteration_Step()
 		count = 1
 
-		print('Initial Mean Field parameters:',a.round(digits))
-		print('Itteration:  1  Mean Field parameters:', b.round(digits))
+		if verbose == True:
+			print('Initial Mean Field parameters:',a.round(digits))
+			print('Itteration:  1  Mean Field parameters:', b.round(digits))
 
 		while LA.norm(a - b) > tol:
 			count += 1
 			a,b = self.Itteration_Step()
 			if verbose ==True:
 				print('Itteration: ',count,' Mean Field parameters:', b.round(digits))
-		print('Final Mean Field parameter:', b.round(digits), '\nNumber of itteration steps:', count)
+		if verbose == True:
+			print('Final Mean Field parameter:', b.round(digits), '\nNumber of itteration steps:', count)
 
 		for i,ind in enumerate(self.indices):
 			self.occupied_energies[i] = self.Energies[ind]
 		self.total_occupied_energy =  np.sum(self.occupied_energies)
-
-		"""
-	def save_results(self,directory):
-		Return Energy csv
-		stacked = pd.Panel(self.Energies.swapaxes(1,2)).to_frame().stack().reset_index()
-		stacked.columns = ['x', 'y', 'values']
-		# save to disk
-		stacked.to_csv('stacked.csv', index=False)
-		"""

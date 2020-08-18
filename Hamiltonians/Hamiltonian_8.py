@@ -1,14 +1,13 @@
 import numpy as np
 import itertools
 from numpy import linalg as LA
-from HFA_Solver import *
 
 class Hamiltonian:
 	"""
 	Contains: Matrix structure, elements, consistency equations, total energy equation
 	and both static and dynamic parameters
 
-	Model_Params must be a ddictionary and at least contain:
+	Model_Params must be a dictionary and at least contain:
 	N_dim
 	N_cells
 	Filling
@@ -18,10 +17,6 @@ class Hamiltonian:
 
 	The class must contain the methods:
 	update_variables
-
-
-
-
 
 
 	All itterations done in HFA solver.
@@ -34,23 +29,31 @@ class Hamiltonian:
 		#initiates Mean field parameters
 		self.MF_params = MF_params
 
-		self.Qx = np.arange(self.N_cells) #Allowed Momentum values for itterator
+		self.N_cells = int(self.Nx*self.Ny)
+
+		self.Qx = np.arange(self.Nx) #Allowed Momentum values for itterator
+		self.Qy = np.arange(self.Ny) #Allowed Momentum values for itterator
 
 	# Static variables, these never change, may depend on momentum indices
 
 		self.U_bar = (3*self.U - 5*self.J)/4
 		self.U_0 = (self.U +self.J)/2
 
-		self.tzz = np.zeros((self.N_cells,self.N_cells))
-		self.tzz_m1 = np.zeros((self.N_cells,self.N_cells))
-		self.tzz_c = np.zeros((self.N_cells,self.N_cells))		
-		self.tzz_m2 = np.zeros((self.N_cells,self.N_cells))
-		Q = itertools.product(self.Qx,repeat=self.N_Dim)
+		self.tzz = np.zeros((self.Nx,self.Ny))
+		self.tzz_m1 = np.zeros((self.Nx,self.Ny))
+		self.tzz_c = np.zeros((self.Nx,self.Ny))
+		self.tzz_m2 = np.zeros((self.Nx,self.Ny))
+
+		qm = np.pi/2 
+		qc = np.pi
+		Q = itertools.product(self.Qx,self.Qy)
 		for q in Q:
-			self.tzz[q] = -2/4*self.t_1*( np.cos(np.pi*2/self.N_cells * q[0]) + np.cos(np.pi*2*q[1]/self.N_cells))
-			self.tzz_m1[q] = -2/4*self.t_1*( np.cos(np.pi * (2/self.N_cells*q[0] +1/2) ) + np.cos(np.pi * (2/self.N_cells*q[1] +1/2) ) )
-			self.tzz_c[q] = -2/4*self.t_1*( np.cos(np.pi * (2/self.N_cells*q[0] +1) ) + np.cos(np.pi * (2/self.N_cells*q[1] +1) ) )
-			self.tzz_m2[q] = -2/4*self.t_1*( np.cos(np.pi * (2/self.N_cells*q[0] -1/2) ) + np.cos(np.pi * (2/self.N_cells*q[1] -1/2) ) )
+			qx = q[0]*np.pi/self.Nx - np.pi/2
+			qy = q[1]*np.pi/self.Ny - np.pi/2
+			self.tzz[q]    = -2/4*self.t_1*( np.cos(qx)       + np.cos(qy)      )
+			self.tzz_m1[q] = -2/4*self.t_1*( np.cos(qx + qm)  + np.cos(qy + qm) )  
+			self.tzz_c[q]  = -2/4*self.t_1*( np.cos(qx + qc)  + np.cos(qy + qc) )  
+			self.tzz_m2[q] = -2/4*self.t_1*( np.cos(qx - qm)  + np.cos(qy - qm) )  
 
 
 	def update_variables(self):
@@ -63,7 +66,7 @@ class Hamiltonian:
 		alpha = 1
 		beta = 27/4*alpha*self.MF_params[0]**2
 
-		if np.abs(self.MF_params[0]) < 1e-14:
+		if np.abs(self.MF_params[0]) < 1e-12:
 			self.u = 0
 		else:
 			self.u = 3*self.MF_params[0] / (2*np.cbrt(beta)) * ( np.cbrt(1 + np.sqrt(1 + 1/beta)) + np.cbrt(1 - np.sqrt(1 + 1/beta)) )
