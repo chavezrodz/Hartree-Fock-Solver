@@ -36,7 +36,7 @@ class Phase_Diagram_Sweeper():
 		Model = self.Model
 		Sol = self.Solver
 
-		Model.U, Model.J = self.U_values[0],self.J_values[1]
+		Model.U, Model.J = self.U_values[v[0]],self.J_values[v[1]]
 		Model.MF_params = self.Initial_params[v]
 
 		Sol.Itterate(tol=1e-3,verbose=False)
@@ -45,8 +45,8 @@ class Phase_Diagram_Sweeper():
 
 		Model.Calculate_Energy()
 
-		self.Es_trial[v] = Model.Final_Total_Energy
-		self.Final_params[v] = Model.MF_params
+		# self.Es_trial[v] = Model.Final_Total_Energy + v[0]+v[1]
+		# self.Final_params[v] = Model.MF_params
 		return Model.Final_Total_Energy, Model.MF_params
 
 	def Sweep(self, outfolder, fname ='', Final_Run=False):

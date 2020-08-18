@@ -17,6 +17,10 @@ class Hamiltonian:
 
 	The class must contain the methods:
 	update_variables
+	Mat_q_calc
+	Consistency
+	Calculate_Energy
+
 
 
 	All itterations done in HFA solver.
@@ -28,9 +32,10 @@ class Hamiltonian:
 
 		#initiates Mean field parameters
 		self.MF_params = MF_params
-		# self.N_cells = int(self.N_cells*self.Filling)
+		self.N_cells = int(self.Nx*self.Ny)
 
-		self.Qx = np.arange(self.N_cells) #Allowed Momentum values for itterator
+		self.Qx = np.arange(self.Nx) #Allowed Momentum Indices for itterator 
+		self.Qy = np.arange(self.Ny)
 
 	# Static variables, these never change, may depend on momentum indices
 
@@ -38,22 +43,21 @@ class Hamiltonian:
 		self.U_bar = (3*self.U - 5*self.J)/4
 		self.J_bar = (-self.U + 5*self.J)/2
 
-		self.tzz = np.zeros((self.N_cells,self.N_cells))
-		self.tzz_c = np.zeros((self.N_cells,self.N_cells))
+		self.tzz = np.zeros((self.Nx,self.Ny))
+		self.tzz_c = np.zeros((self.Nx,self.Ny))
 
-		self.tz_bz_b = np.zeros((self.N_cells,self.N_cells))
-		self.tz_bz_b_c = np.zeros((self.N_cells,self.N_cells))
+		self.tz_bz_b = np.zeros((self.Nx,self.Ny))
+		self.tz_bz_b_c = np.zeros((self.Nx,self.Ny))
 
-		self.tzz_b = np.zeros((self.N_cells,self.N_cells))
-		self.tzz_b_c = np.zeros((self.N_cells,self.N_cells))
+		self.tzz_b = np.zeros((self.Nx,self.Ny))
+		self.tzz_b_c = np.zeros((self.Nx,self.Ny))
 
 		qc = np.pi
 
-		Q = itertools.product(self.Qx,repeat=self.N_Dim)
+		Q = itertools.product(self.Qx,self.Qy)
 		for q in Q:
-			qx = q[0]*np.pi/self.N_cells - np.pi/2
-			qy = q[1]*np.pi/self.N_cells - np.pi/2
-
+			qx = q[0]*np.pi/self.Nx - np.pi/2
+			qy = q[1]*np.pi/self.Ny - np.pi/2
 			self.tzz[q]    = -self.t_1/2*(np.cos(qx)  +   np.cos(qy)) 		- self.t_4/2*(np.cos(2*qx)     +   np.cos(2*qy) )    - 4*self.t_2*np.cos(qx)*np.cos(qy)
 			self.tzz_c[q]  = -self.t_1/2*(np.cos(qx+qc)  +   np.cos(qy+qc)) - self.t_4/2*(np.cos(2*(qx+qc))  +   np.cos(2*(qy+qc)) ) - 4*self.t_2*np.cos(qx+qc)*np.cos(qy+qc)
 
@@ -92,10 +96,10 @@ class Hamiltonian:
 		b = self.tzz_b[q]
 		c = self.tzz_b_c[q]
 
-		d0 = self.U_bar -sigma*self.U_0*self.MF_params[1] + self.J_bar*MF_params[3] + self.tzz[q]
-		d1 = self.U_bar -sigma*self.U_0*self.MF_params[1] + self.J_bar*MF_params[3] + self.tzz_c[q]
-		d2 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*MF_params[3] + self.tz_bz_b[q]
-		d3 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*MF_params[3] + self.tz_bz_b_c[q]
+		d0 = self.U_bar -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[3] + self.tzz[q]
+		d1 = self.U_bar -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[3] + self.tzz_c[q]
+		d2 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[3] + self.tz_bz_b[q]
+		d3 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[3] + self.tz_bz_b_c[q]
 
 
 		# Declare sub-block
@@ -113,10 +117,10 @@ class Hamiltonian:
 		b = self.tzz_b[q]
 		c = self.tzz_b_c[q]
 
-		d0 = self.U_bar -sigma*self.U_0*self.MF_params[1] + self.J_bar*MF_params[3] + self.tzz[q]
-		d1 = self.U_bar -sigma*self.U_0*self.MF_params[1] + self.J_bar*MF_params[3] + self.tzz_c[q]
-		d2 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*MF_params[3] + self.tz_bz_b[q]
-		d3 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*MF_params[3] + self.tz_bz_b_c[q]
+		d0 = self.U_bar -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[3] + self.tzz[q]
+		d1 = self.U_bar -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[3] + self.tzz_c[q]
+		d2 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[3] + self.tz_bz_b[q]
+		d3 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[3] + self.tz_bz_b_c[q]
 
 		# Declare sub-block
 		sub_2 = np.array([
@@ -149,5 +153,5 @@ class Hamiltonian:
 		return a, b, c, d
 
 	def Calculate_Energy(self):
-		E = self.E_occ/self.N_cells**2 + 2*self.eps*(self.u**2/2 + self.u**4/4) - (self.U_bar/2*(1+self.MF_params[0]**2) - self.U_0*(self.MF_params[1]**2 + self.MF_params[2]**2) + self.J_bar*MF_params[3]**2 )/self.N_cells**2
+		E = self.E_occ/self.N_cells**2 + 2*self.eps*(self.u**2/2 + self.u**4/4) - (self.U_bar/2*(1+self.MF_params[0]**2) - self.U_0*(self.MF_params[1]**2 + self.MF_params[2]**2) + self.J_bar*self.MF_params[3]**2 )/self.N_cells**2
 		self.Final_Total_Energy = E

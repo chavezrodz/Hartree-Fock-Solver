@@ -13,8 +13,8 @@ class HFA_Solver:
 		self.Hamiltonian = Ham
 
 		if Ham.N_Dim == 2:
-			self.Energies = np.zeros((Ham.N_cells,Ham.N_cells,Ham.mat_dim))
-			self.Eigenvectors = np.zeros((Ham.N_cells,Ham.N_cells,Ham.mat_dim,Ham.mat_dim),dtype=complex)
+			self.Energies = np.zeros((Ham.Nx,Ham.Ny,Ham.mat_dim))
+			self.Eigenvectors = np.zeros((Ham.Nx,Ham.Ny,Ham.mat_dim,Ham.mat_dim),dtype=complex)
 
 		self.N_states = self.Energies.size #Bands x N
 		self.N_occ_states = int(Ham.Filling*self.N_states)
@@ -44,7 +44,7 @@ class HFA_Solver:
 		# 	Calculate Dynamic Variables
 		self.Hamiltonian.update_variables()
 		# Solve Matrix Across all momenta
-		Q = itertools.product(self.Hamiltonian.Qx,repeat=self.Hamiltonian.N_Dim)
+		Q = itertools.product(self.Hamiltonian.Qx,self.Hamiltonian.Qy)
 		for q in Q:
 			self.Energies[q],self.Eigenvectors[q] = self.Hamiltonian.Mat_q_calc(q)
 		# Find Indices of all required lowest energies

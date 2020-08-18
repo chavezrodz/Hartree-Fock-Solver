@@ -5,8 +5,8 @@ import os
 
 from Code.HFA_Solver import *
 from Code.PhaseDiagramSweeper import *
-from Code.Optimizer import Optimize
-from Hamiltonians.Hamiltonian_8 import *
+from Code.Interpreter import Interpreter
+from Hamiltonians.Hamiltonian_Nickelates import *
 from Utils.tuplelist import *
 from time import time
 
@@ -21,6 +21,7 @@ mat_dim = 8,
 
 eps = 1,
 t_1 = 1,
+t_1 = 4,
 U = 1,
 J = 1)
 
@@ -38,7 +39,7 @@ Solver = HFA_Solver(Model)
 
 Input_Folder = 'Results/Guesses_Results/'
 
-Optimal_guesses, Optimal_Energy = Optimize(Input_Folder, params_list)
+Optimal_guesses, Optimal_Energy = Interpreter(Input_Folder, params_list)
 
 sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,U_values,J_values)
 # print(Optimal_guesses[:,:,2])

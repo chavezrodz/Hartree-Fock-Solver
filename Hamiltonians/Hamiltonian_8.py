@@ -28,26 +28,28 @@ class Hamiltonian:
 
 		#initiates Mean field parameters
 		self.MF_params = MF_params
-		# self.N_cells = int(self.N_cells*self.Filling)
 
-		self.Qx = np.arange(self.N_cells) #Allowed Momentum values for itterator
+		self.N_cells = int(self.Nx*self.Ny)
+
+		self.Qx = np.arange(self.Nx) #Allowed Momentum values for itterator
+		self.Qy = np.arange(self.Ny) #Allowed Momentum values for itterator
 
 	# Static variables, these never change, may depend on momentum indices
 
 		self.U_bar = (3*self.U - 5*self.J)/4
 		self.U_0 = (self.U +self.J)/2
 
-		self.tzz = np.zeros((self.N_cells,self.N_cells))
-		self.tzz_m1 = np.zeros((self.N_cells,self.N_cells))
-		self.tzz_c = np.zeros((self.N_cells,self.N_cells))
-		self.tzz_m2 = np.zeros((self.N_cells,self.N_cells))
+		self.tzz = np.zeros((self.Nx,self.Ny))
+		self.tzz_m1 = np.zeros((self.Nx,self.Ny))
+		self.tzz_c = np.zeros((self.Nx,self.Ny))
+		self.tzz_m2 = np.zeros((self.Nx,self.Ny))
 
 		qm = np.pi/2 
-		qc = np.pi 
-		Q = itertools.product(self.Qx,repeat=self.N_Dim)
+		qc = np.pi
+		Q = itertools.product(self.Qx,self.Qy)
 		for q in Q:
-			qx = q[0]*np.pi/self.N_cells - np.pi/2
-			qy = q[1]*np.pi/self.N_cells - np.pi/2
+			qx = q[0]*np.pi/self.Nx - np.pi/2
+			qy = q[1]*np.pi/self.Ny - np.pi/2
 			self.tzz[q]    = -2/4*self.t_1*( np.cos(qx)       + np.cos(qy)      )
 			self.tzz_m1[q] = -2/4*self.t_1*( np.cos(qx + qm)  + np.cos(qy + qm) )  
 			self.tzz_c[q]  = -2/4*self.t_1*( np.cos(qx + qc)  + np.cos(qy + qc) )  

@@ -4,7 +4,7 @@ import sys
 import os
 from Code.HFA_Solver import *
 from Code.PhaseDiagramSweeper import *
-from Hamiltonians.Hamiltonian_8 import *
+from Hamiltonians.Hamiltonian_Nickelates import *
 from Utils.tuplelist import *
 from time import time
 
@@ -17,6 +17,8 @@ mat_dim = 8,
 
 eps = 1,
 t_1 = 1,
+t_2 = 1,
+t_4 = 1,
 U = 1,
 J = 1)
 
@@ -26,8 +28,8 @@ J_values = np.linspace(0,10,20)
 deltas = np.linspace(0,10,2)
 sfm = np.linspace(0,10,2)
 safm = np.linspace(0,10,2)
-
-params_list = tuplelist([deltas,sfm,safm])
+Deltas = np.linspace(1,10,3)
+params_list = tuplelist([deltas,sfm,safm,Deltas])
 
 # if  len(sys.argv)!=2:
     # print("Expected input")

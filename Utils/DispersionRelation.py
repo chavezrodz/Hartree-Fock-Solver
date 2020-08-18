@@ -4,12 +4,13 @@ from matplotlib.colors import LogNorm
 import numpy as np
 import scipy.interpolate
 from Code.HFA_Solver import *
-from Hamiltonian_8 import *
+from Hamiltonians.Hamiltonian_8 import *
 
 # model parameters
 Model_Params = dict(
 N_Dim = 2,
-N_cells = 25,
+Nx = 10,
+Ny=10,
 Filling = 0.25,
 mat_dim = 8,
 
