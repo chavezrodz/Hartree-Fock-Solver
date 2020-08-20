@@ -32,7 +32,7 @@ J_values = np.linspace(0,10,20)
 deltas = np.linspace(0,10,10)
 sfm = np.linspace(0,10,10)
 safm = np.linspace(0,10,10)
-Deltas = np.linspace(1,10,10)
+Deltas = np.linspace(0,10,10)
 params_list = tuplelist([deltas,sfm,safm,Deltas])
 
 
