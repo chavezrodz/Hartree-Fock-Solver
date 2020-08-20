@@ -36,8 +36,6 @@ class Hamiltonian:
 
 	# Static variables, these never change, may depend on momentum indices
 
-		self.U_bar = (3*self.U - 5*self.J)/4
-		self.U_0 = (self.U +self.J)/2
 
 		self.tzz = np.zeros((self.Nx,self.Ny))
 		self.tzz_m1 = np.zeros((self.Nx,self.Ny))
@@ -61,6 +59,8 @@ class Hamiltonian:
 		Calculate dynamic variables
 		These depend on MFP, not on momentum
 		"""
+		self.U_bar = (3*self.U - 5*self.J)/4
+		self.U_0 = (self.U +self.J)/2
 
 		# Distortion
 		alpha = 1
@@ -133,11 +133,11 @@ class Hamiltonian:
 
 	def Consistency(self,v):
 		# Consistency Equations, keep order of MFP
-		a = ( np.conj(v[0])*v[2] + np.conj(v[1])*v[3] + np.conj(v[2])*v[0] + np.conj(v[3])*v[1] + np.conj(v[4])*v[6] + np.conj(v[5])*v[7] + np.conj(v[6])*v[4] + np.conj(v[7])*v[5])/self.N_cells**2
-		b = 0.5*(np.abs(v[0])**2 + np.abs(v[1])**2 + np.abs(v[2])**2 + np.abs(v[3])**2 - np.abs(v[4])**2 - np.abs(v[5])**2 - np.abs(v[6])**2 - np.abs(v[7])**2)/self.N_cells**2
-		c = 0.5*( np.conj(v[0])*v[2] + np.conj(v[1])*v[3] + np.conj(v[2])*v[0] + np.conj(v[3])*v[1] - np.conj(v[4])*v[6] - np.conj(v[5])*v[7] - np.conj(v[6])*v[4] - np.conj(v[7])*v[5])/self.N_cells**2
+		a = ( np.conj(v[0])*v[2] + np.conj(v[1])*v[3] + np.conj(v[2])*v[0] + np.conj(v[3])*v[1] + np.conj(v[4])*v[6] + np.conj(v[5])*v[7] + np.conj(v[6])*v[4] + np.conj(v[7])*v[5])/self.N_cells
+		b = 0.5*(np.abs(v[0])**2 + np.abs(v[1])**2 + np.abs(v[2])**2 + np.abs(v[3])**2 - np.abs(v[4])**2 - np.abs(v[5])**2 - np.abs(v[6])**2 - np.abs(v[7])**2)/self.N_cells
+		c = 0.5*( np.conj(v[0])*v[2] + np.conj(v[1])*v[3] + np.conj(v[2])*v[0] + np.conj(v[3])*v[1] - np.conj(v[4])*v[6] - np.conj(v[5])*v[7] - np.conj(v[6])*v[4] - np.conj(v[7])*v[5])/self.N_cells
 		return a, b, c
 
 	def Calculate_Energy(self):
-		E = self.E_occ/self.N_cells**2 + 2*self.eps*(self.u**2/2 + self.u**4/4) - (self.U_bar/2*(1+self.MF_params[0]**2) - self.U_0*(self.MF_params[1]**2 + self.MF_params[2]**2) )/self.N_cells**2
+		E = self.E_occ/self.N_cells + 2*self.eps*(self.u**2/2 + self.u**4/4) - (self.U_bar/2*(1+self.MF_params[0]**2) - self.U_0*(self.MF_params[1]**2 + self.MF_params[2]**2) )/self.N_cells
 		self.Final_Total_Energy = E
