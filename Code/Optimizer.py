@@ -19,7 +19,7 @@ ind = np.argmin(A,axis=0)
 # print(A.shape)
 # print(ind)
 
-def Optimize(Input_Folder, params_list):
+def Optimizer(Input_Folder, params_list):
 	"""
 	Input list of arrays of energy across phase region,
 	return best guess per region
@@ -43,6 +43,7 @@ def Optimize(Input_Folder, params_list):
 	Optimal_Energy = np.min(Arrays,axis=2)
 
 	ind = np.argmin(Arrays,axis=2)
+	# print(ind)
 	# Recover best guess across phase diagram
 	u = np.arange(Initial_Shape[0])
 	j = np.arange(Initial_Shape[1])
@@ -52,7 +53,7 @@ def Optimize(Input_Folder, params_list):
 	Optimal_Guesses = np.zeros((*Initial_Shape,len(params_list[0])))
 
 	for i , v in enumerate(uj_itterator):
-	# print('U value:',v[0],'J value:',v[1],'Best guess:', params[ind[v]] )
+		# print('U value:',v[0],'J value:',v[1],'Best guess:', params_list[ind[v]] )
 		Optimal_Guesses[v] = np.array(params_list[ind[v]])
 	return Optimal_Guesses, Optimal_Energy
 
