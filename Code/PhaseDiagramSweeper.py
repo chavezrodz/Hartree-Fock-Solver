@@ -32,7 +32,7 @@ class Phase_Diagram_Sweeper():
 		self.Es_trial = np.zeros((len(self.U_values),len(self.J_values)))
 		self.Final_params = np.zeros(self.Initial_params.shape)
 
-	def Phase_Diagram_point(self,v):
+	def Phase_Diagram_point(self,v, verbose = False):
 		Model = self.Model
 		Sol = self.Solver
 
@@ -45,12 +45,14 @@ class Phase_Diagram_Sweeper():
 
 		Model.Calculate_Energy()
 
+		if verbose == True:
+			print('U:',round(Model.U,2),'J:', round(Model.J,2),'Initial MFP:',self.Initial_params[v], 'Final MFP:',Model.Final_params)
 		# self.Es_trial[v] = Model.Final_Total_Energy + v[0]+v[1]
 		# self.Final_params[v] = Model.MF_params
 		return Model.Final_Total_Energy, Model.MF_params
 
 	def Sweep(self, outfolder, fname ='', Final_Run=False):
-
+		# MP way
 		PD_grid = itertools.product(self.U_idx,self.J_idx)
 		with Pool(self.n_threads) as p:
 			results = p.map(self.Phase_Diagram_point, PD_grid)
@@ -60,9 +62,6 @@ class Phase_Diagram_Sweeper():
 		for i,v in enumerate(PD_grid):
 			self.Es_trial[v] = results[i][0]
 			self.Final_params[v] = results[i][1]
-
-		# for v in PD_grid:
-			# self.Phase_Diagram_point(v)
 
 		if Final_Run == False:
 			outfile = os.path.join(outfolder,fname)

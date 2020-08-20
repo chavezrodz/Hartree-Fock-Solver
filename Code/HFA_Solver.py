@@ -64,11 +64,13 @@ class HFA_Solver:
 			print('Initial Mean Field parameters:',a.round(digits))
 			print('Itteration:  1  Mean Field parameters:', b.round(digits))
 
-		while LA.norm(a - b) > tol:
+		while np.sum(np.abs(a - b)) > tol:
 			count += 1
 			a,b = self.Itteration_Step()
 			if verbose ==True:
 				print('Itteration: ',count,' Mean Field parameters:', b.round(digits))
+			if count == 1000:
+				break
 		if verbose == True:
 			print('Final Mean Field parameter:', b.round(digits), '\nNumber of itteration steps:', count)
 
