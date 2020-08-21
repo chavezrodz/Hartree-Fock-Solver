@@ -1,9 +1,8 @@
 #!/bin/bash
 #SBATCH -p nodes                          # CPU nodes partition
-#SBATCH --job-name=NickelatesTrial ## this helps identify your job in the queue, especially if you have multiple
-#SBATCH --ntasks=1 ## this is the number of nodes you are using. unless you are skilled in using MPI for across-nodes parallelization, this is usually 1
+#SBATCH --job-name=NickelatesTrial
 
-#####SBATCH --nodes=1                       # Use 1 node
+#SBATCH --nodes=1                       # Use 1 node
 
 #SBATCH --cpus-per-task=28 ## this is the number of cores you are using on a given node. LISA has 28 cores per node.
 

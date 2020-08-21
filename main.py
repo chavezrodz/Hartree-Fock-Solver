@@ -40,10 +40,10 @@ n = int(sys.argv[1])
 n_threads = 28
 
 a = time()
+MF_params = np.array(params_list[n])
 
-Model = Hamiltonian(Model_Params, np.array(params_list[n]))
+Model = Hamiltonian(Model_Params, MF_params)
 Solver = HFA_Solver(Model)
-
 
 sweeper = Phase_Diagram_Sweeper(Model,Solver,MF_params,U_values,J_values,n_threads)
 
@@ -52,5 +52,4 @@ fname = str(MF_params)+'.csv'
 outfolder = os.path.join('Results','Guesses_Results')
 
 sweeper.Sweep(outfolder,fname)
-
 print('itteration:',n, 'time to complete:',round(time()-a,3))
