@@ -9,12 +9,17 @@ class HFA_Solver:
 	Model_params: Hamiltonian Parameters, must include Filling(float)
 	MFP_params: initial guesses for Mean Free Parameters
 	"""
-	def __init__(self, Ham):
+	def __init__(self, Ham, beta = 0.51,Itteration_limit = 50,tol = 1e-3):
 		self.Hamiltonian = Ham
 
 		if Ham.N_Dim == 2:
 			self.Energies = np.zeros((Ham.Nx,Ham.Ny,Ham.mat_dim))
 			self.Eigenvectors = np.zeros((Ham.Nx,Ham.Ny,Ham.mat_dim,Ham.mat_dim),dtype=complex)
+		
+		self.beta = beta
+		self.Itteration_limit = Itteration_limit
+		self.tol = tol
+		self.converged = True
 
 		self.N_states = self.Energies.size #Bands x N
 		self.N_occ_states = int(Ham.Filling*self.N_states)
@@ -36,7 +41,7 @@ class HFA_Solver:
 			v = self.Eigenvectors[ind[0],ind[1],:,ind[2]]
 			self.sub_params[:,i] = np.real(self.Hamiltonian.Consistency(v))
 		a = self.Hamiltonian.MF_params
-		self.Hamiltonian.MF_params = np.sum(self.sub_params,axis=1)
+		self.Hamiltonian.MF_params = (1 - self.beta)*a + self.beta*np.sum(self.sub_params,axis=1)
 		return a, self.Hamiltonian.MF_params
 
 
@@ -54,8 +59,8 @@ class HFA_Solver:
 		return previous_MFP, New_MFP
 
 
-	def Itterate(self,tol = 1e-3, verbose = True):
-		digits = int(np.abs(np.log10(tol)))
+	def Itterate(self, verbose = True):
+		digits = int(np.abs(np.log10(self.tol)))
 
 		a,b = self.Itteration_Step()
 		count = 1
@@ -64,16 +69,20 @@ class HFA_Solver:
 			print('Initial Mean Field parameters:',a.round(digits))
 			print('Itteration:  1  Mean Field parameters:', b.round(digits))
 
-		while np.sum(np.abs(a - b)) > tol:
+		while np.sum(np.abs(a - b)) > self.tol:
 			count += 1
 			a,b = self.Itteration_Step()
 			if verbose ==True:
 				print('Itteration: ',count,' Mean Field parameters:', b.round(digits))
-			if count == 1000:
+			if count == self.Itteration_limit:
+				print("\t \t \t Warning! Did not converge")
+				self.converged = False
 				break
 		if verbose == True:
 			print('Final Mean Field parameter:', b.round(digits), '\nNumber of itteration steps:', count)
 
 		for i,ind in enumerate(self.indices):
 			self.occupied_energies[i] = self.Energies[ind]
+
 		self.total_occupied_energy =  np.sum(self.occupied_energies)
+		self.Fermi_Energy = np.max(self.occupied_energies)

@@ -12,7 +12,7 @@ class Phase_Diagram_Sweeper():
 	"""
 	"""
 
-	def __init__(self, Model, Solver, Initial_params, U_values, J_values, n_threads=8):
+	def __init__(self, Model, Solver, Initial_params, U_values, J_values, n_threads=8,verbose = False):
 		self.Model = Model
 		self.Solver = Solver
 		
@@ -22,6 +22,7 @@ class Phase_Diagram_Sweeper():
 		self.J_idx = np.arange(len(J_values))
 
 		self.n_threads = n_threads
+		self.verbose = verbose
 		
 		if Initial_params.ndim == 1:
 			self.Initial_params = np.zeros((len(self.U_values),len(self.J_values),len(Model.MF_params)))
@@ -31,25 +32,28 @@ class Phase_Diagram_Sweeper():
 
 		self.Es_trial = np.zeros((len(self.U_values),len(self.J_values)))
 		self.Final_params = np.zeros(self.Initial_params.shape)
+		self.Convergence_Grid = np.zeros((len(self.U_values),len(self.J_values)))
 
-	def Phase_Diagram_point(self,v, verbose = False):
+	def Phase_Diagram_point(self,v):
 		Model = self.Model
 		Sol = self.Solver
 
 		Model.U, Model.J = self.U_values[v[0]],self.J_values[v[1]]
 		Model.MF_params = self.Initial_params[v]
 
-		Sol.Itterate(tol=1e-3,verbose=False)
+		Sol.Itterate(verbose=False)
 
 		Model.E_occ = Sol.total_occupied_energy
 
 		Model.Calculate_Energy()
 
-		if verbose == True:
-			print('U:',round(Model.U,2),'J:', round(Model.J,2),'Initial MFP:',self.Initial_params[v], 'Final MFP:',Model.Final_params)
-		# self.Es_trial[v] = Model.Final_Total_Energy + v[0]+v[1]
-		# self.Final_params[v] = Model.MF_params
-		return Model.Final_Total_Energy, Model.MF_params
+		if self.verbose == True:
+			if Sol.converged ==True:
+				print('U:',round(Model.U,2),'J:', round(Model.J,2),'Initial MFP:',self.Initial_params[v], 'Final MFP:',Model.MF_params)
+			else:
+				print('U:',round(Model.U,2),'J:', round(Model.J,2),'Initial MFP:',self.Initial_params[v], 'Did Not Converge')
+
+		return Model.Final_Total_Energy, Model.MF_params, Sol.converged
 
 	def Sweep(self, outfolder, fname ='', Final_Run=False):
 		# MP way
@@ -62,6 +66,10 @@ class Phase_Diagram_Sweeper():
 		for i,v in enumerate(PD_grid):
 			self.Es_trial[v] = results[i][0]
 			self.Final_params[v] = results[i][1]
+			self.Convergence_Grid[v] = results[i][2]
+
+		self.Convergence_Grid = self.Convergence_Grid.astype(int)
+		self.Convergence_pc = 100*np.mean(self.Convergence_Grid)
 
 		if Final_Run == False:
 			outfile = os.path.join(outfolder,fname)
