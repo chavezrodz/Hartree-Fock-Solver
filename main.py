@@ -10,25 +10,25 @@ from time import time
 
 Model_Params = dict(
 N_Dim = 2,
-Nx = 100,
-Ny = 100,
+Nx = 75,
+Ny = 75,
 Filling = 0.25,
 mat_dim = 8,
 
-eps = 1,
+eps = 0,
 t_1 = 1,
-t_2 = 1,
-t_4 = 1,
+t_2 = 0.15,
+t_4 = 0,
 U = 1,
 J = 1)
 
-U_values = np.linspace(0,10,20)
-J_values = np.linspace(0,10,20)
+U_values = np.linspace(0,6,40)
+J_values = np.linspace(0,3,40)
 
-deltas = np.linspace(0,10,10)
-sfm = np.linspace(0,10,10)
-safm = np.linspace(0,10,10)
-Deltas = np.linspace(0,10,10)
+deltas = np.linspace(0,1,4)
+sfm    = np.linspace(0,1,4)
+safm   = np.linspace(0,1,4)
+Deltas = np.linspace(0,1,4)
 params_list = tuplelist([deltas,sfm,safm,Deltas])
 
 if  len(sys.argv)!=2:
@@ -36,20 +36,32 @@ if  len(sys.argv)!=2:
     exit(2)
 
 n = int(sys.argv[1])
-
+ 
 n_threads = 28
 
 a = time()
 MF_params = np.array(params_list[n])
 
 Model = Hamiltonian(Model_Params, MF_params)
+<<<<<<< HEAD
 Solver = HFA_Solver(Model)
 
 sweeper = Phase_Diagram_Sweeper(Model,Solver,MF_params,U_values,J_values,n_threads)
+=======
+Solver = HFA_Solver(Model, beta=0.500001, Itteration_limit=500, tol=1e-3)
+
+
+sweeper = Phase_Diagram_Sweeper(Model,Solver,MF_params,U_values,J_values,n_threads,verbose=True)
+>>>>>>> 148eada2d36970636e9d9817b1fbc991ac3cc66b
 
 fname = str(MF_params)+'.csv'
 
 outfolder = os.path.join('Results','Guesses_Results')
 
 sweeper.Sweep(outfolder,fname)
+<<<<<<< HEAD
 print('itteration:',n, 'time to complete:',round(time()-a,3))
+=======
+
+print('\n Diagram itteration:',n, 'time to complete (s):',round(time()-a,3),'Converged points:',sweeper.Convergence_pc,'%' '\n')
+>>>>>>> 148eada2d36970636e9d9817b1fbc991ac3cc66b
