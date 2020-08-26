@@ -11,7 +11,6 @@ from time import time
 
 
 ########## Command Line Arguments
-
 if  len(sys.argv)!=2:
     print("Expected input")
     exit(2)
@@ -19,13 +18,11 @@ if  len(sys.argv)!=2:
 n = int(sys.argv[1])
  
 n_threads = 28
-
-
 ########### Model Params
 Model_Params = dict(
 N_Dim = 2,
-Nx = 75,
-Ny = 75,
+Nx = 50,
+Ny = 50,
 Filling = 0.25,
 mat_dim = 8,
 
@@ -36,13 +33,16 @@ t_4 = 0,
 U = 1,
 J = 1)
 ############ Diagram Ranges
-U_values = np.linspace(0,6,40)
-J_values = np.linspace(0,3,40)
+U_values = np.linspace(0,3,20)
+J_values = np.linspace(0,1.5,20)
 ############ Guess ranges
-deltas = np.linspace(0,1,4)
-sfm    = np.linspace(0,1,4)
-safm   = np.linspace(0,1,4)
-Deltas = np.linspace(0,1,4)
+deltas = np.linspace(0,0.5,2)
+sfm    = np.linspace(0,0.5,2)
+Deltas = np.linspace(0.5,1,4)
+safm   = np.linspace(0,0.5,2)
+
+params_list = tuplelist([deltas,sfm,safm,Deltas])
+
 ########### Solver params
 beta = 0.500001 
 Itteration_limit = 500 
@@ -52,7 +52,6 @@ verbose = True
 outfolder = os.path.join('Results','Guesses_Results')
 
 ########## Code
-params_list = tuplelist([deltas,sfm,safm,Deltas])
 a = time()
 MF_params = np.array(params_list[n])
 

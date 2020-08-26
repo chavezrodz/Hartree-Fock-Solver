@@ -31,8 +31,8 @@ J_values = np.linspace(0,3,40)
 ############ Guess ranges
 deltas = np.linspace(0,1,4)
 sfm    = np.linspace(0,1,4)
-safm   = np.linspace(0,1,4)
 Deltas = np.linspace(0,1,4)
+safm   = np.linspace(0,1,4)
 ########### Solver params
 beta = 0.500001 
 Itteration_limit = 500 
@@ -45,7 +45,6 @@ Input_Folder = 'Results/Guesses_Results/'
 
 ########## Code
 params_list = tuplelist([deltas,sfm,safm,Deltas])
-
 
 a = time()
 Model = Hamiltonian(Model_Params, params_list[1])
