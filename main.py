@@ -43,25 +43,15 @@ a = time()
 MF_params = np.array(params_list[n])
 
 Model = Hamiltonian(Model_Params, MF_params)
-<<<<<<< HEAD
-Solver = HFA_Solver(Model)
-
-sweeper = Phase_Diagram_Sweeper(Model,Solver,MF_params,U_values,J_values,n_threads)
-=======
 Solver = HFA_Solver(Model, beta=0.500001, Itteration_limit=500, tol=1e-3)
 
 
 sweeper = Phase_Diagram_Sweeper(Model,Solver,MF_params,U_values,J_values,n_threads,verbose=True)
->>>>>>> 148eada2d36970636e9d9817b1fbc991ac3cc66b
 
 fname = str(MF_params)+'.csv'
 
 outfolder = os.path.join('Results','Guesses_Results')
 
 sweeper.Sweep(outfolder,fname)
-<<<<<<< HEAD
-print('itteration:',n, 'time to complete:',round(time()-a,3))
-=======
 
 print('\n Diagram itteration:',n, 'time to complete (s):',round(time()-a,3),'Converged points:',sweeper.Convergence_pc,'%' '\n')
->>>>>>> 148eada2d36970636e9d9817b1fbc991ac3cc66b
