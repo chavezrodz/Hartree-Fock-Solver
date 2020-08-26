@@ -47,6 +47,9 @@ class Phase_Diagram_Sweeper():
 
 		Model.Calculate_Energy()
 
+		if Sol.converged == False:
+			Model.Final_Total_Energy = np.inf
+
 		if self.verbose == True:
 			if Sol.converged ==True:
 				print('U:',round(Model.U,2),'J:', round(Model.J,2),'Initial MFP:',self.Initial_params[v], 'Final MFP:',Model.MF_params)
@@ -78,7 +81,8 @@ class Phase_Diagram_Sweeper():
 		if Final_Run == True:
 			outfile = os.path.join(outfolder,'Energies.csv')
 			np.savetxt(outfile,self.Es_trial,delimiter=',')
-
+			outfile = os.path.join(outfolder,'Convergence_Grid.csv')
+			np.savetxt(outfile,self.Convergence_Grid,delimiter=',')
 			for i in range(self.Initial_params.shape[2]):
 				outfile = os.path.join(outfolder,'MF_Solutions','MF'+str(i)+'.csv')
 				np.savetxt(outfile,self.Final_params[:,:,i],delimiter=",")

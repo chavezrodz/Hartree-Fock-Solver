@@ -27,9 +27,9 @@ MF_params = np.array([0,0,-1,0])
 
 Model = Hamiltonian(Model_Params, MF_params)
 
-Sol = HFA_Solver(Model,beta = 0.51,Itteration_limit = 50)
+Sol = HFA_Solver(Model,beta=0.500001,Itteration_limit = 50, tol=1e-3)
 
-Sol.Itterate(tol=1e-3,verbose=True)
+Sol.Itterate(verbose=True)
 
 Fermi_Energy = Sol.Fermi_Energy
 Energies = np.sort(Sol.Energies)
@@ -37,7 +37,7 @@ Energies = np.sort(Sol.Energies)
 plt.hist(Energies.flatten(),bins='auto')
 plt.title('Density of states')
 plt.axvline(Fermi_Energy, label='Fermi Energy',color='red')
-plt.xlabel('Energy')
+plt.xlabel('Energy (Ev)')
 plt.legend()
 plt.show()
 plt.close()
@@ -76,7 +76,7 @@ plt.close()
 
 
 
-'''
+"""
 # Fermi Surface
 x = Sol.indices_array[0]*np.pi/Model.N_cells - np.pi/2
 y = Sol.indices_array[1]*np.pi/Model.N_cells - np.pi/2
@@ -84,12 +84,10 @@ z = Sol.occupied_energies
 
 plt.scatter(x, y, c=z
 	, marker="s"
-	)
+		)
 plt.title('Fermi Surface')
 plt.xlabel('$K_x$  ($\pi/a$)')
 plt.ylabel('$K_Y$  ($\pi/a$)')
 plt.colorbar()
 plt.show()
-'''
-
-
+"""

@@ -1,0 +1,6 @@
+"""
+r
+\uparrow\downarrow
+Uparrow = 0.1 to 1 
+uparrow = 0.1 to 0.5 
+"""

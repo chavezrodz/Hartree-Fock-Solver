@@ -9,16 +9,18 @@ class HFA_Solver:
 	Model_params: Hamiltonian Parameters, must include Filling(float)
 	MFP_params: initial guesses for Mean Free Parameters
 	"""
-	def __init__(self, Ham, beta = 0.51,Itteration_limit = 50,tol = 1e-3):
+	def __init__(self, Ham, method='momentum', beta=0.7, Itteration_limit=50, tol=1e-3):
 		self.Hamiltonian = Ham
 
 		if Ham.N_Dim == 2:
 			self.Energies = np.zeros((Ham.Nx,Ham.Ny,Ham.mat_dim))
 			self.Eigenvectors = np.zeros((Ham.Nx,Ham.Ny,Ham.mat_dim,Ham.mat_dim),dtype=complex)
 		
+		# Itteration Method Params
 		self.beta = beta
 		self.Itteration_limit = Itteration_limit
 		self.tol = tol
+		self.method = method
 		self.converged = True
 
 		self.N_states = self.Energies.size #Bands x N
@@ -41,8 +43,17 @@ class HFA_Solver:
 			v = self.Eigenvectors[ind[0],ind[1],:,ind[2]]
 			self.sub_params[:,i] = np.real(self.Hamiltonian.Consistency(v))
 		a = self.Hamiltonian.MF_params
-		self.Hamiltonian.MF_params = (1 - self.beta)*a + self.beta*np.sum(self.sub_params,axis=1)
-		return a, self.Hamiltonian.MF_params
+		b = np.sum(self.sub_params,axis=1)
+		return a, b
+
+	def update_del(self,a,b):
+		"""
+		allows for different possible updating methods
+		"""
+		if self.method == 'momentum':
+			self.Hamiltonian.MF_params = (1 - self.beta)*a + self.beta*b
+		else:
+			print('Error: Itteration Method not found')
 
 
 	def Itteration_Step(self):
@@ -56,7 +67,11 @@ class HFA_Solver:
 		self.Find_filling_lowest_energies()
 		# Calculate Mean Field Parameters with lowest energies
 		previous_MFP, New_MFP = self.Calculate_new_del()
+		self.update_del(previous_MFP, New_MFP)
 		return previous_MFP, New_MFP
+
+	def Metal_or_insulator(self):
+		pass
 
 
 	def Itterate(self, verbose = True):
@@ -78,6 +93,7 @@ class HFA_Solver:
 				print("\t \t \t Warning! Did not converge")
 				self.converged = False
 				break
+
 		if verbose == True:
 			print('Final Mean Field parameter:', b.round(digits), '\nNumber of itteration steps:', count)
 
