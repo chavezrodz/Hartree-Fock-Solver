@@ -14,8 +14,8 @@ n_threads = 28
 ########### Model Params
 Model_Params = dict(
 N_Dim = 2,
-Nx = 75,
-Ny = 75,
+Nx = 50,
+Ny = 50,
 Filling = 0.25,
 mat_dim = 8,
 
@@ -26,22 +26,22 @@ t_4 = 0,
 U = 1,
 J = 1)
 ############ Diagram Ranges
-U_values = np.linspace(0,6,40)
-J_values = np.linspace(0,3,40)
+U_values = np.linspace(0,3,20)
+J_values = np.linspace(0,1.5,20)
 ############ Guess ranges
-deltas = np.linspace(0,1,4)
-sfm    = np.linspace(0,1,4)
-Deltas = np.linspace(0,1,4)
-safm   = np.linspace(0,1,4)
+deltas = np.linspace(0,0.5,2)
+sfm    = np.linspace(0,0.5,2)
+Deltas = np.linspace(0.5,1,4)
+safm   = np.linspace(0,0.5,2)
 ########### Solver params
 beta = 0.500001 
 Itteration_limit = 500 
 tolerance = 1e-3
 ########## Sweeper params
 verbose = True
-Final_Results_Folder = os.path.join('Results_dl','Final_Results')
+Final_Results_Folder = os.path.join('Results','Final_Results')
 ########## Optimizer params
-Input_Folder = 'Results_dl/Guesses_Results/'
+Input_Folder = 'Results/Guesses_Results/'
 
 ########## Code
 params_list = tuplelist([deltas,sfm,safm,Deltas])
