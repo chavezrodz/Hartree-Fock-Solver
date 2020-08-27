@@ -39,9 +39,9 @@ Itteration_limit = 500
 tolerance = 1e-3
 ########## Sweeper params
 verbose = True
-Final_Results_Folder = os.path.join('Results','Final_Results')
+Final_Results_Folder = os.path.join('Results_dl','Final_Results')
 ########## Optimizer params
-Input_Folder = 'Results/Guesses_Results/'
+Input_Folder = 'Results_dl/Guesses_Results/'
 
 ########## Code
 params_list = tuplelist([deltas,sfm,safm,Deltas])
