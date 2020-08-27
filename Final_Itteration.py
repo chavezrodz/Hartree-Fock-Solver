@@ -8,44 +8,30 @@ from Code.Optimizer import Optimizer
 from Hamiltonians.Hamiltonian_Nickelates import *
 from Utils.tuplelist import *
 from time import time
+import params
 
 ########## Command Line Arguments
-n_threads = 28
+n_threads = params.n_threads
 ########### Model Params
-Model_Params = dict(
-N_Dim = 2,
-Nx = 50,
-Ny = 50,
-Filling = 0.25,
-mat_dim = 8,
+Model_Params = params.Model_Params
+########### Diagram Ranges
+U_values = params.U_values
+J_values = params.J_values
+############ Guesses list
+params_list = params.params_list
 
-eps = 0,
-t_1 = 1,
-t_2 = 0.15,
-t_4 = 0,
-U = 1,
-J = 1)
-############ Diagram Ranges
-U_values = np.linspace(0,3,20)
-J_values = np.linspace(0,1.5,20)
-############ Guess ranges
-deltas = np.linspace(0,0.5,2)
-sfm    = np.linspace(0,0.5,2)
-Deltas = np.linspace(0.5,1,4)
-safm   = np.linspace(0,0.5,2)
 ########### Solver params
-beta = 0.500001 
-Itteration_limit = 500 
-tolerance = 1e-3
+beta = params.beta 
+Itteration_limit = params.Itteration_limit 
+tolerance = params.tolerance
 ########## Sweeper params
-verbose = True
-Final_Results_Folder = os.path.join('Results','Final_Results')
+verbose = params.verbose
 ########## Optimizer params
-Input_Folder = 'Results/Guesses_Results/'
+Input_Folder = params.Final_Input_Folder
+Final_Results_Folder = params.Final_Results_Folder
+
 
 ########## Code
-params_list = tuplelist([deltas,sfm,safm,Deltas])
-
 a = time()
 Model = Hamiltonian(Model_Params, params_list[1])
 Solver = HFA_Solver(Model,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)

@@ -8,48 +8,31 @@ from Hamiltonians.Hamiltonian_Nickelates import *
 from Utils.tuplelist import *
 from Utils.DispersionRelation import *
 from time import time
+import params
 
-
-########## Command Line Arguments
+######### Command Line Arguments
 if  len(sys.argv)!=2:
     print("Expected input")
     exit(2)
 
 n = int(sys.argv[1])
- 
-n_threads = 28
+
+n_threads = params.n_threads
 ########### Model Params
-Model_Params = dict(
-N_Dim = 2,
-Nx = 50,
-Ny = 50,
-Filling = 0.25,
-mat_dim = 8,
-
-eps = 0,
-t_1 = 1,
-t_2 = 0.15,
-t_4 = 0,
-U = 1,
-J = 1)
-############ Diagram Ranges
-U_values = np.linspace(0,3,20)
-J_values = np.linspace(0,1.5,20)
-############ Guess ranges
-deltas = np.linspace(0,0.5,2)
-sfm    = np.linspace(0,0.5,2)
-Deltas = np.linspace(0.5,1,4)
-safm   = np.linspace(0,0.5,2)
-
-params_list = tuplelist([deltas,sfm,safm,Deltas])
+Model_Params = params.Model_Params
+########### Diagram Ranges
+U_values = params.U_values
+J_values = params.J_values
+############ Guesses list
+params_list = params.params_list
 
 ########### Solver params
-beta = 0.500001 
-Itteration_limit = 500 
-tolerance = 1e-3
+beta = params.beta 
+Itteration_limit = params.Itteration_limit 
+tolerance = params.tolerance
 ########## Sweeper params
-verbose = True
-outfolder = os.path.join('Results','Guesses_Results')
+verbose = params.verbose
+outfolder = params.main_outfolder
 
 ########## Code
 a = time()
