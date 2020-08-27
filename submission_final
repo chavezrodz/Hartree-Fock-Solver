@@ -3,7 +3,7 @@
 #SBATCH --job-name=NickelatesFinal
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=16
-#SBATCH --mem-per-cpu=8GB       # Memory (RAM) per core. this is the memory per core. sometimes you need more memory: the total memory per node is 128GB, and mem-per-core * cores < 128 GB for obvious reasons. if you need more memory, you will have to use less cores.
+#SBATCH --mem-per-cpu=7GB       # Memory (RAM) per core. this is the memory per core. sometimes you need more memory: the total memory per node is 128GB, and mem-per-core * cores < 128 GB for obvious reasons. if you need more memory, you will have to use less cores.
 #SBATCH --output=Results/logs/final.txt
 
 module purge ## this clears the modules loaded before to get a fresh start
