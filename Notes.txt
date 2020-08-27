@@ -1,6 +1,21 @@
 """
 r
 \uparrow\downarrow
-Uparrow = 0.1 to 1 
+Uparrow = 0.5 to 1 
 uparrow = 0.1 to 0.5 
 """
+
+
+
+Charge modulation: Topographical map
+Orbital disp: Discrete z(lower),Z (upper)
+z_bar: negative
+
+dont take abs for orbital
+
+
+
+put together the phases
+2nd optimizer
+1d plot of energies
+Sequence of convergence
