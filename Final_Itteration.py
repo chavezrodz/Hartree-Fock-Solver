@@ -27,9 +27,13 @@ tolerance = params.tolerance
 ########## Sweeper params
 verbose = params.verbose
 ########## Optimizer params
-Input_Folder = params.Final_Input_Folder
-Final_Results_Folder = params.Final_Results_Folder
+Input_Folder = os.path.join(params.Results_Folder,'Guesses_Results')
 
+Final_Results_Folder = os.path.join(params.Results_Folder,'Final_Results')
+if not os.path.exists(Final_Results_Folder):
+    os.makedirs(Final_Results_Folder)
+    os.makedirs(os.path.join(Final_Results_Folder,'MF_Solutions'))
+    os.makedirs(os.path.join(Final_Results_Folder,'Plots'))
 
 ########## Code
 a = time()

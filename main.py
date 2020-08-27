@@ -32,9 +32,14 @@ Itteration_limit = params.Itteration_limit
 tolerance = params.tolerance
 ########## Sweeper params
 verbose = params.verbose
-outfolder = params.main_outfolder
+
+outfolder = os.path.join(params.Results_Folder,'Guesses_Results')
+if not os.path.exists(outfolder):
+	os.makedirs(outfolder)
+	os.makedirs(os.path.join(params.Results_Folder,'logs'))
 
 ########## Code
+
 a = time()
 MF_params = np.array(params_list[n])
 
