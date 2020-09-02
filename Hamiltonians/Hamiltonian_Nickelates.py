@@ -126,7 +126,7 @@ class Hamiltonian:
 
 
 		# Declare sub-block
-		sub_1 = np.array([
+		sub_2 = np.array([
 			[d0,a0,b,0],
 			[a0,d1,0,c],
 			[b,0,d2,a1],

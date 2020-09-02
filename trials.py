@@ -10,6 +10,11 @@ from Utils.DispersionRelation import *
 from time import time
 import params
 
+outfolder = os.path.join(params.Results_Folder,'Guesses_Results')
+if not os.path.exists(outfolder):
+	os.makedirs(outfolder)
+	os.makedirs(os.path.join(params.Results_Folder,'logs'))
+
 ######### Command Line Arguments
 if  len(sys.argv)!=2:
     print("Expected input")
@@ -33,10 +38,6 @@ tolerance = params.tolerance
 ########## Sweeper params
 verbose = params.verbose
 
-outfolder = os.path.join(params.Results_Folder,'Guesses_Results')
-if not os.path.exists(outfolder):
-	os.makedirs(outfolder)
-	os.makedirs(os.path.join(params.Results_Folder,'logs'))
 
 ########## Code
 
