@@ -9,4 +9,4 @@
 
 module purge ## this clears the modules loaded before to get a fresh start
 module add anaconda3                   # modules to be loaded
-python3 main.py $SLURM_ARRAY_TASK_ID                                                                                                                                                    
+python3 trials.py $SLURM_ARRAY_TASK_ID
