@@ -28,7 +28,7 @@ sfm    = np.linspace(0,1,3)
 Deltas_FO = np.linspace(0,1,3)
 safm   = np.linspace(0,1,3)
 Deltas_AFO = np.linspace(0,1,3)
-params_list = tuplelist([deltas,sfm,safm,Deltas])
+params_list = tuplelist([deltas,sfm,Deltas_FO,safm,Deltas_AFO])
 
 ########### Solver params
 beta = 0.500001 
