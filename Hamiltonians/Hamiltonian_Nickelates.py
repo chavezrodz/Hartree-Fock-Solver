@@ -21,8 +21,6 @@ class Hamiltonian:
 	Consistency
 	Calculate_Energy
 
-
-
 	All itterations done in HFA solver.
 	"""
 	def __init__(self, Model_params, MF_params):
@@ -91,10 +89,11 @@ class Hamiltonian:
 
 		"""
 
-		# Call static matrix elements
+		# Call matrix elements
 		sigma = 1
 
-		a = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3]
+		a0 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] + self.J_bar*self.MF_params[4]
+		a1 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] - self.J_bar*self.MF_params[4]		
 		b = self.tzz_b[q]
 		c = self.tzz_b_c[q]
 
@@ -106,16 +105,17 @@ class Hamiltonian:
 
 		# Declare sub-block
 		sub_1 = np.array([
-			[d0,a,b,0],
-			[a,d1,0,c],
-			[b,0,d2,a],
-			[0,c,a,d3]])
+			[d0,a0,b,0],
+			[a0,d1,0,c],
+			[b,0,d2,a1],
+			[0,c,a1,d3]])
 
 
-		# Call static matrix elements
+		# Call matrix elements
 		sigma = -1
 
-		a = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3]
+		a0 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] + self.J_bar*self.MF_params[4]
+		a1 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] - self.J_bar*self.MF_params[4]		
 		b = self.tzz_b[q]
 		c = self.tzz_b_c[q]
 
@@ -124,12 +124,13 @@ class Hamiltonian:
 		d2 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b[q]
 		d3 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c[q]
 
+
 		# Declare sub-block
-		sub_2 = np.array([
-			[d0,a,b,0],
-			[a,d1,0,c],
-			[b,0,d2,a],
-			[0,c,a,d3]])
+		sub_1 = np.array([
+			[d0,a0,b,0],
+			[a0,d1,0,c],
+			[b,0,d2,a1],
+			[0,c,a1,d3]])
 
 
 		# Declare matrix
@@ -152,8 +153,10 @@ class Hamiltonian:
 
 		d = 0.5*( np.conj(v[0])*v[1] + np.conj(v[2])*v[3] - np.conj(v[4])*v[5] - np.conj(v[6])*v[7] + np.conj(v[1])*v[0] + np.conj(v[3])*v[2] - np.conj(v[5])*v[4] - np.conj(v[7])*v[6])/self.N_cells
 
-		return a, b, c, d
+		e = 0.5*( np.conj(v[0])*v[1] - np.conj(v[2])*v[3] + np.conj(v[4])*v[5] - np.conj(v[6])*v[7] + np.conj(v[1])*v[0] - np.conj(v[3])*v[2] + np.conj(v[5])*v[4] - np.conj(v[7])*v[6])/self.N_cells
+
+		return a, b, c, d, e
 
 	def Calculate_Energy(self):
-		E = self.E_occ/self.N_cells + 2*self.eps*(self.u**2/2 + self.u**4/4) - (self.U_bar/2*(1+self.MF_params[0]**2) - self.U_0*(self.MF_params[1]**2 + self.MF_params[3]**2) + self.J_bar*self.MF_params[2]**2 )/self.N_cells
+		E = self.E_occ/self.N_cells + 2*self.eps*(self.u**2/2 + self.u**4/4) - (self.U_bar/2*(1+self.MF_params[0]**2) - self.U_0*(self.MF_params[1]**2 + self.MF_params[3]**2) + self.J_bar*(self.MF_params[2]**2 + self.MF_params[4]**2) )/self.N_cells
 		self.Final_Total_Energy = E

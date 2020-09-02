@@ -6,8 +6,8 @@ n_threads = 16
 ########### Model Params
 Model_Params = dict(
 N_Dim = 2,
-Nx = 35,
-Ny = 35,
+Nx = 25,
+Ny = 25,
 Filling = 0.25,
 mat_dim = 8,
 
@@ -23,20 +23,12 @@ J_values = np.linspace(0,3,30)
 
 ############ Guess ranges
 
-# deltas = np.linspace(0,0.5,1)
-# sfm    = np.linspace(0,0.5,1)
-# Deltas = np.linspace(0.5,1,1)
-# safm   = np.linspace(0,0.5,1)
-# params_list = tuplelist([deltas,sfm,safm,Deltas])
-
-params_list = [
-(0,0,0.4,0),
-(0.7,0.7,0,0.7),
-(0,0.2,0.8,0.6),
-(1,1,0,1),
-(1,1,0.2,0.6),
-(0.4,0.4,0.4,0.4),
-(0.5,0.1,0.25,0)]
+deltas = np.linspace(0,1,3)
+sfm    = np.linspace(0,1,3)
+Deltas_FO = np.linspace(0,1,3)
+safm   = np.linspace(0,1,3)
+Deltas_AFO = np.linspace(0,1,3)
+params_list = tuplelist([deltas,sfm,safm,Deltas])
 
 ########### Solver params
 beta = 0.500001 
