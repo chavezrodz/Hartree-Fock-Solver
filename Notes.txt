@@ -14,8 +14,6 @@ z_bar: negative
 dont take abs for orbital
 
 
-
-put together the phases
 2nd optimizer
 1d plot of energies
 Sequence of convergence

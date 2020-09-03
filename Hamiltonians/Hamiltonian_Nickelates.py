@@ -3,7 +3,7 @@ import itertools
 from numpy import linalg as LA
 
 class Hamiltonian:
-f	"""
+	"""
 	Contains: Matrix structure, elements, consistency equations, total energy equation
 	and both static and dynamic parameters
 

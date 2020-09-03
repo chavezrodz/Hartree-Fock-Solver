@@ -7,6 +7,7 @@ from Code.PhaseDiagramSweeper import *
 from Code.Optimizer import Optimizer
 from Hamiltonians.Hamiltonian_Nickelates import *
 from Utils.tuplelist import *
+from Utils.DiagramPlots import *
 from time import time
 import params
 
@@ -14,6 +15,7 @@ import params
 n_threads = params.n_threads
 ########### Model Params
 Model_Params = params.Model_Params
+Dict = params.Dict
 ########### Diagram Ranges
 U_values = params.U_values
 J_values = params.J_values
@@ -28,13 +30,12 @@ tolerance = params.tolerance
 verbose = params.verbose
 ########## Optimizer params
 Input_Folder = os.path.join(params.Results_Folder,'Guesses_Results')
-
 Final_Results_Folder = os.path.join(params.Results_Folder,'Final_Results')
+
 if not os.path.exists(Final_Results_Folder):
     os.makedirs(Final_Results_Folder)
     os.makedirs(os.path.join(Final_Results_Folder,'MF_Solutions'))
-    os.makedirs(os.path.join(Final_Results_Folder,'Plots'))
-
+ 
 ########## Code
 a = time()
 Model = Hamiltonian(Model_Params, params_list[1])
@@ -45,9 +46,11 @@ Optimal_guesses, Optimal_Energy = Optimizer(Input_Folder, params_list)
 sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,U_values,J_values,n_threads,verbose=True)
 
 sweeper.Sweep(Final_Results_Folder, Final_Run=True)
-Final_Energy = sweeper.Es_trial
-print(sweeper.Convergence_Grid)
 
-print("Initial guess sweep and final calculations are consistent:",np.array_equal(Final_Energy, Optimal_Energy)) 
+Final_Energies = sweeper.Es_trial
+
+DiagramPlots(Final_Results_Folder,Dict)
+
+print("Initial guess sweep and final calculations are consistent:",np.array_equal(Final_Energies, Optimal_Energy)) 
 
 print('time to complete (s):',round(time()-a,3),'Converged points:',sweeper.Convergence_pc,'%' '\n')

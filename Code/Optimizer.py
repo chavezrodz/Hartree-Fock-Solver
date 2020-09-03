@@ -12,7 +12,7 @@ def Optimizer(Input_Folder, params_list):
 
 	filelist = []
 	for i in range(len(params_list)):
-		filelist.append(os.path.join(Input_Folder,str(np.array(params_list[i]))+'.csv'))
+		filelist.append(os.path.join(Input_Folder,'Guess'+str(np.array(params_list[i])),'Energies.csv'))
 
 	# Stack all energies arrays
 	for i, file in enumerate(filelist):
