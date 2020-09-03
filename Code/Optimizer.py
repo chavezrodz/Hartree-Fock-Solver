@@ -9,12 +9,12 @@ def Optimizer(Input_Folder, params_list):
 	Input list of arrays of energy across phase region,
 	return best guess per region
 	"""
-	# filelist = sorted(glob.glob(Input_Folder+'/*csv'))
+
 	filelist = []
 	for i in range(len(params_list)):
 		filelist.append(os.path.join(Input_Folder,str(np.array(params_list[i]))+'.csv'))
-	# Stack all energies arrays
 
+	# Stack all energies arrays
 	for i, file in enumerate(filelist):
 		if i ==0:
 			Arrays = np.loadtxt(file,delimiter=',')
