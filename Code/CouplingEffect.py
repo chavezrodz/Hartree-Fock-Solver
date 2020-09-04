@@ -59,7 +59,6 @@ class Phase_Diagram_Sweeper():
 		return Model.Final_Total_Energy, Model.MF_params, Sol.converged
 
 	def Sweep(self, outfolder, Final_Run=False):
-
 		# MP way
 		PD_grid = itertools.product(self.U_idx,self.J_idx)
 		with Pool(self.n_threads) as p:
@@ -77,7 +76,7 @@ class Phase_Diagram_Sweeper():
 
 		if Final_Run == False:
 			np.savetxt(os.path.join(outfolder,'Energies.csv'),self.Es_trial,delimiter=',')
-			np.savetxt(os.path.join(outfolder,'Convergence_Grid.csv'),self.Convergence_Grid,delimiter=',')
+			# np.savetxt(os.path.join(outfolder,'Convergence_Grid.csv'),self.Convergence_Grid,delimiter=',')
 			# for i in range(self.Initial_params.shape[2]):
 				# outfile = os.path.join(outfolder,'MF_Solutions','MF'+str(i)+'.csv')
 				# np.savetxt(outfile,self.Final_params[:,:,i],delimiter=",")

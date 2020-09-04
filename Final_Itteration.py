@@ -5,7 +5,7 @@ import os
 from Code.HFA_Solver import *
 from Code.PhaseDiagramSweeper import *
 from Code.Optimizer import Optimizer
-from Hamiltonians.Hamiltonian_Nickelates import *
+from Nickelates.Hamiltonian_Nickelates import *
 from Utils.tuplelist import *
 from Utils.DiagramPlots import *
 from time import time

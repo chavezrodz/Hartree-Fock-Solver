@@ -38,5 +38,4 @@ Itteration_limit = 100
 tolerance = 1e-3
 ########## Sweeper params
 verbose = True
-
 Results_Folder = "Results/Results_Test"

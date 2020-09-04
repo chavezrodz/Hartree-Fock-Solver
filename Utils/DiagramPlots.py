@@ -9,7 +9,7 @@ import os
 # Input arrays of two parameters and phase
 
 
-def DiagramPlots(final_results_folder,Dict):
+def DiagramPlots(final_results_folder,Dict,transparent=False):
 	Solutions_folder = os.path.join(final_results_folder,'MF_Solutions')
 	if not os.path.exists(Solutions_folder):
 		print('Solutions not found')
@@ -30,7 +30,7 @@ def DiagramPlots(final_results_folder,Dict):
 		plt.xticks(np.linspace(0, arr.shape[0], 4),np.arange(0,8,2))
 		plt.yticks(np.linspace(0, arr.shape[1], 4),np.arange(0,4,1))	
 		plt.colorbar()
-		plt.savefig(Plots_folder+'/'+Dict[i]+'.png',transparent=True)
+		plt.savefig(Plots_folder+'/'+Dict[i]+'.png',transparent=transparent)
 		plt.close()
 
 	plt.title('Convergence Grid')

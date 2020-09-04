@@ -1,12 +1,11 @@
+from matplotlib.colors import LogNorm
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
-from matplotlib.colors import LogNorm
-import numpy as np
 import scipy.interpolate
-from Code.HFA_Solver import *
-from Hamiltonians.Hamiltonian_Nickelates import *
-from Utils.tuplelist import *
 from time import time
+import numpy as np
+from Code.HFA_Solver import *
+from Utils.tuplelist import *
 
 class  Dispersion_Relation():
 
