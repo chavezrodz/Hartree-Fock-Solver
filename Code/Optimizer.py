@@ -27,18 +27,17 @@ def Optimizer(Input_Folder, params_list, verbose=False):
 			C_Tower = np.dstack((C_Tower,np.loadtxt(C_file,delimiter=',')))
 
 	# Find Indices of lowest energies across stack
-	ind = np.argmin(E_Tower,axis=2)
+	ind = np.argmin(E_Tower,axis=-1)
 
 	# Lowest achievable energy
-	Optimal_Energy = np.min(E_Tower,axis=2)
-	Optimal_Convergence = np.min(C_Tower,axis=2)
+	Optimal_Energy = np.min(E_Tower,axis=-1)
+	Optimal_Convergence = np.min(C_Tower,axis=-1)
 
 	# Recover best guess across phase diagram
 	Optimal_Guesses = np.zeros((*Initial_Shape,len(params_list[0])))
 
-	# Convergence Grid
-	u = np.arange(Initial_Shape[0])
-	j = np.arange(Initial_Shape[1])
+	u,j = np.indices(Initial_Shape,sparse=True)
+	u,j = u.flatten(),j.flatten()
 	uj_itterator = itertools.product(u,j)
 	for v in uj_itterator:
 		if verbose:

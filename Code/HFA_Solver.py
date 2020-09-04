@@ -12,9 +12,8 @@ class HFA_Solver:
 	def __init__(self, Ham, method='momentum', beta=0.7, Itteration_limit=50, tol=1e-3):
 		self.Hamiltonian = Ham
 
-		if Ham.N_Dim == 2:
-			self.Energies = np.zeros((Ham.Nx,Ham.Ny,Ham.mat_dim))
-			self.Eigenvectors = np.zeros((Ham.Nx,Ham.Ny,Ham.mat_dim,Ham.mat_dim),dtype=complex)
+		self.Energies = np.zeros((*Ham.N_shape,Ham.mat_dim))
+		self.Eigenvectors = np.zeros((*Ham.N_shape,Ham.mat_dim,Ham.mat_dim),dtype=complex)
 		
 		# Itteration Method Params
 		self.beta = beta
@@ -40,7 +39,7 @@ class HFA_Solver:
 
 	def Calculate_new_del(self):
 		for i,ind in enumerate(self.indices):
-			v = self.Eigenvectors[ind[0],ind[1],:,ind[2]]
+			v = self.Eigenvectors[ind[:-1]][:,ind[-1]]
 			self.sub_params[:,i] = np.real(self.Hamiltonian.Consistency(v))
 		a = self.Hamiltonian.MF_params
 		b = np.sum(self.sub_params,axis=1)

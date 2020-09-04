@@ -16,23 +16,26 @@ class Phase_Diagram_Sweeper():
 		self.Model = Model
 		self.Solver = Solver
 		
-		self.U_values = U_values
-		self.J_values = J_values
-		self.U_idx = np.arange(len(U_values))
-		self.J_idx = np.arange(len(J_values))
-
 		self.n_threads = n_threads
 		self.verbose = verbose
+
+		self.U_values = U_values
+		self.J_values = J_values
+
+		self.Diag_shape = (len(U_values),len(J_values))
+
+		self.U_idx,self.J_idx = np.indices(self.Diag_shape,sparse=True)
+		self.U_idx,self.J_idx = self.U_idx.flatten(),self.J_idx.flatten()
 		
 		if Initial_params.ndim == 1:
-			self.Initial_params = np.zeros((len(self.U_values),len(self.J_values),len(Model.MF_params)))
+			self.Initial_params = np.zeros((*self.Diag_shape,len(Model.MF_params)))
 			self.Initial_params[:,:,:] = Initial_params
 		else:
 			self.Initial_params = Initial_params
 
-		self.Es_trial = np.zeros((len(self.U_values),len(self.J_values)))
+		self.Es_trial = np.zeros(self.Diag_shape)
 		self.Final_params = np.zeros(self.Initial_params.shape)
-		self.Convergence_Grid = np.zeros((len(self.U_values),len(self.J_values)))
+		self.Convergence_Grid = np.zeros(self.Diag_shape)
 
 	def Phase_Diagram_point(self,v):
 		Model = self.Model

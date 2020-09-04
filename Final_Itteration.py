@@ -40,9 +40,9 @@ if not os.path.exists(Final_Results_Folder):
 a = time()
 Model = Hamiltonian(Model_Params, params_list[1])
 Solver = HFA_Solver(Model,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
-
+print("Model loaded")
 Optimal_guesses, Optimal_Energy = Optimizer(Input_Folder, params_list)
-
+print("Optimizer loaded")
 sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,U_values,J_values,n_threads,verbose=True)
 
 sweeper.Sweep(Final_Results_Folder, Final_Run=True)

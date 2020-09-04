@@ -31,28 +31,31 @@ class Hamiltonian:
 		#initiates Mean field parameters
 		self.MF_params = MF_params
 		self.N_cells = int(self.Nx*self.Ny)
+		self.N_shape = (self.Nx,self.Ny)
 
-		self.Qx = np.arange(self.Nx) #Allowed Momentum Indices for itterator 
-		self.Qy = np.arange(self.Ny)
+		#Allowed Momentum Indices for itterator 
+		self.Qx,self.Qy = np.indices(self.N_shape,sparse=True) 
+		self.Qx,self.Qy = self.Qx.flatten(),self.Qy.flatten()
+		# Allowed Momentum Values
+		self.Qxv = self.Qx*np.pi/self.Nx - np.pi/2
+		self.Qyv = self.Qy*np.pi/self.Ny - np.pi/2
+	
+		# Static variables, these never change, may depend on momentum indices
+		self.tzz = np.zeros(self.N_shape)
+		self.tzz_c = np.zeros(self.N_shape)
 
-	# Static variables, these never change, may depend on momentum indices
+		self.tz_bz_b = np.zeros(self.N_shape)
+		self.tz_bz_b_c = np.zeros(self.N_shape)
 
-
-		self.tzz = np.zeros((self.Nx,self.Ny))
-		self.tzz_c = np.zeros((self.Nx,self.Ny))
-
-		self.tz_bz_b = np.zeros((self.Nx,self.Ny))
-		self.tz_bz_b_c = np.zeros((self.Nx,self.Ny))
-
-		self.tzz_b = np.zeros((self.Nx,self.Ny))
-		self.tzz_b_c = np.zeros((self.Nx,self.Ny))
+		self.tzz_b = np.zeros(self.N_shape)
+		self.tzz_b_c = np.zeros(self.N_shape)
 
 		qc = np.pi
 
 		Q = itertools.product(self.Qx,self.Qy)
 		for q in Q:
-			qx = q[0]*np.pi/self.Nx - np.pi/2
-			qy = q[1]*np.pi/self.Ny - np.pi/2
+			qx = self.Qxv[q[0]]#*np.pi/self.Nx - np.pi/2
+			qy = self.Qyv[q[1]]#*np.pi/self.Ny - np.pi/2
 			self.tzz[q]    = -self.t_1/2*(np.cos(qx)  +   np.cos(qy)) 		- self.t_4/2*(np.cos(2*qx)     +   np.cos(2*qy) )    - 4*self.t_2*np.cos(qx)*np.cos(qy)
 			self.tzz_c[q]  = -self.t_1/2*(np.cos(qx+qc)  +   np.cos(qy+qc)) - self.t_4/2*(np.cos(2*(qx+qc))  +   np.cos(2*(qy+qc)) ) - 4*self.t_2*np.cos(qx+qc)*np.cos(qy+qc)
 
