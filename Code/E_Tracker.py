@@ -8,18 +8,22 @@ from multiprocessing import Pool
 from time import time
 import os
 
-class Phase_Diagram_Sweeper():
+"""
+1D sweeper to track state's energies
+
+"""
+
+
+class E_Tracker:
 	"""
 	"""
 
-	def __init__(self, Model, Solver, Initial_params, U_values, J_values, n_threads=8,verbose = False):
+	def __init__(self, Model, Solver, Interpreter, U_values, states, n_threads=8,verbose = False):
 		self.Model = Model
 		self.Solver = Solver
 		
 		self.U_values = U_values
-		self.J_values = J_values
 		self.U_idx = np.arange(len(U_values))
-		self.J_idx = np.arange(len(J_values))
 
 		self.n_threads = n_threads
 		self.verbose = verbose

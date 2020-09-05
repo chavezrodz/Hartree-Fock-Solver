@@ -1,3 +1,4 @@
+import os
 import itertools
 import earthpy.plot as ep
 import matplotlib.patches as mpatches
@@ -40,13 +41,39 @@ def spin_array_interpreter(MFPs):
 
 	return Full_phase
 
+def orbit_interpreter(mfps):
+	"""
+	Feed mfps,
+	return discretized phase
+	"""
 
-# Results_Folder = 'Results_CP2'
-Results_Folder = 'Results_NoCP2'
+	b1 = np.array([1,1])
+	b2 = np.array([1,-1])
 
-MF = np.zeros((30,30,4))
-for i in range(4):
-	MF[:,:,i] = np.loadtxt(Results_Folder+'/Final_Results/MF_Solutions/MF'+str(i)+'.csv',delimiter=",")
+	spin = mfps[0]*b1 + mfps[1]*b2
+	spin = np.rint(spin*2)
+	spin = np.sign(spin)
+
+	if np.array_equal(spin,np.array([0,0])):
+		spin = 0
+	elif np.array_equal(spin,np.array([1,0])):
+		spin = 1
+	elif np.array_equal(spin,np.array([1,-1])):
+		spin = 2
+	elif np.array_equal(spin,np.array([1,1])):
+		spin = 3
+	return orbit
+
+def orbit_array_interpreter(MFPs):
+	shape = MFPs.shape
+	Full_phase = np.zeros((shape[0],shape[1]))
+
+	vectorize =np.vectorize(spin_interpreter)
+	for v in itertools.product(np.arange(shape[0]),np.arange(shape[1])):
+		Full_phase[v] = spin_interpreter(MFPs[v])
+
+	return Full_phase
+
 
 # Loading
 CM = MF[:,:,0]

@@ -4,12 +4,12 @@ import numpy as np
 import os
 import glob
 
-def Optimizer(Input_Folder, params_list, verbose=False):
+def Optimizer_exhaustive(Input_Folder, params_list, verbose=False):
 	"""
 	Input list of arrays of energy across phase region,
 	return best guess per region
 	"""
-
+	
 	folderlist = []
 	for i in range(len(params_list)):
 		folderlist.append(os.path.join(Input_Folder,'Guess'+str(np.array(params_list[i]))))

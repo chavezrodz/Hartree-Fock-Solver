@@ -54,7 +54,6 @@ class HFA_Solver:
 		else:
 			print('Error: Itteration Method not found')
 
-
 	def Itteration_Step(self):
 		# 	Calculate Dynamic Variables
 		self.Hamiltonian.update_variables()
