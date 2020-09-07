@@ -55,7 +55,7 @@ class Phase_Diagram_Sweeper():
 
 		if self.verbose == True:
 			if Sol.converged ==True:
-				print('U:',round(Model.U,2),'J:', round(Model.J,2),'Initial MFP:',self.Initial_params[v], 'Final MFP:',Model.MF_params)
+				print('U:',round(Model.U,2),'J:', round(Model.J,2),'Initial MFP:',self.Initial_params[v], 'Final MFP:',Model.MF_params, 'Converged in :',Model.count,'steps')
 			else:
 				print('U:',round(Model.U,2),'J:', round(Model.J,2),'Initial MFP:',self.Initial_params[v], 'Did Not Converge')
 

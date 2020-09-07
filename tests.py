@@ -45,14 +45,20 @@ MFPS = Read_MFPs(MFP_Folder)
 C_file = os.path.join('Results','Results_5mfp','Final_Results','Convergence_Grid.csv')
 Convergence_Grid = np.loadtxt(C_file,delimiter=',')
 
-mfp = Optimizer_touchup(MFPS,Convergence_Grid)
+Final_Results_Folder = 'Results_Test'
+print('Initial convergence',np.mean(Convergence_Grid))
+optimal_guesses = Optimizer_touchup(MFPS,Convergence_Grid)
 
-for i in range(5):
-	plt.imshow(mfp[:,:,i])
-	plt.colorbar()
-	plt.show()
-
-########## Code
 Model = Hamiltonian(Model_Params, params_list[1])
 Solver = HFA_Solver(Model,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
 
+sweeper = Phase_Diagram_Sweeper(Model,Solver,optimal_guesses,U_values,J_values,n_threads,verbose=True)
+
+sweeper.Sweep(Final_Results_Folder, Final_Run=True)
+
+Final_Energies = sweeper.Es_trial
+
+DiagramPlots(Final_Results_Folder,Dict)
+
+# print("Initial guess sweep and final calculations are consistent:",np.array_equal(Final_Energies, Optimal_Energy))
+print('time to complete (s):',round(time()-a,3),'Converged points:',sweeper.Convergence_pc,'%' '\n')

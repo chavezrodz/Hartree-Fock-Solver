@@ -86,6 +86,7 @@ class HFA_Solver:
 			count += 1
 			a,b = self.Itteration_Step()
 			if verbose ==True:
+				self.count = count
 				print('Itteration: ',count,' Mean Field parameters:', b.round(digits))
 			if count == self.Itteration_limit:
 				print("\t \t \t Warning! Did not converge")
