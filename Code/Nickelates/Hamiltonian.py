@@ -23,7 +23,7 @@ class Hamiltonian:
 
 	All itterations done in HFA solver.
 	"""
-	def __init__(self, Model_params, MF_params):
+	def __init__(self, Model_params, MF_params=[0,0,0,0,0]):
 		#initiates Model parameters
 		for key, value in Model_params.items():
 			setattr(self, key, value)

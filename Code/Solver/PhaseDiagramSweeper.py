@@ -61,7 +61,7 @@ class Phase_Diagram_Sweeper():
 
 		return Model.Final_Total_Energy, Model.MF_params, Sol.converged
 
-	def Sweep(self, outfolder, Final_Run=False):
+	def Sweep(self):
 
 		# MP way
 		PD_grid = itertools.product(self.U_idx,self.J_idx)
@@ -78,16 +78,10 @@ class Phase_Diagram_Sweeper():
 		self.Convergence_Grid = self.Convergence_Grid.astype(int)
 		self.Convergence_pc = 100*np.mean(self.Convergence_Grid)
 
-		if Final_Run == False:
-			np.savetxt(os.path.join(outfolder,'Energies.csv'),self.Es_trial,delimiter=',')
-			np.savetxt(os.path.join(outfolder,'Convergence_Grid.csv'),self.Convergence_Grid,delimiter=',')
-			# for i in range(self.Initial_params.shape[2]):
-				# outfile = os.path.join(outfolder,'MF_Solutions','MF'+str(i)+'.csv')
-				# np.savetxt(outfile,self.Final_params[:,:,i],delimiter=",")
-
-		if Final_Run == True:
-			np.savetxt(os.path.join(outfolder,'Energies.csv'),self.Es_trial,delimiter=',')
-			np.savetxt(os.path.join(outfolder,'Convergence_Grid.csv'),self.Convergence_Grid,delimiter=',')
+	def save_results(self, outfolder, Include_MFPs=False):
+		np.savetxt(os.path.join(outfolder,'Energies.csv'),self.Es_trial,delimiter=',')
+		np.savetxt(os.path.join(outfolder,'Convergence_Grid.csv'),self.Convergence_Grid,delimiter=',')
+		if Include_MFPs:
 			for i in range(self.Initial_params.shape[2]):
 				outfile = os.path.join(outfolder,'MF_Solutions','MF'+str(i)+'.csv')
 				np.savetxt(outfile,self.Final_params[:,:,i],delimiter=",")
