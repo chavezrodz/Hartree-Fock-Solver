@@ -4,3 +4,4 @@ __pycache__
 Results_Toy_Hamiltonian
 *.pyc
 Results_Local
+.test.py

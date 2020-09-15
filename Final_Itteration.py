@@ -2,17 +2,21 @@ import numpy as np
 import itertools
 import sys
 import os
-from Code.HFA_Solver import *
-from Code.PhaseDiagramSweeper import *
-from Code.Optimizer import Optimizer
-from Nickelates.Hamiltonian_Nickelates import *
-from Utils.tuplelist import *
-from Utils.DiagramPlots import *
+from Code.Solver.HFA_Solver import HFA_Solver
+from Code.Solver.PhaseDiagramSweeper import Phase_Diagram_Sweeper
+from Code.Nickelates.Hamiltonian import Hamiltonian
+from Code.Solver.Optimizer_exhaustive import Optimizer_exhaustive
+from Code.Utils.tuplelist import tuplelist
+from Code.Display.DiagramPlots import DiagramPlots
 from time import time
+import argparse
 import params
 
 ########## Command Line Arguments
-n_threads = params.n_threads
+parser = argparse.ArgumentParser()
+parser.add_argument('--n_threads', type=int, default = 8)
+n_threads = parser.n_threads
+
 ########### Model Params
 Model_Params = params.Model_Params
 Dict = params.Dict
@@ -41,11 +45,12 @@ a = time()
 Model = Hamiltonian(Model_Params, params_list[1])
 Solver = HFA_Solver(Model,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
 print("Model loaded")
-Optimal_guesses, Optimal_Energy = Optimizer(Input_Folder, params_list)
+Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(Input_Folder, params_list)
 print("Optimizer loaded")
 sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,U_values,J_values,n_threads,verbose=True)
 
-sweeper.Sweep(Final_Results_Folder, Final_Run=True)
+sweeper.Sweep()
+sweeper.save_results(Final_Results_Folder,Include_MFPs=True)
 
 Final_Energies = sweeper.Es_trial
 

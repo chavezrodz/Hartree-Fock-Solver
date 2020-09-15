@@ -26,19 +26,17 @@ t_4 = 0,
 U = 1,
 J = 1)
 
+U_values = np.linspace(0,6,30)
+J_values = np.linspace(0,3,30)
+
 Model=Ni.Hamiltonian(Model_Params)
 Dict ={ 0:'Charge Modulation',1:'Ferromagnetism', 2:'Orbital Disproportionation',3:'Anti Ferromagnetism',4:'Antiferroorbital'}
 
 ########### Solver params
-beta = 0.500001 
-Itteration_limit = 50 
-tolerance = 1e-3
-Solver = HFA.HFA_Solver(Model,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
+Solver = HFA.HFA_Solver(Model,beta=0.500001, Itteration_limit=1, tol=1e-3)
 ########## Sweeper params
-U_values = np.linspace(0,6,30)
-J_values = np.linspace(0,3,30)
 verbose = True
-Input_folder = os.path.join('Results','Results_5mfp','Final_Results')
+Input_folder = os.path.join("Results/Results_5mfp",'Final_Results')
 
 MFP_Folder = os.path.join(Input_folder,'MF_Solutions')
 Initial_mpfs = Read_MFPs.Read_MFPs(MFP_Folder)
@@ -46,4 +44,4 @@ Initial_mpfs = Read_MFPs.Read_MFPs(MFP_Folder)
 C_file = os.path.join(Input_folder,'Convergence_Grid.csv')
 Initial_Convergence_Grid = np.loadtxt(C_file,delimiter=',')
 
-Results_Folder = "Results/Results_Test"
+outfolder = "Results/Results_Test_NN"

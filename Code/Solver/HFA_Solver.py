@@ -76,20 +76,19 @@ class HFA_Solver:
 		digits = int(np.abs(np.log10(self.tol)))
 
 		a,b = self.Itteration_Step()
-		count = 1
+		self.count = 1
 
 		if verbose == True:
 			print('Initial Mean Field parameters:',a.round(digits))
 			print('Itteration:  1  Mean Field parameters:', b.round(digits))
 
 		while np.sum(np.abs(a - b)) > self.tol:
-			count += 1
+			self.count += 1
 			a,b = self.Itteration_Step()
 			if verbose ==True:
-				self.count = count
 				print('Itteration: ',count,' Mean Field parameters:', b.round(digits))
-			if count == self.Itteration_limit:
-				print("\t \t \t Warning! Did not converge")
+			if self.count == self.Itteration_limit:
+				# print("\t \t \t Warning! Did not converge")
 				self.converged = False
 				break
 
