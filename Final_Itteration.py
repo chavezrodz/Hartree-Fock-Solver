@@ -15,7 +15,8 @@ import params
 ########## Command Line Arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--n_threads', type=int, default = 8)
-n_threads = parser.n_threads
+args = parser.parse_args()
+n_threads = args.n_threads
 
 ########### Model Params
 Model_Params = params.Model_Params

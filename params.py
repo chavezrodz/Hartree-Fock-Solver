@@ -45,4 +45,4 @@ Itteration_limit = 150
 tolerance = 1e-3
 ########## Sweeper params
 verbose = True
-Results_Folder = "Results/Run_sep_14"
+Results_Folder = "Results"
