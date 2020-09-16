@@ -4,16 +4,25 @@ import itertools
 import sys
 import os
 import params
+import Code.Nickelates.Hamiltonian as Ni
+import Code.Solver.HFA_Solver as HFA
 import Code.Solver.Optimizer_touchup as ot
 import Code.Solver.PhaseDiagramSweeper as Sweeper
 import Code.Display.DiagramPlots as Dp
+import argparse
 """
 Feed incomplete final results, itterates with nearest neighbours to try and fill the gaps
 """
 
+########## Command Line Arguments
+parser = argparse.ArgumentParser()
+parser.add_argument('--n_threads', type=int, default = 8)
+args = parser.parse_args()
+n_threads = args.n_threads
 
-Model = params.Model
-Solver = params.Solver
+######### Params file arguments
+Model=Ni.Hamiltonian(params.Model_Params)
+Solver = HFA.HFA_Solver(Model,beta=params.beta, Itteration_limit=params.Itteration_limit, tol=params.tol)
 MFPs = params.Initial_mpfs
 Convergence_Grid = params.Initial_Convergence_Grid
 
@@ -23,7 +32,7 @@ print('Initial convergence',old_convergence)
 # 1 run optimer
 optimal_guesses = ot.Optimizer_touchup(MFPs,Convergence_Grid)
 # 2 feed into sweeper
-sweeper = Sweeper.Phase_Diagram_Sweeper(Model,Solver,optimal_guesses,params.U_values,params.J_values,params.n_threads,verbose=params.verbose)
+sweeper = Sweeper.Phase_Diagram_Sweeper(Model,Solver,optimal_guesses,params.U_values,params.J_values,n_threads,verbose=params.verbose)
 # 3 compute once
 sweeper.Sweep()
 new_convergence = sweeper.Convergence_pc
@@ -44,6 +53,7 @@ Final_Results_Folder = params.outfolder
 if not os.path.exists(Final_Results_Folder):
     os.makedirs(Final_Results_Folder)
     os.makedirs(os.path.join(Final_Results_Folder,'MF_Solutions'))
+
 sweeper.save_results(Final_Results_Folder, Include_MFPs=True)
 
 Dp.DiagramPlots(Final_Results_Folder,params.Dict)

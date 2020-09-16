@@ -20,7 +20,8 @@ class HFA_Solver:
 		self.Itteration_limit = Itteration_limit
 		self.tol = tol
 		self.method = method
-		self.converged = True
+
+		self.sol_seq = np.zeros(shape=(Itteration_limit+1,len(Ham.MF_params)))
 
 		self.N_states = self.Energies.size #Bands x N
 		self.N_occ_states = int(Ham.Filling*self.N_states)
@@ -45,12 +46,15 @@ class HFA_Solver:
 		b = np.sum(self.sub_params,axis=1)
 		return a, b
 
-	def update_del(self,a,b):
+	def momentum_update(self,a,b):
+		return (1 - self.beta)*a + self.beta*b
+
+	def update_guess(self,a,b):
 		"""
 		allows for different possible updating methods
 		"""
 		if self.method == 'momentum':
-			self.Hamiltonian.MF_params = (1 - self.beta)*a + self.beta*b
+			self.Hamiltonian.MF_params = self.momentum_update(a,b)
 		else:
 			print('Error: Itteration Method not found')
 
@@ -65,7 +69,12 @@ class HFA_Solver:
 		self.Find_filling_lowest_energies()
 		# Calculate Mean Field Parameters with lowest energies
 		previous_MFP, New_MFP = self.Calculate_new_del()
-		self.update_del(previous_MFP, New_MFP)
+		self.update_guess(previous_MFP, New_MFP)
+		if self.count==0:
+			self.sol_seq[self.count] = previous_MFP
+		else:
+			self.sol_seq[self.count] = New_MFP
+
 		return previous_MFP, New_MFP
 
 	def Metal_or_insulator(self):
@@ -73,27 +82,36 @@ class HFA_Solver:
 
 
 	def Itterate(self, verbose = True):
-		digits = int(np.abs(np.log10(self.tol)))
+		self.count = 0
+		self.converged = True
 
+		digits = int(np.abs(np.log10(self.tol)))
 		a,b = self.Itteration_Step()
-		self.count = 1
+		self.sol_seq[1] = self.sol_seq[0]
 
 		if verbose == True:
 			print('Initial Mean Field parameters:',a.round(digits))
-			print('Itteration:  1  Mean Field parameters:', b.round(digits))
+			print('Itteration: ',self.count,' Mean Field parameters:', b.round(digits))
 
-		while np.sum(np.abs(a - b)) > self.tol:
-			self.count += 1
+		self.count += 1
+
+		a,b = self.Itteration_Step()
+		if verbose ==True:
+			print('Itteration: ',self.count,' Mean Field parameters:', b.round(digits))
+		self.count += 1
+
+		while np.sum(np.abs(b- self.momentum_update(self.sol_seq[self.count-1],self.sol_seq[self.count -2]))) > self.tol:
 			a,b = self.Itteration_Step()
 			if verbose ==True:
-				print('Itteration: ',count,' Mean Field parameters:', b.round(digits))
+				print('Itteration: ',self.count,' Mean Field parameters:', b.round(digits))
 			if self.count == self.Itteration_limit:
-				# print("\t \t \t Warning! Did not converge")
 				self.converged = False
 				break
+			self.count += 1
+				# print("\t \t \t Warning! Did not converge")
 
 		if verbose == True:
-			print('Final Mean Field parameter:', b.round(digits), '\nNumber of itteration steps:', count)
+			print('Final Mean Field parameter:', b.round(digits), '\nNumber of itteration steps:', self.count)
 
 		for i,ind in enumerate(self.indices):
 			self.occupied_energies[i] = self.Energies[ind]
