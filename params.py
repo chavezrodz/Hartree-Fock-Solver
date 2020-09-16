@@ -5,8 +5,8 @@ from Code.Utils.tuplelist import tuplelist
 ########### Model Params
 Model_Params = dict(
 N_Dim = 2,
-Nx = 50,
-Ny = 50,
+Nx = 5,
+Ny = 5,
 Filling = 0.25,
 mat_dim = 8,
 
@@ -41,7 +41,7 @@ params_list =[
 Dict ={ 0:'Charge Modulation',1:'Ferromagnetism', 2:'Orbital Disproportionation',3:'Anti Ferromagnetism',4:'antiferroorbital'}
 ########### Solver params
 beta = 0.500001 
-Itteration_limit = 150
+Itteration_limit = 25
 tolerance = 1e-3
 ########## Sweeper params
 verbose = True
