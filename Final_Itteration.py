@@ -59,4 +59,4 @@ DiagramPlots(Final_Results_Folder,Dict)
 
 print("Initial guess sweep and final calculations are consistent:",np.array_equal(Final_Energies, Optimal_Energy)) 
 
-print('time to complete (s):',round(time()-a,3),'Converged points:',sweeper.Convergence_pc,'%' '\n')
+print('time to complete (s):',round(time()-a,3),'Converged points:',round(sweeper.Convergence_pc,3),'%' '\n')

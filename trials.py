@@ -5,8 +5,6 @@ import os
 from Code.Solver.HFA_Solver import HFA_Solver
 from Code.Solver.PhaseDiagramSweeper import Phase_Diagram_Sweeper
 from Code.Nickelates.Hamiltonian import Hamiltonian
-# from Utils.tuplelist import *
-# from Code.Utils.tuplelist import tuplelistfrom Utils.DispersionRelation import *
 from time import time
 import params
 import argparse
@@ -53,4 +51,4 @@ if not os.path.exists(outfolder):
 
 sweeper.Sweep()
 sweeper.save_results(outfolder)
-print('\n Diagram itteration:',n, 'time to complete (s):',round(time()-a,3),'Converged points:',sweeper.Convergence_pc,'%' '\n')
+print('\n Diagram itteration:',n, 'time to complete (s):',round(time()-a,3),'Converged points:',round(sweeper.Convergence_pc,3),'%' '\n')

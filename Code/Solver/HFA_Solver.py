@@ -23,8 +23,10 @@ class HFA_Solver:
 
 		self.N_states = self.Energies.size #Bands x N
 		self.N_occ_states = int(Ham.Filling*self.N_states)
+		self.N_params = len(Ham.MF_params)
+		self.N_digits = int(np.abs(np.log10(self.tol)))
 		self.occupied_energies = np.zeros(self.N_occ_states)
-		self.sub_params = np.zeros((len(Ham.MF_params),self.N_occ_states))
+		self.sub_params = np.zeros((self.N_params,self.N_occ_states))
 
 	def Find_filling_lowest_energies(self):
 		Initial_shape = self.Energies.shape
@@ -44,19 +46,24 @@ class HFA_Solver:
 		a = np.sum(self.sub_params,axis=1)
 		return a, b
 
-	def momentum_update(self,a,b):
-		return (1 - self.beta)*b + self.beta*a
-
-	def update_guess(self,a,b):
-		"""
-		allows for different possible updating methods
-		"""
+	def update_method(self,a,b):
 		if self.method == 'momentum':
-			self.Hamiltonian.MF_params = self.momentum_update(a,b)
+			return (1 - self.beta)*b + self.beta*a
 		else:
 			print('Error: Itteration Method not found')
 
-	def Itteration_Step(self):
+	def Print_step(self,a,method=None):
+		if method==None:
+			print('Itteration:',self.count,' Mean Field parameters:', a.round(self.N_digits))
+			return
+		elif method=='Initial':
+			print('Initial Mean Field parameters:',a.round(self.N_digits))
+			return
+		elif method=='Final':
+			print('Final Mean Field parameter:', a.round(self.N_digits), 'Number of itteration steps:', self.count)
+			return
+
+	def Itteration_Step(self,verbose,save_seq):
 		# 	Calculate Dynamic Variables
 		self.Hamiltonian.update_variables()
 		# Solve Matrix Across all momenta
@@ -67,44 +74,45 @@ class HFA_Solver:
 		self.Find_filling_lowest_energies()
 		# Calculate Mean Field Parameters with lowest energies
 		New_MFP, previous_MFP = self.Calculate_new_del()
-		self.update_guess(New_MFP, previous_MFP)
+		# Update Guess
+		New_Guess = self.update_method(New_MFP, previous_MFP)
+		self.Hamiltonian.MF_params = New_Guess
+		# Logging
 		self.count += 1
-		return New_MFP, previous_MFP
+		if verbose:
+			self.Print_step(New_MFP)
+		if save_seq:
+			self.sol_seq[self.count] = New_MFP
+		return New_MFP, New_Guess
 
-	def Metal_or_insulator(self):
-		pass
-
-	def Itterate(self, verbose=True, save_seq=True):
+	def Itterate(self, verbose=True, save_seq=False):
 		self.count = 0
-		digits = int(np.abs(np.log10(self.tol)))
 		self.converged = True
 
-		a,b = self.Itteration_Step()
-		c = b
-		if save_seq:
-			self.sol_seq = np.zeros((self.Itteration_limit+1,len(c)))
-			self.sol_seq[0] = b
-			self.sol_seq[self.count] = a
+		c = self.Hamiltonian.MF_params
 		if verbose:
-			print('Initial Mean Field parameters:',b.round(digits))
-			print('Itteration: ',self.count,' Mean Field parameters:', a.round(digits))
+			self.Print_step(c,method='Initial')
+		if save_seq:
+			self.sol_seq = np.zeros((self.Itteration_limit+1,self.N_params))
+			self.sol_seq[0] = c
 
-		while np.sum(np.abs(a- self.momentum_update(b,c))) > self.tol:
+		a,b = self.Itteration_Step(verbose,save_seq)
+
+		while np.sum(np.abs(a-c)) > self.tol:
 			c = b
-			a,b = self.Itteration_Step()
-			if save_seq:
-				self.sol_seq[self.count] = a
-			if verbose:
-				print('Itteration: ',self.count,' Mean Field parameters:', a.round(digits))
+			a,b = self.Itteration_Step(verbose,save_seq)
 			if self.count >= self.Itteration_limit:
 				self.converged = False
 				break
 
 		if verbose:
-			print('Final Mean Field parameter:', a.round(digits), '\nNumber of itteration steps:', self.count)
+			self.Print_step(a,method='Final')
 
 		for i,ind in enumerate(self.indices):
 			self.occupied_energies[i] = self.Energies[ind]
 
 		self.total_occupied_energy =  np.sum(self.occupied_energies)
 		self.Fermi_Energy = np.max(self.occupied_energies)
+
+	def Metal_or_insulator(self):
+		pass
