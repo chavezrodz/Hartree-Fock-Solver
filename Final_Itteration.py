@@ -18,21 +18,6 @@ parser.add_argument('--n_threads', type=int, default = 8)
 args = parser.parse_args()
 n_threads = args.n_threads
 
-########### Model Params
-Model_Params = params.Model_Params
-Dict = params.Dict
-########### Diagram Ranges
-U_values = params.U_values
-J_values = params.J_values
-############ Guesses list
-params_list = params.params_list
-
-########### Solver params
-beta = params.beta 
-Itteration_limit = params.Itteration_limit 
-tolerance = params.tolerance
-########## Sweeper params
-verbose = params.verbose
 ########## Optimizer params
 Input_Folder = os.path.join(params.Results_Folder,'Guesses_Results')
 Final_Results_Folder = os.path.join(params.Results_Folder,'Final_Results')
@@ -43,19 +28,19 @@ if not os.path.exists(Final_Results_Folder):
  
 ########## Code
 a = time()
-Model = Hamiltonian(Model_Params, params_list[1])
-Solver = HFA_Solver(Model,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
-print("Model loaded")
-Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(Input_Folder, params_list)
-print("Optimizer loaded")
-sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,U_values,J_values,n_threads,verbose=True)
+Model = Hamiltonian(params.Model_Params)
+Solver = HFA_Solver(Model,beta=params.beta, Itteration_limit=params.Itteration_limit, tol=params.tolerance)
+
+Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(Input_Folder, params.params_list)
+
+sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,params.U_values,params.J_values,n_threads,verbose=params.verbose)
 
 sweeper.Sweep()
 sweeper.save_results(Final_Results_Folder,Include_MFPs=True)
 
 Final_Energies = sweeper.Es_trial
 
-DiagramPlots(Final_Results_Folder,Dict)
+DiagramPlots(Final_Results_Folder,params.Dict)
 
 print("Initial guess sweep and final calculations are consistent:",np.array_equal(Final_Energies, Optimal_Energy)) 
 
