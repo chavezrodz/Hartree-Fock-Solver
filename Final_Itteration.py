@@ -40,7 +40,7 @@ sweeper.save_results(Final_Results_Folder,Include_MFPs=True)
 
 Final_Energies = sweeper.Es_trial
 
-DiagramPlots(Final_Results_Folder,params.Dict)
+DiagramPlots(Final_Results_Folder,Model.Dict)
 
 print("Initial guess sweep and final calculations are consistent:",np.array_equal(Final_Energies, Optimal_Energy)) 
 
