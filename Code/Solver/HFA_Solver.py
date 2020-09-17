@@ -57,10 +57,10 @@ class HFA_Solver:
 			print('Itteration:',self.count,' Mean Field parameters:', a.round(self.N_digits))
 			return
 		elif method=='Initial':
-			print('Initial Mean Field parameters:',a.round(self.N_digits))
+			print('\nInitial Mean Field parameters:',a.round(self.N_digits))
 			return
 		elif method=='Final':
-			print('Final Mean Field parameter:', a.round(self.N_digits), 'Number of itteration steps:', self.count)
+			print('Final Mean Field parameter:', a.round(self.N_digits), 'Number of itteration steps:', self.count,'\n')
 			return
 
 	def Itteration_Step(self,verbose,save_seq):
@@ -98,7 +98,7 @@ class HFA_Solver:
 
 		a,b = self.Itteration_Step(verbose,save_seq)
 
-		while np.sum(np.abs(a-c)) > self.tol:
+		while LA.norm(a-c) > self.tol:
 			c = b
 			a,b = self.Itteration_Step(verbose,save_seq)
 			if self.count >= self.Itteration_limit:
@@ -116,4 +116,3 @@ class HFA_Solver:
 
 	def Metal_or_insulator(self):
 		pass
-

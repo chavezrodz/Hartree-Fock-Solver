@@ -16,7 +16,7 @@ Feed incomplete final results, itterates with nearest neighbours to try and fill
 
 ########## Command Line Arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--n_threads', type=int, default = 8)
+parser.add_argument('--n_threads', type=int, default=1)
 args = parser.parse_args()
 n_threads = args.n_threads
 

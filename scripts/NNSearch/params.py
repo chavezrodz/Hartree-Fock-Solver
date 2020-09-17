@@ -5,8 +5,8 @@ import Code.Utils.Read_MFPs as Read_MFPs
 ########### Model Params
 Model_Params = dict(
 N_Dim = 2,
-Nx = 25,
-Ny = 25,
+Nx = 75,
+Ny = 75,
 Filling = 0.25,
 mat_dim = 8,
 
@@ -23,13 +23,14 @@ J_values = np.linspace(0,3,30)
 Dict ={ 0:'Charge Modulation',1:'Ferromagnetism', 2:'Orbital Disproportionation',3:'Anti Ferromagnetism',4:'Antiferroorbital'}
 
 ########### Solver params
-beta=1
-Itteration_limit=5
+beta = 0.500001 
+Itteration_limit=10
 tol=1e-3
 
 ########## Sweeper params
 verbose = True
-Input_folder = os.path.join('Results','Run_sep_15','Final_Results')
+Input_folder = os.path.join('Results','Run_17_sept','Final_Results')
+# Input_folder = os.path.join('Results','Run_sep_15','Final_Results')
 
 MFP_Folder = os.path.join(Input_folder,'MF_Solutions')
 Initial_mpfs = Read_MFPs.Read_MFPs(MFP_Folder)
