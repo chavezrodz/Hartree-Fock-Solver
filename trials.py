@@ -15,6 +15,12 @@ parser.add_argument('--n_threads', type=int, default = 8)
 parser.add_argument('--trial_ind',type=int, default = 0)
 args = parser.parse_args()
 
+"""
+# Local test
+for i in range(len(params.params_list)):
+	args.trial_ind = i
+"""
+
 ############ Guesses Input
 params_list = params.params_list
 MF_params = np.array(params_list[args.trial_ind])
@@ -28,13 +34,14 @@ if not os.path.exists(outfolder):
 if not os.path.exists(os.path.join(params.Results_Folder,'logs')):
 	os.makedirs(os.path.join(params.Results_Folder,'logs'))
 
+
 ########## Code
 a = time()
 
 Model = Hamiltonian(params.Model_Params, MF_params)
-Solver = HFA_Solver(Model, beta=params.beta, Itteration_limit=params.Itteration_limit, tol=params.tolerance)
-sweeper = Phase_Diagram_Sweeper(Model,Solver,MF_params,params.U_values,params.J_values,args.n_threads,verbose=params.verbose)
+Solver = HFA_Solver(Model,method=params.method,alpha = params.alpha, beta= params.beta,gamma=params.gamma, Itteration_limit=params.Itteration_limit, tol=params.tolerance)
+sweeper = Phase_Diagram_Sweeper(Model,Solver,MF_params,params.U_values,params.J_values, n_threads=args.n_threads, verbose=params.verbose)
 
 sweeper.Sweep()
 sweeper.save_results(outfolder)
-print('\n Diagram itteration:',args.trial_ind, 'time to complete (s):',round(time()-a,3),'Converged points:',round(sweeper.Convergence_pc,3),'%' '\n')
+print('\nDiagram itteration:',args.trial_ind, 'time to complete (s):',round(time()-a,3),'Converged points:',round(sweeper.Convergence_pc,3),'%' '\n')

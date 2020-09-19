@@ -23,7 +23,7 @@ class Hamiltonian:
 
 	All itterations done in HFA solver.
 	"""
-	def __init__(self, Model_params, MF_params=[0,0,0,0,0]):
+	def __init__(self, Model_params, MF_params=np.array([0,0,0,0,0])):
 		#initiates Model parameters
 		for key, value in Model_params.items():
 			setattr(self, key, value)
@@ -32,11 +32,11 @@ class Hamiltonian:
 		self.MF_params = MF_params
 		self.N_cells = int(self.Nx*self.Ny)
 		self.N_shape = (self.Nx,self.Ny)
-		self.Dict ={ 0:'0 Charge Modulation',
-					 1:'1 Ferromagnetism',
-					 2:'2 Orbital Disproportionation',
-					 3:'3 Anti Ferromagnetism',
-					 4:'4 Anti Ferroorbital'}
+		self.Dict ={ 0:'Charge Modulation',
+					 1:'Ferromagnetism',
+					 2:'Orbital Disproportionation',
+					 3:'Anti Ferromagnetism',
+					 4:'Anti Ferroorbital'}
 
 		#Allowed Momentum Indices for itterator 
 		self.Qx,self.Qy = np.indices(self.N_shape,sparse=True) 

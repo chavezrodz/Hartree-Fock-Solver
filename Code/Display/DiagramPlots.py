@@ -39,5 +39,5 @@ def DiagramPlots(final_results_folder,Dict,transparent=False):
 	plt.ylabel('$J/t_{1}$')
 	plt.xticks(np.linspace(0, arr.shape[0], 4),np.arange(0,8,2))
 	plt.yticks(np.linspace(0, arr.shape[1], 4),np.arange(0,4,1))
-	plt.savefig(Plots_folder+'/Convergence_Grid.png',transparent=True)
+	plt.savefig(Plots_folder+'/Convergence_Grid.png',transparent=transparent)
 	plt.close()

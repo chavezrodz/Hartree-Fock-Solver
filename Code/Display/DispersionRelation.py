@@ -26,7 +26,6 @@ class  Dispersion_Relation():
 		plt.show()
 		plt.close()
 
-
 	def Dispersion_Relation(self):
 
 

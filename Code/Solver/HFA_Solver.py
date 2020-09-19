@@ -1,4 +1,5 @@
 import numpy as np
+import scipy.special as sp
 import matplotlib.pyplot as plt
 from numpy import linalg as LA
 import itertools
@@ -9,14 +10,16 @@ class HFA_Solver:
 	Model_params: Hamiltonian Parameters, must include Filling(float)
 	MFP_params: initial guesses for Mean Free Parameters
 	"""
-	def __init__(self, Ham, method='momentum', beta=0.7, Itteration_limit=50, tol=1e-3):
+	def __init__(self, Ham, method='momentum', alpha=100, beta=0.7,gamma=3, Itteration_limit=50, tol=1e-3):
 		self.Hamiltonian = Ham
 
 		self.Energies = np.zeros((*Ham.N_shape,Ham.mat_dim))
 		self.Eigenvectors = np.zeros((*Ham.N_shape,Ham.mat_dim,Ham.mat_dim),dtype=complex)
 		
 		# Itteration Method Params
+		self.alpha = alpha
 		self.beta = beta
+		self.gamma = gamma
 		self.Itteration_limit = Itteration_limit
 		self.tol = tol
 		self.method = method
@@ -46,12 +49,6 @@ class HFA_Solver:
 		a = np.sum(self.sub_params,axis=1)
 		return a, b
 
-	def update_method(self,a,b):
-		if self.method == 'momentum':
-			return (1 - self.beta)*b + self.beta*a
-		else:
-			print('Error: Itteration Method not found')
-
 	def Print_step(self,a,method=None):
 		if method==None:
 			print('Itteration:',self.count,' Mean Field parameters:', a.round(self.N_digits))
@@ -62,6 +59,22 @@ class HFA_Solver:
 		elif method=='Final':
 			print('Final Mean Field parameter:', a.round(self.N_digits), 'Number of itteration steps:', self.count,'\n')
 			return
+
+	def update_method(self,a,b):
+		if self.method == 'momentum':
+			return (1 - self.beta)*b + self.beta*a
+
+		elif self.method == 'exponential':
+			beta = np.exp(-self.count/self.alpha)
+			return (1 - beta)*b + beta*a
+
+		elif self.method == 'sigmoid':
+			beta = sp.expit(-self.count*self.gamma/self.Itteration_limit) 
+			return (1 - beta)*b + beta*a
+
+		else:
+			print('Error: Itteration Method not found')
+			
 
 	def Itteration_Step(self,verbose,save_seq):
 		# 	Calculate Dynamic Variables
@@ -82,10 +95,10 @@ class HFA_Solver:
 		if verbose:
 			self.Print_step(New_MFP)
 		if save_seq:
-			self.sol_seq[self.count] = New_MFP
+			self.sol_seq = np.vstack((self.sol_seq,New_MFP))
 		return New_MFP, New_Guess
 
-	def Itterate(self, verbose=True, save_seq=False):
+	def Itterate(self, verbose=True, save_seq=False,order=None):
 		self.count = 0
 		self.converged = True
 
@@ -93,12 +106,11 @@ class HFA_Solver:
 		if verbose:
 			self.Print_step(c,method='Initial')
 		if save_seq:
-			self.sol_seq = np.zeros((self.Itteration_limit+1,self.N_params))
-			self.sol_seq[0] = c
+			self.sol_seq = c
 
 		a,b = self.Itteration_Step(verbose,save_seq)
 
-		while LA.norm(a-c) > self.tol:
+		while LA.norm(a-c,ord=order) > self.tol:
 			c = b
 			a,b = self.Itteration_Step(verbose,save_seq)
 			if self.count >= self.Itteration_limit:

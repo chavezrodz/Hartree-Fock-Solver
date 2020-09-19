@@ -16,7 +16,7 @@ Feed incomplete final results, itterates with nearest neighbours to try and fill
 
 ########## Command Line Arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--n_threads', type=int, default=1)
+parser.add_argument('--n_threads', type=int, default=8)
 args = parser.parse_args()
 n_threads = args.n_threads
 
@@ -38,8 +38,8 @@ sweeper.Sweep()
 new_convergence = sweeper.Convergence_pc
 print('old_convergence:',old_convergence,'new_convergence:',new_convergence)
 # 4 recompute, Do not save intermediary steps, only keep going as convergence increases
-while new_convergence > old_convergence:
-# for i in range(2):
+# while new_convergence > old_convergence:
+for i in range(3):
 	old_convergence = new_convergence
 	optimal_guesses = ot.Optimizer_touchup(sweeper.Final_params,sweeper.Convergence_Grid)
 	sweeper.Initial_params = optimal_guesses
@@ -56,6 +56,12 @@ if not os.path.exists(Final_Results_Folder):
 
 sweeper.save_results(Final_Results_Folder, Include_MFPs=True)
 
-Dp.DiagramPlots(Final_Results_Folder,params.Dict)
+Dp.DiagramPlots(Final_Results_Folder,Model.Dict)
 
 print('time to complete (s):',round(time()-a,3),'\n')
+
+"""
+Initial convergence 97.88888888888889
+old_convergence: 97.88888888888889 new_convergence: 97.55555555555556
+old_convergence: 97.55555555555556 new_convergence: 97.55555555555556
+"""

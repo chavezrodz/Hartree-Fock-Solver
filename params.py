@@ -1,7 +1,6 @@
 import os
 import numpy as np
 from Code.Utils.tuplelist import tuplelist
-
 ########### Model Params
 Model_Params = dict(
 N_Dim = 2,
@@ -39,9 +38,13 @@ params_list =[
 ]
 
 ########### Solver params
-beta = 0.500001 
-Itteration_limit = 150
+alpha = 100
+beta = 0.500001
+gamma = 3
+Itteration_limit = 250
 tolerance = 1e-3
+method ='sigmoid'
+
 ########## Sweeper params
 verbose = True
 Results_Folder = "Results"
