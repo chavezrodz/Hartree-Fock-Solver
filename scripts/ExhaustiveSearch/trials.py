@@ -39,7 +39,7 @@ if not os.path.exists(os.path.join(params.Results_Folder,'logs')):
 a = time()
 
 Model = Hamiltonian(params.Model_Params, MF_params)
-Solver = HFA_Solver(Model,method=params.method,alpha = params.alpha, beta= params.beta,gamma=params.gamma, Itteration_limit=params.Itteration_limit, tol=params.tolerance)
+Solver = HFA_Solver(Model,method=params.method,beta= params.beta, Itteration_limit=params.Itteration_limit, tol=params.tolerance)
 sweeper = Phase_Diagram_Sweeper(Model,Solver,MF_params,params.U_values,params.J_values, n_threads=args.n_threads, verbose=params.verbose)
 
 sweeper.Sweep()

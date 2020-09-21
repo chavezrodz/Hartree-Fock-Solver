@@ -5,8 +5,8 @@ import Code.Utils.Read_MFPs as Read_MFPs
 ########### Model Params
 Model_Params = dict(
 N_Dim = 2,
-Nx = 50,
-Ny = 50,
+Nx = 5,
+Ny = 5,
 Filling = 0.25,
 mat_dim = 8,
 

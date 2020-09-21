@@ -14,7 +14,14 @@ import argparse
 Feed incomplete final results, itterates with nearest neighbours to try and fill the gaps
 """
 
-########## Command Line Arguments
+class NN_Searcher:
+
+	def __init__(self,Model,Solver,Sweeper):
+		self.Model = Model
+		self.Solver = Solver
+		self.Sweeper = Sweeper
+
+########## Cd Line Arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--n_threads', type=int, default=8)
 args = parser.parse_args()
@@ -59,9 +66,3 @@ sweeper.save_results(Final_Results_Folder, Include_MFPs=True)
 Dp.DiagramPlots(Final_Results_Folder,Model.Dict)
 
 print('time to complete (s):',round(time()-a,3),'\n')
-
-"""
-Initial convergence 97.88888888888889
-old_convergence: 97.88888888888889 new_convergence: 97.55555555555556
-old_convergence: 97.55555555555556 new_convergence: 97.55555555555556
-"""
