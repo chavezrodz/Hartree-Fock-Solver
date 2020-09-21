@@ -29,7 +29,7 @@ if not os.path.exists(Final_Results_Folder):
 ########## Code
 a = time()
 Model = Hamiltonian(params.Model_Params)
-Solver = HFA_Solver(Model,method=params.method,alpha = params.alpha, beta= params.beta,gamma=params.gamma, Itteration_limit=params.Itteration_limit, tol=params.tolerance)
+Solver = HFA_Solver(Model,method=params.method, beta= params.beta, Itteration_limit=params.Itteration_limit, tol=params.tolerance)
 
 Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(Input_Folder, params.params_list)
 

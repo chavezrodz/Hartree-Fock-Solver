@@ -10,19 +10,18 @@ class HFA_Solver:
 	Model_params: Hamiltonian Parameters, must include Filling(float)
 	MFP_params: initial guesses for Mean Free Parameters
 	"""
-	def __init__(self, Ham, method='momentum', alpha=100, beta=0.7,gamma=3, Itteration_limit=50, tol=1e-3):
+	def __init__(self, Ham, method='momentum', beta=0.7, Itteration_limit=50, tol=1e-3,save_seq=False):
 		self.Hamiltonian = Ham
 
 		self.Energies = np.zeros((*Ham.N_shape,Ham.mat_dim))
 		self.Eigenvectors = np.zeros((*Ham.N_shape,Ham.mat_dim,Ham.mat_dim),dtype=complex)
 		
 		# Itteration Method Params
-		self.alpha = alpha
 		self.beta = beta
-		self.gamma = gamma
 		self.Itteration_limit = Itteration_limit
 		self.tol = tol
 		self.method = method
+		self.save_seq = save_seq
 
 		self.N_states = self.Energies.size #Bands x N
 		self.N_occ_states = int(Ham.Filling*self.N_states)
@@ -60,23 +59,51 @@ class HFA_Solver:
 			print('Final Mean Field parameter:', a.round(self.N_digits), 'Number of itteration steps:', self.count,'\n')
 			return
 
-	def update_method(self,a,b):
+	def update_guess(self,a,b):
+		"""
+		beta is a measure of how fast the mixing goes to zero,
+		static for momentum.
+		usual values are ~0.5 for exponential, ~3 for sigmoid
+
+		"""
 		if self.method == 'momentum':
-			return (1 - self.beta)*b + self.beta*a
+			beta = self.beta
 
 		elif self.method == 'exponential':
-			beta = np.exp(-self.count/self.alpha)
-			return (1 - beta)*b + beta*a
+			beta = np.exp(-self.count*self.beta)
 
 		elif self.method == 'sigmoid':
-			beta = sp.expit(-self.count*self.gamma/self.Itteration_limit) 
-			return (1 - beta)*b + beta*a
+			beta = sp.expit(-self.count*self.beta/self.Itteration_limit) 
 
+		elif self.method == 'decaying':
+			beta = 1/(1 + self.beta)**self.count
+
+		elif self.method == 'decaying fast':
+			beta = 1/(1 + self.beta*self.count)**self.count
+
+		elif self.method == 'sinusoidal':
+			beta = np.cos(2*np.pi*self.count*self.beta/self.Itteration_limit)
+
+		elif self.method == 'decaying sinusoidal':
+			beta = np.exp(-self.count/self.Itteration_limit)*np.cos(2*np.pi*self.count/self.Itteration_limit)
 		else:
 			print('Error: Itteration Method not found')
+
+		if self.count == 0:
+			beta = 0
+			self.beta_seq = beta
+		elif self.count >= 0.7*self.Itteration_limit and self.count % int(self.Itteration_limit/10) == 0:
+			beta = 0.5
+		elif self.count == int(0.9*self.Itteration_limit):
+			beta = 1
+
+		if self.save_seq:
+			self.beta_seq = np.vstack((self.beta_seq,beta))
+
+		return (1 - beta)*b + beta*a
 			
 
-	def Itteration_Step(self,verbose,save_seq):
+	def Itteration_Step(self,verbose):
 		# 	Calculate Dynamic Variables
 		self.Hamiltonian.update_variables()
 		# Solve Matrix Across all momenta
@@ -88,31 +115,31 @@ class HFA_Solver:
 		# Calculate Mean Field Parameters with lowest energies
 		New_MFP, previous_MFP = self.Calculate_new_del()
 		# Update Guess
-		New_Guess = self.update_method(New_MFP, previous_MFP)
+		New_Guess = self.update_guess(New_MFP, previous_MFP)
 		self.Hamiltonian.MF_params = New_Guess
 		# Logging
 		self.count += 1
 		if verbose:
 			self.Print_step(New_MFP)
-		if save_seq:
+		if self.save_seq:
 			self.sol_seq = np.vstack((self.sol_seq,New_MFP))
 		return New_MFP, New_Guess
 
-	def Itterate(self, verbose=True, save_seq=False,order=None):
+	def Itterate(self, verbose=True, save_seq=False, order=None):
 		self.count = 0
 		self.converged = True
 
 		c = self.Hamiltonian.MF_params
 		if verbose:
 			self.Print_step(c,method='Initial')
-		if save_seq:
+		if self.save_seq:
 			self.sol_seq = c
 
-		a,b = self.Itteration_Step(verbose,save_seq)
+		a,b = self.Itteration_Step(verbose)
 
 		while LA.norm(a-c,ord=order) > self.tol:
 			c = b
-			a,b = self.Itteration_Step(verbose,save_seq)
+			a,b = self.Itteration_Step(verbose)
 			if self.count >= self.Itteration_limit:
 				self.converged = False
 				break

@@ -10,10 +10,14 @@ import os
 
 
 def Display_sequence(Solver):
+	fig, axs = plt.subplots(2)
+	fig.suptitle('Converged:'+str(Solver.converged))
 	for i in range(Solver.N_params):
-		plt.plot(np.arange(Solver.sol_seq.shape[0]),Solver.sol_seq[:,i],label=Solver.Hamiltonian.Dict[i])
-	plt.title('Converged:'+str(Solver.converged))
+		axs[0].plot(np.arange(Solver.sol_seq.shape[0]),Solver.sol_seq[:,i],label=Solver.Hamiltonian.Dict[i])
+	axs[0].set_title('Mean Field Parameters')
+	axs[0].legend()
+	
+	axs[1].plot(np.arange(len(Solver.beta_seq)),Solver.beta_seq)
+	axs[1].set_title('Pullay Mixing Factor')
 	plt.xlabel('Itteration')
-	plt.ylabel('Parameter Value$')
-	plt.legend()
 	plt.show()
