@@ -4,8 +4,8 @@ from Code.Utils.tuplelist import tuplelist
 ########### Model Params
 Model_Params = dict(
 N_Dim = 2,
-Nx = 50,
-Ny = 50,
+Nx = 5,
+Ny = 5,
 Filling = 0.25,
 mat_dim = 8,
 
@@ -38,12 +38,10 @@ params_list =[
 ]
 
 ########### Solver params
-alpha = 100
-beta = 0.500001
-gamma = 3
+method ='sigmoid'
+beta = 3
 Itteration_limit = 250
 tolerance = 1e-3
-method ='sigmoid'
 
 ########## Sweeper params
 verbose = True

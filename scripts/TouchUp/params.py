@@ -21,19 +21,12 @@ U_values = np.linspace(0,6,30)
 J_values = np.linspace(0,3,30)
 
 ########### Solver params
-alpha = 100
-beta = 0.500001 
-gamma = 3
-Itteration_limit = 50
+beta = 3
+Itteration_limit = 100
 tolerance = 1e-3
 method = 'sigmoid'
 ########## Sweeper params
 verbose = True
  
-Input_folder = os.path.join('Results','Run_17_sept_2')
+Input_folder = os.path.join('Results','Run_sep_20')
 # Input_folder = os.path.join('Results','Run_sep_15','Final_Results')
-
-MFP_Folder = os.path.join(Input_folder,'MF_Solutions')
-Initial_mpfs = Read_MFPs.Read_MFPs(MFP_Folder)
-
-Results_Folder = "Results/TestTouchup"

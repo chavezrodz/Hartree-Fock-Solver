@@ -35,7 +35,6 @@ def spin_array_interpreter(MFPs):
 	shape = MFPs.shape
 	Full_phase = np.zeros((shape[0],shape[1]))
 
-	vectorize =np.vectorize(spin_interpreter)
 	for v in itertools.product(np.arange(shape[0]),np.arange(shape[1])):
 		Full_phase[v] = spin_interpreter(MFPs[v])
 
@@ -75,6 +74,11 @@ def orbit_array_interpreter(MFPs):
 	return Full_phase
 
 
+from Code.Utils.Read_MFPs import Read_MFPs
+
+MF = Read_MFPs(os.path.join('Results','Run_sep_20','Final_Results','MF_Solutions'))
+
+
 # Loading
 CM = MF[:,:,0]
 OD = MF[:,:,2]
@@ -92,12 +96,20 @@ plt.yticks(np.linspace(0, MF.shape[1], 4),np.arange(0,4,1))
 CS = ax.contour(CM.T,colors='red',levels=[0.1,0.3,0.5])
 ax.clabel(CS, inline=True, fontsize=10)
 
+
 # Magnetization
 MF_Spin = np.zeros((30,30,2))
 MF_Spin[:,:,0]= np.abs(SFM)
 MF_Spin[:,:,1]= np.abs(SAFM)
 
 mag = ax.pcolormesh(spin_array_interpreter(MF_Spin).T)
+
+z = OD
+zm = np.ma.masked_less(z, 0.5)
+
+# cm = plt.pcolormesh(z)
+ax.pcolor(zm, hatch='/', alpha=0.5)
+# plt.colorbar(cm)
 ep.draw_legend(mag,
     titles=[r'$0 0$', r'$\uparrow 0$', r'$\uparrow \downarrow$', r'$\uparrow \uparrow$'],
     classes=[0, 1, 2, 3])
