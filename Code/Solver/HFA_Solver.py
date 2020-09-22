@@ -35,7 +35,7 @@ class HFA_Solver:
 		k = self.N_occ_states
 		Ec = self.Energies.flatten()
 		indices = np.argpartition(Ec,k)[:k]
-		indices = np.unravel_index(indices,shape = Initial_shape)
+		indices = np.unravel_index(indices, shape=Initial_shape)
 		self.indices_array = indices
 		indices = np.transpose(np.stack(indices))
 		self.indices = list(map(tuple,indices))
@@ -91,17 +91,12 @@ class HFA_Solver:
 
 		if self.count == 0:
 			beta = 0
-			self.beta_seq = beta
 		elif self.count >= 0.7*self.Itteration_limit and self.count % int(self.Itteration_limit/10) == 0:
 			beta = 0.5
 		elif self.count == int(0.9*self.Itteration_limit):
 			beta = 1
 
-		if self.save_seq:
-			self.beta_seq = np.vstack((self.beta_seq,beta))
-
-		return (1 - beta)*b + beta*a
-			
+		return (1 - beta)*b + beta*a, beta
 
 	def Itteration_Step(self,verbose):
 		# 	Calculate Dynamic Variables
@@ -114,15 +109,18 @@ class HFA_Solver:
 		self.Find_filling_lowest_energies()
 		# Calculate Mean Field Parameters with lowest energies
 		New_MFP, previous_MFP = self.Calculate_new_del()
+
 		# Update Guess
-		New_Guess = self.update_guess(New_MFP, previous_MFP)
+		New_Guess, beta = self.update_guess(New_MFP, previous_MFP)
 		self.Hamiltonian.MF_params = New_Guess
+
 		# Logging
+		if self.save_seq:
+			self.beta_seq.append(beta)
+			self.sol_seq.append(New_MFP)
 		self.count += 1
 		if verbose:
 			self.Print_step(New_MFP)
-		if self.save_seq:
-			self.sol_seq = np.vstack((self.sol_seq,New_MFP))
 		return New_MFP, New_Guess
 
 	def Itterate(self, verbose=True, save_seq=False, order=None):
@@ -132,8 +130,10 @@ class HFA_Solver:
 		c = self.Hamiltonian.MF_params
 		if verbose:
 			self.Print_step(c,method='Initial')
+
 		if self.save_seq:
-			self.sol_seq = c
+			self.sol_seq = []
+			self.beta_seq = []
 
 		a,b = self.Itteration_Step(verbose)
 
@@ -144,6 +144,10 @@ class HFA_Solver:
 				self.converged = False
 				break
 
+		if self.save_seq:
+			self.sol_seq = np.vstack(self.sol_seq)
+			self.beta_seq = np.vstack(self.beta_seq)
+
 		if verbose:
 			self.Print_step(a,method='Final')
 
@@ -152,6 +156,7 @@ class HFA_Solver:
 
 		self.total_occupied_energy =  np.sum(self.occupied_energies)
 		self.Fermi_Energy = np.max(self.occupied_energies)
+		self.Energies = np.sort(self.Energies)
 
 	def Metal_or_insulator(self):
 		pass

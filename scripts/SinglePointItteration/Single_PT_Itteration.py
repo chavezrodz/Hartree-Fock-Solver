@@ -1,17 +1,17 @@
+from time import time
 import numpy as np
 import itertools
 import sys
 import os
 from Code.Solver.HFA_Solver import HFA_Solver
 from Code.Nickelates.Hamiltonian import Hamiltonian
-import matplotlib.pyplot as plt
-from time import time
 from Code.Display.Display_sequence import Display_sequence
+import Code.Display.DispersionRelation as DR
 
 Model_Params = dict(
 N_Dim = 2,
-Nx = 50,
-Ny = 50,
+Nx = 25,
+Ny = 25,
 Filling = 0.25,
 mat_dim = 8,
 
@@ -39,8 +39,10 @@ MF_params =np.array([ 0.759 , 0.759 ,-0.082 , 0.682 , 0.089])
 
 Model = Hamiltonian(Model_Params,MF_params)
 
-Solver = HFA_Solver(Model,method='sigmoid', beta=0.5, Itteration_limit=200, tol=1e-3,save_seq=True)
+Solver = HFA_Solver(Model,method='sigmoid', beta=1, Itteration_limit=50, tol=1e-3,save_seq=True)
 
 Solver.Itterate(verbose=True)
 
 Display_sequence(Solver)
+# DR.DispersionRelation(Solver)
+# DR.DOS(Solver)

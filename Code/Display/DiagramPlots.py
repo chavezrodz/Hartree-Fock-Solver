@@ -8,7 +8,6 @@ import os
 
 # Input arrays of two parameters and phase
 
-
 def DiagramPlots(final_results_folder,Dict,transparent=False):
 	Solutions_folder = os.path.join(final_results_folder,'MF_Solutions')
 	if not os.path.exists(Solutions_folder):

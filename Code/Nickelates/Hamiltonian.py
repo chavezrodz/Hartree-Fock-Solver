@@ -41,6 +41,7 @@ class Hamiltonian:
 		#Allowed Momentum Indices for itterator 
 		self.Qx,self.Qy = np.indices(self.N_shape,sparse=True) 
 		self.Qx,self.Qy = self.Qx.flatten(),self.Qy.flatten()
+
 		# Allowed Momentum Values
 		self.Qxv = self.Qx*np.pi/self.Nx - np.pi/2
 		self.Qyv = self.Qy*np.pi/self.Ny - np.pi/2

@@ -2,52 +2,39 @@ from matplotlib.colors import LogNorm
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import scipy.interpolate
-from time import time
 import numpy as np
-from Code.HFA_Solver import *
-from Utils.tuplelist import *
+import itertools
 
-class  Dispersion_Relation():
+import seaborn as sns
+sns.set_theme()
+sns.set_context("paper")
 
-	def __init__(self,Model, Solver):
-		self.Model = Model
-		self.Sol = Solver
-	
-		self.Fermi_Energy = Sol.Fermi_Energy
-		self.Energies = np.sort(Sol.Energies)
-
-	def Density_of_States(self):
-
-		plt.hist(self.Energies.flatten(),bins='auto')
-		plt.title('Density of states')
-		plt.axvline(self.Fermi_Energy, label='Fermi Energy',color='red')
-		plt.xlabel('Energy (Ev)')
-		plt.legend()
-		plt.show()
-		plt.close()
-
-	def Dispersion_Relation(self):
-
+def DispersionRelation(Solver,x=0,y=1):
+		mat_dim = Solver.Hamiltonian.mat_dim
+		Energies = Solver.Energies
+		Qx = Solver.Hamiltonian.Qx
+		Qy = Solver.Hamiltonian.Qy
+		Qxv = Solver.Hamiltonian.Qxv
+		Qyv = Solver.Hamiltonian.Qyv
 
 		fig = plt.figure()
 		ax = fig.add_subplot(111, projection='3d')
-
-		for b in range(self.Model.mat_dim):
-			Q = itertools.product(self.Model.Qx,self.Model.Qy)
+		for b in range(mat_dim):
+			Q = itertools.product(Qx,Qy)
 			qxs=[]
 			qys=[]
 			zs=[]
 			
 			for q in Q:
-				qxs.append(q[0]*np.pi/Model.Nx - np.pi/2)
-				qys.append(q[1]*np.pi/Model.Ny - np.pi/2)
+				qxs.append(Qxv[q[0]])
+				qys.append(Qyv[q[1]])
 				zs.append(Energies[q][b])
 			
 			ax.scatter(qxs, qys, zs,label='Band '+str(b+1))
 			
-		xx, yy = np.meshgrid(np.arange(self.Model.Nx)*np.pi/self.Model.Nx - np.pi/2, np.arange(self.Model.Ny)*np.pi/self.Model.Ny - np.pi/2)
+		xx, yy = np.meshgrid(Qxv, Qyv)
 		z = np.ones(xx.shape)
-		z = z*self.Fermi_Energy
+		z = z*Solver.Fermi_Energy
 		ax.plot_surface(xx, yy,z, alpha=1)
 
 		ax.set_xlabel('$K_x$  ($\pi/a$)')
@@ -56,5 +43,14 @@ class  Dispersion_Relation():
 
 		handles, labels = ax.get_legend_handles_labels()
 		ax.legend(reversed(handles), reversed(labels))
+		plt.show()
+		plt.close()
+
+def DOS(Solver):
+		plt.hist(Solver.Energies.flatten(),bins='auto')
+		plt.title('Density of states')
+		plt.axvline(Solver.Fermi_Energy, label='Fermi Energy',color='red')
+		plt.xlabel('Energy (Ev)')
+		plt.legend()
 		plt.show()
 		plt.close()
