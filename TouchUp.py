@@ -36,11 +36,11 @@ a = time()
 Model = Hamiltonian(params.Model_Params)
 Solver = HFA_Solver(Model,method=params.method,beta= params.beta, Itteration_limit=params.Itteration_limit, tol=params.tolerance)
 
-sweeper = Phase_Diagram_Sweeper(Model,Solver,Initial_mpfs,params.U_values,params.J_values,n_threads,verbose=params.verbose)
+sweeper = Phase_Diagram_Sweeper(Model,Solver,Initial_mpfs,params.i,params.i_values,params.j,params.j_values,n_threads,verbose=params.verbose)
 
 sweeper.Sweep()
 sweeper.save_results(Results_Folder,Include_MFPs=True)
 
-DiagramPlots(Results_Folder,Model.Dict)
+DiagramPlots(params.i,params.j,Results_Folder,Model.Dict)
 
 print('time to complete (s):',round(time()-a,3),'Converged points:',round(sweeper.Convergence_pc,3),'%' '\n')

@@ -12,20 +12,23 @@ class Phase_Diagram_Sweeper():
 	"""
 	"""
 
-	def __init__(self, Model, Solver, Initial_params, U_values, J_values, n_threads=8,verbose = False):
+	def __init__(self, Model, Solver, Initial_params, i, i_values, j, j_values, n_threads=8,verbose = False):
 		self.Model = Model
 		self.Solver = Solver
 		
 		self.n_threads = n_threads
 		self.verbose = verbose
 
-		self.U_values = U_values
-		self.J_values = J_values
+		self.i = i
+		self.j = j
 
-		self.Diag_shape = (len(U_values),len(J_values))
+		self.i_values = i_values
+		self.j_values = j_values
 
-		self.U_idx,self.J_idx = np.indices(self.Diag_shape,sparse=True)
-		self.U_idx,self.J_idx = self.U_idx.flatten(),self.J_idx.flatten()
+		self.Diag_shape = (len(i_values),len(i_values))
+
+		self.i_idx,self.j_idx = np.indices(self.Diag_shape,sparse=True)
+		self.i_idx,self.j_idx = self.i_idx.flatten(),self.j_idx.flatten()
 		
 		if Initial_params.ndim == 1:
 			self.Initial_params = np.zeros((*self.Diag_shape,len(Model.MF_params)))
@@ -40,8 +43,9 @@ class Phase_Diagram_Sweeper():
 	def Phase_Diagram_point(self,v):
 		Model = self.Model
 		Sol = self.Solver
+		setattr(Model, self.i, self.i_values[v[0]])
+		setattr(Model, self.j, self.j_values[v[1]])
 
-		Model.U, Model.J = self.U_values[v[0]],self.J_values[v[1]]
 		Model.MF_params = self.Initial_params[v]
 
 		Sol.Itterate(verbose=False)
@@ -55,21 +59,21 @@ class Phase_Diagram_Sweeper():
 
 		if self.verbose:
 			if Sol.converged:
-				print('U:',round(Model.U,2),'J:', round(Model.J,2),'Initial MFP:',np.round(self.Initial_params[v],3), 'Final MFP:',np.round(Model.MF_params,3), 'Converged in :',Sol.count,'steps')
+				print(self.i,round(getattr(Model,self.i),2),self.j, round(getattr(Model,self.j),2),'Initial MFP:',np.round(self.Initial_params[v],3), 'Final MFP:',np.round(Model.MF_params,3), 'Converged in :',Sol.count,'steps')
 			else:
-				print('U:',round(Model.U,2),'J:', round(Model.J,2),'Initial MFP:',np.round(self.Initial_params[v],3), 'Did Not Converge')
+				print(self.i,round(getattr(Model,self.i),2),self.j, round(getattr(Model,self.j),2),'Initial MFP:',np.round(self.Initial_params[v],3), 'Did Not Converge')
 
 		return Model.Final_Total_Energy, Model.MF_params, Sol.converged
 
 	def Sweep(self):
 
 		# MP way
-		PD_grid = itertools.product(self.U_idx,self.J_idx)
+		PD_grid = itertools.product(self.i_idx,self.j_idx)
 		with Pool(self.n_threads) as p:
 			results = p.map(self.Phase_Diagram_point, PD_grid)
 
 		# Energies results list to array to csv
-		PD_grid = itertools.product(self.U_idx,self.J_idx)
+		PD_grid = itertools.product(self.i_idx,self.j_idx)
 		for i,v in enumerate(PD_grid):
 			self.Es_trial[v] = results[i][0]
 			self.Final_params[v] = results[i][1]

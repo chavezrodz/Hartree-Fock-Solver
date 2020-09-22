@@ -8,7 +8,7 @@ import os
 
 # Input arrays of two parameters and phase
 
-def DiagramPlots(final_results_folder,Dict,transparent=False):
+def DiagramPlots(i_label,j_label,final_results_folder,Dict,transparent=False):
 	Solutions_folder = os.path.join(final_results_folder,'MF_Solutions')
 	if not os.path.exists(Solutions_folder):
 		print('Solutions not found')
@@ -24,8 +24,10 @@ def DiagramPlots(final_results_folder,Dict,transparent=False):
 		arr = np.abs(MF[:,:].T)
 		plt.pcolormesh(arr)
 		plt.title(Dict[i])
-		plt.xlabel('$U/t_{1}$')
-		plt.ylabel('$J/t_{1}$')
+		# plt.xlabel('$U/t_{1}$')
+		# plt.ylabel('$J/t_{1}$')
+		plt.xlabel(i_label)
+		plt.ylabel(j_label)
 		plt.xticks(np.linspace(0, arr.shape[0], 4),np.arange(0,8,2))
 		plt.yticks(np.linspace(0, arr.shape[1], 4),np.arange(0,4,1))	
 		plt.colorbar()
@@ -34,8 +36,8 @@ def DiagramPlots(final_results_folder,Dict,transparent=False):
 
 	plt.title('Convergence Grid')
 	plt.pcolormesh(np.loadtxt(final_results_folder+'/Convergence_Grid.csv',delimiter=',').T,cmap='gray')
-	plt.xlabel('$U/t_{1}$')
-	plt.ylabel('$J/t_{1}$')
+	plt.xlabel(i_label)
+	plt.ylabel(j_label)
 	plt.xticks(np.linspace(0, arr.shape[0], 4),np.arange(0,8,2))
 	plt.yticks(np.linspace(0, arr.shape[1], 4),np.arange(0,4,1))
 	plt.savefig(Plots_folder+'/Convergence_Grid.png',transparent=transparent)
