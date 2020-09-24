@@ -86,6 +86,8 @@ class Phase_Diagram_Sweeper():
 		np.savetxt(os.path.join(outfolder,'Energies.csv'),self.Es_trial,delimiter=',')
 		np.savetxt(os.path.join(outfolder,'Convergence_Grid.csv'),self.Convergence_Grid,delimiter=',')
 		if Include_MFPs:
+			if not os.path.exists(os.path.join(outfolder,'MF_Solutions')):
+				os.makedirs(os.path.join(outfolder,'MF_Solutions'))
 			for i in range(self.Initial_params.shape[2]):
 				outfile = os.path.join(outfolder,'MF_Solutions','MF'+str(i)+'.csv')
 				np.savetxt(outfile,self.Final_params[:,:,i],delimiter=",")

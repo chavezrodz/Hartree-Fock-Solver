@@ -8,6 +8,7 @@ from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Solver.Optimizer_exhaustive import Optimizer_exhaustive
 from Code.Utils.tuplelist import tuplelist
 from Code.Display.DiagramPlots import DiagramPlots
+import Code.Utils.Read_MFPs as rm
 from time import time
 import argparse
 import params
@@ -24,24 +25,23 @@ Final_Results_Folder = os.path.join(params.Results_Folder,'Final_Results')
 
 if not os.path.exists(Final_Results_Folder):
     os.makedirs(Final_Results_Folder)
-    os.makedirs(os.path.join(Final_Results_Folder,'MF_Solutions'))
  
 ########## Code
 a = time()
 Model = Hamiltonian(params.Model_Params)
 Solver = HFA_Solver(Model,method=params.method, beta= params.beta, Itteration_limit=params.Itteration_limit, tol=params.tolerance)
 
-Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(Input_Folder, params.params_list)
+Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(Input_Folder, params.params_list,input_MFP=params.save_guess_mfps)
 
-sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,params.U_values,params.J_values,n_threads,verbose=params.verbose)
+sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,params.i,params.i_values,params.j,params.j_values,n_threads,verbose=params.verbose)
 
 sweeper.Sweep()
 sweeper.save_results(Final_Results_Folder,Include_MFPs=True)
 
 Final_Energies = sweeper.Es_trial
 
-DiagramPlots(Final_Results_Folder,Model.Dict)
+DiagramPlots(params.i,params.j,Final_Results_Folder,Model.Dict)
 
-print("Initial guess sweep and final calculations are consistent:",np.array_equal(Final_Energies, Optimal_Energy)) 
+print("Initial guess sweep and final calculations are consistent:",np.array_equal(Final_Energies, Optimal_Energy))
 
 print('time to complete (s):',round(time()-a,3),'Converged points:',round(sweeper.Convergence_pc,3),'%' '\n')

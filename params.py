@@ -1,11 +1,11 @@
 import os
 import numpy as np
-import Code.Utils.Read_MFPs as Read_MFPs
+from Code.Utils.tuplelist import tuplelist
 ########### Model Params
 Model_Params = dict(
 N_Dim = 2,
-Nx = 2,
-Ny = 2,
+Nx = 5,
+Ny = 5,
 Filling = 0.25,
 mat_dim = 8,
 
@@ -17,18 +17,34 @@ U = 1,
 J = 1)
 
 ############ Diagram Ranges
-i = 'U'
-j = 'eps'
-i_values = np.linspace(0,6,30)
-j_values = np.linspace(0,3,30)
+i,j = 'U','J'
+i_values = np.linspace(0,6,4)
+j_values = np.linspace(0,3,4)
+############ Guess ranges
+deltas = np.linspace(0,1,2)
+sfm    = np.linspace(0,1,2)
+Deltas_FO = np.linspace(0,1,2)
+safm   = np.linspace(0,1,2)
+Deltas_AFO = np.linspace(0,1,2)
+params_list = tuplelist([deltas,sfm,Deltas_FO,safm,Deltas_AFO])
+"""
+params_list =[
+(1,1,0,1,0.15),
+(1,0.5,0,1,0.15),
+(0,0.2,0.5,0,0),
+(0.1,0.5,1,0.5,0.1),
+(0.5,0.5,0,0.5,0.1),
+(0.5,0.5,0.5,0.5,0.5)
+]
+"""
 
 ########### Solver params
-beta = 1
+method ='sigmoid'
+beta = 3
 Itteration_limit = 50
 tolerance = 1e-3
-method = 'sigmoid'
+
 ########## Sweeper params
-verbose = True
- 
-Input_folder = os.path.join('Results','Run_sep_20')
-# Input_folder = os.path.join('Results','Run_sep_15','Final_Results')
+verbose = False
+save_guess_mfps = True
+Results_Folder = "Results/Test"
