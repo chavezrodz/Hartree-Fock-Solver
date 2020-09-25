@@ -4,8 +4,8 @@ import Code.Utils.Read_MFPs as Read_MFPs
 ########### Model Params
 Model_Params = dict(
 N_Dim = 2,
-Nx = 2,
-Ny = 2,
+Nx = 50,
+Ny = 50,
 Filling = 0.25,
 mat_dim = 8,
 
@@ -18,13 +18,13 @@ J = 1)
 
 ############ Diagram Ranges
 i = 'U'
-j = 'eps'
+j = 'J'
 i_values = np.linspace(0,6,30)
 j_values = np.linspace(0,3,30)
 
 ########### Solver params
-beta = 1
-Itteration_limit = 50
+beta = 3
+Itteration_limit = 10
 tolerance = 1e-3
 method = 'sigmoid'
 ########## Sweeper params

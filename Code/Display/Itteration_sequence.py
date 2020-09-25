@@ -10,7 +10,7 @@ import seaborn as sns
 sns.set_theme()
 sns.set_context("paper")
 
-def Display_sequence(Solver):
+def Itteration_sequence(Solver):
 	fig, axs = plt.subplots(2)
 	fig.suptitle('Converged: '+str(Solver.converged))
 	for i in range(Solver.N_params):

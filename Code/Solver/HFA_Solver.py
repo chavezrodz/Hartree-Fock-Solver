@@ -40,14 +40,6 @@ class HFA_Solver:
 		indices = np.transpose(np.stack(indices))
 		self.indices = list(map(tuple,indices))
 
-	def Calculate_new_del(self):
-		for i,ind in enumerate(self.indices):
-			v = self.Eigenvectors[ind[:-1]][:,ind[-1]]
-			self.sub_params[:,i] = np.real(self.Hamiltonian.Consistency(v))
-		b = self.Hamiltonian.MF_params
-		a = np.sum(self.sub_params,axis=1)
-		return a, b
-
 	def Print_step(self,a,method=None):
 		if method==None:
 			print('Itteration:',self.count,' Mean Field parameters:', a.round(self.N_digits))
@@ -59,6 +51,14 @@ class HFA_Solver:
 			print('Final Mean Field parameter:', a.round(self.N_digits), 'Number of itteration steps:', self.count,'\n')
 			return
 
+	def Calculate_new_del(self):
+		for i,ind in enumerate(self.indices):
+			v = self.Eigenvectors[ind[:-1]][:,ind[-1]]
+			self.sub_params[:,i] = np.real(self.Hamiltonian.Consistency(v))
+		b = self.Hamiltonian.MF_params
+		a = np.sum(self.sub_params,axis=1)
+		return a, b
+
 	def update_guess(self,a,b):
 		"""
 		beta is a measure of how fast the mixing goes to zero,
@@ -68,24 +68,14 @@ class HFA_Solver:
 		"""
 		if self.method == 'momentum':
 			beta = self.beta
-
-		elif self.method == 'exponential':
-			beta = np.exp(-self.count*self.beta)
-
 		elif self.method == 'sigmoid':
 			beta = sp.expit(-self.count*self.beta/self.Itteration_limit) 
-
 		elif self.method == 'decaying':
 			beta = 1/(1 + self.beta)**self.count
-
-		elif self.method == 'decaying fast':
-			beta = 1/(1 + self.beta*self.count)**self.count
-
-		elif self.method == 'sinusoidal':
-			beta = np.cos(2*np.pi*self.count*self.beta/self.Itteration_limit)
-
+		elif self.method == 'exponential':
+			beta = np.exp(-self.count*self.beta)
 		elif self.method == 'decaying sinusoidal':
-			beta = np.exp(-self.count/self.Itteration_limit)*np.cos(2*np.pi*self.count/self.Itteration_limit)
+			beta = np.exp(-self.count/self.Itteration_limit)*np.abs(np.sin(2*np.pi*self.count/self.Itteration_limit))
 		else:
 			print('Error: Itteration Method not found')
 
@@ -109,11 +99,9 @@ class HFA_Solver:
 		self.Find_filling_lowest_energies()
 		# Calculate Mean Field Parameters with lowest energies
 		New_MFP, previous_MFP = self.Calculate_new_del()
-
 		# Update Guess
 		New_Guess, beta = self.update_guess(New_MFP, previous_MFP)
 		self.Hamiltonian.MF_params = New_Guess
-
 		# Logging
 		if self.save_seq:
 			self.beta_seq.append(beta)
@@ -122,6 +110,24 @@ class HFA_Solver:
 		if verbose:
 			self.Print_step(New_MFP)
 		return New_MFP, New_Guess
+
+	def Calculate_Total_E(self):
+		for i,ind in enumerate(self.indices):
+			self.occupied_energies[i] = self.Energies[ind]
+		return self.Hamiltonian.Calculate_Energy(np.sum(self.occupied_energies))
+
+	def MIT_determination(self,binning='fd'):
+		self.Fermi_Energy = np.max(self.occupied_energies)
+		self.Energies = np.sort(self.Energies)
+
+		hist, bins = np.histogram(self.Energies,bins=binning)
+		a = np.digitize(self.Fermi_Energy,bins)
+
+		if hist[a-1] >0:
+			self.Conductor = True
+		else :
+			self.Conductor = False
+
 
 	def Itterate(self, verbose=True, save_seq=False, order=None):
 		self.count = 0
@@ -151,12 +157,9 @@ class HFA_Solver:
 		if verbose:
 			self.Print_step(a,method='Final')
 
-		for i,ind in enumerate(self.indices):
-			self.occupied_energies[i] = self.Energies[ind]
+		if self.converged:
+			self.Final_Total_Energy = self.Calculate_Total_E()
+		else:
+			self.Final_Total_Energy = np.inf
 
-		self.total_occupied_energy =  np.sum(self.occupied_energies)
-		self.Fermi_Energy = np.max(self.occupied_energies)
-		self.Energies = np.sort(self.Energies)
-
-	def Metal_or_insulator(self):
-		pass
+		self.MIT_determination()

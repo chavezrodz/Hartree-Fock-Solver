@@ -11,8 +11,8 @@ import argparse
 
 ######### Command Line Arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--n_threads', type=int, default = 8)
-parser.add_argument('--trial_ind',type=int, default = 0)
+parser.add_argument('--n_threads', type=int, default = 1)
+parser.add_argument('--trial_ind',type=int, default = 8)
 args = parser.parse_args()
 
 """

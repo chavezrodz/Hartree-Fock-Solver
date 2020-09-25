@@ -47,7 +47,7 @@ def DispersionRelation(Solver,x=0,y=1):
 		plt.close()
 
 def DOS(Solver):
-		plt.hist(Solver.Energies.flatten(),bins='auto')
+		plt.hist(Solver.Energies.flatten(),bins='fd')
 		plt.title('Density of states')
 		plt.axvline(Solver.Fermi_Energy, label='Fermi Energy',color='red')
 		plt.xlabel('Energy (Ev)')

@@ -1,42 +1,45 @@
+import os
+import itertools
+import earthpy.plot as ep
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from matplotlib.colors import LogNorm
 import numpy as np
 import scipy.interpolate
-import glob
-import os
+import Code.Nickelates.Interpreter as In
 
-# Input arrays of two parameters and phase
+from Code.Utils.Read_MFPs import Read_MFPs
 
-def DiagramPlots(final_results_folder,Dict,transparent=False):
-	Solutions_folder = os.path.join(final_results_folder,'MF_Solutions')
-	if not os.path.exists(Solutions_folder):
-		print('Solutions not found')
-		sys.exit(2)
+MF = Read_MFPs(os.path.join('Results','Run_sep_20','Final_Results','MF_Solutions'))
 
-	Plots_folder = os.path.join(final_results_folder,'Plots') 
-	if not os.path.exists(Plots_folder):
-		os.mkdir(Plots_folder)
+Phase = In.array_interpreter(MF)
+
+f, ax = plt.subplots(figsize=(8,5))
+ax.set_xlabel('$U/t_{1}$')
+ax.set_ylabel('$J/t_{1}$')
+plt.xticks(np.linspace(0, MF.shape[0], 4),np.arange(0,8,2))
+plt.yticks(np.linspace(0, MF.shape[1], 4),np.arange(0,4,1))	
+
+CM = Phase[:,:,0]
+# Charge Modulation
+CS = ax.contour(CM.T,colors='red',levels=[0.1,0.3,0.5])
+ax.clabel(CS, inline=True, fontsize=10)
+
+# Magnetization
+MF_Spin = Phase[:,:,1]
+mag = ax.pcolormesh(MF_Spin.T,alpha=0.5)
+ep.draw_legend(mag,
+    titles=[r'$0 0$', r'$\uparrow 0$', r'$\uparrow \downarrow$', r'$\uparrow \uparrow$'],
+    classes=[0, 1, 2, 3])
+
+# Orbital order
+OD = Phase[:,:,2]
+im = ax.pcolormesh(OD,alpha=0.5)
+ep.draw_legend(im,
+    titles=[r'$\bar{Z}$', r'$\bar{z}$', r'$z$', r'$Z$'],
+    classes=[0, 1, 2, 3])
+plt.tight_layout()
+plt.show()
 
 
-	for i in range(len(Dict)):
-		MF = np.loadtxt(Solutions_folder+'/MF'+str(i)+'.csv',delimiter=",")
-		arr = np.abs(MF[:,:].T)
-		plt.pcolormesh(arr)
-		plt.title(Dict[i])
-		plt.xlabel('$U/t_{1}$')
-		plt.ylabel('$J/t_{1}$')
-		plt.xticks(np.linspace(0, arr.shape[0], 4),np.arange(0,8,2))
-		plt.yticks(np.linspace(0, arr.shape[1], 4),np.arange(0,4,1))	
-		plt.colorbar()
-		plt.savefig(Plots_folder+'/'+Dict[i]+'.png',transparent=transparent)
-		plt.close()
-
-	plt.title('Convergence Grid')
-	plt.pcolormesh(np.loadtxt(final_results_folder+'/Convergence_Grid.csv',delimiter=',').T,cmap='gray')
-	plt.xlabel('$U/t_{1}$')
-	plt.ylabel('$J/t_{1}$')
-	plt.xticks(np.linspace(0, arr.shape[0], 4),np.arange(0,8,2))
-	plt.yticks(np.linspace(0, arr.shape[1], 4),np.arange(0,4,1))
-	plt.savefig(Plots_folder+'/Convergence_Grid.png',transparent=transparent)
-	plt.close()

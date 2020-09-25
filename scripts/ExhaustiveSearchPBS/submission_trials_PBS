@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH -p nodes
+#SBATCH --job-name=NickelatesTrial
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=16
+#SBATCH --mem-per-cpu=7GB
+#SBATCH --array=0-5
+#SBATCH --output=Results/logs/Trial-%a.txt
+#mkdir -p Results/logs
+module purge ## this clears the modules loaded before to get a fresh start
+module add anaconda3                   # modules to be loaded
+python3 trials.py --trial_ind $SLURM_ARRAY_TASK_ID --n_threads $SLURM_CPUS_PER_TASK

@@ -21,6 +21,7 @@ i,j = 'U','J'
 i_values = np.linspace(0,6,4)
 j_values = np.linspace(0,3,4)
 ############ Guess ranges
+"""
 deltas = np.linspace(0,1,2)
 sfm    = np.linspace(0,1,2)
 Deltas_FO = np.linspace(0,1,2)
@@ -36,7 +37,6 @@ params_list =[
 (0.5,0.5,0,0.5,0.1),
 (0.5,0.5,0.5,0.5,0.5)
 ]
-"""
 
 ########### Solver params
 method ='sigmoid'
@@ -46,5 +46,5 @@ tolerance = 1e-3
 
 ########## Sweeper params
 verbose = False
-save_guess_mfps = True
+save_guess_mfps = False
 Results_Folder = "Results/Test"

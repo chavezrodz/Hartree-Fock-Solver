@@ -16,20 +16,21 @@ class Phase_Diagram_Sweeper():
 		self.Model = Model
 		self.Solver = Solver
 		
+
 		self.n_threads = n_threads
 		self.verbose = verbose
 
 		self.i = i
-		self.j = j
-
 		self.i_values = i_values
+
+		self.j = j
 		self.j_values = j_values
 
 		self.Diag_shape = (len(i_values),len(i_values))
 
 		self.i_idx,self.j_idx = np.indices(self.Diag_shape,sparse=True)
 		self.i_idx,self.j_idx = self.i_idx.flatten(),self.j_idx.flatten()
-		
+
 		if Initial_params.ndim == 1:
 			self.Initial_params = np.zeros((*self.Diag_shape,len(Model.MF_params)))
 			self.Initial_params[:,:,:] = Initial_params
@@ -39,6 +40,7 @@ class Phase_Diagram_Sweeper():
 		self.Es_trial = np.zeros(self.Diag_shape)
 		self.Final_params = np.zeros(self.Initial_params.shape)
 		self.Convergence_Grid = np.zeros(self.Diag_shape)
+		self.MIT = np.zeros(self.Diag_shape)
 
 	def Phase_Diagram_point(self,v):
 		Model = self.Model
@@ -50,20 +52,13 @@ class Phase_Diagram_Sweeper():
 
 		Sol.Itterate(verbose=False)
 
-		Model.E_occ = Sol.total_occupied_energy
-
-		Model.Calculate_Energy()
-
-		if Sol.converged == False:
-			Model.Final_Total_Energy = np.inf
-
 		if self.verbose:
 			if Sol.converged:
 				print(self.i,round(getattr(Model,self.i),2),self.j, round(getattr(Model,self.j),2),'Initial MFP:',np.round(self.Initial_params[v],3), 'Final MFP:',np.round(Model.MF_params,3), 'Converged in :',Sol.count,'steps')
 			else:
 				print(self.i,round(getattr(Model,self.i),2),self.j, round(getattr(Model,self.j),2),'Initial MFP:',np.round(self.Initial_params[v],3), 'Did Not Converge')
 
-		return Model.Final_Total_Energy, Model.MF_params, Sol.converged
+		return Sol.Final_Total_Energy, Model.MF_params, Sol.converged, Sol.Conductor
 
 	def Sweep(self):
 
@@ -78,13 +73,16 @@ class Phase_Diagram_Sweeper():
 			self.Es_trial[v] = results[i][0]
 			self.Final_params[v] = results[i][1]
 			self.Convergence_Grid[v] = results[i][2]
+			self.MIT[v] = results[i][3]
 
+		self.MIT = self.MIT.astype(int)
 		self.Convergence_Grid = self.Convergence_Grid.astype(int)
 		self.Convergence_pc = 100*np.mean(self.Convergence_Grid)
 
 	def save_results(self, outfolder, Include_MFPs=False):
 		np.savetxt(os.path.join(outfolder,'Energies.csv'),self.Es_trial,delimiter=',')
 		np.savetxt(os.path.join(outfolder,'Convergence_Grid.csv'),self.Convergence_Grid,delimiter=',')
+		np.savetxt(os.path.join(outfolder,'Conductance_Grid.csv'),self.MIT,delimiter=',')
 		if Include_MFPs:
 			if not os.path.exists(os.path.join(outfolder,'MF_Solutions')):
 				os.makedirs(os.path.join(outfolder,'MF_Solutions'))

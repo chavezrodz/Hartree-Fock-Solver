@@ -42,3 +42,12 @@ def DiagramPlots(i_label,j_label,final_results_folder,Dict,transparent=False):
 	plt.yticks(np.linspace(0, arr.shape[1], 4),np.arange(0,4,1))
 	plt.savefig(Plots_folder+'/Convergence_Grid.png',transparent=transparent)
 	plt.close()
+
+	plt.title('Conductance Grid')
+	plt.pcolormesh(np.loadtxt(final_results_folder+'/Conductance_Grid.csv',delimiter=',').T,cmap='bone')
+	plt.xlabel(i_label)
+	plt.ylabel(j_label)
+	plt.xticks(np.linspace(0, arr.shape[0], 4),np.arange(0,8,2))
+	plt.yticks(np.linspace(0, arr.shape[1], 4),np.arange(0,4,1))
+	plt.savefig(Plots_folder+'/Conductance_Grid.png',transparent=transparent)
+	plt.close()

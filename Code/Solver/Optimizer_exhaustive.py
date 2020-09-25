@@ -52,7 +52,6 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
     Diag_Shape = E_Tower.shape[:-1]
     Optimal_Guesses = np.zeros((*Diag_Shape,len(params_list[0])))
 
-    print(Solutions.shape)
     i,j = np.indices(Diag_Shape,sparse=True)
     i,j = i.flatten(),j.flatten()
     for v in itertools.product(i,j):
@@ -64,9 +63,5 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
                 if not C_Tower[v][k]:
                     Unconverged_Sols[v][k] = Solutions[v][k]
                     Solutions[v][k] = np.nan
-
-    print(Unconverged_Sols[2,3])
-    print(Solutions[2,3])
-    print(E_Tower[2,3])
 
     return Optimal_Guesses, Optimal_Energy
