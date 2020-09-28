@@ -8,7 +8,7 @@ import os
 
 # Input arrays of two parameters and phase
 
-def DiagramPlots(i_label,j_label,final_results_folder,Dict,transparent=False):
+def DiagramPlots(i_label,j_label,Dict,final_results_folder=None,show=False,transparent=False):
 	Solutions_folder = os.path.join(final_results_folder,'MF_Solutions')
 	if not os.path.exists(Solutions_folder):
 		print('Solutions not found')
@@ -31,16 +31,23 @@ def DiagramPlots(i_label,j_label,final_results_folder,Dict,transparent=False):
 		plt.xticks(np.linspace(0, arr.shape[0], 4),np.arange(0,8,2))
 		plt.yticks(np.linspace(0, arr.shape[1], 4),np.arange(0,4,1))	
 		plt.colorbar()
-		plt.savefig(Plots_folder+'/'+Dict[i]+'.png',transparent=transparent)
+		if final_results_folder is not None:
+			plt.savefig(Plots_folder+'/'+Dict[i]+'.png',transparent=transparent)
+		if show:
+			plt.show()
 		plt.close()
 
 	plt.title('Convergence Grid')
-	plt.pcolormesh(np.loadtxt(final_results_folder+'/Convergence_Grid.csv',delimiter=',').T,cmap='gray')
+	plt.pcolormesh(np.loadtxt(final_results_folder+'/Convergence_Grid.csv',delimiter=',').T,cmap='bone')
 	plt.xlabel(i_label)
 	plt.ylabel(j_label)
 	plt.xticks(np.linspace(0, arr.shape[0], 4),np.arange(0,8,2))
 	plt.yticks(np.linspace(0, arr.shape[1], 4),np.arange(0,4,1))
-	plt.savefig(Plots_folder+'/Convergence_Grid.png',transparent=transparent)
+	plt.colorbar()
+	if final_results_folder is not None:
+		plt.savefig(Plots_folder+'/Convergence_Grid.png',transparent=transparent)
+	if show:
+		plt.show()
 	plt.close()
 
 	plt.title('Conductance Grid')
@@ -49,5 +56,9 @@ def DiagramPlots(i_label,j_label,final_results_folder,Dict,transparent=False):
 	plt.ylabel(j_label)
 	plt.xticks(np.linspace(0, arr.shape[0], 4),np.arange(0,8,2))
 	plt.yticks(np.linspace(0, arr.shape[1], 4),np.arange(0,4,1))
-	plt.savefig(Plots_folder+'/Conductance_Grid.png',transparent=transparent)
+	plt.colorbar()
+	if final_results_folder is not None:
+		plt.savefig(Plots_folder+'/Conductance_Grid.png',transparent=transparent)
+	if show:
+		plt.show()
 	plt.close()

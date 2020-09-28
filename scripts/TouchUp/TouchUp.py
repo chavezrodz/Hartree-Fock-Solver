@@ -9,6 +9,7 @@ from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Solver.Optimizer_exhaustive import Optimizer_exhaustive
 from Code.Utils.tuplelist import tuplelist
 from Code.Display.DiagramPlots import DiagramPlots
+import Code.Solver.Optimizer_smoothing as om
 from time import time
 import argparse
 import params
@@ -24,6 +25,7 @@ Input_folder = params.Input_folder
 
 MFP_Folder = os.path.join(Input_folder,'Final_Results','MF_Solutions')
 Initial_mpfs = Read_MFPs.Read_MFPs(MFP_Folder)
+# Initial_mpfs = om.Optimizer_smoothing(Initial_mpfs, sigma=[0.5,0.5])
 
 Results_Folder =  os.path.join(Input_folder,'TouchUp')
 
@@ -41,6 +43,6 @@ sweeper = Phase_Diagram_Sweeper(Model,Solver,Initial_mpfs,params.i,params.i_valu
 sweeper.Sweep()
 sweeper.save_results(Results_Folder,Include_MFPs=True)
 
-DiagramPlots(params.i,params.j,Results_Folder,Model.Dict)
+DiagramPlots(params.i,params.j,Model.Dict,final_results_folder=Results_Folder)
 
 print('time to complete (s):',round(time()-a,3),'Converged points:',round(sweeper.Convergence_pc,3),'%' '\n')

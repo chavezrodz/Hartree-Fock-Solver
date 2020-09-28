@@ -5,7 +5,7 @@ import sys
 import os
 from Code.Solver.HFA_Solver import HFA_Solver
 from Code.Nickelates.Hamiltonian import Hamiltonian
-from Code.Display.Display_sequence import Display_sequence
+from Code.Display.Itteration_sequence import Itteration_sequence
 import Code.Display.DispersionRelation as DR
 
 Model_Params = dict(
@@ -19,8 +19,8 @@ eps = 0.5,
 t_1 = 1,
 t_2 = 0.15,
 t_4 = 0,
-U = 1,
-J = 2.072)
+U = 5,
+J = 0.5)
 
 ########## Code
 a = time()
@@ -39,12 +39,12 @@ MF_params =np.array([ 0.759 , 0.759 ,-0.082 , 0.682 , 0.089])
 
 Model = Hamiltonian(Model_Params,MF_params)
 
-Solver = HFA_Solver(Model,method='sigmoid', beta=1, Itteration_limit=25, tol=1e-3,save_seq=True)
+Solver = HFA_Solver(Model,method='sigmoid', beta=1, Itteration_limit=50, tol=1e-3,save_seq=True)
 
 Solver.Itterate(verbose=False)
 
-# Display_sequence(Solver)
-# DR.DispersionRelation(Solver)
+Itteration_sequence(Solver)
+DR.DispersionRelation(Solver)
 
 print(Solver.Conductor)
 DR.DOS(Solver)

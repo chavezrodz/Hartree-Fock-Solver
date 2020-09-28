@@ -123,7 +123,7 @@ class HFA_Solver:
 		hist, bins = np.histogram(self.Energies,bins=binning)
 		a = np.digitize(self.Fermi_Energy,bins)
 
-		if hist[a-1] >0:
+		if a != len(hist) and hist[a] >0:
 			self.Conductor = True
 		else :
 			self.Conductor = False

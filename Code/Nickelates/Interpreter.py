@@ -13,19 +13,27 @@ def spin_interpreter(mfps):
 	b2 = np.array([1,-1])
 
 	spin = mfps[1]*b1 + mfps[3]*b2
-	spin = np.rint(spin*2)
+	spin = np.rint(spin*10)
 	spin = np.sign(spin)
 
 	if np.array_equal(spin,np.array([0,0])):
 		spin = 0
-	elif np.array_equal(spin,np.array([1,0])):
+	elif np.array_equal(spin,np.array([0,1])):
 		spin = 1
-	elif np.array_equal(spin,np.array([1,-1])):
+	elif np.array_equal(spin,np.array([0,-1])):
 		spin = 2
-	elif np.array_equal(spin,np.array([1,1])):
+	elif np.array_equal(spin,np.array([1,0])):
 		spin = 3
-	else:
+	elif np.array_equal(spin,np.array([1,1])):
 		spin = 4
+	elif np.array_equal(spin,np.array([1,-1])):
+		spin = 5
+	elif np.array_equal(spin,np.array([-1,0])):
+		spin = 6
+	elif np.array_equal(spin,np.array([-1,1])):
+		spin = 7
+	elif np.array_equal(spin,np.array([-1,-1])):
+		spin = 8
 	return spin
 
 def orbit_interpreter(mfps):
@@ -33,19 +41,27 @@ def orbit_interpreter(mfps):
 	b2 = np.array([1,-1])
 
 	orbit = mfps[2]*b1 + mfps[4]*b2
-	orbit = np.rint(orbit*2)
+	orbit = np.rint(orbit*10)
 	orbit = np.sign(orbit)
 
 	if np.array_equal(orbit,np.array([0,0])):
 		orbit = 0
-	elif np.array_equal(orbit,np.array([1,0])):
+	elif np.array_equal(orbit,np.array([0,1])):
 		orbit = 1
-	elif np.array_equal(orbit,np.array([1,-1])):
+	elif np.array_equal(orbit,np.array([0,-1])):
 		orbit = 2
-	elif np.array_equal(orbit,np.array([1,1])):
+	elif np.array_equal(orbit,np.array([1,0])):
 		orbit = 3
-	else:
+	elif np.array_equal(orbit,np.array([1,1])):
 		orbit = 4
+	elif np.array_equal(orbit,np.array([1,-1])):
+		orbit = 5
+	elif np.array_equal(orbit,np.array([-1,0])):
+		orbit = 6
+	elif np.array_equal(orbit,np.array([-1,1])):
+		orbit = 7
+	elif np.array_equal(orbit,np.array([-1,-1])):
+		orbit = 8
 	return orbit
 
 def fullphase(mfp):

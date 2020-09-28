@@ -3,19 +3,22 @@ import numpy as np
 import scipy as sp
 import scipy.ndimage
 
-n = 200 # widht/height of the array
-m = 1000 # number of points
-
-
-def Opimizer_smoothing(mfps,sigma=[1,1]):
-	dummy = mfps[:,:,0]
-	y = sp.ndimage.filters.gaussian_filter(x, sigma, mode='nearest')
-
+def Optimizer_smoothing(mfps,sigma=[1,1]):
+	y = np.zeros(mfps.shape)
+	for i in range(mfps.shape[2]):
+		y[:,:,i] = sp.ndimage.filters.gaussian_filter(mfps[:,:,i], sigma, mode='nearest')
+	return y
+x = np.random.rand(20,20,2)
+"""
 # Plot input array
-plt.imshow(x, cmap='Blues')
-plt.show()
-# Apply gaussian filter
+for i in range(2):
+	plt.imshow(x[:,:,i], cmap='Blues')
+	plt.show()
+	# Apply gaussian filter
+	y = Optimizer_smoothing(x)
 
-# Display filtered array
-plt.imshow(y, cmap='Blues')
-plt.show()
+	# Display filtered array
+	plt.imshow(y[:,:,i], cmap='Blues')
+	plt.show()
+
+"""

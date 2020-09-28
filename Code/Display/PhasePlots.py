@@ -27,19 +27,24 @@ CS = ax.contour(CM.T,colors='red',levels=[0.1,0.3,0.5])
 ax.clabel(CS, inline=True, fontsize=10)
 
 # Magnetization
-MF_Spin = Phase[:,:,1]
-mag = ax.pcolormesh(MF_Spin.T,alpha=0.5)
-ep.draw_legend(mag,
-    titles=[r'$0 0$', r'$\uparrow 0$', r'$\uparrow \downarrow$', r'$\uparrow \uparrow$'],
-    classes=[0, 1, 2, 3])
 
-# Orbital order
-OD = Phase[:,:,2]
-im = ax.pcolormesh(OD,alpha=0.5)
-ep.draw_legend(im,
-    titles=[r'$\bar{Z}$', r'$\bar{z}$', r'$z$', r'$Z$'],
-    classes=[0, 1, 2, 3])
+MF_Spin = Phase[:,:,1]
+mag = ax.pcolormesh(MF_Spin.T,alpha=1,cmap='gnuplot')
+states = list(np.unique(MF_Spin).astype(int))
+print(states)
+state_names = [r'$0 0$', r'$0 \uparrow$', r'$0 \downarrow$', r'$\uparrow 0$', r'$\uparrow \uparrow$', r'$\uparrow \downarrow$', r'$\downarrow 0$', r'$\downarrow \uparrow$', r'$\downarrow \downarrow$']
+ep.draw_legend(mag, classes = states,titles=[state_names[i] for i in states])#,
+    # titles=[r'$0 0$', r'$0 \uparrow$', r'$0 \downarrow$', r'$\uparrow 0$', r'$\uparrow \uparrow$', r'$\uparrow \downarrow$', r'$\downarrow 0$', r'$\downarrow \uparrow$', r'$\downarrow \downarrow$'],)
+    # classes=[0, 1, 2, 3,4,5,6,7,8]
+    # )
+
+# # Orbital order
+# OD = Phase[:,:,2]
+# im = ax.pcolormesh(OD,alpha=1)
+
+# ep.draw_legend(im,
+#     titles=[r'$0 0$', r'$0 z$', r'$0 \bar{z}$', r'$z 0$', r'$z z$', r'$z \bar{z}$', r'$\bar{z} 0$', r'$\bar{z} z$', r'$\bar{z} \bar{z}$'],
+#     classes=[0, 1, 2, 3,4,5,6,7,8])
+
 plt.tight_layout()
 plt.show()
-
-
