@@ -1,0 +1,12 @@
+#!/bin/bash
+#PBS -A st-anocera-1
+#PBS -q nodes
+#PBS -N NickelatesFinal
+#PBS -l nodes=1:ppn=32
+#PBS -l mem=187GB
+#PBS -o Results/logs/final.txt
+cp params.py Results
+
+module purge ## this clears the modules loaded before to get a fresh start
+module add anaconda3                   # modules to be loaded
+python3 Final_Itteration.py --n_threads $PBS_NUM_PPN

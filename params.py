@@ -4,8 +4,8 @@ from Code.Utils.tuplelist import tuplelist
 ########### Model Params
 Model_Params = dict(
 N_Dim = 2,
-Nx = 50,
-Ny = 50,
+Nx = 5,
+Ny = 5,
 Filling = 0.25,
 mat_dim = 8,
 
@@ -18,8 +18,8 @@ J = 1)
 
 ############ Diagram Ranges
 i,j = 'U','J'
-i_values = np.linspace(0,18,40)
-j_values = np.linspace(0,9,40)
+i_values = np.linspace(0,6,4)
+j_values = np.linspace(0,3,4)
 ############ Guess ranges
 """
 deltas = np.linspace(0,1,2)
@@ -45,6 +45,6 @@ Itteration_limit = 50
 tolerance = 1e-3
 
 ########## Sweeper params
-verbose = True
+verbose = False
 save_guess_mfps = False
-Results_Folder = "Results"
+Results_Folder = "Results/Test"
