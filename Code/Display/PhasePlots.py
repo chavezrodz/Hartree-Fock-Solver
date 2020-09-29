@@ -33,6 +33,7 @@ mag = ax.pcolormesh(MF_Spin.T,alpha=1,cmap='gnuplot')
 states = list(np.unique(MF_Spin).astype(int))
 print(states)
 state_names = [r'$0 0$', r'$0 \uparrow$', r'$0 \downarrow$', r'$\uparrow 0$', r'$\uparrow \uparrow$', r'$\uparrow \downarrow$', r'$\downarrow 0$', r'$\downarrow \uparrow$', r'$\downarrow \downarrow$']
+
 ep.draw_legend(mag, classes = states,titles=[state_names[i] for i in states])#,
     # titles=[r'$0 0$', r'$0 \uparrow$', r'$0 \downarrow$', r'$\uparrow 0$', r'$\uparrow \uparrow$', r'$\uparrow \downarrow$', r'$\downarrow 0$', r'$\downarrow \uparrow$', r'$\downarrow \downarrow$'],)
     # classes=[0, 1, 2, 3,4,5,6,7,8]

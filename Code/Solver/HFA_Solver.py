@@ -123,8 +123,13 @@ class HFA_Solver:
 		hist, bins = np.histogram(self.Energies,bins=binning)
 		a = np.digitize(self.Fermi_Energy,bins)
 
-		if a != len(hist) and hist[a] >0:
-			self.Conductor = True
+		print("a, histogram lenght",a,len(hist))
+		
+		if a < len(hist):
+			if hist[a] >0:
+				self.Conductor = True
+			else :
+				self.Conductor = False
 		else :
 			self.Conductor = False
 

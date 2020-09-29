@@ -8,8 +8,9 @@ def Optimizer_smoothing(mfps,sigma=[1,1]):
 	for i in range(mfps.shape[2]):
 		y[:,:,i] = sp.ndimage.filters.gaussian_filter(mfps[:,:,i], sigma, mode='nearest')
 	return y
-x = np.random.rand(20,20,2)
+
 """
+x = np.random.rand(20,20,2)
 # Plot input array
 for i in range(2):
 	plt.imshow(x[:,:,i], cmap='Blues')

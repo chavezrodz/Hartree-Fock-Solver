@@ -18,8 +18,8 @@ J = 1)
 
 ############ Diagram Ranges
 i,j = 'U','J'
-i_values = np.linspace(0,6,4)
-j_values = np.linspace(0,3,4)
+i_values = np.linspace(0,18,3)
+j_values = np.linspace(0,9,3)
 ############ Guess ranges
 """
 deltas = np.linspace(0,1,2)
@@ -45,6 +45,6 @@ Itteration_limit = 50
 tolerance = 1e-3
 
 ########## Sweeper params
-verbose = False
+verbose = True
 save_guess_mfps = False
 Results_Folder = "Results/Test"

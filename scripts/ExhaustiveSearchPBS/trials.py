@@ -19,12 +19,11 @@ args = parser.parse_args()
 """
 if not os.path.exists(os.path.join(params.Results_Folder,'logs')):
 	os.makedirs(os.path.join(params.Results_Folder,'logs'))
-"""
-"""
 # Local test
 for i in range(len(params.params_list)):
 	args.trial_ind = i
-############ Guesses Input
+
+	############ Guesses Input
 	params_list = params.params_list
 	MF_params = np.array(params_list[args.trial_ind])
 

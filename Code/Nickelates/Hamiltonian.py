@@ -32,6 +32,7 @@ class Hamiltonian:
 		self.MF_params = MF_params
 		self.N_cells = int(self.Nx*self.Ny)
 		self.N_shape = (self.Nx,self.Ny)
+		self.f = 4*self.Filling
 		self.Dict ={ 0:'Charge Modulation',
 					 1:'Ferromagnetism',
 					 2:'Orbital Disproportionation',
@@ -60,8 +61,8 @@ class Hamiltonian:
 
 		Q = itertools.product(self.Qx,self.Qy)
 		for q in Q:
-			qx = self.Qxv[q[0]]#*np.pi/self.Nx - np.pi/2
-			qy = self.Qyv[q[1]]#*np.pi/self.Ny - np.pi/2
+			qx = self.Qxv[q[0]]
+			qy = self.Qyv[q[1]]
 			self.tzz[q]    = -self.t_1/2*(np.cos(qx)  +   np.cos(qy)) 		- self.t_4/2*(np.cos(2*qx)     +   np.cos(2*qy) )    - 4*self.t_2*np.cos(qx)*np.cos(qy)
 			self.tzz_c[q]  = -self.t_1/2*(np.cos(qx+qc)  +   np.cos(qy+qc)) - self.t_4/2*(np.cos(2*(qx+qc))  +   np.cos(2*(qy+qc)) ) - 4*self.t_2*np.cos(qx+qc)*np.cos(qy+qc)
 
