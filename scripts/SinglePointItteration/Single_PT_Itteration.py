@@ -9,11 +9,12 @@ from Code.Display.Itteration_sequence import Itteration_sequence
 import Code.Display.DispersionRelation as DR
 
 Model_Params = dict(
+mat_dim = 8,
 N_Dim = 2,
 Nx = 15,
 Ny = 15,
 Filling = 0.25,
-mat_dim = 8,
+stress = 0,
 
 eps = 0.5,
 t_1 = 1,

@@ -3,12 +3,9 @@ import numpy as np
 from Code.Utils.tuplelist import tuplelist
 ########### Model Params
 Model_Params = dict(
-N_Dim = 2,
-Nx = 5,
-Ny = 5,
+N_shape = (5,5),
 Filling = 0.25,
-mat_dim = 8,
-
+stress=0,
 eps = 0,
 t_1 = 1,
 t_2 = 0.15,
@@ -17,9 +14,9 @@ U = 1,
 J = 1)
 
 ############ Diagram Ranges
-i,j = 'U','J'
-i_values = np.linspace(0,18,3)
-j_values = np.linspace(0,9,3)
+i,j = 'eps','U',
+i_values = np.linspace(0,9,10)
+j_values = np.linspace(0,18,10)
 ############ Guess ranges
 """
 deltas = np.linspace(0,1,2)
@@ -47,4 +44,7 @@ tolerance = 1e-3
 ########## Sweeper params
 verbose = True
 save_guess_mfps = False
-Results_Folder = "Results/Test"
+Run_ID = 'Itterated:'+str(i)+','+str(j)+'-'
+Run_ID = Run_ID+'-'.join("{!s}={!r}".format(key,val) for (key,val) in Model_Params.items())
+
+Results_Folder = os.path.join('Results',Run_ID)

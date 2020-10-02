@@ -8,28 +8,38 @@ from Code.Nickelates.Hamiltonian import Hamiltonian
 from time import time
 import params
 import argparse
+import logging
 
 ######### Command Line Arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--n_threads', type=int, default = 1)
-parser.add_argument('--trial_ind',type=int, default = 8)
+parser.add_argument('--n_threads', type=int, default = 8)
+parser.add_argument('--trial_ind',type=int, default = 5)
 args = parser.parse_args()
-
 """
 """
-if not os.path.exists(os.path.join(params.Results_Folder,'logs')):
-	os.makedirs(os.path.join(params.Results_Folder,'logs'))
+LOG_FOLDER = os.path.join(params.Results_Folder,'logs')
+if not os.path.exists(LOG_FOLDER):
+	os.makedirs(LOG_FOLDER)
 """
 """
 # Local test
 for i in range(len(params.params_list)):
+	############ Guesses Input
 	args.trial_ind = i
-############ Guesses Input
+
+# if logging_enabled:
+	LOG_FILE_NAME = 'logs'+'_trial_'+str(args.trial_ind)+'.txt'
+	logging.basicConfig(filename=os.path.join(LOG_FOLDER,LOG_FILE_NAME),
+	                        filemode='a+',
+	                        format='%(asctime)s,%(msecs)d %(levelname)s %(message)s',
+	                        datefmt='%H:%M:%S',
+	                        level=logging.INFO)
+	logger = logging.getLogger()
+	# print = logging.info
+	sys.stdout.write = logger.info
 	params_list = params.params_list
 	MF_params = np.array(params_list[args.trial_ind])
-
 	Guess_Name = 'Guess'+str(MF_params)
-
 	outfolder = os.path.join(params.Results_Folder,'Guesses_Results',Guess_Name)
 	if not os.path.exists(outfolder):
 		os.makedirs(outfolder)
@@ -43,4 +53,4 @@ for i in range(len(params.params_list)):
 
 	sweeper.Sweep()
 	sweeper.save_results(outfolder,Include_MFPs=params.save_guess_mfps)
-	print('\nDiagram itteration:',args.trial_ind, 'time to complete (s):',round(time()-a,3),'Converged points:',round(sweeper.Convergence_pc,3),'%' '\n')
+	print(f'Diagram itteration:{args.trial_ind} time to complete (s): {round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} ')

@@ -25,19 +25,33 @@ CM = Phase[:,:,0]
 # Charge Modulation
 CS = ax.contour(CM.T,colors='red',levels=[0.1,0.3,0.5])
 ax.clabel(CS, inline=True, fontsize=10)
-
+# plt.plot()
+# plt.close()
 # Magnetization
 
-MF_Spin = Phase[:,:,1]
-mag = ax.pcolormesh(MF_Spin.T,alpha=1,cmap='gnuplot')
-states = list(np.unique(MF_Spin).astype(int))
-print(states)
-state_names = [r'$0 0$', r'$0 \uparrow$', r'$0 \downarrow$', r'$\uparrow 0$', r'$\uparrow \uparrow$', r'$\uparrow \downarrow$', r'$\downarrow 0$', r'$\downarrow \uparrow$', r'$\downarrow \downarrow$']
 
-ep.draw_legend(mag, classes = states,titles=[state_names[i] for i in states])#,
+MF_Spin = Phase[:,:,1:3]
+Spin_Dict = {0:'\downarrow', 1:'0',2:r'\uparrow'}
+
+states = MF_Spin.reshape(-1,MF_Spin.shape[-1])
+states = np.unique(MF_Spin.reshape(-1,MF_Spin.shape[-1]),axis=0)
+states = list(states)
+
+labels = [r'$'+Spin_Dict[state[0]]+Spin_Dict[state[1]]+'$' for state in states]
+
+# IDS
+# MF_Spin[:,:,0] = 
+print(labels)
+
+mag = ax.pcolormesh(MF_Spin[:,:,0].T,alpha=1)
+# (?# state_names = [r'$0 0$', r'$0 \uparrow$', r'$0 \downarrow$', r'$\uparrow 0$', r'$\uparrow \uparrow$', r'$\uparrow \downarrow$', r'$\downanp.rrow 0$', r'$\downarrow \uparrow$', r'$\downarrow \downarrow$'])
+# print(states)
+
+ep.draw_legend(mag, classes = states,titles=labels)#,
     # titles=[r'$0 0$', r'$0 \uparrow$', r'$0 \downarrow$', r'$\uparrow 0$', r'$\uparrow \uparrow$', r'$\uparrow \downarrow$', r'$\downarrow 0$', r'$\downarrow \uparrow$', r'$\downarrow \downarrow$'],)
     # classes=[0, 1, 2, 3,4,5,6,7,8]
     # )
+# Orbit_Dict ={0:r'$ 0 $',1:r'$ z$',2:r'$\downarrow$'}
 
 # # Orbital order
 # OD = Phase[:,:,2]

@@ -16,7 +16,6 @@ class Phase_Diagram_Sweeper():
 		self.Model = Model
 		self.Solver = Solver
 		
-
 		self.n_threads = n_threads
 		self.verbose = verbose
 
@@ -54,9 +53,9 @@ class Phase_Diagram_Sweeper():
 
 		if self.verbose:
 			if Sol.converged:
-				print(self.i,round(getattr(Model,self.i),2),self.j, round(getattr(Model,self.j),2),'Initial MFP:',np.round(self.Initial_params[v],3), 'Final MFP:',np.round(Model.MF_params,3), 'Converged in :',Sol.count,'steps')
+				print(f'{self.i}:{getattr(Model,self.i):1.2f} {self.j}:{getattr(Model,self.j):1.2f} Initial MFP: {np.round(self.Initial_params[v],3)} Final MFP: {np.round(Model.MF_params,3)} Converged in :{Sol.count} steps')
 			else:
-				print(self.i,round(getattr(Model,self.i),2),self.j, round(getattr(Model,self.j),2),'Initial MFP:',np.round(self.Initial_params[v],3), 'Did Not Converge')
+				print(f'{self.i}:{getattr(Model,self.i):1.2f} {self.j}:{getattr(Model,self.j):1.2f} Initial MFP: {np.round(self.Initial_params[v],3)} Did Not Converge')
 
 		return Sol.Final_Total_Energy, Model.MF_params, Sol.converged, Sol.Conductor
 

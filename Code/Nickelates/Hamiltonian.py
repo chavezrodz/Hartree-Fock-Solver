@@ -28,26 +28,31 @@ class Hamiltonian:
 		for key, value in Model_params.items():
 			setattr(self, key, value)
 
-		#initiates Mean field parameters
-		self.MF_params = MF_params
-		self.N_cells = int(self.Nx*self.Ny)
-		self.N_shape = (self.Nx,self.Ny)
 		self.f = 4*self.Filling
+		self.t_1 = self.t_1#*np.exp(-self.stress)
+		self.t_2 = self.t_2#*np.exp(-self.stress)
+		self.t_4 = self.t_4#*np.exp(-self.stress)
+
 		self.Dict ={ 0:'Charge Modulation',
 					 1:'Ferromagnetism',
 					 2:'Orbital Disproportionation',
 					 3:'Anti Ferromagnetism',
 					 4:'Anti Ferroorbital'}
 
+		#initiates Mean field parameters
+		self.MF_params = MF_params
+		self.N_cells = int(np.prod(self.N_shape))
+
 		#Allowed Momentum Indices for itterator 
 		self.Qx,self.Qy = np.indices(self.N_shape,sparse=True) 
 		self.Qx,self.Qy = self.Qx.flatten(),self.Qy.flatten()
 
 		# Allowed Momentum Values
-		self.Qxv = self.Qx*np.pi/self.Nx - np.pi/2
-		self.Qyv = self.Qy*np.pi/self.Ny - np.pi/2
+		self.Qxv = self.Qx*np.pi/self.N_shape[0] - np.pi/2
+		self.Qyv = self.Qy*np.pi/self.N_shape[1] - np.pi/2
 	
 		# Static variables, these never change, may depend on momentum indices
+		self.mat_dim = 8
 		self.tzz = np.zeros(self.N_shape)
 		self.tzz_c = np.zeros(self.N_shape)
 
@@ -106,10 +111,10 @@ class Hamiltonian:
 		b = self.tzz_b[q]
 		c = self.tzz_b_c[q]
 
-		d0 = self.U_bar -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz[q]
-		d1 = self.U_bar -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c[q]
-		d2 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b[q]
-		d3 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c[q]
+		d0 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz[q]
+		d1 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c[q]
+		d2 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b[q]
+		d3 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c[q]
 
 
 		# Declare sub-block
@@ -128,10 +133,10 @@ class Hamiltonian:
 		b = self.tzz_b[q]
 		c = self.tzz_b_c[q]
 
-		d0 = self.U_bar -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz[q]
-		d1 = self.U_bar -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c[q]
-		d2 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b[q]
-		d3 = self.U_bar -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c[q]
+		d0 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz[q]
+		d1 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c[q]
+		d2 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b[q]
+		d3 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c[q]
 
 
 		# Declare sub-block
@@ -167,6 +172,6 @@ class Hamiltonian:
 		return a, b, c, d, e
 
 	def Calculate_Energy(self,E_occ):
-		E = E_occ/self.N_cells + 2*self.eps*(self.u**2/2 + self.u**4/4) - (self.U_bar/2*(1+self.MF_params[0]**2) - self.U_0*(self.MF_params[1]**2 + self.MF_params[3]**2) + self.J_bar*(self.MF_params[2]**2 + self.MF_params[4]**2) )/self.N_cells
+		E = E_occ/self.N_cells + 2*self.eps*(self.u**2/2 + self.u**4/4) - (self.U_bar/2*(self.f**2+self.MF_params[0]**2) - self.U_0*(self.MF_params[1]**2 + self.MF_params[3]**2) + self.J_bar*(self.MF_params[2]**2 + self.MF_params[4]**2) )/self.N_cells
 		return E
 
