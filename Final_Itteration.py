@@ -58,6 +58,6 @@ Final_Energies = sweeper.Es_trial
 
 DiagramPlots(params.i,params.i_values,params.j,params.j_values,Model.Dict,Final_Results_Folder)
 
-print(f'Initial guess sweep and final calculations are consistent:{np.array_equal(Final_Energies, Optimal_Energy}')
+print(f'Initial guess sweep and final calculations are consistent:{np.array_equal(Final_Energies, Optimal_Energy)}')
 
 print(f'time to complete (s):{round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} % \n')
