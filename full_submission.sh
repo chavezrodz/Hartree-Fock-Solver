@@ -1,7 +1,2 @@
 #! /bin/bash
-
-jid1=$(sbatch submission_trials)
-#echo $jid1
-sbatch --dependency=afterok:$jid1  submission_final
-
-
+RES=$(sbatch submission_trials) && sbatch --dependency=afterok:${RES##* } submission_final

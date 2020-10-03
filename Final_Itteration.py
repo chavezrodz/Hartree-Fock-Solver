@@ -12,12 +12,28 @@ import Code.Utils.Read_MFPs as rm
 from time import time
 import argparse
 import params
+import logging
 
 ########## Command Line Arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--n_threads', type=int, default = 8)
 args = parser.parse_args()
 n_threads = args.n_threads
+
+
+LOG_FOLDER = os.path.join(params.Results_Folder,'logs')
+if not os.path.exists(LOG_FOLDER):
+	os.makedirs(LOG_FOLDER)
+
+LOG_FILE_NAME = 'logs'+'_final_.txt'
+logging.basicConfig(filename=os.path.join(LOG_FOLDER,LOG_FILE_NAME),
+			filemode='a+',
+			format='%(asctime)s,%(msecs)d %(levelname)s %(message)s',
+			datefmt='%H:%M:%S',
+			level=logging.INFO)
+logger = logging.getLogger()
+sys.stdout.write = logger.info
+
 
 ########## Optimizer params
 Input_Folder = os.path.join(params.Results_Folder,'Guesses_Results')

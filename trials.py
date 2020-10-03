@@ -16,26 +16,25 @@ parser.add_argument('--n_threads', type=int, default = 8)
 parser.add_argument('--trial_ind',type=int, default = 5)
 args = parser.parse_args()
 """
-"""
-LOG_FOLDER = os.path.join(params.Results_Folder,'logs')
-if not os.path.exists(LOG_FOLDER):
-	os.makedirs(LOG_FOLDER)
-"""
 # Local test
 for i in range(len(params.params_list)):
 	############ Guesses Input
 	args.trial_ind = i
 """
-# if logging_enabled:
+
+LOG_FOLDER = os.path.join(params.Results_Folder,'logs')
+if not os.path.exists(LOG_FOLDER):
+	os.makedirs(LOG_FOLDER)
 LOG_FILE_NAME = 'logs'+'_trial_'+str(args.trial_ind)+'.txt'
 logging.basicConfig(filename=os.path.join(LOG_FOLDER,LOG_FILE_NAME),
 			filemode='a+',
-			format='%(asctime)s,%(msecs)d %(levelname)s %(message)s',
+			format='%(message)s',
 			datefmt='%H:%M:%S',
 			level=logging.INFO)
 logger = logging.getLogger()
-# print = logging.info
 sys.stdout.write = logger.info
+
+
 params_list = params.params_list
 MF_params = np.array(params_list[args.trial_ind])
 Guess_Name = 'Guess'+str(MF_params)
