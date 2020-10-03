@@ -28,7 +28,7 @@ if not os.path.exists(LOG_FOLDER):
 LOG_FILE_NAME = 'logs'+'_final_.txt'
 logging.basicConfig(filename=os.path.join(LOG_FOLDER,LOG_FILE_NAME),
 			filemode='a+',
-			format='%(asctime)s,%(msecs)d %(levelname)s %(message)s',
+			format='%(message)s',
 			datefmt='%H:%M:%S',
 			level=logging.INFO)
 logger = logging.getLogger()
@@ -58,6 +58,6 @@ Final_Energies = sweeper.Es_trial
 
 DiagramPlots(params.i,params.i_values,params.j,params.j_values,Model.Dict,Final_Results_Folder)
 
-print("Initial guess sweep and final calculations are consistent:",np.array_equal(Final_Energies, Optimal_Energy))
+print(f'Initial guess sweep and final calculations are consistent:{np.array_equal(Final_Energies, Optimal_Energy}')
 
-print('time to complete (s):',round(time()-a,3),'Converged points:',round(sweeper.Convergence_pc,3),'%' '\n')
+print(f'time to complete (s):{round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} % \n')
