@@ -2,10 +2,11 @@
 #SBATCH -p nodes
 #SBATCH --job-name=NickelatesTrial
 #SBATCH --nodes=1
-#SBATCH --cpus-per-task=6
+#SBATCH --cpus-per-task=16
 #SBATCH --mem-per-cpu=7GB
 #SBATCH --array=0-5
-#SBATCH --output=Slurm/Trial-%a.txt
+#SBATCH --error=Slurm/error-%A-%a.txt
+#SBATCH --output=Slurm/%A-%a.txt
 
 module purge
 module add anaconda3

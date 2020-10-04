@@ -3,10 +3,10 @@ import numpy as np
 from Code.Utils.tuplelist import tuplelist
 ########### Model Params
 Model_Params = dict(
-N_shape = (5,2),
+N_shape = (50,50),
 Filling = 0.25,
 stress=0,
-eps = 0,
+eps = 0.8,
 t_1 = 1,
 t_2 = 0.15,
 t_4 = 0,
@@ -14,9 +14,9 @@ U = 1,
 J = 1)
 
 ############ Diagram Ranges
-i,j = 'eps','U',
-i_values = np.linspace(0,9,3)
-j_values = np.linspace(0,18,3)
+i,j = 'U','J',
+i_values = np.linspace(0,6,30)
+j_values = np.linspace(0,3,30)
 ############ Guess ranges
 """
 deltas = np.linspace(0,1,2)
@@ -37,8 +37,8 @@ params_list =[
 
 ########### Solver params
 method ='sigmoid'
-beta = 3
-Itteration_limit = 50
+beta = 1.5
+Itteration_limit = 250
 tolerance = 1e-3
 
 ########## Sweeper params
