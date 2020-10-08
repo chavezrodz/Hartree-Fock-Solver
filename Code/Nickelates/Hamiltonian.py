@@ -27,11 +27,11 @@ class Hamiltonian:
 		#initiates Model parameters
 		for key, value in Model_params.items():
 			setattr(self, key, value)
-
+		decay = 1
 		self.f = 4*self.Filling
-		self.t_1 = self.t_1#*np.exp(-self.stress)
-		self.t_2 = self.t_2#*np.exp(-self.stress)
-		self.t_4 = self.t_4#*np.exp(-self.stress)
+		self.t_1 = self.t_1*np.exp(-decay*self.stress)
+		self.t_2 = self.t_2*np.exp(-decay*self.stress)
+		self.t_4 = self.t_4*np.exp(-decay*self.stress)
 
 		self.Dict ={ 0:'Charge Modulation',
 					 1:'Ferromagnetism',
