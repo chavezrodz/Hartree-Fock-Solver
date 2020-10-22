@@ -3,7 +3,7 @@ import numpy as np
 from Code.Utils.tuplelist import tuplelist
 ########### Model Params
 Model_Params = dict(
-N_shape = (50,50),
+N_shape = (30,30),
 Filling = 0.25,
 stress=0,
 eps = 0,
@@ -11,12 +11,13 @@ t_1 = 1,
 t_2 = 0.15,
 t_4 = 0,
 U = 1,
-J = 1)
+J = 1,
+BZ_rot = 1)
 
 ############ Diagram Ranges
 i,j = 'U','J',
-i_values = np.linspace(0,6,30)
-j_values = np.linspace(0,3,30)
+i_values = np.linspace(0,6,5)
+j_values = np.linspace(0,3,5)
 ############ Guess ranges
 """
 deltas = np.linspace(0,1,2)

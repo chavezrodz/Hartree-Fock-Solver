@@ -14,7 +14,7 @@ from Code.Display.DiagramPlots import DiagramPlots
 
 
 Model_Params = dict(
-N_shape = (3,3),
+N_shape = (30,30),
 Filling = 0.25,
 stress=0,
 eps = 0,
@@ -22,7 +22,8 @@ t_1 = 1,
 t_2 = 0.15,
 t_4 = 0.05,
 U = 1,
-J = 1)
+J = 1,
+BZ_rot = 1)
 
 i,j = 'U','J',
 i_values = np.linspace(0,6,3)
@@ -49,9 +50,12 @@ parser.add_argument('--n_threads', type=int, default = 8)
 parser.add_argument('--run_ind',type=int, default=5)
 args = parser.parse_args()
 
-epsilons = [0,0.3,0.6,0.8]
-strains = [-0.025,-1,0,1,2.5]
-dopings = [0.2,0.25,0.3]
+epsilons = [0]
+strains = [0]
+dopings = [0.25]
+# epsilons = [0,0.3,0.6,0.8]
+# strains = [-0.025,-1,0,1,2.5]
+# dopings = [0.2,0.25,0.3]
 
 model_params_lists = tp([epsilons,strains,dopings])
 Model_Params['eps'],Model_Params['stress'],Model_Params['Filling'] = model_params_lists[args.run_ind]
@@ -93,7 +97,7 @@ Final_Results_Folder = os.path.join(Results_Folder,'Final_Results')
 
 if not os.path.exists(Final_Results_Folder):
     os.makedirs(Final_Results_Folder)
- 
+
 Model = Hamiltonian(Model_Params)
 Solver = HFA_Solver(Model,method=method, beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
 

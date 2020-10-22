@@ -64,18 +64,18 @@ class Hamiltonian:
 
 		qc = np.pi
 
-
-		angle = -np.pi / 4. # rotate by 45 degrees to re-create true BZ
+		angle = -np.pi / 4.*self.BZ_rot # rotate by 45 degrees to re-create true BZ
 		rotate = np.array(( (np.cos(angle), -np.sin(angle)),
 		               (np.sin(angle),  np.cos(angle)) ))
-		scale = np.array( ( (1./np.sqrt(2),0), (0,1./np.sqrt(2)) ) )
-						# scale to only allow up to pi/2 momentum values
-        self.Qv =np.array( [ np.dot(scale,np.dot(rotate,np.array([k_x,k_y]))) \
-                        for k_x in self.Qxv for k_y in self.Qyv ] )
-		# similarly create an array that houses the indices, in same order
-		self.Q = np.array( [np.array(ind_x,ind_y) for ind_x in self.Qx \
-														for ind_y in self.Qy]  )
 
+		scaling = (1./np.sqrt(2.))*self.BZ_rot + 1.*(1. - self.BZ_rot)
+		scale = np.array( ( (scaling,0), (0,scaling) ) )
+						# scale to only allow up to pi/2 momentum values
+		self.Qv = np.array( [ np.dot(scale,np.dot(rotate,np.array([k_x,k_y]))) \
+						for k_x in self.Qxv for k_y in self.Qyv ] )
+		# # similarly create an array that houses the indices, in same order
+		self.Q = np.array( [ (ind_x,ind_y) for ind_x in self.Qx \
+														for ind_y in self.Qy]  )
 		for i in range(len(self.Q)):
 			ind_x, ind_y = self.Q[i]
 			qx, qy = self.Qv[i]

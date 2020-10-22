@@ -20,7 +20,6 @@ parser.add_argument('--n_threads', type=int, default = 8)
 args = parser.parse_args()
 n_threads = args.n_threads
 
-
 LOG_FOLDER = os.path.join(params.Results_Folder,'logs')
 if not os.path.exists(LOG_FOLDER):
 	os.makedirs(LOG_FOLDER)
@@ -41,7 +40,7 @@ Final_Results_Folder = os.path.join(params.Results_Folder,'Final_Results')
 
 if not os.path.exists(Final_Results_Folder):
     os.makedirs(Final_Results_Folder)
- 
+
 ########## Code
 a = time()
 Model = Hamiltonian(params.Model_Params)

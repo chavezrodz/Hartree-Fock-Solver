@@ -95,7 +95,9 @@ class HFA_Solver:
 		# 	Calculate Dynamic Variables
 		self.Hamiltonian.update_variables()
 		# Solve Matrix Across all momenta
-		for q in self.Q:
+		for [qx,qy] in self.Q:
+			q = (qx,qy) # for some reason they come out as lists, which cannot
+						# be used as indices
 			self.Energies[q],self.Eigenvectors[q] = \
 										self.Hamiltonian.Mat_q_calc(q)
 		# Find Indices of all required lowest energies
