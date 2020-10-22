@@ -11,7 +11,7 @@ class Hamiltonian:
 	N_dim
 	N_cells
 	Filling
-	mat_dim 
+	mat_dim
 
 	MF_Params must be a 1D np.array
 
@@ -43,14 +43,14 @@ class Hamiltonian:
 		self.MF_params = MF_params
 		self.N_cells = int(np.prod(self.N_shape))
 
-		#Allowed Momentum Indices for itterator 
-		self.Qx,self.Qy = np.indices(self.N_shape,sparse=True) 
+		#Allowed Momentum Indices for itterator
+		self.Qx,self.Qy = np.indices(self.N_shape,sparse=True)
 		self.Qx,self.Qy = self.Qx.flatten(),self.Qy.flatten()
 
 		# Allowed Momentum Values
 		self.Qxv = self.Qx*np.pi/self.N_shape[0] - np.pi/2
 		self.Qyv = self.Qy*np.pi/self.N_shape[1] - np.pi/2
-	
+
 		# Static variables, these never change, may depend on momentum indices
 		self.mat_dim = 8
 		self.tzz = np.zeros(self.N_shape)
@@ -64,10 +64,22 @@ class Hamiltonian:
 
 		qc = np.pi
 
-		Q = itertools.product(self.Qx,self.Qy)
-		for q in Q:
-			qx = self.Qxv[q[0]]
-			qy = self.Qyv[q[1]]
+
+		angle = -np.pi / 4. # rotate by 45 degrees to re-create true BZ
+		rotate = np.array(( (np.cos(angle), -np.sin(angle)),
+		               (np.sin(angle),  np.cos(angle)) ))
+		scale = np.array( ( (1./np.sqrt(2),0), (0,1./np.sqrt(2)) ) )
+						# scale to only allow up to pi/2 momentum values
+        self.Qv =np.array( [ np.dot(scale,np.dot(rotate,np.array([k_x,k_y]))) \
+                        for k_x in self.Qxv for k_y in self.Qyv ] )
+		# similarly create an array that houses the indices, in same order
+		self.Q = np.array( [np.array(ind_x,ind_y) for ind_x in self.Qx \
+														for ind_y in self.Qy]  )
+
+		for i in range(len(self.Q)):
+			ind_x, ind_y = self.Q[i]
+			qx, qy = self.Qv[i]
+			q = (ind_x, ind_y)
 			self.tzz[q]    = -self.t_1/2*(np.cos(qx)  +   np.cos(qy)) 		- self.t_4/2*(np.cos(2*qx)     +   np.cos(2*qy) )    - 4*self.t_2*np.cos(qx)*np.cos(qy)
 			self.tzz_c[q]  = -self.t_1/2*(np.cos(qx+qc)  +   np.cos(qy+qc)) - self.t_4/2*(np.cos(2*(qx+qc))  +   np.cos(2*(qy+qc)) ) - 4*self.t_2*np.cos(qx+qc)*np.cos(qy+qc)
 
@@ -107,7 +119,7 @@ class Hamiltonian:
 		sigma = 1
 
 		a0 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] + self.J_bar*self.MF_params[4]
-		a1 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] - self.J_bar*self.MF_params[4]		
+		a1 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] - self.J_bar*self.MF_params[4]
 		b = self.tzz_b[q]
 		c = self.tzz_b_c[q]
 
@@ -129,7 +141,7 @@ class Hamiltonian:
 		sigma = -1
 
 		a0 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] + self.J_bar*self.MF_params[4]
-		a1 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] - self.J_bar*self.MF_params[4]		
+		a1 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] - self.J_bar*self.MF_params[4]
 		b = self.tzz_b[q]
 		c = self.tzz_b_c[q]
 
@@ -149,7 +161,7 @@ class Hamiltonian:
 
 		# Declare matrix
 		mat = np.block([
-			[sub_1, np.zeros((4,4))], 
+			[sub_1, np.zeros((4,4))],
 			[np.zeros((4,4)),sub_2]
 			])
 
@@ -174,4 +186,3 @@ class Hamiltonian:
 	def Calculate_Energy(self,E_occ):
 		E = E_occ/self.N_cells + 2*self.eps*(self.u**2/2 + self.u**4/4) - (self.U_bar/2*(self.f**2+self.MF_params[0]**2) - self.U_0*(self.MF_params[1]**2 + self.MF_params[3]**2) + self.J_bar*(self.MF_params[2]**2 + self.MF_params[4]**2) )/self.N_cells
 		return E
-

@@ -12,10 +12,13 @@ class HFA_Solver:
 	"""
 	def __init__(self, Ham, method='momentum', beta=0.7, Itteration_limit=50, tol=1e-3,save_seq=False):
 		self.Hamiltonian = Ham
+		# while we are here, extract the momentum arrays
+		self.Q = self.Hamiltonian.Q
+		self.Qv = self.Hamiltonian.Qv
 
 		self.Energies = np.zeros((*Ham.N_shape,Ham.mat_dim))
 		self.Eigenvectors = np.zeros((*Ham.N_shape,Ham.mat_dim,Ham.mat_dim),dtype=complex)
-		
+
 		# Itteration Method Params
 		self.beta = beta
 		self.Itteration_limit = Itteration_limit
@@ -69,7 +72,7 @@ class HFA_Solver:
 		if self.method == 'momentum':
 			beta = self.beta
 		elif self.method == 'sigmoid':
-			beta = sp.expit(-self.count*self.beta/self.Itteration_limit) 
+			beta = sp.expit(-self.count*self.beta/self.Itteration_limit)
 		elif self.method == 'decaying':
 			beta = 1/(1 + self.beta)**self.count
 		elif self.method == 'exponential':
@@ -92,9 +95,9 @@ class HFA_Solver:
 		# 	Calculate Dynamic Variables
 		self.Hamiltonian.update_variables()
 		# Solve Matrix Across all momenta
-		Q = itertools.product(self.Hamiltonian.Qx,self.Hamiltonian.Qy)
-		for q in Q:
-			self.Energies[q],self.Eigenvectors[q] = self.Hamiltonian.Mat_q_calc(q)
+		for q in self.Q:
+			self.Energies[q],self.Eigenvectors[q] = \
+										self.Hamiltonian.Mat_q_calc(q)
 		# Find Indices of all required lowest energies
 		self.Find_filling_lowest_energies()
 		# Calculate Mean Field Parameters with lowest energies
