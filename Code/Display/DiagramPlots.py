@@ -59,3 +59,17 @@ def DiagramPlots(i_label,i_values,j_label,j_values,Dict,final_results_folder=Non
 	if show:
 		plt.show()
 	plt.close()
+
+	plt.title('Distortion')
+	plt.pcolormesh(np.loadtxt(final_results_folder+'/Distortion.csv',delimiter=',').T,cmap='bone')
+	plt.xlabel(i_label)
+	plt.ylabel(j_label)
+	plt.xticks(np.linspace(0,len(i_values),4),np.linspace(0,max(i_values),4,dtype=int))
+	plt.yticks(np.linspace(0,len(j_values),4),np.linspace(0,max(j_values),4,dtype=int))
+	plt.colorbar()
+	if final_results_folder is not None:
+		plt.savefig(Plots_folder+'/Distortion_Grid.png',transparent=transparent)
+	if show:
+		plt.show()
+	plt.close()
+

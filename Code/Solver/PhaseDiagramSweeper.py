@@ -40,8 +40,9 @@ class Phase_Diagram_Sweeper():
 		self.Final_params = np.zeros(self.Initial_params.shape)
 		self.Convergence_Grid = np.zeros(self.Diag_shape)
 		self.MIT = np.zeros(self.Diag_shape)
+		self.Distortion = np.zeros(self.Diag_shape)
 
-	def Phase_Diagram_point(self,v):
+	def Phase_Diagram_point(self, v):
 		Model = self.Model
 		Sol = self.Solver
 		setattr(Model, self.i, self.i_values[v[0]])
@@ -57,7 +58,7 @@ class Phase_Diagram_Sweeper():
 			else:
 				print(f'{self.i}:{getattr(Model,self.i):1.2f} {self.j}:{getattr(Model,self.j):1.2f} Initial MFP: {np.round(self.Initial_params[v],3)} Did Not Converge')
 
-		return Sol.Final_Total_Energy, Model.MF_params, Sol.converged, Sol.Conductor
+		return Sol.Final_Total_Energy, Model.MF_params, Sol.converged, Sol.Conductor, Model.u
 
 	def Sweep(self):
 
@@ -73,6 +74,7 @@ class Phase_Diagram_Sweeper():
 			self.Final_params[v] = results[i][1]
 			self.Convergence_Grid[v] = results[i][2]
 			self.MIT[v] = results[i][3]
+			self.Distortion[v] = results[i][4]
 
 		self.MIT = self.MIT.astype(int)
 		self.Convergence_Grid = self.Convergence_Grid.astype(int)
@@ -82,6 +84,7 @@ class Phase_Diagram_Sweeper():
 		np.savetxt(os.path.join(outfolder,'Energies.csv'),self.Es_trial,delimiter=',')
 		np.savetxt(os.path.join(outfolder,'Convergence_Grid.csv'),self.Convergence_Grid,delimiter=',')
 		np.savetxt(os.path.join(outfolder,'Conductance_Grid.csv'),self.MIT,delimiter=',')
+		np.savetxt(os.path.join(outfolder,'Distortion.csv'),self.Distortion,delimiter=',')
 		if Include_MFPs:
 			if not os.path.exists(os.path.join(outfolder,'MF_Solutions')):
 				os.makedirs(os.path.join(outfolder,'MF_Solutions'))

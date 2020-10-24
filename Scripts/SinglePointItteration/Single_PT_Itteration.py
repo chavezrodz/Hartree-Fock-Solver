@@ -11,8 +11,7 @@ import Code.Display.DispersionRelation as DR
 Model_Params = dict(
 mat_dim = 8,
 N_Dim = 2,
-Nx = 15,
-Ny = 15,
+N_shape = (15,15),
 Filling = 0.25,
 stress = 0,
 
@@ -26,7 +25,7 @@ J = 0.5)
 ########## Code
 a = time()
 # MF_params = np.zeros(5)
-MF_params =np.array([ 0.759 , 0.759 ,-0.082 , 0.682 , 0.089])
+MF_params = np.array([ 0.759 , 0.759 ,-0.082 , 0.682 , 0.089])
 # MF_params = np.array([ 0.924, -0.934,  0.817, -0.668, -0.02 ])
 # MF_params = np.array([ 0.758, -0.712, -0.111, -0.642,  0.056])
 # MF_params = np.array([ 0.255, -0.712, -0.384, -0.914,  0.904])
@@ -42,10 +41,12 @@ Model = Hamiltonian(Model_Params,MF_params)
 
 Solver = HFA_Solver(Model,method='sigmoid', beta=1, Itteration_limit=50, tol=1e-3,save_seq=True)
 
-Solver.Itterate(verbose=False)
+Solver.Itterate(verbose=True)
 
 Itteration_sequence(Solver)
 DR.DispersionRelation(Solver)
 
 print(Solver.Conductor)
 DR.DOS(Solver)
+
+print(Solver.bandwidth_calculation())

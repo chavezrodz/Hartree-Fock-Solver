@@ -130,6 +130,30 @@ class HFA_Solver:
 		else :
 			self.Conductor = False
 
+	def bandwidth_calculation(self, binning='fd'):
+		hist, bins = np.histogram(self.Energies,bins=binning)
+		a = np.digitize(self.Fermi_Energy,bins)
+		E_dist = np.mean(np.diff(bins))
+
+		bandwidths = []
+		count = 0
+		for i in range(len(hist)):
+			if hist[i] != 0:
+				count +=1
+			else:
+				bandwidths.append(count)
+				count = 0
+			if i == len(hist) -1:
+				bandwidths.append(count)
+
+		bandwidths_per_E = []
+		for i in bandwidths:
+			bandwidths_per_E = bandwidths_per_E +i*[i] + [0]
+		bandwidths_per_E = E_dist*np.array(bandwidths_per_E)
+
+		self.Fermi_bandwidth = bandwidths_per_E[a-1]
+		return self.Fermi_bandwidth
+
 
 	def Itterate(self, verbose=True, save_seq=False, order=None):
 		self.count = 0

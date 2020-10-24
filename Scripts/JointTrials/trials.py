@@ -14,7 +14,7 @@ from Code.Display.DiagramPlots import DiagramPlots
 
 
 Model_Params = dict(
-N_shape = (3,3),
+N_shape = (2,2),
 Filling = 0.25,
 stress=0,
 eps = 0,
@@ -25,8 +25,8 @@ U = 1,
 J = 1)
 
 i,j = 'U','J',
-i_values = np.linspace(0,6,3)
-j_values = np.linspace(0,3,3)
+i_values = np.linspace(0,6,10)
+j_values = np.linspace(0,3,10)
 
 params_list =[
 (1,1,0,1,0.15),
@@ -36,7 +36,6 @@ params_list =[
 (0.5,0.5,0,0.5,0.1),
 (0.5,0.5,0.5,0.5,0.5)
 ]
-
 
 method ='sigmoid'
 beta = 1.5
@@ -55,9 +54,9 @@ dopings = [0.2,0.25,0.3]
 
 model_params_lists = tp([epsilons,strains,dopings])
 Model_Params['eps'],Model_Params['stress'],Model_Params['Filling'] = model_params_lists[args.run_ind]
-print(len(model_params_lists))
+
 verbose = True
-save_guess_mfps = False
+save_guess_mfps = True
 
 Run_ID = 'Itterated:'+str(i)+','+str(j)+'-'
 Run_ID = Run_ID+'-'.join("{!s}={!r}".format(key,val) for (key,val) in Model_Params.items())
@@ -74,16 +73,27 @@ for n in range(len(params_list)):
 	if not os.path.exists(outfolder):
 		os.makedirs(outfolder)
 
+	########
+	Model = Hamiltonian(Model_Params, MF_params)
+	setattr(Model, i, 0)
+	setattr(Model, j, 0)
+	Solver = HFA_Solver(Model,method=method,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
+	Solver.Itterate(verbose=False)
+	Fermi_bw = Solver.bandwidth_calculation()
+	print(f'Fermi_bw: {Fermi_bw}')
+
 	########## Code
 	a = time()
+	i_values_norm = i_values * Fermi_bw; j_values_norm = j_values * Fermi_bw;
 
 	Model = Hamiltonian(Model_Params, MF_params)
 	Solver = HFA_Solver(Model,method=method,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
-	sweeper = Phase_Diagram_Sweeper(Model,Solver,MF_params,i,i_values,j,j_values, n_threads=args.n_threads, verbose=verbose)
+	sweeper = Phase_Diagram_Sweeper(Model,Solver,MF_params,i,i_values_norm,j,j_values_norm, n_threads=args.n_threads, verbose=verbose)
 
 	sweeper.Sweep()
 	sweeper.save_results(outfolder,Include_MFPs=save_guess_mfps)
-	print(f'Diagram itteration:{n} time to complete (s): {round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} ')
+	DiagramPlots(i+'/bw',i_values,j+'/bw',j_values,Model.Dict,outfolder)
+	print(f'Diagram itteration: {n} time to complete (s): {round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)}\n')
 
 
 a = time()
@@ -94,12 +104,21 @@ Final_Results_Folder = os.path.join(Results_Folder,'Final_Results')
 if not os.path.exists(Final_Results_Folder):
     os.makedirs(Final_Results_Folder)
  
+Model = Hamiltonian(Model_Params, MF_params)
+setattr(Model, i, 0)
+setattr(Model, j, 0)
+Solver = HFA_Solver(Model,method=method,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
+Solver.Itterate(verbose=False)
+Fermi_bw = Solver.bandwidth_calculation()
+print(f'Fermi_bw: {Fermi_bw}')
+i_values_norm = i_values * Fermi_bw; j_values_norm = j_values * Fermi_bw; 
+
 Model = Hamiltonian(Model_Params)
 Solver = HFA_Solver(Model,method=method, beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
 
 Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(Input_Folder, params_list,input_MFP=save_guess_mfps)
 
-sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,i,i_values,j,j_values,n_threads=args.n_threads,verbose=verbose)
+sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,i,i_values_norm,j,j_values_norm,n_threads=args.n_threads,verbose=verbose)
 
 sweeper.Sweep()
 sweeper.save_results(Final_Results_Folder,Include_MFPs=True)
