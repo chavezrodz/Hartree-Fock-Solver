@@ -23,7 +23,7 @@ t_2 = 0.15,
 t_4 = 0.05,
 U = 1,
 J = 1,
-BZ_rot = 1)
+BZ_rot = 0)
 
 i,j = 'U','J',
 i_values = np.linspace(0,6,3)
