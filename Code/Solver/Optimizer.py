@@ -1,8 +1,11 @@
+import Code.Nickelates.Interpreter as In
 from itertools import product
 import itertools
 import numpy as np
 import os
 import glob
+
+Interpreter = In.arr_to_int
 
 def Read_MFPs(folder):
     N = len(os.listdir(folder))
@@ -13,6 +16,37 @@ def Read_MFPs(folder):
         else:
             MF = np.dstack((MF,np.loadtxt(file,delimiter=',')))
     return MF
+
+def fill_nans_nearest(arr):
+    mask = np.isnan(arr)
+    idx = np.where(~mask,np.arange(mask.shape[1]),0)
+    np.maximum.accumulate(idx,axis=1, out=idx)
+    return arr[np.arange(idx.shape[0])[:,None], idx]
+
+def Optimizer_touchup(MFPs, Convergence_Grid):
+    """
+    Input list of arrays of energy across phase region,
+    return best guess per region
+    """
+    # Indices where convergence failed
+    indices = np.where(Convergence_Grid==0,)
+    indices = np.transpose(np.stack(indices))
+    indices = list(map(tuple,indices))
+    
+    # Replace unconverged with Nans
+    for v in indices:
+        MFPs[v] = np.nan
+
+    # Replace Nans with nearest neighbours
+    for i in range(5):
+        MFPs[:,:,i] = fill_nans_nearest(MFPs[:, :, i])
+    return MFPs
+
+def Optimizer_smoothing(mfps,sigma=[1,1]):
+    y = np.zeros(mfps.shape)
+    for i in range(mfps.shape[2]):
+        y[:,:,i] = sp.ndimage.filters.gaussian_filter(mfps[:,:,i], sigma, mode='nearest')
+    return y
 
 def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=False):
     """
@@ -27,7 +61,7 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
     E_Tower,C_Tower = [],[]
     for i, folder in enumerate(folderlist):
         E_file = os.path.join(folder,'Energies.csv')
-        C_file = os.path.join(folder,'Convergence_Grid.csv')
+        C_file = os.path.join(folder,'Convergence.csv')
         
         E_Tower.append(np.loadtxt(E_file,delimiter=','))
         C_Tower.append(np.loadtxt(C_file,delimiter=','))
@@ -36,8 +70,12 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
     if input_MFP:
         Solutions = []
         for i, folder in enumerate(folderlist):
-            Solutions.append(Read_MFPs(os.path.join(folder,'MF_Solutions')))
-        Solutions = np.transpose(np.stack(Solutions,axis=-1),(0,1,3,2))
+            MFPs = Read_MFPs(os.path.join(folder,'MF_Solutions'))
+            MF_Spin_orb = MFPs[:,:,1:]
+            state = Interpreter(MF_Spin_orb)
+            Solutions.append(state)
+        Solutions = np.stack(Solutions,axis=-1)
+        print(Solutions.shape)
         Unconverged_Sols = np.empty(Solutions.shape)
         Unconverged_Sols[:] = np.nan
 
@@ -62,6 +100,5 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
             for k in range(len(params_list)):
                 if not C_Tower[v][k]:
                     Unconverged_Sols[v][k] = Solutions[v][k]
-                    Solutions[v][k] = np.nan
-
+                    Solutions[v][k] = -1
     return Optimal_Guesses, Optimal_Energy

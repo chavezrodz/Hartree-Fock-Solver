@@ -9,12 +9,14 @@ from Code.Solver.HFA_Solver import HFA_Solver
 from Code.Utils.tuplelist import tuplelist as tp
 from Code.Solver.PhaseDiagramSweeper import Phase_Diagram_Sweeper
 from Code.Nickelates.Hamiltonian import Hamiltonian
-from Code.Solver.Optimizer_exhaustive import Optimizer_exhaustive
-from Code.Display.DiagramPlots import DiagramPlots
-
+import Code.Solver.Optimizer
+from Code.Solver.Optimizer import Optimizer_exhaustive as Optimizer_exhaustive
+from Code.Display.ResultsPlots import sweeper_plots
+# from Code.Display.PhasePlots import PhasePlots as PhasePlots
+from Code.Display.PhasePlotsStandard import PhasePlotsStandard as PhasePlots
 
 Model_Params = dict(
-N_shape = (2,2),
+N_shape = (3,3),
 Filling = 0.25,
 stress=0,
 eps = 0,
@@ -25,22 +27,26 @@ U = 1,
 J = 1)
 
 i,j = 'U','J',
-i_values = np.linspace(0,6,10)
-j_values = np.linspace(0,3,10)
+i_values = np.linspace(0,6,3)
+j_values = np.linspace(0,3,3)
 
 params_list =[
 (1,1,0,1,0.15),
 (1,0.5,0,1,0.15),
-(0,0.2,0.5,0,0),
-(0.1,0.5,1,0.5,0.1),
-(0.5,0.5,0,0.5,0.1),
-(0.5,0.5,0.5,0.5,0.5)
+# (0,0.2,0.5,0,0),
+# (0.1,0.5,1,0.5,0.1),
+# (0.5,0.5,0,0.5,0.1),
+# (0.5,0.5,0.5,0.5,0.5)
 ]
 
 method ='sigmoid'
 beta = 1.5
-Itteration_limit = 250
+Itteration_limit = 35
 tolerance = 1e-3
+bw_norm = True
+
+verbose = False
+save_guess_mfps = True
 
 ######### Command Line Arguments
 parser = argparse.ArgumentParser()
@@ -55,11 +61,9 @@ dopings = [0.2,0.25,0.3]
 model_params_lists = tp([epsilons,strains,dopings])
 Model_Params['eps'],Model_Params['stress'],Model_Params['Filling'] = model_params_lists[args.run_ind]
 
-verbose = True
-save_guess_mfps = True
 
-Run_ID = 'Itterated:'+str(i)+','+str(j)+'-'
-Run_ID = Run_ID+'-'.join("{!s}={!r}".format(key,val) for (key,val) in Model_Params.items())
+Run_ID = 'Itterated:'+str(i)+'_'+str(j)+'_'
+Run_ID = Run_ID+'_'.join("{!s}={!r}".format(key,val) for (key,val) in Model_Params.items())
 
 Results_Folder = os.path.join('Results',Run_ID)
 
@@ -73,60 +77,39 @@ for n in range(len(params_list)):
 	if not os.path.exists(outfolder):
 		os.makedirs(outfolder)
 
-	########
-	Model = Hamiltonian(Model_Params, MF_params)
-	setattr(Model, i, 0)
-	setattr(Model, j, 0)
-	Solver = HFA_Solver(Model,method=method,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
-	Solver.Itterate(verbose=False)
-	Fermi_bw = Solver.bandwidth_calculation()
-	print(f'Fermi_bw: {Fermi_bw}')
-
 	########## Code
 	a = time()
-	i_values_norm = i_values * Fermi_bw; j_values_norm = j_values * Fermi_bw;
 
 	Model = Hamiltonian(Model_Params, MF_params)
 	Solver = HFA_Solver(Model,method=method,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
-	sweeper = Phase_Diagram_Sweeper(Model,Solver,MF_params,i,i_values_norm,j,j_values_norm, n_threads=args.n_threads, verbose=verbose)
+	sweeper = Phase_Diagram_Sweeper(Model,Solver,MF_params,i,i_values,j,j_values, n_threads=args.n_threads, Bandwidth_Normalization=bw_norm, verbose=verbose)
 
 	sweeper.Sweep()
 	sweeper.save_results(outfolder,Include_MFPs=save_guess_mfps)
-	DiagramPlots(i+'/bw',i_values,j+'/bw',j_values,Model.Dict,outfolder)
+
+	sweeper_plots(i+'/W',i_values,j+'/W',j_values,Model.Dict,outfolder)
+
 	print(f'Diagram itteration: {n} time to complete (s): {round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)}\n')
 
-
 a = time()
-
 Input_Folder = os.path.join(Results_Folder,'Guesses_Results')
 Final_Results_Folder = os.path.join(Results_Folder,'Final_Results')
 
 if not os.path.exists(Final_Results_Folder):
     os.makedirs(Final_Results_Folder)
- 
-Model = Hamiltonian(Model_Params, MF_params)
-setattr(Model, i, 0)
-setattr(Model, j, 0)
-Solver = HFA_Solver(Model,method=method,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
-Solver.Itterate(verbose=False)
-Fermi_bw = Solver.bandwidth_calculation()
-print(f'Fermi_bw: {Fermi_bw}')
-i_values_norm = i_values * Fermi_bw; j_values_norm = j_values * Fermi_bw; 
 
 Model = Hamiltonian(Model_Params)
 Solver = HFA_Solver(Model,method=method, beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
 
 Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(Input_Folder, params_list,input_MFP=save_guess_mfps)
 
-sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,i,i_values_norm,j,j_values_norm,n_threads=args.n_threads,verbose=verbose)
+sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,i,i_values,j,j_values,n_threads=args.n_threads,Bandwidth_Normalization=bw_norm, verbose=verbose)
 
 sweeper.Sweep()
 sweeper.save_results(Final_Results_Folder,Include_MFPs=True)
+sweeper_plots(i+'/W',i_values,j+'/W',j_values,Model.Dict,Final_Results_Folder)
 
 Final_Energies = sweeper.Es_trial
-
-DiagramPlots(i,i_values,j,j_values,Model.Dict,Final_Results_Folder)
-
 print(f'Initial guess sweep and final calculations are consistent:{np.array_equal(Final_Energies, Optimal_Energy)}')
 
 print(f'time to complete (s):{round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} % \n')

@@ -100,7 +100,6 @@ class Hamiltonian:
 	def Mat_q_calc(self,q):
 		"""
 		Declaration of the matrix to diagonalize, momentum dependent
-		MFP Order goes delta, SFM, Delta, SAFM
 		"""
 
 		# Call matrix elements

@@ -12,20 +12,30 @@ class Phase_Diagram_Sweeper():
 	"""
 	"""
 
-	def __init__(self, Model, Solver, Initial_params, i, i_values, j, j_values, n_threads=8,verbose = False):
+	def __init__(self, Model, Solver, Initial_params, i, i_values, j, j_values, n_threads=8,verbose = False,Bandwidth_Normalization=False):
 		self.Model = Model
 		self.Solver = Solver
 		
 		self.n_threads = n_threads
 		self.verbose = verbose
 
-		self.i = i
-		self.i_values = i_values
+		self.i = i; self.j = j
 
-		self.j = j
-		self.j_values = j_values
+		if Bandwidth_Normalization:
+			Model = self.Model
+			setattr(Model, i, 0)
+			setattr(Model, j, 0)
+			Solver = self.Solver
+			Solver.Itterate(verbose=False)
+			Fermi_bw = Solver.bandwidth_calculation()
+			if verbose:
+				print(f'Fermi_bw: {Fermi_bw}')
+			self.i_values,self.j_values = Fermi_bw*i_values,Fermi_bw*j_values
+		else:
+			self.i_values = i_values
+			self.j_values = j_values
 
-		self.Diag_shape = (len(i_values),len(i_values))
+		self.Diag_shape = (len(i_values),len(j_values))
 
 		self.i_idx,self.j_idx = np.indices(self.Diag_shape,sparse=True)
 		self.i_idx,self.j_idx = self.i_idx.flatten(),self.j_idx.flatten()
@@ -82,8 +92,8 @@ class Phase_Diagram_Sweeper():
 
 	def save_results(self, outfolder, Include_MFPs=False):
 		np.savetxt(os.path.join(outfolder,'Energies.csv'),self.Es_trial,delimiter=',')
-		np.savetxt(os.path.join(outfolder,'Convergence_Grid.csv'),self.Convergence_Grid,delimiter=',')
-		np.savetxt(os.path.join(outfolder,'Conductance_Grid.csv'),self.MIT,delimiter=',')
+		np.savetxt(os.path.join(outfolder,'Convergence.csv'),self.Convergence_Grid,delimiter=',')
+		np.savetxt(os.path.join(outfolder,'Conductance.csv'),self.MIT,delimiter=',')
 		np.savetxt(os.path.join(outfolder,'Distortion.csv'),self.Distortion,delimiter=',')
 		if Include_MFPs:
 			if not os.path.exists(os.path.join(outfolder,'MF_Solutions')):

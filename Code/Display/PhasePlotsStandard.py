@@ -11,7 +11,7 @@ import Code.Nickelates.Interpreter as In
 from Code.Utils.Read_MFPs import Read_MFPs
 
 
-def PhasePlots(i,i_values,j,j_values,final_results_folder=None,show=False,transparent=False):
+def PhasePlotsStandard(i,i_values,j,j_values,final_results_folder=None,show=False,transparent=False):
 	Solutions_folder = os.path.join(final_results_folder,'MF_Solutions')
 	if not os.path.exists(Solutions_folder):
 		print('Solutions not found')
@@ -23,11 +23,11 @@ def PhasePlots(i,i_values,j,j_values,final_results_folder=None,show=False,transp
 
 	MFPs = Read_MFPs(Solutions_folder)
 	Phase = In.array_interpreter(MFPs)
-	Spin_Dict = In.Spin_Dict
-	Orbit_Dict = In.Orbit_Dict
 
 	CM = Phase[:,:,0]
 	MF_Spin_orb = Phase[:,:,1:]
+	spin_orb = In.arr_to_int(MF_Spin_orb)
+	unique_states = np.unique(spin_orb)
 
 	f, ax = plt.subplots(figsize=(8,5))
 	ax.set_xlabel(i)
@@ -40,17 +40,8 @@ def PhasePlots(i,i_values,j,j_values,final_results_folder=None,show=False,transp
 	CS = ax.contour(CM.T,colors='red',levels=[0.1,0.3,0.5])
 	ax.clabel(CS, inline=True, fontsize=10)
 
-	#Spin Orbit combinations
-	states = In.unique_states(MF_Spin_orb)
-	labels = [r'$'+Spin_Dict[state[0]]+Spin_Dict[state[1]]+ ', ' +Orbit_Dict[state[2]]+Orbit_Dict[state[3]]+'$' for state in states]
-	int_states = [In.vec_to_int(x) for x in states]
-	State_Dict = {int_states[i]:i for i in range(len(int_states))}
-
-	spin_orb = In.arr_to_int(MF_Spin_orb)
-	spin_orb = np.vectorize(State_Dict.get)(spin_orb)
-	print(len(int_states),len(labels))
-	im = ax.pcolormesh(spin_orb.T,alpha=1,cmap='gnuplot')
-	ep.draw_legend(im_ax=im, classes = int_states,titles=labels)
+	im = ax.pcolormesh(spin_orb.T,alpha=1)
+	ep.draw_legend(im_ax=im,classes = unique_states, titles=[In.pos_to_label[state] for state in unique_states])
 
 	plt.tight_layout()
 	if final_results_folder is not None:
