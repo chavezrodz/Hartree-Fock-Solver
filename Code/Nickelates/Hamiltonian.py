@@ -27,6 +27,8 @@ class Hamiltonian:
 		#initiates Model parameters
 		for key, value in Model_params.items():
 			setattr(self, key, value)
+
+		# Strain Effect
 		decay = 1
 		self.f = 4*self.Filling
 		self.t_1 = self.t_1*np.exp(-decay*self.stress)
@@ -65,9 +67,20 @@ class Hamiltonian:
 		qc = np.pi
 
 		Q = itertools.product(self.Qx,self.Qy)
-		for q in Q:
-			qx = self.Qxv[q[0]]
-			qy = self.Qyv[q[1]]
+
+		angle = -np.pi / 4.*self.BZ_rot # rotate by 45 degrees to re-create true BZ
+		rotate = np.array(( (np.cos(angle), -np.sin(angle)),
+		               (np.sin(angle),  np.cos(angle)) ))
+
+		scaling = (1./np.sqrt(2.))*self.BZ_rot + 1.*(1. - self.BZ_rot)
+		scale = np.array( ( (scaling,0), (0,scaling) ) ) # scale to only allow up to pi/2 momentum values
+		self.Qv = np.array( [ np.dot(scale,np.dot(rotate,np.array([k_x,k_y]))) for k_x in self.Qxv for k_y in self.Qyv ] )
+		# # similarly create an array that houses the indices, in same order
+		self.Q = [ (ind_x,ind_y) for ind_x in self.Qx for ind_y in self.Qy]
+
+		for i,q in enumerate(self.Q):
+			qx, qy = self.Qv[i]
+
 			self.tzz[q]    = -self.t_1/2*(np.cos(qx)  +   np.cos(qy)) 		- self.t_4/2*(np.cos(2*qx)     +   np.cos(2*qy) )    - 4*self.t_2*np.cos(qx)*np.cos(qy)
 			self.tzz_c[q]  = -self.t_1/2*(np.cos(qx+qc)  +   np.cos(qy+qc)) - self.t_4/2*(np.cos(2*(qx+qc))  +   np.cos(2*(qy+qc)) ) - 4*self.t_2*np.cos(qx+qc)*np.cos(qy+qc)
 

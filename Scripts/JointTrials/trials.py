@@ -18,6 +18,7 @@ from Code.Display.PhasePlotsStandard import PhasePlotsStandard as PhasePlots
 Model_Params = dict(
 N_shape = (3,3),
 Filling = 0.25,
+BZ_rot = 1,
 stress=0,
 eps = 0,
 t_1 = 1,
