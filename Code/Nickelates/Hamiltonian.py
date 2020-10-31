@@ -11,7 +11,7 @@ class Hamiltonian:
 	N_dim
 	N_cells
 	Filling
-	mat_dim 
+	mat_dim
 
 	MF_Params must be a 1D np.array
 
@@ -32,7 +32,7 @@ class Hamiltonian:
 		decay = 1
 		self.f = 4*self.Filling
 		self.t_1 = self.t_1*np.exp(-decay*self.stress)
-		self.t_2 = self.t_2*np.exp(-decay*self.stress)
+		self.t_2 = self.t_2*np.exp(-decay*np.sqrt(2)*self.stress)
 		self.t_4 = self.t_4*np.exp(-decay*self.stress)
 
 		self.Dict ={ 0:'Charge Modulation',
@@ -76,7 +76,7 @@ class Hamiltonian:
 		scale = np.array( ( (scaling,0), (0,scaling) ) ) # scale to only allow up to pi/2 momentum values
 		self.Qv = np.array( [ np.dot(scale,np.dot(rotate,np.array([k_x,k_y]))) for k_x in self.Qxv for k_y in self.Qyv ] )
 		# # similarly create an array that houses the indices, in same order
-		self.Q = [ (ind_x,ind_y) for ind_x in self.Qx for ind_y in self.Qy]
+		self.Q = [(ind_x,ind_y) for ind_x in self.Qx for ind_y in self.Qy]
 
 		for i,q in enumerate(self.Q):
 			qx, qy = self.Qv[i]

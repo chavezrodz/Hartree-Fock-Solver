@@ -1,4 +1,4 @@
-import earthpy.plot as ep
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from matplotlib.colors import LogNorm
@@ -9,10 +9,14 @@ import glob
 import os
 import Code.Nickelates.Interpreter as In
 
+import seaborn as sns
+sns.set_theme()
+sns.set_context("paper")
+
 def MFP_plots(MFPs, i_label, i_values, j_label, j_values, Dict, results_folder, show, transparent):
 	for i in range(len(Dict)):
 		arr = np.abs(MFPs[:,:,i].T)
-		plt.pcolormesh(arr)
+		plt.pcolormesh(arr,vmin=0,vmax=1)
 		plt.title(Dict[i])
 		plt.xlabel(i_label)
 		plt.ylabel(j_label)
@@ -29,7 +33,7 @@ def MFP_plots(MFPs, i_label, i_values, j_label, j_values, Dict, results_folder, 
 
 def feature_plot(feature,i_label, i_values, j_label,j_values, results_folder, show, transparent):
 	plt.title(feature)
-	plt.pcolormesh(np.loadtxt(results_folder+'/'+feature+'.csv',delimiter=',').T,cmap='bone')
+	plt.pcolormesh(np.loadtxt(results_folder+'/'+feature+'.csv',delimiter=',').T)
 	plt.xlabel(i_label)
 	plt.ylabel(j_label)
 	plt.xticks(np.linspace(0,len(i_values),4),np.linspace(0,max(i_values),4,dtype=int))
@@ -57,8 +61,10 @@ def phases_plot(Phase,i_label, i_values, j_label,j_values, results_folder, show,
 	plt.xticks(np.linspace(0,len(i_values),4),np.linspace(0,max(i_values),4,dtype=int))
 	plt.yticks(np.linspace(0,len(j_values),4),np.linspace(0,max(j_values),4,dtype=int))	
 
-	im = ax.pcolormesh(spin_orb.T,alpha=1)
-	ep.draw_legend(im_ax=im,classes = unique_states, titles=[In.pos_to_label[state] for state in unique_states])
+	cmap = plt.cm.get_cmap('prism',170)
+	im = ax.pcolormesh(spin_orb.T,alpha=1,cmap=cmap,vmin=0,vmax=169)
+	patches = [mpatches.Patch(color=cmap(state), label=In.pos_to_label[state]) for state in unique_states]
+	ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.0, prop={"size": 13})
 
 	plt.tight_layout()
 	if results_folder is not None:
@@ -72,32 +78,27 @@ def E_Plots(i_label, i_values, Dict, guesses, final_results_folder=None, show=Fa
 	j_values = np.arange(len(guesses))
 
 	Solutions_folder = os.path.join(final_results_folder,'MF_Solutions')
-	if not os.path.exists(Solutions_folder):
-		print('Solutions not found')
-		sys.exit(2)
-
-	Plots_folder = os.path.join(final_results_folder,'Plots')
-	if not os.path.exists(Plots_folder):
-		os.mkdir(Plots_folder)
+	if not os.path.exists(Solutions_folder): print('Solutions not found'); sys.exit(2)
 
 	MF = Read_MFPs(Solutions_folder)
-	MFP_plots(MF, i_label, i_values, j_label, j_values, Dict, Plots_folder, show, transparent)
+
+	Plots_folder = os.path.join(final_results_folder,'Plots') 
+	if not os.path.exists(Plots_folder): os.mkdir(Plots_folder)
+
+	MFP_plots(MF, i_label, i_values, j_label, j_values, Dict, final_results_folder, show, transparent)
 
 	Phase = In.array_interpreter(MF)
-	phases_plot(Phase,i_label, i_values, j_label, j_values, guesses, final_results_folder, show, transparent)
+	phases_plot(Phase,i_label, i_values, j_label, j_values, final_results_folder, show, transparent)
 	features = ['Energies', 'Distortion','Convergence','Conductance']
 	for feature in features:
-		feature_plot(feature,i_label, i_values, j_values, final_results_folder, show, transparent)
+		feature_plot(feature,i_label, i_values, j_label,j_values, final_results_folder, show, transparent)
 
 def sweeper_plots(i_label,i_values,j_label,j_values,Dict,final_results_folder=None,show=False,transparent=False):
 	Solutions_folder = os.path.join(final_results_folder,'MF_Solutions')
-	if not os.path.exists(Solutions_folder):
-		print('Solutions not found')
-		sys.exit(2)
+	if not os.path.exists(Solutions_folder): print('Solutions not found'); sys.exit(2)
 
 	Plots_folder = os.path.join(final_results_folder,'Plots') 
-	if not os.path.exists(Plots_folder):
-		os.mkdir(Plots_folder)
+	if not os.path.exists(Plots_folder): os.mkdir(Plots_folder)
 
 	MF = Read_MFPs(Solutions_folder)
 	MFP_plots(MF, i_label, i_values, j_label, j_values, Dict, final_results_folder, show, transparent)

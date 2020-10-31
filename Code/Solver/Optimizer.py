@@ -5,8 +5,6 @@ import numpy as np
 import os
 import glob
 
-Interpreter = In.arr_to_int
-
 def Read_MFPs(folder):
     N = len(os.listdir(folder))
     for i in range(N):
@@ -71,11 +69,11 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
         Solutions = []
         for i, folder in enumerate(folderlist):
             MFPs = Read_MFPs(os.path.join(folder,'MF_Solutions'))
-            MF_Spin_orb = MFPs[:,:,1:]
-            state = Interpreter(MF_Spin_orb)
+            Phase = In.array_interpreter(MFPs)
+            MF_Spin_orb = Phase[:,:,1:]
+            state = In.arr_to_int(MF_Spin_orb)
             Solutions.append(state)
         Solutions = np.stack(Solutions,axis=-1)
-        print(Solutions.shape)
         Unconverged_Sols = np.empty(Solutions.shape)
         Unconverged_Sols[:] = np.nan
 

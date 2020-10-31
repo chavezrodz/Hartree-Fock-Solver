@@ -5,18 +5,16 @@ import os
 from time import time
 import argparse
 import logging
-from Code.Solver.HFA_Solver import HFA_Solver
 from Code.Utils.tuplelist import tuplelist as tp
+from Code.Solver.HFA_Solver import HFA_Solver
 from Code.Solver.PhaseDiagramSweeper import Phase_Diagram_Sweeper
-from Code.Nickelates.Hamiltonian import Hamiltonian
 import Code.Solver.Optimizer
+from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Solver.Optimizer import Optimizer_exhaustive as Optimizer_exhaustive
 from Code.Display.ResultsPlots import sweeper_plots
-# from Code.Display.PhasePlots import PhasePlots as PhasePlots
-from Code.Display.PhasePlotsStandard import PhasePlotsStandard as PhasePlots
 
 Model_Params = dict(
-N_shape = (3,3),
+N_shape = (50,50),
 Filling = 0.25,
 BZ_rot = 1,
 stress=0,
@@ -28,25 +26,25 @@ U = 1,
 J = 1)
 
 i,j = 'U','J',
-i_values = np.linspace(0,6,3)
-j_values = np.linspace(0,3,3)
+i_values = np.linspace(0,6,35)
+j_values = np.linspace(0,3,35)
 
 params_list =[
 (1,1,0,1,0.15),
 (1,0.5,0,1,0.15),
-# (0,0.2,0.5,0,0),
-# (0.1,0.5,1,0.5,0.1),
-# (0.5,0.5,0,0.5,0.1),
-# (0.5,0.5,0.5,0.5,0.5)
+(0,0.2,0.5,0,0),
+(0.1,0.5,1,0.5,0.1),
+(0.5,0.5,0,0.5,0.1),
+(0.5,0.5,0.5,0.5,0.5)
 ]
 
 method ='sigmoid'
 beta = 1.5
-Itteration_limit = 35
+Itteration_limit = 250
 tolerance = 1e-3
 bw_norm = True
 
-verbose = False
+verbose = True
 save_guess_mfps = True
 
 ######### Command Line Arguments
@@ -56,7 +54,7 @@ parser.add_argument('--run_ind',type=int, default=5)
 args = parser.parse_args()
 
 epsilons = [0,0.3,0.6,0.8]
-strains = [-0.025,-1,0,1,2.5]
+strains = [-1,-0.5,0,0.,5,1]
 dopings = [0.2,0.25,0.3]
 
 model_params_lists = tp([epsilons,strains,dopings])
@@ -90,14 +88,13 @@ for n in range(len(params_list)):
 
 	sweeper_plots(i+'/W',i_values,j+'/W',j_values,Model.Dict,outfolder)
 
-	print(f'Diagram itteration: {n} time to complete (s): {round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)}\n')
+	print(f'Diagram itteration: {n} time to complete (s): {round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} % \n')
 
 a = time()
 Input_Folder = os.path.join(Results_Folder,'Guesses_Results')
 Final_Results_Folder = os.path.join(Results_Folder,'Final_Results')
 
-if not os.path.exists(Final_Results_Folder):
-    os.makedirs(Final_Results_Folder)
+if not os.path.exists(Final_Results_Folder): os.makedirs(Final_Results_Folder)
 
 Model = Hamiltonian(Model_Params)
 Solver = HFA_Solver(Model,method=method, beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)

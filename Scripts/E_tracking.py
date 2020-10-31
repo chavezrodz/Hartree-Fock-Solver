@@ -14,21 +14,22 @@ from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Solver.Optimizer import Optimizer_exhaustive as Optimizer_exhaustive
 import Code.Solver.Optimizer
 from Code.Utils.Read_MFPs import Read_MFPs
-from Code.Display.E_Plots import E_Plots as E_Plots
+from Code.Display.ResultsPlots import E_Plots
 
 Model_Params = dict(
-N_shape = (3,3),
+N_shape = (5,5),
 Filling = 0.25,
-stress=0,
+stress=-1,
+BZ_rot=1,
 eps = 0,
 t_1 = 1,
 t_2 = 0.15,
 t_4 = 0.05,
-U = 1,
+U = 3,
 J = 1)
 
-i = 'eps'
-i_values = np.linspace(0,1,4)
+i = 'J'
+i_values = np.linspace(0,3,10)
 
 params_list =[
 (1,1,0,1,0.15),
@@ -43,7 +44,7 @@ method ='sigmoid'
 beta = 1.5
 Itteration_limit = 50
 tolerance = 1e-3
-bw_norm = False
+bw_norm = True
 
 verbose = True
 
@@ -54,6 +55,7 @@ parser.add_argument('--run_ind',type=int, default=5)
 args = parser.parse_args()
 
 outfolder = 'Results/E_Tracker'
+if not os.path.exists(outfolder): os.mkdir(outfolder)
 
 Model = Hamiltonian(Model_Params)
 Solver = HFA_Solver(Model,method=method,beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)

@@ -135,19 +135,27 @@ class HFA_Solver:
 		E_dist = np.mean(np.diff(bins))
 
 		bandwidths = []
+		gaps = []
 		count = 0
-		for i in range(len(hist)):
-			if hist[i] != 0:
+		hist = np.sign(hist)
+		for i,v in enumerate(hist):
+			if v == 1:
 				count +=1
-			else:
-				bandwidths.append(count)
-				count = 0
-			if i == len(hist) -1:
+			elif v == -1:
+				count += -1
+			if i < len(hist)-1:
+				if v*hist[i+1] == 0:
+					bandwidths.append(count)
+					count = 0
+			if i == len(hist)-1:
 				bandwidths.append(count)
 
 		bandwidths_per_E = []
-		for i in bandwidths:
-			bandwidths_per_E = bandwidths_per_E +i*[i] + [0]
+		for v  in bandwidths:
+			if v != 0:
+				bandwidths_per_E = bandwidths_per_E +v*[v]
+			elif v == 0:
+				bandwidths_per_E = bandwidths_per_E +[0]
 		bandwidths_per_E = E_dist*np.array(bandwidths_per_E)
 
 		self.Fermi_bandwidth = bandwidths_per_E[a-1]

@@ -10,10 +10,10 @@ import Code.Display.DispersionRelation as DR
 
 Model_Params = dict(
 mat_dim = 8,
-N_Dim = 2,
-N_shape = (15,15),
+N_shape = (5,5),
 Filling = 0.25,
 stress = 0,
+BZ_rot = 1,
 
 eps = 0.5,
 t_1 = 1,
@@ -43,10 +43,10 @@ Solver = HFA_Solver(Model,method='sigmoid', beta=1, Itteration_limit=50, tol=1e-
 
 Solver.Itterate(verbose=True)
 
-Itteration_sequence(Solver)
-DR.DispersionRelation(Solver)
+# Itteration_sequence(Solver)
+# DR.DispersionRelation(Solver)
 
-print(Solver.Conductor)
-DR.DOS(Solver)
+# print(Solver.Conductor)
 
 print(Solver.bandwidth_calculation())
+DR.DOS(Solver)
