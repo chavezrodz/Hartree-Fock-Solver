@@ -10,4 +10,4 @@
 
 module purge
 module add anaconda3
-python3 trials.py --trial_ind $SLURM_ARRAY_TASK_ID --n_threads $SLURM_CPUS_PER_TASK
+python3 trials.py --run_ind $SLURM_ARRAY_TASK_ID --n_threads $SLURM_CPUS_PER_TASK

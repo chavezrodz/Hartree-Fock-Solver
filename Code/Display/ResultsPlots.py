@@ -9,10 +9,6 @@ import glob
 import os
 import Code.Nickelates.Interpreter as In
 
-import seaborn as sns
-sns.set_theme()
-sns.set_context("paper")
-
 def MFP_plots(MFPs, i_label, i_values, j_label, j_values, Dict, results_folder, show, transparent):
 	for i in range(len(Dict)):
 		arr = np.abs(MFPs[:,:,i].T)
