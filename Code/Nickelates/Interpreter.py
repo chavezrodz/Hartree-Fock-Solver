@@ -1,6 +1,5 @@
 import os
 import itertools
-import earthpy.plot as ep
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
