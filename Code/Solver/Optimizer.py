@@ -4,16 +4,7 @@ import itertools
 import numpy as np
 import os
 import glob
-
-def Read_MFPs(folder):
-    N = len(os.listdir(folder))
-    for i in range(N):
-        file = os.path.join(folder,'MF'+str(i)+'.csv')
-        if i ==0:
-            MF = np.loadtxt(file,delimiter=',')
-        else:
-            MF = np.dstack((MF,np.loadtxt(file,delimiter=',')))
-    return MF
+import Code.Utils as Utils
 
 def fill_nans_nearest(arr):
     mask = np.isnan(arr)
@@ -68,7 +59,7 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
     if input_MFP:
         Solutions = []
         for i, folder in enumerate(folderlist):
-            MFPs = Read_MFPs(os.path.join(folder,'MF_Solutions'))
+            MFPs = Utils.Read_MFPs(os.path.join(folder,'MF_Solutions'))
             Phase = In.array_interpreter(MFPs)
             MF_Spin_orb = Phase[:,:,1:]
             state = In.arr_to_int(MF_Spin_orb)

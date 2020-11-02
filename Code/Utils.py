@@ -2,6 +2,12 @@ import numpy as np
 import os
 import itertools
 
+def tuplelist(x):
+	LIST = []
+	for v in itertools.product(*x):
+		LIST.append(v)
+	return LIST
+
 def Read_MFPs(folder):
 	N = len(os.listdir(folder))
 	for i in range(N):

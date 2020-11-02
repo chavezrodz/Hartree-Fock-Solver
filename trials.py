@@ -5,16 +5,16 @@ import os
 from time import time
 import argparse
 import logging
-from Code.Utils.tuplelist import tuplelist as tp
-from Code.Solver.HFA_Solver import HFA_Solver
-from Code.Solver.PhaseDiagramSweeper import Phase_Diagram_Sweeper
+import Code.Utils as Utils
 import Code.Solver.Optimizer
 from Code.Nickelates.Hamiltonian import Hamiltonian
+from Code.Solver.HFA_Solver import HFA_Solver
+from Code.Solver.PhaseDiagramSweeper import Phase_Diagram_Sweeper
 from Code.Solver.Optimizer import Optimizer_exhaustive as Optimizer_exhaustive
 from Code.Display.ResultsPlots import sweeper_plots
 
 Model_Params = dict(
-N_shape = (50,50),
+N_shape = (2,2),
 Filling = 0.25,
 BZ_rot = 1,
 stress=0,
@@ -26,8 +26,8 @@ U = 1,
 J = 1)
 
 i,j = 'U','J',
-i_values = np.linspace(0,6,35)
-j_values = np.linspace(0,3,35)
+i_values = np.linspace(0,6,3)
+j_values = np.linspace(0,3,3)
 
 params_list =[
 (1,1,0,1,0.15),
@@ -57,7 +57,7 @@ epsilons = [0,0.3,0.6,0.8]
 strains = [-1,-0.5,0,0.,5,1]
 dopings = [0.2,0.25,0.3]
 
-model_params_lists = tp([epsilons,strains,dopings])
+model_params_lists = Utils.tuplelist([epsilons,strains,dopings])
 Model_Params['eps'],Model_Params['stress'],Model_Params['Filling'] = model_params_lists[args.run_ind]
 
 
@@ -73,8 +73,7 @@ for n in range(len(params_list)):
 	MF_params = np.array(params_list[n])
 	Guess_Name = 'Guess'+str(MF_params)
 	outfolder = os.path.join(Results_Folder,'Guesses_Results',Guess_Name)
-	if not os.path.exists(outfolder):
-		os.makedirs(outfolder)
+	if not os.path.exists(outfolder): os.makedirs(outfolder)
 
 	########## Code
 	a = time()

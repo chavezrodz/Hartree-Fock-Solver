@@ -2,7 +2,7 @@ import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from matplotlib.colors import LogNorm
-from Code.Utils.Read_MFPs import Read_MFPs
+import Code.Utils as Utils
 import numpy as np
 import scipy.interpolate
 import glob
@@ -76,7 +76,7 @@ def E_Plots(i_label, i_values, Dict, guesses, final_results_folder=None, show=Fa
 	Solutions_folder = os.path.join(final_results_folder,'MF_Solutions')
 	if not os.path.exists(Solutions_folder): print('Solutions not found'); sys.exit(2)
 
-	MF = Read_MFPs(Solutions_folder)
+	MF = Utils.Read_MFPs(Solutions_folder)
 
 	Plots_folder = os.path.join(final_results_folder,'Plots') 
 	if not os.path.exists(Plots_folder): os.mkdir(Plots_folder)
@@ -96,7 +96,7 @@ def sweeper_plots(i_label,i_values,j_label,j_values,Dict,final_results_folder=No
 	Plots_folder = os.path.join(final_results_folder,'Plots') 
 	if not os.path.exists(Plots_folder): os.mkdir(Plots_folder)
 
-	MF = Read_MFPs(Solutions_folder)
+	MF = Utils.Read_MFPs(Solutions_folder)
 	MFP_plots(MF, i_label, i_values, j_label, j_values, Dict, final_results_folder, show, transparent)
 
 	Phase = In.array_interpreter(MF)
