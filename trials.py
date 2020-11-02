@@ -14,7 +14,7 @@ from Code.Solver.Optimizer import Optimizer_exhaustive as Optimizer_exhaustive
 from Code.Display.ResultsPlots import sweeper_plots
 
 Model_Params = dict(
-N_shape = (2,2),
+N_shape = (50,50),
 Filling = 0.25,
 BZ_rot = 1,
 stress=0,
@@ -26,8 +26,8 @@ U = 1,
 J = 1)
 
 i,j = 'U','J',
-i_values = np.linspace(0,6,3)
-j_values = np.linspace(0,3,3)
+i_values = np.linspace(0,6,35)
+j_values = np.linspace(0,3,35)
 
 params_list =[
 (1,1,0,1,0.15),

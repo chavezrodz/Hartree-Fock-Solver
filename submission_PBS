@@ -7,6 +7,7 @@
 #PBS -o -%a.txt
 #PBS -t 0-59 							#Job array
 
-module purge ## this clears the modules loaded before to get a fresh start
-module add anaconda3                   # modules to be loaded
+# module purge ## this clears the modules loaded before to get a fresh start
+# module add anaconda3                   # modules to be loaded
+source .venvs/HFA/bin/activate
 python3 trials.py --trial_ind $PBS_ARRAYID --n_threads $PBS_NUM_PPN
