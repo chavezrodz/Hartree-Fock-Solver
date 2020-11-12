@@ -34,7 +34,7 @@ def symetries(phase):
 	if spin[0] == 0:
 		spin=np.roll(spin,1)
 	if 0 in spin:
-		spin=np.abs(np.sign(spin))
+		spin=np.abs(spin)
 	# orbit
 	if orbit[0] == 0:
 		orbit=np.roll(orbit,1)
