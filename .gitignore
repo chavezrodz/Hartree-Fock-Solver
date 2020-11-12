@@ -1,5 +1,6 @@
 Results
 __pycache__
+PBS
 *.pyc
 Slurm
 .test.py
