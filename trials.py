@@ -54,7 +54,7 @@ parser.add_argument('--run_ind',type=int, default=5)
 args = parser.parse_args()
 
 epsilons = [0,0.3,0.6,0.8]
-strains = [-1,-0.5,0,0.,5,1]
+strains = [-1,-0.5,0,0.5,1]
 dopings = [0.2,0.25,0.3]
 
 model_params_lists = Utils.tuplelist([epsilons,strains,dopings])
