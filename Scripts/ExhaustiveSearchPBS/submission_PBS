@@ -1,12 +1,11 @@
 #!/bin/bash
 #PBS -A st-anocera-1
-#PBS -q nodes
-#PBS -N NickelatesTrials
-#PBS -l nodes=1:ppn=32
-#PBS -l mem=187GB
-#PBS -o -%a.txt
-#PBS -t 0-59 							#Job array
+#PBS -N RNiO3 
+#PBS -l walltime=18:00:00,select=1:ncpus=32:mpiprocs=32:mem=64gb
+#PBS -o PBS/out_^array_index^.txt
+#PBS -e PBS/err_^array_index^.txt
+#PBS -J 0-59
 
-module purge ## this clears the modules loaded before to get a fresh start
-module add anaconda3                   # modules to be loaded
-python3 trials.py --trial_ind $PBS_ARRAYID --n_threads $PBS_NUM_PPN
+cd $PBS_O_WORKDIR
+source ../.venvs/HFA/bin/activate
+python trials.py --run_ind $PBS_ARRAY_INDEX --n_threads 32 

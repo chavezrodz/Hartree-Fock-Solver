@@ -5,13 +5,12 @@ import os
 from time import time
 import argparse
 import logging
-from Code.Utils.tuplelist import tuplelist as tp
-from Code.Solver.HFA_Solver import HFA_Solver
-from Code.Solver.PhaseDiagramSweeper import Phase_Diagram_Sweeper
+import Code.Utils as Utils
 import Code.Solver.Optimizer
 from Code.Nickelates.Hamiltonian import Hamiltonian
+from Code.Solver.HFA_Solver import HFA_Solver
+from Code.Solver.PhaseDiagramSweeper import Phase_Diagram_Sweeper
 from Code.Solver.Optimizer import Optimizer_exhaustive as Optimizer_exhaustive
-from Code.Display.ResultsPlots import sweeper_plots
 
 Model_Params = dict(
 N_shape = (50,50),
@@ -54,10 +53,10 @@ parser.add_argument('--run_ind',type=int, default=5)
 args = parser.parse_args()
 
 epsilons = [0,0.3,0.6,0.8]
-strains = [-1,-0.5,0,0.,5,1]
+strains = [-1,-0.5,0,0.5,1]
 dopings = [0.2,0.25,0.3]
 
-model_params_lists = tp([epsilons,strains,dopings])
+model_params_lists = Utils.tuplelist([epsilons,strains,dopings])
 Model_Params['eps'],Model_Params['stress'],Model_Params['Filling'] = model_params_lists[args.run_ind]
 
 
@@ -85,8 +84,6 @@ for n in range(len(params_list)):
 	sweeper.Sweep()
 	sweeper.save_results(outfolder,Include_MFPs=save_guess_mfps)
 
-	sweeper_plots(i+'/W',i_values,j+'/W',j_values,Model.Dict,outfolder)
-
 	print(f'Diagram itteration: {n} time to complete (s): {round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} % \n')
 
 a = time()
@@ -104,7 +101,6 @@ sweeper = Phase_Diagram_Sweeper(Model,Solver,Optimal_guesses,i,i_values,j,j_valu
 
 sweeper.Sweep()
 sweeper.save_results(Final_Results_Folder,Include_MFPs=True)
-sweeper_plots(i+'/W',i_values,j+'/W',j_values,Model.Dict,Final_Results_Folder)
 
 Final_Energies = sweeper.Es_trial
 print(f'Initial guess sweep and final calculations are consistent:{np.array_equal(Final_Energies, Optimal_Energy)}')
