@@ -21,7 +21,7 @@ U = 1,
 J = 1)
 Model = Hamiltonian(Model_Params)
 
-run_folders = 'Nov_run_2/Filling_025'
+run_folders = 'Tests'
 for folder in os.listdir(os.path.join('Results',run_folders)):
 	frf = os.path.join('Results',run_folders,folder,'Final_Results')
 	print(frf)

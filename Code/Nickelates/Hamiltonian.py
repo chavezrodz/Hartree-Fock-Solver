@@ -123,10 +123,10 @@ class Hamiltonian:
 		b = self.tzz_b[q]
 		c = self.tzz_b_c[q]
 
-		d0 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz[q]
-		d1 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c[q]
-		d2 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b[q]
-		d3 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c[q]
+		d0 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz[q] + self.Delta_CT/2
+		d1 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c[q] + self.Delta_CT/2
+		d2 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b[q] + self.Delta_CT/2
+		d3 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c[q] + self.Delta_CT/2
 
 
 		# Declare sub-block
@@ -145,10 +145,10 @@ class Hamiltonian:
 		b = self.tzz_b[q]
 		c = self.tzz_b_c[q]
 
-		d0 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz[q]
-		d1 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c[q]
-		d2 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b[q]
-		d3 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c[q]
+		d0 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz[q] + self.Delta_CT/2
+		d1 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c[q] + self.Delta_CT/2
+		d2 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b[q] + self.Delta_CT/2
+		d3 = self.U_bar*self.f -sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c[q] + self.Delta_CT/2
 
 
 		# Declare sub-block
