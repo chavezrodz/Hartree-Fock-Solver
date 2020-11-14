@@ -12,30 +12,31 @@ sns.set_context("paper")
 def DispersionRelation(Solver,x=0,y=1):
 		mat_dim = Solver.Hamiltonian.mat_dim
 		Energies = Solver.Energies
-		Qx = Solver.Hamiltonian.Qx
-		Qy = Solver.Hamiltonian.Qy
-		Qxv = Solver.Hamiltonian.Qxv
-		Qyv = Solver.Hamiltonian.Qyv
+
+		Q = Solver.Hamiltonian.Q
+		Qv = Solver.Hamiltonian.Qv
 
 		fig = plt.figure()
 		ax = fig.add_subplot(111, projection='3d')
 		for b in range(mat_dim):
-			Q = itertools.product(Qx,Qy)
 			qxs=[]
 			qys=[]
 			zs=[]
 			
-			for q in Q:
-				qxs.append(Qxv[q[0]])
-				qys.append(Qyv[q[1]])
+			for i,q in enumerate(Q):
+				qx, qy = Qv[i]
+				qxs.append(qx)
+				qys.append(qy)
 				zs.append(Energies[q][b])
 			
 			ax.scatter(qxs, qys, zs,label='Band '+str(b+1))
 			
-		xx, yy = np.meshgrid(Qxv, Qyv)
+		qx_range = np.linspace(np.min(qxs),np.max(qxs),2)
+		qy_range = np.linspace(np.min(qys),np.max(qys),2)
+		xx, yy = np.meshgrid(qx_range, qy_range)
 		z = np.ones(xx.shape)
 		z = z*Solver.Fermi_Energy
-		ax.plot_surface(xx, yy,z, alpha=1)
+		ax.plot_surface(xx, yy,z, alpha=0.5)
 
 		ax.set_xlabel('$K_x$  ($\pi/a$)')
 		ax.set_ylabel('$K_Y$  ($\pi/a$)')

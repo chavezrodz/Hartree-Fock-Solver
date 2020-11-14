@@ -49,7 +49,7 @@ class E_Tracker:
 		self.MIT = np.zeros(self.Diag_shape)
 		self.Distortion = np.zeros(self.Diag_shape)
 
-	def Phase_Diagram_point(self, v):
+	def Phase_Diagram_point(self, v, DOS=False):
 		Model = self.Model
 		Sol = self.Solver
 
@@ -86,7 +86,27 @@ class E_Tracker:
 		self.Convergence_Grid = self.Convergence_Grid.astype(int)
 		self.Convergence_pc = 100*np.mean(self.Convergence_Grid)
 
+		self.Best_E = np.min(self.Es_trial,axis=1)
+		self.Best_E_ind = np.argmin(self.Es_trial,axis=1)
+		self.best_params = np.array([self.Final_params[i,j] for i,j in enumerate(self.Best_E_ind)])
+
+		sol_energies = []
+		sol_fermis = []
+		for n,sol in enumerate(self.best_params):
+			Model = self.Model
+			Sol = self.Solver
+			setattr(Model, self.i, self.i_values[n])
+			Model.MF_params = sol
+			Sol.Itterate(verbose=False)
+			sol_energies.append(Sol.Energies.flatten())
+			sol_fermis.append(Sol.Fermi_Energy)
+
+		self.sol_energies = np.array(sol_energies)
+		self.fermis = np.array(sol_fermis)
+
 	def save_results(self, outfolder, Include_MFPs=False):
+		np.savetxt(os.path.join(outfolder,'Solution_Energies.csv'),self.sol_energies,delimiter=',')
+		np.savetxt(os.path.join(outfolder,'Fermi_Energies.csv'),self.fermis,delimiter=',')
 		np.savetxt(os.path.join(outfolder,'Energies.csv'),self.Es_trial,delimiter=',')
 		np.savetxt(os.path.join(outfolder,'Convergence.csv'),self.Convergence_Grid,delimiter=',')
 		np.savetxt(os.path.join(outfolder,'Conductance.csv'),self.MIT,delimiter=',')

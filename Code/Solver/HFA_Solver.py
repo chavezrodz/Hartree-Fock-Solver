@@ -1,6 +1,5 @@
 import numpy as np
 import scipy.special as sp
-import matplotlib.pyplot as plt
 from numpy import linalg as LA
 import itertools
 

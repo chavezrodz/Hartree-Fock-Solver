@@ -9,12 +9,13 @@ from Code.Display.Itteration_sequence import Itteration_sequence
 import Code.Display.DispersionRelation as DR
 
 Model_Params = dict(
-mat_dim = 8,
-N_shape = (5,5),
+N_shape = (25,25),
+
 Filling = 0.25,
 stress = 0,
 BZ_rot = 1,
 
+Delta_CT = 0,
 eps = 0.5,
 t_1 = 1,
 t_2 = 0.15,
@@ -48,5 +49,5 @@ Solver.Itterate(verbose=True)
 
 # print(Solver.Conductor)
 
-print(Solver.bandwidth_calculation())
+# print(Solver.bandwidth_calculation())
 DR.DOS(Solver)

@@ -76,13 +76,22 @@ def phases_plot(Phase,i_label, i_values, j_label,j_values, results_folder, show,
 		plt.show()
 	plt.close()
 
+def density_of_states(i_label,i_value,Energies,Fermi_Energy,results_folder,show,transparent):
+	plt.hist(Energies.flatten(),bins='fd')
+	plt.title('Density of states')
+	plt.axvline(Fermi_Energy, label='Fermi Energy',color='red')
+	plt.xlabel('Energy (Ev)')
+	plt.legend()
+	plt.savefig(results_folder+'/DOS/'+i_label+str(i_value)+'.png',transparent=transparent)
+	plt.show()
+	plt.close()
+
 def E_Plots(i_label, i_values, Dict, guesses, final_results_folder=None, show=False, transparent=False):
 	j_label = 'Guesses'
 	j_values = np.arange(len(guesses))
 
 	Solutions_folder = os.path.join(final_results_folder,'MF_Solutions')
 	if not os.path.exists(Solutions_folder): print('Solutions not found'); sys.exit(2)
-
 	MF = Utils.Read_MFPs(Solutions_folder)
 
 	Plots_folder = os.path.join(final_results_folder,'Plots') 
@@ -92,6 +101,18 @@ def E_Plots(i_label, i_values, Dict, guesses, final_results_folder=None, show=Fa
 
 	Phase = In.array_interpreter(MF)
 	phases_plot(Phase,i_label, i_values, j_label, j_values, final_results_folder, show, transparent)
+
+	DOS_folder = os.path.join(final_results_folder,'DOS')
+	if not os.path.exists(DOS_folder): os.mkdir(DOS_folder)
+
+	sol_energies = np.loadtxt(os.path.join(final_results_folder,'Solution_Energies.csv'),delimiter=',')
+	fermis = np.loadtxt(os.path.join(final_results_folder,'Fermi_Energies.csv'),delimiter=',')
+	for i,v in enumerate(i_values):
+		Energies = sol_energies[i]
+		Fermi_Energy = fermis[i]
+		density_of_states(i_label, i, Energies, Fermi_Energy, final_results_folder, show, transparent)
+
+
 	features = ['Energies', 'Distortion','Convergence','Conductance']
 	for feature in features:
 		feature_plot(feature,i_label, i_values, j_label,j_values, final_results_folder, show, transparent)

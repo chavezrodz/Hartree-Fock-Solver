@@ -1,11 +1,6 @@
 import os
 import itertools
-import matplotlib.patches as mpatches
-import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-from matplotlib.colors import LogNorm
 import numpy as np
-import scipy.interpolate
 
 def spin_interpreter(mfps,rounding=1):
 	b1 = np.array([1,1])
