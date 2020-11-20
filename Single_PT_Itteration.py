@@ -9,7 +9,7 @@ from Code.Display.Itteration_sequence import Itteration_sequence
 import Code.Display.DispersionRelation as DR
 
 Model_Params = dict(
-N_shape = (25,25),
+N_shape=(25, 25),
 
 Filling = 0.25,
 stress = 0,
@@ -38,16 +38,16 @@ MF_params = np.array([ 0.759 , 0.759 ,-0.082 , 0.682 , 0.089])
 
 # MF_params = np.random.rand(5)*2 -1
 
-Model = Hamiltonian(Model_Params,MF_params)
+Model = Hamiltonian(Model_Params, MF_params)
 
-Solver = HFA_Solver(Model,method='sigmoid', beta=1, Itteration_limit=50, tol=1e-3,save_seq=True)
+Solver = HFA_Solver(Model, method='sigmoid', beta=1, Itteration_limit=50, tol=1e-3,save_seq=True)
 
 Solver.Itterate(verbose=True)
 
 # Itteration_sequence(Solver)
 # DR.DispersionRelation(Solver)
+DR.DOS(Solver)
 
 # print(Solver.Conductor)
 
 # print(Solver.bandwidth_calculation())
-DR.DOS(Solver)
