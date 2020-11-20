@@ -46,12 +46,3 @@ def DispersionRelation(Solver,x=0,y=1):
 		ax.legend(reversed(handles), reversed(labels))
 		plt.show()
 		plt.close()
-
-def DOS(Solver):
-		plt.hist(Solver.Energies.flatten(),bins='fd')
-		plt.title('Density of states')
-		plt.axvline(Solver.Fermi_Energy, label='Fermi Energy',color='red')
-		plt.xlabel('Energy (Ev)')
-		plt.legend()
-		plt.show()
-		plt.close()
