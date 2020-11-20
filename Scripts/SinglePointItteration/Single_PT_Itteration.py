@@ -1,29 +1,24 @@
 from time import time
 import numpy as np
-import itertools
-import sys
-import os
 from Code.Solver.HFA_Solver import HFA_Solver
 from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Display.Itteration_sequence import Itteration_sequence
 import Code.Display.DispersionRelation as DR
 
 Model_Params = dict(
-N_shape=(25, 25),
+    N_shape=(25, 25),
+    Filling=0.25,
+    stress=0,
+    BZ_rot=1,
+    Delta_CT=0,
+    eps=0.5,
+    t_1=1,
+    t_2=0.15,
+    t_4=0,
+    U=5,
+    J=0.5)
 
-Filling = 0.25,
-stress = 0,
-BZ_rot = 1,
-
-Delta_CT = 0,
-eps = 0.5,
-t_1 = 1,
-t_2 = 0.15,
-t_4 = 0,
-U = 5,
-J = 0.5)
-
-########## Code
+# Code
 a = time()
 # MF_params = np.zeros(5)
 MF_params = np.array([ 0.759 , 0.759 ,-0.082 , 0.682 , 0.089])

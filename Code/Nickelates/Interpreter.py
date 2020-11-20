@@ -45,23 +45,23 @@ def symetries(phase):
 def fullphase(mfp):
     phase = np.zeros(5)
     phase[0] = mfp[0]
-    spin= spin_interpreter(mfp)
+    spin = spin_interpreter(mfp)
     orbit = orbit_interpreter(mfp)
-    phase[1:3],phase[3:] = spin,orbit
+    phase[1:3], phase[3:] = spin, orbit
     phase[1:] = symetries(phase[1:])
     return phase
 
 
 def array_interpreter(MFPs):
-    Full_phase = np.zeros((MFPs.shape[0],MFPs.shape[1],5))
+    Full_phase = np.zeros((MFPs.shape[0], MFPs.shape[1], 5))
 
-    for v in itertools.product(np.arange(MFPs.shape[0]),np.arange(MFPs.shape[1])):
+    for v in itertools.product(np.arange(MFPs.shape[0]), np.arange(MFPs.shape[1])):
         Full_phase[v] = fullphase(MFPs[v])
     return Full_phase
 
 
 def unique_states(state_array):
-    states = state_array.reshape(-1,state_array.shape[-1])
+    states = state_array.reshape(-1, state_array.shape[-1])
     states = np.unique(states,axis=0)
     return list(states)
 
@@ -92,17 +92,17 @@ All_states_pre_sym = [np.array([i,j,k,l]) for i,j,k,l in itertools.product(np.ar
 All_states_post_sym = np.unique([vec_to_int(symetries(state)) for state in All_states_pre_sym],axis=0)
 
 
-state_to_pos = {state:i for i,state in enumerate(All_states_post_sym)}
+state_to_pos = {state: i for i, state in enumerate(All_states_post_sym)}
 
 indices = np.arange(len(state_to_pos))
-np.random.seed(42) 
-np.random.shuffle(indices) 
-state_to_pos_rand = {All_states_post_sym[v]:i for i,v in enumerate(indices)}
+np.random.seed(42)
+np.random.shuffle(indices)
+state_to_pos_rand = {All_states_post_sym[v]: i for i, v in enumerate(indices)}
 # state_to_pos = state_to_pos_rand
 
 state_to_label = {
-vec_to_int(np.array([i,j,k,l])): r'$'+Spin_Dict[i]+Spin_Dict[j]+ ', ' +Orbit_Dict[k]+Orbit_Dict[l]+'$'
-for i,j,k,l in itertools.product(np.arange(-2,3),repeat=4)
+    vec_to_int(np.array([i, j, k, l])): r'$'+Spin_Dict[i]+Spin_Dict[j] + ', ' + Orbit_Dict[k]+Orbit_Dict[l]+'$'
+    for i, j, k, l in itertools.product(np.arange(-2, 3), repeat=4)
 }
 pos_to_label={
     state_to_pos[state]:state_to_label[state] for state in All_states_post_sym

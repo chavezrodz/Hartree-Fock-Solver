@@ -1,12 +1,7 @@
 import numpy as np
-import itertools
-import sys
 import os
 from time import time
 import argparse
-import logging
-import Code.Utils as Utils
-import Code.Solver.Optimizer
 from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Solver.HFA_Solver import HFA_Solver
 from Code.Solver.PhaseDiagramSweeper import Phase_Diagram_Sweeper
@@ -16,7 +11,7 @@ Model_Params = dict(
     N_shape=(50, 50),
     Filling=0.25,
     BZ_rot=1,
-    stress=0,
+    stress=-1,
     Delta_CT=0,
     eps=0,
     t_1=1,
@@ -26,7 +21,7 @@ Model_Params = dict(
     J=1)
 
 i, j = 'U', 'J',
-i_values = np.linspace(0, 4, 35)
+i_values = np.linspace(0, 1, 35)
 j_values = np.linspace(0, 1, 35)
 
 
@@ -39,7 +34,7 @@ params_list = [
     (0.5, 0.5, 0.5, 0.5, 0.5)
 ]
 
-method ='sigmoid'
+method = 'sigmoid'
 beta = 1.5
 Itteration_limit = 250
 tolerance = 1e-3
@@ -48,18 +43,18 @@ bw_norm = True
 verbose = True
 save_guess_mfps = True
 
-######### Command Line Arguments
+# Command Line Arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--n_threads', type=int, default = 8)
+parser.add_argument('--n_threads', type=int, default=8)
 parser.add_argument('--run_ind',type=int, default=0)
 args = parser.parse_args()
 
-epsilons = [0,0.4,0.8]
-strains = [-1,-0.5,0,0.5,1]
-delta_cts = [-1.5,-1,-0.5,0,0.5,1,1.5]
+# epsilons = [0,0.4,0.8]
+# strains = [-1,-0.5,0,0.5,1]
+# delta_cts = [-1.5,-1,-0.5,0,0.5,1,1.5]
 
-model_params_lists = Utils.tuplelist([epsilons,strains,delta_cts])
-Model_Params['eps'],Model_Params['stress'],Model_Params['Delta_CT'] = model_params_lists[args.run_ind]
+# model_params_lists = Utils.tuplelist([epsilons,strains,delta_cts])
+# Model_Params['eps'],Model_Params['stress'],Model_Params['Delta_CT'] = model_params_lists[args.run_ind]
 
 Run_ID = 'Itterated:'+str(i)+'_'+str(j)+'_'
 Run_ID = Run_ID+'_'.join("{!s}={!r}".format(key,val) for (key,val) in Model_Params.items())
