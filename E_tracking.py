@@ -47,11 +47,11 @@ args = parser.parse_args()
 Run_ID = 'Itterated:'+str(i)+'_'
 Run_ID = Run_ID+'_'.join("{!s}={!r}".format(key, val) for (key, val) in Model_Params.items())
 
-outfolder = os.path.join('Results', 'E_Tracker', Run_ID)
+Results_Folder = os.path.join('Results', Run_ID)
 
-if not os.path.exists(outfolder): os.mkdir(outfolder)
+if not os.path.exists(Results_Folder): os.mkdir(Results_Folder)
 
-sys.stdout = open(outfolder+'/logs.txt','w+')
+sys.stdout = open(Results_Folder+'/logs.txt','w+')
 for (key, val) in Model_Params.items():
     print("{!s}={!r}".format(key, val))
 print("Itterated : {} Values: {}".format(i,i_values))
@@ -61,6 +61,6 @@ Solver = HFA_Solver(Model, method=method,beta=beta, Itteration_limit=Itteration_
 sweeper = E_Tracker(Model, Solver, i, i_values, guesses=params_list, n_threads=8, Bandwidth_Normalization=bw_norm, verbose=verbose)
 
 sweeper.Sweep()
-sweeper.save_results(outfolder, Include_MFPs=True)
+sweeper.save_results(Results_Folder, Include_MFPs=True)
 
 print('done')

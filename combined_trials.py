@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import os
 from time import time
@@ -57,10 +58,16 @@ args = parser.parse_args()
 # Model_Params['eps'],Model_Params['stress'],Model_Params['Delta_CT'] = model_params_lists[args.run_ind]
 
 Run_ID = 'Itterated:'+str(i)+'_'+str(j)+'_'
-Run_ID = Run_ID+'_'.join("{!s}={!r}".format(key,val) for (key,val) in Model_Params.items())
+Run_ID = Run_ID + '_'.join("{!s}={!r}".format(key, val) for (key, val) in Model_Params.items())
 
 Results_Folder = os.path.join('Results',Run_ID)
+if not os.path.exists(Results_Folder):  os.makedirs(Results_Folder)
 
+sys.stdout = open(Results_Folder+'/logs.txt', 'w+')
+for (key, val) in Model_Params.items():
+    print("{!s}={!r}".format(key, val))
+print("Itterated : {} Values: {} \n ".format(i, i_values))
+print("Itterated : {} Values: {}".format(j, j_values))
 
 for n in range(len(params_list)):
     # Guesses Input
@@ -78,7 +85,7 @@ for n in range(len(params_list)):
     sweeper = Phase_Diagram_Sweeper(Model, Solver, MF_params, i, i_values, j, j_values, n_threads=args.n_threads, Bandwidth_Normalization=bw_norm, verbose=verbose)
 
     sweeper.Sweep()
-    sweeper.save_results(outfolder,Include_MFPs=save_guess_mfps)
+    sweeper.save_results(outfolder, Include_MFPs=save_guess_mfps)
 
     print(f'Diagram itteration: {n} time to complete (s): {round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} % \n')
 
@@ -89,14 +96,14 @@ Final_Results_Folder = os.path.join(Results_Folder, 'Final_Results')
 if not os.path.exists(Final_Results_Folder): os.makedirs(Final_Results_Folder)
 
 Model = Hamiltonian(Model_Params)
-Solver = HFA_Solver(Model,method=method, beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
+Solver = HFA_Solver(Model, method=method, beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
 
 Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(Input_Folder, params_list, input_MFP=save_guess_mfps)
 
 sweeper = Phase_Diagram_Sweeper(Model, Solver, Optimal_guesses, i, i_values, j, j_values, n_threads=args.n_threads,Bandwidth_Normalization=bw_norm, verbose=verbose)
 
 sweeper.Sweep()
-sweeper.save_results(Final_Results_Folder,Include_MFPs=True)
+sweeper.save_results(Final_Results_Folder, Include_MFPs=True)
 
 Final_Energies = sweeper.Es_trial
 print(f'Initial guess sweep and final calculations are consistent:{np.array_equal(Final_Energies, Optimal_Energy)}')
