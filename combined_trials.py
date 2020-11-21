@@ -22,8 +22,8 @@ Model_Params = dict(
     J=1)
 
 i, j = 'U', 'J',
-i_values = np.linspace(0, 1, 35)
-j_values = np.linspace(0, 1, 35)
+i_values = np.linspace(0, 3, 40)
+j_values = np.linspace(0, 6, 40)
 
 
 params_list = [
@@ -39,7 +39,7 @@ method = 'sigmoid'
 beta = 1.5
 Itteration_limit = 250
 tolerance = 1e-3
-bw_norm = True
+bw_norm = False
 
 verbose = True
 save_guess_mfps = True

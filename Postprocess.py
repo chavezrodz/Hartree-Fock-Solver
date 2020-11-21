@@ -7,7 +7,7 @@ Model_Params = dict(
     N_shape=(50, 50),
     Filling=0.25,
     BZ_rot=1,
-    stress=0,
+    stress=-1,
     Delta_CT=0,
     eps=0,
     t_1=1,
@@ -17,12 +17,12 @@ Model_Params = dict(
     J=1)
 
 i, j = 'U', 'J',
-i_values = np.linspace(0, 4, 35)
+i_values = np.linspace(0, 1, 35)
 j_values = np.linspace(0, 1, 35)
 
 Model = Hamiltonian(Model_Params)
 
-run_folders = 'stress0'
+run_folders = 'tent'
 for folder in os.listdir(os.path.join('Results', run_folders)):
     frf = os.path.join('Results', run_folders, folder, 'Final_Results')
     print(frf)
