@@ -25,6 +25,14 @@ i, j = 'U', 'J',
 i_values = np.linspace(0, 3, 40)
 j_values = np.linspace(0, 6, 40)
 
+method = 'sigmoid'
+beta = 1.5
+Itteration_limit = 250
+tolerance = 1e-3
+bw_norm = False
+
+verbose = True
+save_guess_mfps = True
 
 params_list = [
     (1, 1, 0, 1, 0.15),
@@ -35,14 +43,6 @@ params_list = [
     (0.5, 0.5, 0.5, 0.5, 0.5)
 ]
 
-method = 'sigmoid'
-beta = 1.5
-Itteration_limit = 250
-tolerance = 1e-3
-bw_norm = False
-
-verbose = True
-save_guess_mfps = True
 
 # Command Line Arguments
 parser = argparse.ArgumentParser()

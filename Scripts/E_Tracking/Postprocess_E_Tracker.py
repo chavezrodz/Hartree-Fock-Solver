@@ -5,7 +5,7 @@ from Code.Display.ResultsPlots import E_Plots
 
 
 Model_Params = dict(
-    N_shape=(10, 10),
+    N_shape=(50, 50),
     Filling=0.25,
     Delta_CT=1,
     stress=-1,
@@ -18,7 +18,7 @@ Model_Params = dict(
     J=0.1)
 
 i = 'U'
-i_values = np.linspace(0, 4, 5)
+i_values = np.linspace(0, 4, 35)
 
 params_list = [
     (1, 1, 0, 1, 0.15),
@@ -31,13 +31,14 @@ params_list = [
 
 method = 'sigmoid'
 beta = 1.5
-Itteration_limit = 50
+Itteration_limit = 250
 tolerance = 1e-3
 bw_norm = True
 verbose = True
+
 Model = Hamiltonian(Model_Params)
 
-run_folders = 'E_Tracker'
+run_folders = 'tent/1d'
 for folder in os.listdir(os.path.join('Results', run_folders)):
     frf = os.path.join('Results', run_folders, folder)
     print(frf)

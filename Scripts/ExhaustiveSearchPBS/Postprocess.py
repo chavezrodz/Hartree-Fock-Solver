@@ -17,16 +17,25 @@ Model_Params = dict(
     J=1)
 
 i, j = 'U', 'J',
-i_values = np.linspace(0, 1, 35)
-j_values = np.linspace(0, 1, 35)
+i_values = np.linspace(0, 3, 40)
+j_values = np.linspace(0, 6, 40)
+
+method = 'sigmoid'
+beta = 1.5
+Itteration_limit = 250
+tolerance = 1e-3
+bw_norm = False
+
+verbose = True
+save_guess_mfps = True
 
 Model = Hamiltonian(Model_Params)
 
-run_folders = 'tent'
+run_folders = 'tent/tent'
 for folder in os.listdir(os.path.join('Results', run_folders)):
     frf = os.path.join('Results', run_folders, folder, 'Final_Results')
     print(frf)
-    sweeper_plots(i, i_values, j, j_values, Model.Dict, frf, BW_norm=True)
+    sweeper_plots(i, i_values, j, j_values, Model.Dict, frf, BW_norm=bw_norm)
     # break
     # break
     # guesses_folder = os.path.join('Results', run_folders, folder, 'Guesses_Results')

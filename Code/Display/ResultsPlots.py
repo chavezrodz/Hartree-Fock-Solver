@@ -110,8 +110,8 @@ def one_dimensional_phases(Phase, i_label, i_values, results_folder, show, trans
     plt.close()
 
 
-def density_of_states(i_label,i_value,Energies,Fermi_Energy,results_folder,show,transparent):
-    plt.hist(Energies.flatten(),bins='fd')
+def density_of_states(i_label, i_value, Energies, Fermi_Energy, results_folder, show, transparent):
+    plt.hist(Energies.flatten(), bins='fd')
     plt.title('Density of states')
     plt.axvline(Fermi_Energy, label='Fermi Energy',color='red')
     plt.xlabel('Energy (Ev)')
@@ -154,7 +154,7 @@ def E_Plots(i_label, i_values, Dict, guesses, final_results_folder=None, show=Fa
     for i, v in enumerate(i_values):
         Energies = sol_energies[i]
         Fermi_Energy = fermis[i]
-        density_of_states(i_label, i, Energies, Fermi_Energy, final_results_folder, show, transparent)
+        density_of_states(i_label, v, Energies, Fermi_Energy, final_results_folder, show, transparent)
 
     features = ['Energies', 'Distortion', 'Convergence', 'Conductance']
     for feature in features:
