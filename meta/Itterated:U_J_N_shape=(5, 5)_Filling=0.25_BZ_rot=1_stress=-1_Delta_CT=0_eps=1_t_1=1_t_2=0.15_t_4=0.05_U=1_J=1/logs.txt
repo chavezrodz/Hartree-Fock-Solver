@@ -1,0 +1,695 @@
+N_shape=(5, 5)
+Filling=0.25
+BZ_rot=1
+stress=-1
+Delta_CT=0
+eps=1
+t_1=1
+t_2=0.15
+t_4=0.05
+U=1
+J=1
+Itterated : U Values: [0.         0.33333333 0.66666667 1.         1.33333333 1.66666667
+ 2.         2.33333333 2.66666667 3.        ] 
+ 
+Itterated : J Values: [0.         0.66666667 1.33333333 2.         2.66666667 3.33333333
+ 4.         4.66666667 5.33333333 6.        ]
+U:0.67 J:0.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.    -0.948  0.    -0.001] Converged in :17 steps
+U:0.67 J:0.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.835  0.    -0.   ] Converged in :19 steps
+U:0.67 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.002  0.04  -0.61   0.    -0.   ] Converged in :27 steps
+U:0.67 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.009  0.36  -0.477  0.006  0.   ] Converged in :92 steps
+U:1.00 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.742  0.76  -0.153  0.655  0.035] Converged in :15 steps
+U:1.00 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.814  0.84  -0.107  0.749  0.031] Converged in :14 steps
+U:1.00 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:1.00 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.921  1.    -0.     0.921  0.053] Converged in :11 steps
+U:2.33 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.12  -0.739  0.001 -0.   ] Converged in :21 steps
+U:2.33 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.003  0.36  -0.505  0.002  0.   ] Converged in :46 steps
+U:2.33 J:2.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.074  0.36  -0.424  0.061  0.008] Converged in :140 steps
+U:2.33 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.469  0.52  -0.319  0.401  0.037] Converged in :26 steps
+U:0.33 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.002  0.04  -0.605  0.    -0.   ] Converged in :30 steps
+U:0.33 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:0.33 J:2.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.368  0.36  -0.384  0.235  0.012] Converged in :33 steps
+U:0.33 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.582  0.52  -0.282  0.424  0.018] Converged in :153 steps
+U:2.67 J:0.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [-0.     0.    -0.968  0.001  0.   ] Converged in :16 steps
+U:2.67 J:0.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.     0.04  -0.899  0.001 -0.   ] Converged in :17 steps
+U:2.67 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.12  -0.747  0.001 -0.   ] Converged in :21 steps
+U:2.67 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.002  0.36  -0.51   0.002  0.   ] Converged in :43 steps
+U:2.67 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.898  1.    -0.     0.898  0.066] Converged in :12 steps
+U:2.67 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.916  1.    -0.     0.916  0.056] Converged in :11 steps
+U:3.00 J:0.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [-0.     0.    -0.97   0.001  0.   ] Converged in :17 steps
+U:3.00 J:0.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.     0.    -0.933  0.001 -0.   ] Converged in :18 steps
+U:3.00 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.736  0.84  -0.123  0.713  0.059] Converged in :15 steps
+U:3.00 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.849  0.96  -0.032  0.841  0.067] Converged in :13 steps
+U:3.00 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.896  1.    -0.     0.896  0.067] Converged in :12 steps
+U:3.00 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.915  1.    -0.     0.915  0.057] Converged in :11 steps
+U:0.00 J:0.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.     0.    -0.938  0.    -0.   ] Converged in :19 steps
+U:0.00 J:0.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.817  0.    -0.   ] Converged in :20 steps
+U:0.00 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.002  0.04  -0.598  0.    -0.   ] Converged in :33 steps
+U:0.00 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.007  0.04  -0.5    0.001 -0.   ] Converged in :127 steps
+U:1.33 J:0.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.     0.    -0.956  0.    -0.   ] Converged in :16 steps
+U:1.33 J:0.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.85   0.    -0.   ] Converged in :17 steps
+U:1.33 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.12  -0.668  0.001 -0.   ] Converged in :23 steps
+U:1.33 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.005  0.36  -0.489  0.003  0.   ] Converged in :62 steps
+U:1.33 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.888  0.96  -0.031  0.87   0.048] Converged in :12 steps
+U:1.33 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.92   1.    -0.     0.92   0.054] Converged in :11 steps
+U:1.67 J:0.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.     0.    -0.959  0.    -0.   ] Converged in :15 steps
+U:1.67 J:0.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.857  0.    -0.   ] Converged in :17 steps
+U:1.67 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.741  0.8   -0.14   0.682  0.044] Converged in :17 steps
+U:1.67 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.804  0.84  -0.11   0.749  0.036] Converged in :15 steps
+U:1.67 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.886  0.96  -0.031  0.869  0.049] Converged in :12 steps
+U:1.67 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.919  1.    -0.     0.919  0.054] Converged in :11 steps
+U:2.00 J:2.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.142  0.36  -0.419  0.112  0.013] Converged in :85 steps
+U:2.00 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.488  0.52  -0.314  0.405  0.034] Converged in :25 steps
+U:2.00 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.733  0.8   -0.142  0.682  0.047] Converged in :141 steps
+U:2.00 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.798  0.84  -0.111  0.749  0.038] Converged in :19 steps
+U:0.33 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:0.33 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.824  0.84  -0.104  0.749  0.027] Converged in :12 steps
+U:0.33 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.853  0.84  -0.094  0.771  0.019] Converged in :160 steps
+U:0.33 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.911  0.96  -0.029  0.888  0.035] Converged in :12 steps
+U:2.00 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:2.00 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.918  1.    -0.     0.918  0.055] Converged in :11 steps
+U:2.33 J:0.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [-0.     0.    -0.965  0.     0.   ] Converged in :16 steps
+U:2.33 J:0.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.     0.04  -0.867  0.001 -0.   ] Converged in :17 steps
+U:0.67 J:2.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.33   0.36  -0.392  0.219  0.014] Converged in :36 steps
+U:0.67 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.563  0.52  -0.289  0.42   0.021] Converged in :106 steps
+U:0.67 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:0.67 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.82   0.84  -0.106  0.749  0.029] Converged in :12 steps
+U:2.00 J:0.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.     0.    -0.963  0.001 -0.   ] Converged in :15 steps
+U:2.00 J:0.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.     0.04  -0.862  0.001 -0.   ] Converged in :17 steps
+U:2.00 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:2.00 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.003  0.36  -0.5    0.003  0.   ] Converged in :49 steps
+U:0.00 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.857  0.84  -0.093  0.77   0.018] Converged in :12 steps
+U:0.00 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.912  0.96  -0.029  0.888  0.034] Converged in :11 steps
+U:0.33 J:0.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.    -0.944  0.    -0.001] Converged in :18 steps
+U:0.33 J:0.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.827  0.    -0.   ] Converged in :19 steps
+U:1.00 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.616  0.    -0.   ] Converged in :25 steps
+U:1.00 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.006  0.36  -0.483  0.004  0.   ] Converged in :73 steps
+U:1.00 J:2.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.29   0.36  -0.4    0.2    0.015] Converged in :41 steps
+U:1.00 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.546  0.52  -0.295  0.418  0.024] Converged in :22 steps
+U:1.33 J:2.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.246  0.36  -0.407  0.177  0.016] Converged in :49 steps
+U:1.33 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.527  0.52  -0.302  0.414  0.028] Converged in :24 steps
+U:1.33 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.748  0.8   -0.139  0.683  0.041] Converged in :14 steps
+U:1.33 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.809  0.84  -0.109  0.749  0.034] Converged in :14 steps
+U:1.67 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.12  -0.675  0.001 -0.   ] Converged in :22 steps
+U:1.67 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.004  0.36  -0.494  0.003  0.   ] Converged in :54 steps
+U:1.67 J:2.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.198  0.36  -0.413  0.149  0.015] Converged in :61 steps
+U:1.67 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.507  0.52  -0.308  0.41   0.031] Converged in :24 steps
+U:2.33 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.749  0.84  -0.121  0.714  0.053] Converged in :15 steps
+U:2.33 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:2.33 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.9    1.    -0.     0.9    0.065] Converged in :11 steps
+U:2.33 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.917  1.    -0.     0.917  0.056] Converged in :11 steps
+U:0.00 J:2.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.404  0.36  -0.375  0.248  0.009] Converged in :30 steps
+U:0.00 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:0.00 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.683  0.52  -0.23   0.471  0.012] Converged in :164 steps
+U:0.00 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.816  0.8   -0.117  0.716  0.022] Converged in :160 steps
+U:3.00 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.     0.12  -0.755  0.001 -0.   ] Converged in :22 steps
+U:3.00 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.002  0.36  -0.515  0.002  0.   ] Converged in :41 steps
+U:3.00 J:2.67 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:3.00 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.432  0.52  -0.33   0.391  0.042] Converged in :31 steps
+U:0.67 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:0.67 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:1.00 J:0.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.     0.    -0.952  0.    -0.   ] Converged in :17 steps
+U:1.00 J:0.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.843  0.    -0.   ] Converged in :18 steps
+U:2.67 J:2.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.027  0.36  -0.428  0.023  0.003] Converged in :165 steps
+U:2.67 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.45   0.52  -0.325  0.396  0.039] Converged in :29 steps
+U:2.67 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.742  0.84  -0.122  0.713  0.056] Converged in :15 steps
+U:2.67 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+Diagram itteration: 0 time to complete (s): 11.47 Converged points:88.0 % 
+
+U:0.67 J:2.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.33   0.36  -0.392  0.219  0.014] Converged in :36 steps
+U:0.67 J:3.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.563  0.52  -0.289  0.42   0.021] Converged in :106 steps
+U:0.67 J:4.00 Initial MFP: [1.   0.5  0.   1.   0.15] Did Not Converge
+U:0.67 J:4.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.819  0.84  -0.106  0.748  0.029] Converged in :196 steps
+U:2.00 J:2.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.142  0.36  -0.419  0.112  0.013] Converged in :84 steps
+U:2.00 J:3.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.488  0.52  -0.314  0.405  0.034] Converged in :23 steps
+U:2.00 J:4.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.732  0.8   -0.142  0.681  0.047] Converged in :66 steps
+U:2.00 J:4.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.798  0.84  -0.111  0.749  0.038] Converged in :13 steps
+U:2.67 J:5.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.897  1.    -0.     0.897  0.066] Converged in :14 steps
+U:2.67 J:6.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.916  1.    -0.     0.916  0.056] Converged in :12 steps
+U:3.00 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [-0.     0.    -0.97   0.001  0.   ] Converged in :17 steps
+U:3.00 J:0.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.    -0.933  0.001 -0.   ] Converged in :18 steps
+U:0.67 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.    -0.948  0.    -0.001] Converged in :17 steps
+U:0.67 J:0.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.835  0.    -0.   ] Converged in :19 steps
+U:0.67 J:1.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.002  0.04  -0.61   0.    -0.   ] Converged in :27 steps
+U:0.67 J:2.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.009  0.36  -0.477  0.006  0.   ] Converged in :92 steps
+U:1.00 J:1.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.616  0.    -0.   ] Converged in :25 steps
+U:1.00 J:2.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.006  0.36  -0.483  0.004  0.   ] Converged in :73 steps
+U:1.00 J:2.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.289  0.36  -0.4    0.2    0.015] Converged in :41 steps
+U:1.00 J:3.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.544  0.52  -0.296  0.417  0.025] Converged in :71 steps
+U:1.33 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.    -0.956  0.    -0.   ] Converged in :16 steps
+U:1.33 J:0.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.85   0.    -0.   ] Converged in :17 steps
+U:1.33 J:1.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.12  -0.668  0.    -0.   ] Converged in :23 steps
+U:1.33 J:2.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.005  0.36  -0.489  0.004  0.   ] Converged in :61 steps
+U:1.33 J:5.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.887  0.96  -0.031  0.869  0.048] Converged in :14 steps
+U:1.33 J:6.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.92   1.    -0.     0.92   0.054] Converged in :14 steps
+U:1.67 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.    -0.959  0.    -0.   ] Converged in :15 steps
+U:1.67 J:0.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.04  -0.857  0.    -0.   ] Converged in :17 steps
+U:1.67 J:4.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.741  0.8   -0.14   0.682  0.044] Converged in :14 steps
+U:1.67 J:4.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.804  0.84  -0.11   0.749  0.036] Converged in :13 steps
+U:1.67 J:5.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.885  0.96  -0.031  0.868  0.049] Converged in :13 steps
+U:1.67 J:6.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.919  1.    -0.     0.919  0.054] Converged in :13 steps
+U:2.00 J:5.33 Initial MFP: [1.   0.5  0.   1.   0.15] Did Not Converge
+U:2.00 J:6.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.918  1.    -0.     0.918  0.055] Converged in :13 steps
+U:2.33 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [-0.     0.    -0.965  0.     0.   ] Converged in :16 steps
+U:2.33 J:0.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.04  -0.867  0.001 -0.   ] Converged in :17 steps
+U:0.00 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.    -0.938  0.    -0.   ] Converged in :19 steps
+U:0.00 J:0.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.817  0.    -0.   ] Converged in :20 steps
+U:0.00 J:1.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.002  0.04  -0.598  0.    -0.   ] Converged in :33 steps
+U:0.00 J:2.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.005  0.041 -0.5    0.001 -0.   ] Converged in :126 steps
+U:1.00 J:4.00 Initial MFP: [1.   0.5  0.   1.   0.15] Did Not Converge
+U:1.00 J:4.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.814  0.84  -0.107  0.748  0.031] Converged in :16 steps
+U:1.00 J:5.33 Initial MFP: [1.   0.5  0.   1.   0.15] Did Not Converge
+U:1.00 J:6.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.921  1.    -0.     0.921  0.053] Converged in :15 steps
+U:2.67 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [-0.     0.    -0.968  0.001  0.   ] Converged in :16 steps
+U:2.67 J:0.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.04  -0.899  0.001 -0.   ] Converged in :17 steps
+U:2.67 J:1.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.12  -0.747  0.001 -0.   ] Converged in :21 steps
+U:2.67 J:2.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.002  0.36  -0.51   0.002  0.   ] Converged in :43 steps
+U:3.00 J:4.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.735  0.84  -0.123  0.713  0.059] Converged in :14 steps
+U:3.00 J:4.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.849  0.96  -0.032  0.84   0.067] Converged in :17 steps
+U:3.00 J:5.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.896  1.    -0.001  0.896  0.067] Converged in :13 steps
+U:3.00 J:6.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.915  1.    -0.     0.914  0.057] Converged in :12 steps
+U:0.67 J:5.33 Initial MFP: [1.   0.5  0.   1.   0.15] Did Not Converge
+U:0.67 J:6.00 Initial MFP: [1.   0.5  0.   1.   0.15] Did Not Converge
+U:1.00 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.    -0.952  0.    -0.   ] Converged in :17 steps
+U:1.00 J:0.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.843  0.    -0.   ] Converged in :18 steps
+U:2.00 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.    -0.963  0.001 -0.   ] Converged in :15 steps
+U:2.00 J:0.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.04  -0.862  0.001 -0.   ] Converged in :17 steps
+U:2.00 J:1.33 Initial MFP: [1.   0.5  0.   1.   0.15] Did Not Converge
+U:2.00 J:2.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.003  0.36  -0.5    0.003  0.   ] Converged in :49 steps
+U:0.33 J:4.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.669  0.52  -0.237  0.471  0.016] Converged in :157 steps
+U:0.33 J:4.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.823  0.84  -0.105  0.748  0.027] Converged in :209 steps
+U:0.33 J:5.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.852 -0.84  -0.095 -0.769  0.02 ] Converged in :248 steps
+U:0.33 J:6.00 Initial MFP: [1.   0.5  0.   1.   0.15] Did Not Converge
+U:0.00 J:5.33 Initial MFP: [1.   0.5  0.   1.   0.15] Did Not Converge
+U:0.00 J:6.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.912  0.96  -0.029  0.887  0.035] Converged in :216 steps
+U:0.33 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.    -0.944  0.    -0.001] Converged in :18 steps
+U:0.33 J:0.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.04  -0.827  0.    -0.   ] Converged in :19 steps
+U:1.67 J:1.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.12  -0.675  0.001 -0.   ] Converged in :22 steps
+U:1.67 J:2.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.004  0.36  -0.494  0.003  0.   ] Converged in :54 steps
+U:1.67 J:2.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.198  0.36  -0.413  0.149  0.015] Converged in :60 steps
+U:1.67 J:3.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.507  0.52  -0.308  0.41   0.031] Converged in :23 steps
+U:2.33 J:1.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.12  -0.739  0.001 -0.   ] Converged in :21 steps
+U:2.33 J:2.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.003  0.36  -0.505  0.002  0.   ] Converged in :45 steps
+U:2.33 J:2.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.075  0.36  -0.424  0.061  0.008] Converged in :138 steps
+U:2.33 J:3.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.469  0.52  -0.319  0.401  0.037] Converged in :25 steps
+U:0.00 J:2.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.386  0.28  -0.362  0.189  0.01 ] Converged in :207 steps
+U:0.00 J:3.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.548  0.36  -0.309  0.318  0.01 ] Converged in :111 steps
+U:0.00 J:4.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.683  0.52  -0.23   0.471  0.012] Converged in :164 steps
+U:0.00 J:4.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.815  0.8   -0.117  0.714  0.022] Converged in :225 steps
+U:2.33 J:4.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.749  0.84  -0.121  0.714  0.053] Converged in :13 steps
+U:2.33 J:4.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.793  0.84  -0.113  0.75   0.041] Converged in :13 steps
+U:2.33 J:5.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.899  1.    -0.     0.899  0.065] Converged in :15 steps
+U:2.33 J:6.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.917  1.    -0.     0.917  0.056] Converged in :12 steps
+U:3.00 J:1.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.12  -0.755  0.001 -0.   ] Converged in :21 steps
+U:3.00 J:2.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.002  0.36  -0.515  0.002  0.   ] Converged in :41 steps
+U:3.00 J:2.67 Initial MFP: [1.   0.5  0.   1.   0.15] Did Not Converge
+U:3.00 J:3.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.431  0.52  -0.33   0.391  0.042] Converged in :28 steps
+U:0.33 J:1.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.002  0.04  -0.605  0.    -0.   ] Converged in :30 steps
+U:0.33 J:2.00 Initial MFP: [1.   0.5  0.   1.   0.15] Did Not Converge
+U:0.33 J:2.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.368  0.36  -0.384  0.235  0.012] Converged in :32 steps
+U:0.33 J:3.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.582  0.52  -0.282  0.424  0.018] Converged in :153 steps
+U:1.33 J:2.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.246  0.36  -0.407  0.177  0.016] Converged in :48 steps
+U:1.33 J:3.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.525  0.52  -0.302  0.413  0.028] Converged in :42 steps
+U:1.33 J:4.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.732  0.76  -0.155  0.654  0.039] Converged in :186 steps
+U:1.33 J:4.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.809  0.84  -0.109  0.749  0.034] Converged in :13 steps
+U:2.67 J:2.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.027  0.36  -0.428  0.023  0.003] Converged in :164 steps
+U:2.67 J:3.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.45   0.52  -0.325  0.396  0.039] Converged in :26 steps
+U:2.67 J:4.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.742  0.84  -0.122  0.713  0.056] Converged in :14 steps
+U:2.67 J:4.67 Initial MFP: [1.   0.5  0.   1.   0.15] Did Not Converge
+Diagram itteration: 1 time to complete (s): 17.498 Converged points:88.0 % 
+
+U:0.33 J:4.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.277  0.     0.   ] Converged in :10 steps
+U:0.33 J:4.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.253  0.     0.   ] Converged in :10 steps
+U:0.33 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.231  0.     0.   ] Converged in :13 steps
+U:0.33 J:6.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.212  0.     0.   ] Converged in :25 steps
+U:1.00 J:4.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.359 -0.314  0.     0.   ] Converged in :140 steps
+U:1.00 J:4.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.258  0.     0.   ] Converged in :10 steps
+U:1.00 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.236  0.     0.   ] Converged in :12 steps
+U:1.00 J:6.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.519 -0.215  0.     0.   ] Converged in :113 steps
+U:2.67 J:2.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.359 -0.428  0.     0.   ] Converged in :15 steps
+U:2.67 J:3.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.36  -0.381  0.     0.   ] Converged in :15 steps
+U:2.67 J:4.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.303  0.     0.   ] Converged in :20 steps
+U:2.67 J:4.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.273  0.     0.   ] Converged in :16 steps
+U:0.00 J:2.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.199 -0.37   0.     0.   ] Converged in :118 steps
+U:0.00 J:3.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Did Not Converge
+U:0.00 J:4.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.275  0.     0.   ] Converged in :12 steps
+U:0.00 J:4.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.251  0.     0.   ] Converged in :10 steps
+U:2.67 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.246  0.     0.   ] Converged in :18 steps
+U:2.67 J:6.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.8   -0.127  0.     0.   ] Converged in :23 steps
+U:3.00 J:0.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.    0.   -0.97  0.    0.  ] Converged in :14 steps
+U:3.00 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.932  0.     0.   ] Converged in :13 steps
+U:0.00 J:0.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.938  0.     0.   ] Converged in :13 steps
+U:0.00 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.817  0.     0.   ] Converged in :12 steps
+U:0.00 J:1.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.598  0.     0.   ] Converged in :10 steps
+U:0.00 J:2.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.041 -0.5    0.     0.   ] Converged in :125 steps
+U:1.67 J:1.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.12  -0.675  0.     0.   ] Converged in :12 steps
+U:1.67 J:2.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Did Not Converge
+U:1.67 J:2.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.36  -0.415  0.     0.   ] Converged in :16 steps
+U:1.67 J:3.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.36  -0.367  0.     0.   ] Converged in :17 steps
+U:0.67 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.234  0.     0.   ] Converged in :12 steps
+U:0.67 J:6.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.214  0.     0.   ] Converged in :24 steps
+U:1.00 J:0.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.952  0.     0.   ] Converged in :14 steps
+U:1.00 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.843  0.     0.   ] Converged in :12 steps
+U:1.33 J:0.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.956  0.     0.   ] Converged in :14 steps
+U:1.33 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.    0.04 -0.85  0.    0.  ] Converged in :12 steps
+U:1.33 J:1.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.12  -0.668  0.     0.   ] Converged in :13 steps
+U:1.33 J:2.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.527  0.     0.   ] Converged in :10 steps
+U:1.33 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.238  0.     0.   ] Converged in :10 steps
+U:1.33 J:6.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.217  0.     0.   ] Converged in :107 steps
+U:1.67 J:0.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.959  0.     0.   ] Converged in :14 steps
+U:1.67 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.856  0.     0.   ] Converged in :13 steps
+U:2.00 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.242  0.     0.   ] Converged in :19 steps
+U:2.00 J:6.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Did Not Converge
+U:2.33 J:0.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.965  0.     0.   ] Converged in :14 steps
+U:2.33 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.867  0.     0.   ] Converged in :12 steps
+U:0.00 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.229  0.     0.   ] Converged in :13 steps
+U:0.00 J:6.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.211  0.     0.   ] Converged in :29 steps
+U:0.33 J:0.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.943  0.     0.   ] Converged in :13 steps
+U:0.33 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.827  0.     0.   ] Converged in :12 steps
+U:1.33 J:2.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.    0.36 -0.41  0.    0.  ] Converged in :44 steps
+U:1.33 J:3.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.359 -0.362  0.     0.   ] Converged in :48 steps
+U:1.33 J:4.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.36  -0.318  0.     0.   ] Converged in :20 steps
+U:1.33 J:4.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.    0.2  -0.26  0.    0.  ] Converged in :10 steps
+U:2.00 J:2.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.36  -0.419  0.     0.   ] Converged in :17 steps
+U:2.00 J:3.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.36  -0.371  0.     0.   ] Converged in :15 steps
+U:2.00 J:4.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.439 -0.316  0.     0.   ] Converged in :19 steps
+U:2.00 J:4.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.267  0.     0.   ] Converged in :18 steps
+U:2.33 J:1.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.12  -0.739  0.     0.   ] Converged in :13 steps
+U:2.33 J:2.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.578  0.     0.   ] Converged in :10 steps
+U:2.33 J:2.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.36  -0.424  0.     0.   ] Converged in :15 steps
+U:2.33 J:3.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.36  -0.376  0.     0.   ] Converged in :15 steps
+U:2.33 J:4.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.    0.44 -0.32  0.    0.  ] Converged in :18 steps
+U:2.33 J:4.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.    0.52 -0.27  0.    0.  ] Converged in :16 steps
+U:2.33 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.244  0.     0.   ] Converged in :20 steps
+U:2.33 J:6.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Did Not Converge
+U:0.33 J:1.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.605  0.     0.   ] Converged in :11 steps
+U:0.33 J:2.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.507  0.     0.   ] Converged in :52 steps
+U:0.33 J:2.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.373  0.     0.   ] Converged in :93 steps
+U:0.33 J:3.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Did Not Converge
+U:3.00 J:4.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.519 -0.306  0.     0.   ] Converged in :17 steps
+U:3.00 J:4.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.276  0.     0.   ] Converged in :16 steps
+U:3.00 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Did Not Converge
+U:3.00 J:6.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.8   -0.128  0.     0.   ] Converged in :19 steps
+U:0.67 J:2.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.377  0.     0.   ] Converged in :116 steps
+U:0.67 J:3.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.28  -0.339  0.     0.   ] Converged in :49 steps
+U:0.67 J:4.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.    0.2  -0.28  0.    0.  ] Converged in :10 steps
+U:0.67 J:4.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.256  0.     0.   ] Converged in :10 steps
+U:1.67 J:4.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.44  -0.312  0.     0.   ] Converged in :21 steps
+U:1.67 J:4.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.265  0.     0.   ] Converged in :21 steps
+U:1.67 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.239  0.     0.   ] Converged in :21 steps
+U:1.67 J:6.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.219  0.     0.   ] Converged in :103 steps
+U:2.67 J:0.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.968  0.     0.   ] Converged in :14 steps
+U:2.67 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.926  0.     0.   ] Converged in :13 steps
+U:2.67 J:1.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.12  -0.747  0.     0.   ] Converged in :14 steps
+U:2.67 J:2.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.585  0.     0.   ] Converged in :10 steps
+U:3.00 J:1.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.807  0.     0.   ] Converged in :11 steps
+U:3.00 J:2.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.592  0.     0.   ] Converged in :11 steps
+U:3.00 J:2.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Did Not Converge
+U:3.00 J:3.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.44  -0.371  0.     0.   ] Converged in :18 steps
+U:0.67 J:0.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.948  0.     0.   ] Converged in :13 steps
+U:0.67 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.835  0.     0.   ] Converged in :12 steps
+U:0.67 J:1.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.    0.04 -0.61  0.    0.  ] Converged in :11 steps
+U:0.67 J:2.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.514  0.     0.   ] Converged in :12 steps
+U:1.00 J:1.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.616  0.     0.   ] Converged in :11 steps
+U:1.00 J:2.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.521  0.     0.   ] Converged in :10 steps
+U:1.00 J:2.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.    0.2  -0.38  0.    0.  ] Converged in :74 steps
+U:1.00 J:3.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.28  -0.343  0.     0.   ] Converged in :43 steps
+U:2.00 J:0.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.962  0.     0.   ] Converged in :14 steps
+U:2.00 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.862  0.     0.   ] Converged in :13 steps
+U:2.00 J:1.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Did Not Converge
+U:2.00 J:2.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Did Not Converge
+Diagram itteration: 2 time to complete (s): 11.643 Converged points:91.0 % 
+
+U:0.00 J:0.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.    -0.938  0.    -0.   ] Converged in :14 steps
+U:0.00 J:0.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.001  0.04  -0.817  0.    -0.   ] Converged in :15 steps
+U:0.00 J:1.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.002  0.04  -0.598  0.    -0.   ] Converged in :23 steps
+U:0.00 J:2.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.002  0.041 -0.5    0.    -0.   ] Converged in :125 steps
+U:1.00 J:4.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:1.00 J:4.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.813  0.84  -0.107  0.748  0.031] Converged in :186 steps
+U:1.00 J:5.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:1.00 J:6.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:0.67 J:5.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:0.67 J:6.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:1.00 J:0.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.    -0.952  0.    -0.   ] Converged in :14 steps
+U:1.00 J:0.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.001  0.04  -0.843  0.    -0.   ] Converged in :14 steps
+U:1.67 J:4.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.74   0.8   -0.141  0.681  0.044] Converged in :116 steps
+U:1.67 J:4.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.803  0.84  -0.11   0.748  0.036] Converged in :165 steps
+U:1.67 J:5.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.885  0.96  -0.031  0.868  0.049] Converged in :211 steps
+U:1.67 J:6.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.919  1.    -0.     0.918  0.054] Converged in :240 steps
+U:0.33 J:4.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.669  0.52  -0.237  0.471  0.016] Converged in :157 steps
+U:0.33 J:4.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.823  0.84  -0.105  0.748  0.027] Converged in :209 steps
+U:0.33 J:5.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.852  0.84  -0.095  0.769  0.02 ] Converged in :209 steps
+U:0.33 J:6.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:2.00 J:5.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:2.00 J:6.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.917  1.    -0.     0.917  0.055] Converged in :209 steps
+U:2.33 J:0.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [-0.     0.    -0.965  0.     0.   ] Converged in :15 steps
+U:2.33 J:0.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.04  -0.867  0.001 -0.   ] Converged in :15 steps
+U:0.67 J:0.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.    -0.948  0.    -0.   ] Converged in :14 steps
+U:0.67 J:0.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.04  -0.835  0.    -0.   ] Converged in :15 steps
+U:0.67 J:1.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.002  0.04  -0.61   0.    -0.   ] Converged in :19 steps
+U:0.67 J:2.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.004  0.04  -0.514  0.001 -0.   ] Converged in :33 steps
+U:1.00 J:1.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.001  0.04  -0.616  0.    -0.   ] Converged in :18 steps
+U:1.00 J:2.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.003  0.04  -0.521  0.    -0.   ] Converged in :28 steps
+U:1.00 J:2.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.282  0.36  -0.4    0.196  0.015] Converged in :56 steps
+U:1.00 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.544  0.52  -0.296  0.417  0.025] Converged in :72 steps
+U:1.33 J:0.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.    -0.956  0.    -0.   ] Converged in :14 steps
+U:1.33 J:0.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.    0.04 -0.85  0.   -0.  ] Converged in :15 steps
+U:1.33 J:1.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.001  0.12  -0.668  0.    -0.   ] Converged in :18 steps
+U:1.33 J:2.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.041 -0.527  0.    -0.   ] Converged in :78 steps
+U:1.33 J:2.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.236  0.36  -0.407  0.17   0.016] Converged in :56 steps
+U:1.33 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.525  0.52  -0.302  0.412  0.028] Converged in :44 steps
+U:1.33 J:4.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.732  0.76  -0.155  0.654  0.039] Converged in :185 steps
+U:1.33 J:4.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.808  0.84  -0.109  0.748  0.034] Converged in :179 steps
+U:2.33 J:1.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.001  0.12  -0.739  0.001 -0.   ] Converged in :18 steps
+U:2.33 J:2.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.001  0.04  -0.578  0.001 -0.   ] Converged in :20 steps
+U:2.33 J:2.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.074  0.36  -0.424  0.061  0.008] Converged in :95 steps
+U:2.33 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.466  0.52  -0.32   0.398  0.037] Converged in :37 steps
+U:3.00 J:1.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.04  -0.807  0.001 -0.   ] Converged in :18 steps
+U:3.00 J:2.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.04  -0.592  0.001 -0.   ] Converged in :21 steps
+U:3.00 J:2.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:3.00 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.429  0.52  -0.33   0.389  0.042] Converged in :38 steps
+U:0.67 J:2.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.324  0.36  -0.393  0.215  0.014] Converged in :75 steps
+U:0.67 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.563  0.52  -0.289  0.42   0.021] Converged in :105 steps
+U:0.67 J:4.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.654  0.52  -0.243  0.471  0.019] Converged in :142 steps
+U:0.67 J:4.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.818  0.84  -0.106  0.748  0.029] Converged in :194 steps
+U:1.67 J:1.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.001  0.12  -0.675  0.001 -0.   ] Converged in :17 steps
+U:1.67 J:2.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:1.67 J:2.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.184  0.36  -0.413  0.138  0.014] Converged in :52 steps
+U:1.67 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.505  0.52  -0.308  0.408  0.031] Converged in :38 steps
+U:2.33 J:4.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.748  0.84  -0.121  0.713  0.053] Converged in :36 steps
+U:2.33 J:4.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.792  0.84  -0.113  0.749  0.041] Converged in :22 steps
+U:2.33 J:5.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.899  1.    -0.001  0.899  0.065] Converged in :195 steps
+U:2.33 J:6.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.916  1.    -0.     0.916  0.056] Converged in :209 steps
+U:0.00 J:5.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.856  0.84  -0.093  0.769  0.018] Converged in :238 steps
+U:0.00 J:6.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:0.33 J:0.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.    -0.943  0.    -0.   ] Converged in :14 steps
+U:0.33 J:0.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.001  0.04  -0.827  0.    -0.   ] Converged in :15 steps
+U:2.00 J:0.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [-0.     0.    -0.962  0.     0.   ] Converged in :15 steps
+U:2.00 J:0.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.04  -0.862  0.001 -0.   ] Converged in :15 steps
+U:2.00 J:1.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:2.00 J:2.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:3.00 J:4.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.735  0.84  -0.124  0.712  0.059] Converged in :30 steps
+U:3.00 J:4.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.849  0.96  -0.033  0.84   0.067] Converged in :27 steps
+U:3.00 J:5.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.896  1.    -0.     0.896  0.067] Converged in :22 steps
+U:3.00 J:6.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.914  1.    -0.     0.914  0.057] Converged in :207 steps
+U:0.00 J:2.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.386  0.28  -0.362  0.189  0.01 ] Converged in :207 steps
+U:0.00 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.548  0.36  -0.309  0.318  0.01 ] Converged in :111 steps
+U:0.00 J:4.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.683  0.52  -0.23   0.471  0.012] Converged in :165 steps
+U:0.00 J:4.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.815  0.8   -0.117  0.714  0.022] Converged in :216 steps
+U:2.00 J:2.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.141  0.36  -0.419  0.111  0.013] Converged in :17 steps
+U:2.00 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.485  0.52  -0.314  0.403  0.034] Converged in :37 steps
+U:2.00 J:4.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.732  0.8   -0.142  0.681  0.047] Converged in :65 steps
+U:2.00 J:4.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.797  0.84  -0.112  0.748  0.039] Converged in :150 steps
+U:2.67 J:2.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.026  0.36  -0.428  0.023  0.003] Converged in :126 steps
+U:2.67 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.447  0.52  -0.325  0.394  0.04 ] Converged in :38 steps
+U:2.67 J:4.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.741  0.84  -0.123  0.712  0.056] Converged in :30 steps
+U:2.67 J:4.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Did Not Converge
+U:0.33 J:1.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.002  0.04  -0.605  0.    -0.   ] Converged in :20 steps
+U:0.33 J:2.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.004  0.04  -0.507  0.001 -0.   ] Converged in :53 steps
+U:0.33 J:2.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.363  0.36  -0.384  0.232  0.012] Converged in :191 steps
+U:0.33 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.582  0.52  -0.282  0.424  0.018] Converged in :152 steps
+U:1.33 J:5.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.887  0.96  -0.031  0.869  0.048] Converged in :213 steps
+U:1.33 J:6.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.92   1.    -0.     0.919  0.054] Converged in :211 steps
+U:1.67 J:0.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.    -0.959  0.     0.   ] Converged in :14 steps
+U:1.67 J:0.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.04  -0.856  0.    -0.   ] Converged in :15 steps
+U:2.67 J:0.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [-0.     0.    -0.968  0.001  0.   ] Converged in :15 steps
+U:2.67 J:0.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.04  -0.899  0.001 -0.   ] Converged in :16 steps
+U:2.67 J:1.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.12  -0.747  0.001 -0.   ] Converged in :18 steps
+U:2.67 J:2.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.003  0.36  -0.51   0.002  0.   ] Converged in :33 steps
+U:2.67 J:5.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.897  1.    -0.001  0.897  0.066] Converged in :191 steps
+U:2.67 J:6.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.915  1.    -0.     0.915  0.056] Converged in :208 steps
+U:3.00 J:0.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [-0.    0.   -0.97  0.    0.  ] Converged in :16 steps
+U:3.00 J:0.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.    -0.933  0.001 -0.   ] Converged in :16 steps
+Diagram itteration: 3 time to complete (s): 26.614 Converged points:87.0 % 
+
+U:0.33 J:1.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.002  0.04  -0.605  0.    -0.   ] Converged in :27 steps
+U:0.33 J:2.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Did Not Converge
+U:0.33 J:2.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.363  0.36  -0.384  0.232  0.012] Converged in :34 steps
+U:0.33 J:3.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.582  0.52  -0.282  0.424  0.018] Converged in :153 steps
+U:1.33 J:5.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.887  0.96  -0.031  0.869  0.048] Converged in :216 steps
+U:1.33 J:6.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.92  -1.    -0.    -0.919  0.054] Converged in :213 steps
+U:1.67 J:0.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.     0.    -0.959  0.    -0.   ] Converged in :14 steps
+U:1.67 J:0.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.     0.04  -0.857  0.    -0.   ] Converged in :16 steps
+U:2.67 J:5.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.897  1.    -0.     0.897  0.066] Converged in :17 steps
+U:2.67 J:6.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.915  1.    -0.     0.915  0.056] Converged in :17 steps
+U:3.00 J:0.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [-0.     0.    -0.97   0.001  0.   ] Converged in :15 steps
+U:3.00 J:0.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.     0.    -0.933  0.001 -0.   ] Converged in :16 steps
+U:0.67 J:0.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.001  0.    -0.948  0.    -0.   ] Converged in :16 steps
+U:0.67 J:0.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.001  0.04  -0.835  0.    -0.   ] Converged in :17 steps
+U:0.67 J:1.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.002  0.04  -0.61   0.    -0.   ] Converged in :25 steps
+U:0.67 J:2.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.009  0.36  -0.477  0.006  0.   ] Converged in :87 steps
+U:1.00 J:1.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.001  0.04  -0.616  0.    -0.   ] Converged in :23 steps
+U:1.00 J:2.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.006  0.36  -0.483  0.005  0.   ] Converged in :68 steps
+U:1.00 J:2.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.289  0.36  -0.4    0.2    0.015] Converged in :35 steps
+U:1.00 J:3.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.544  0.52  -0.296  0.417  0.025] Converged in :71 steps
+U:1.33 J:0.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.     0.    -0.956  0.    -0.   ] Converged in :15 steps
+U:1.33 J:0.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.001  0.04  -0.85   0.    -0.   ] Converged in :16 steps
+U:1.33 J:1.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.001  0.12  -0.668  0.    -0.   ] Converged in :21 steps
+U:1.33 J:2.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.005  0.36  -0.489  0.003  0.   ] Converged in :58 steps
+U:1.33 J:2.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.246  0.36  -0.407  0.177  0.016] Converged in :43 steps
+U:1.33 J:3.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.525  0.52  -0.302  0.412  0.028] Converged in :42 steps
+U:1.33 J:4.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.732  0.76  -0.155  0.654  0.039] Converged in :186 steps
+U:1.33 J:4.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.808  0.84  -0.109  0.748  0.034] Converged in :180 steps
+U:2.67 J:0.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [-0.     0.    -0.968  0.001  0.   ] Converged in :15 steps
+U:2.67 J:0.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.     0.04  -0.899  0.001 -0.   ] Converged in :16 steps
+U:2.67 J:1.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.001  0.12  -0.747  0.001 -0.   ] Converged in :19 steps
+U:2.67 J:2.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.002  0.36  -0.51   0.002  0.   ] Converged in :40 steps
+U:3.00 J:4.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.735  0.84  -0.124  0.712  0.059] Converged in :22 steps
+U:3.00 J:4.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.849  0.96  -0.032  0.84   0.067] Converged in :22 steps
+U:3.00 J:5.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.896  1.    -0.     0.896  0.067] Converged in :17 steps
+U:3.00 J:6.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.914  1.    -0.     0.914  0.057] Converged in :17 steps
+U:0.33 J:4.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.669  0.52  -0.237  0.471  0.016] Converged in :157 steps
+U:0.33 J:4.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.823  0.84  -0.105  0.748  0.027] Converged in :209 steps
+U:0.33 J:5.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.852 -0.84  -0.095 -0.769  0.02 ] Converged in :248 steps
+U:0.33 J:6.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Did Not Converge
+U:2.33 J:1.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.001  0.12  -0.739  0.001 -0.   ] Converged in :19 steps
+U:2.33 J:2.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.003  0.36  -0.505  0.002  0.   ] Converged in :42 steps
+U:2.33 J:2.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.074  0.36  -0.424  0.061  0.008] Converged in :130 steps
+U:2.33 J:3.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.466  0.52  -0.319  0.399  0.037] Converged in :13 steps
+U:0.00 J:0.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.001  0.    -0.938  0.    -0.001] Converged in :17 steps
+U:0.00 J:0.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.001  0.04  -0.817  0.    -0.   ] Converged in :19 steps
+U:0.00 J:1.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.002  0.04  -0.598  0.    -0.   ] Converged in :30 steps
+U:0.00 J:2.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.004  0.041 -0.5    0.    -0.   ] Converged in :126 steps
+U:1.00 J:4.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Did Not Converge
+U:1.00 J:4.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.813  0.84  -0.107  0.748  0.031] Converged in :185 steps
+U:1.00 J:5.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Did Not Converge
+U:1.00 J:6.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Did Not Converge
+U:0.00 J:5.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Did Not Converge
+U:0.00 J:6.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.912  0.96  -0.029  0.887  0.035] Converged in :216 steps
+U:0.33 J:0.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.     0.    -0.944  0.    -0.   ] Converged in :17 steps
+U:0.33 J:0.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.001  0.04  -0.827  0.    -0.   ] Converged in :18 steps
+U:1.67 J:4.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.74   0.8   -0.141  0.681  0.044] Converged in :117 steps
+U:1.67 J:4.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.803  0.84  -0.11   0.748  0.036] Converged in :164 steps
+U:1.67 J:5.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.885  0.96  -0.031  0.868  0.049] Converged in :212 steps
+U:1.67 J:6.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.919  1.    -0.     0.918  0.054] Converged in :240 steps
+U:0.00 J:2.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.386  0.28  -0.362  0.189  0.01 ] Converged in :207 steps
+U:0.00 J:3.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.548  0.36  -0.309  0.318  0.01 ] Converged in :111 steps
+U:0.00 J:4.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.683  0.52  -0.23   0.471  0.012] Converged in :164 steps
+U:0.00 J:4.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.815  0.8   -0.117  0.714  0.022] Converged in :225 steps
+U:2.00 J:5.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Did Not Converge
+U:2.00 J:6.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.917 -1.    -0.    -0.917  0.055] Converged in :236 steps
+U:2.33 J:0.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.     0.    -0.965  0.001  0.   ] Converged in :14 steps
+U:2.33 J:0.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.     0.04  -0.867  0.001 -0.   ] Converged in :16 steps
+U:0.67 J:2.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.33   0.36  -0.392  0.219  0.014] Converged in :29 steps
+U:0.67 J:3.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.563  0.52  -0.289  0.42   0.021] Converged in :106 steps
+U:0.67 J:4.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.654  0.52  -0.243  0.471  0.019] Converged in :141 steps
+U:0.67 J:4.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.819  0.84  -0.106  0.748  0.029] Converged in :196 steps
+U:1.67 J:1.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.001  0.12  -0.675  0.001 -0.   ] Converged in :20 steps
+U:1.67 J:2.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.004  0.36  -0.494  0.003  0.   ] Converged in :51 steps
+U:1.67 J:2.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.198  0.36  -0.413  0.149  0.015] Converged in :55 steps
+U:1.67 J:3.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.505  0.52  -0.308  0.408  0.031] Converged in :19 steps
+U:2.00 J:2.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.142  0.36  -0.419  0.112  0.013] Converged in :77 steps
+U:2.00 J:3.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.485  0.52  -0.314  0.403  0.034] Converged in :17 steps
+U:2.00 J:4.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.732  0.8   -0.142  0.681  0.047] Converged in :66 steps
+U:2.00 J:4.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.797  0.84  -0.112  0.748  0.039] Converged in :151 steps
+U:2.67 J:2.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.027  0.36  -0.428  0.023  0.003] Converged in :152 steps
+U:2.67 J:3.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.448  0.52  -0.325  0.394  0.039] Converged in :12 steps
+U:2.67 J:4.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.741  0.84  -0.123  0.712  0.056] Converged in :22 steps
+U:2.67 J:4.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Did Not Converge
+Diagram itteration: 4 time to complete (s): 24.598 Converged points:88.0 % 
+
+U:0.00 J:5.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Did Not Converge
+U:0.00 J:6.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.912  0.96  -0.029  0.887  0.035] Converged in :216 steps
+U:0.33 J:0.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.001  0.    -0.944  0.    -0.001] Converged in :16 steps
+U:0.33 J:0.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.001  0.04  -0.827  0.    -0.   ] Converged in :18 steps
+U:1.67 J:4.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.74   0.8   -0.141  0.681  0.044] Converged in :117 steps
+U:1.67 J:4.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.803  0.84  -0.11   0.748  0.036] Converged in :25 steps
+U:1.67 J:5.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.885  0.96  -0.031  0.868  0.049] Converged in :212 steps
+U:1.67 J:6.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.919  1.    -0.     0.918  0.054] Converged in :240 steps
+U:0.00 J:0.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.001  0.    -0.938  0.    -0.001] Converged in :17 steps
+U:0.00 J:0.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.001  0.04  -0.817  0.    -0.   ] Converged in :19 steps
+U:0.00 J:1.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.002  0.04  -0.598  0.    -0.   ] Converged in :31 steps
+U:0.00 J:2.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.004  0.041 -0.5    0.001 -0.   ] Converged in :125 steps
+U:1.00 J:4.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Did Not Converge
+U:1.00 J:4.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.813  0.84  -0.107  0.748  0.031] Converged in :185 steps
+U:1.00 J:5.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Did Not Converge
+U:1.00 J:6.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Did Not Converge
+U:0.33 J:4.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.669  0.52  -0.237  0.471  0.016] Converged in :157 steps
+U:0.33 J:4.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.823  0.84  -0.105  0.748  0.027] Converged in :209 steps
+U:0.33 J:5.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.852  0.84  -0.095  0.769  0.02 ] Converged in :248 steps
+U:0.33 J:6.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Did Not Converge
+U:2.67 J:5.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.897  1.    -0.     0.897  0.066] Converged in :20 steps
+U:2.67 J:6.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.915  1.    -0.     0.915  0.056] Converged in :223 steps
+U:3.00 J:0.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [-0.    0.   -0.97  0.    0.  ] Converged in :16 steps
+U:3.00 J:0.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.     0.    -0.933  0.001 -0.   ] Converged in :16 steps
+U:0.00 J:2.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.404  0.36  -0.375  0.248  0.009] Converged in :24 steps
+U:0.00 J:3.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Did Not Converge
+U:0.00 J:4.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.683  0.52  -0.23   0.471  0.012] Converged in :164 steps
+U:0.00 J:4.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.815  0.8   -0.117  0.714  0.022] Converged in :225 steps
+U:2.00 J:5.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Did Not Converge
+U:2.00 J:6.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.917  1.    -0.     0.917  0.055] Converged in :236 steps
+U:2.33 J:0.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [-0.     0.    -0.965  0.     0.   ] Converged in :15 steps
+U:2.33 J:0.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.     0.04  -0.867  0.001 -0.   ] Converged in :16 steps
+U:0.67 J:5.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Did Not Converge
+U:0.67 J:6.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Did Not Converge
+U:1.00 J:0.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.     0.    -0.952  0.    -0.   ] Converged in :15 steps
+U:1.00 J:0.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.001  0.04  -0.843  0.    -0.   ] Converged in :17 steps
+U:2.00 J:0.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [-0.     0.    -0.962  0.     0.   ] Converged in :15 steps
+U:2.00 J:0.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.     0.04  -0.862  0.    -0.   ] Converged in :16 steps
+U:2.00 J:1.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Did Not Converge
+U:2.00 J:2.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.003  0.36  -0.5    0.003  0.   ] Converged in :46 steps
+U:2.67 J:0.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [-0.     0.    -0.968  0.     0.   ] Converged in :16 steps
+U:2.67 J:0.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.     0.04  -0.899  0.001 -0.   ] Converged in :16 steps
+U:2.67 J:1.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.001  0.12  -0.747  0.001 -0.   ] Converged in :19 steps
+U:2.67 J:2.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.002  0.36  -0.51   0.002  0.   ] Converged in :39 steps
+U:3.00 J:4.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.735  0.84  -0.124  0.712  0.059] Converged in :24 steps
+U:3.00 J:4.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.849  0.96  -0.033  0.84   0.067] Converged in :24 steps
+U:3.00 J:5.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.896  1.    -0.     0.896  0.067] Converged in :20 steps
+U:3.00 J:6.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.914  1.    -0.     0.914  0.057] Converged in :211 steps
+U:0.67 J:2.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.33   0.36  -0.392  0.219  0.014] Converged in :31 steps
+U:0.67 J:3.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.563  0.52  -0.289  0.42   0.021] Converged in :106 steps
+U:0.67 J:4.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.654  0.52  -0.243  0.471  0.019] Converged in :141 steps
+U:0.67 J:4.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.819  0.84  -0.106  0.748  0.029] Converged in :196 steps
+U:1.67 J:1.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.001  0.12  -0.675  0.001 -0.   ] Converged in :20 steps
+U:1.67 J:2.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.004  0.36  -0.494  0.003  0.   ] Converged in :51 steps
+U:1.67 J:2.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.198  0.36  -0.413  0.148  0.015] Converged in :56 steps
+U:1.67 J:3.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.505  0.52  -0.308  0.408  0.031] Converged in :19 steps
+U:2.00 J:2.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.142  0.36  -0.419  0.112  0.013] Converged in :78 steps
+U:2.00 J:3.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.485  0.52  -0.314  0.403  0.034] Converged in :19 steps
+U:2.00 J:4.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.732  0.8   -0.142  0.681  0.047] Converged in :66 steps
+U:2.00 J:4.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.797  0.84  -0.112  0.748  0.039] Converged in :18 steps
+U:2.33 J:4.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.748  0.84  -0.121  0.713  0.053] Converged in :31 steps
+U:2.33 J:4.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.792  0.84  -0.113  0.749  0.041] Converged in :18 steps
+U:2.33 J:5.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.899  1.    -0.001  0.899  0.065] Converged in :198 steps
+U:2.33 J:6.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.916  1.    -0.     0.916  0.056] Converged in :228 steps
+U:0.33 J:1.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.002  0.04  -0.605  0.    -0.   ] Converged in :28 steps
+U:0.33 J:2.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.005  0.04  -0.507  0.001 -0.   ] Converged in :65 steps
+U:0.33 J:2.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.368  0.36  -0.384  0.235  0.012] Converged in :27 steps
+U:0.33 J:3.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.582  0.52  -0.282  0.424  0.018] Converged in :153 steps
+U:1.33 J:0.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.     0.    -0.956  0.    -0.   ] Converged in :14 steps
+U:1.33 J:0.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.001  0.04  -0.85   0.    -0.   ] Converged in :16 steps
+U:1.33 J:1.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.001  0.12  -0.668  0.    -0.   ] Converged in :22 steps
+U:1.33 J:2.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.     0.041 -0.527  0.    -0.   ] Converged in :77 steps
+U:1.33 J:5.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.887  0.96  -0.031  0.869  0.048] Converged in :216 steps
+U:1.33 J:6.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.92  -1.    -0.    -0.919  0.054] Converged in :213 steps
+U:1.67 J:0.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [-0.     0.    -0.959  0.     0.   ] Converged in :14 steps
+U:1.67 J:0.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.001  0.04  -0.857  0.    -0.   ] Converged in :16 steps
+U:2.67 J:2.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.027  0.36  -0.428  0.023  0.003] Converged in :151 steps
+U:2.67 J:3.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.447  0.52  -0.325  0.393  0.04 ] Converged in :18 steps
+U:2.67 J:4.00 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.741  0.84  -0.123  0.712  0.056] Converged in :24 steps
+U:2.67 J:4.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Did Not Converge
+Diagram itteration: 5 time to complete (s): 22.387 Converged points:88.0 % 
+
+U:0.33 J:1.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.605  0.     0.   ] Converged in :11 steps
+U:0.33 J:2.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.004  0.04  -0.507  0.001 -0.   ] Converged in :53 steps
+U:0.33 J:2.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.368  0.36  -0.384  0.235  0.012] Converged in :27 steps
+U:0.33 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.582  0.52  -0.282  0.424  0.018] Converged in :152 steps
+U:2.00 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.242  0.     0.   ] Converged in :19 steps
+U:2.00 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.918  1.    -0.     0.918  0.055] Converged in :11 steps
+U:2.33 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [-0.     0.    -0.965  0.     0.   ] Converged in :16 steps
+U:2.33 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.867  0.     0.   ] Converged in :12 steps
+U:2.67 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [-0.     0.    -0.968  0.001  0.   ] Converged in :16 steps
+U:2.67 J:0.67 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.     0.04  -0.899  0.001 -0.   ] Converged in :16 steps
+U:2.67 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.12  -0.747  0.001 -0.   ] Converged in :21 steps
+U:2.67 J:2.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.003  0.36  -0.51   0.002  0.   ] Converged in :33 steps
+U:0.00 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.857  0.84  -0.093  0.77   0.018] Converged in :12 steps
+U:0.00 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.912  0.96  -0.029  0.888  0.034] Converged in :11 steps
+U:0.33 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.    -0.944  0.    -0.001] Converged in :18 steps
+U:0.33 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.827  0.     0.   ] Converged in :12 steps
+U:1.00 J:1.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.002  0.04  -0.616  0.    -0.   ] Converged in :23 steps
+U:1.00 J:2.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.006  0.36  -0.483  0.005  0.   ] Converged in :68 steps
+U:1.00 J:2.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.29   0.36  -0.4    0.2    0.015] Converged in :36 steps
+U:1.00 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.546  0.52  -0.295  0.418  0.024] Converged in :22 steps
+U:1.67 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.12  -0.675  0.001 -0.   ] Converged in :22 steps
+U:1.67 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.004  0.36  -0.494  0.003  0.   ] Converged in :54 steps
+U:1.67 J:2.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.198  0.36  -0.413  0.149  0.015] Converged in :61 steps
+U:1.67 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.507  0.52  -0.308  0.41   0.031] Converged in :24 steps
+U:2.67 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.898  1.    -0.     0.898  0.066] Converged in :12 steps
+U:2.67 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.916  1.    -0.     0.916  0.056] Converged in :11 steps
+U:3.00 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [-0.     0.    -0.97   0.001  0.   ] Converged in :17 steps
+U:3.00 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.932  0.     0.   ] Converged in :13 steps
+U:3.00 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.736  0.84  -0.123  0.713  0.059] Converged in :15 steps
+U:3.00 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.849  0.96  -0.032  0.841  0.067] Converged in :13 steps
+U:3.00 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.896  1.    -0.     0.896  0.067] Converged in :12 steps
+U:3.00 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.915  1.    -0.     0.915  0.057] Converged in :11 steps
+U:0.00 J:2.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.404  0.36  -0.375  0.248  0.009] Converged in :24 steps
+U:0.00 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.548  0.36  -0.309  0.318  0.01 ] Converged in :111 steps
+U:0.00 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.683  0.52  -0.23   0.471  0.012] Converged in :164 steps
+U:0.00 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.816  0.8   -0.117  0.716  0.022] Converged in :160 steps
+U:0.33 J:4.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.669  0.52  -0.237  0.471  0.016] Converged in :157 steps
+U:0.33 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.824  0.84  -0.104  0.749  0.027] Converged in :12 steps
+U:0.33 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.853  0.84  -0.094  0.771  0.019] Converged in :160 steps
+U:0.33 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.911  0.96  -0.029  0.888  0.035] Converged in :12 steps
+U:2.67 J:2.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.027  0.36  -0.428  0.023  0.003] Converged in :151 steps
+U:2.67 J:3.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.45   0.52  -0.325  0.396  0.039] Converged in :26 steps
+U:2.67 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.742  0.84  -0.122  0.713  0.056] Converged in :15 steps
+U:2.67 J:4.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.52  -0.273  0.     0.   ] Converged in :16 steps
+U:0.00 J:0.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.    -0.938  0.     0.   ] Converged in :13 steps
+U:0.00 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.817  0.     0.   ] Converged in :12 steps
+U:0.00 J:1.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.598  0.     0.   ] Converged in :10 steps
+U:0.00 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.007  0.04  -0.5    0.001 -0.   ] Converged in :127 steps
+U:1.33 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.888  0.96  -0.031  0.87   0.048] Converged in :12 steps
+U:1.33 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.92   1.    -0.     0.92   0.054] Converged in :11 steps
+U:1.67 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.    -0.959  0.    -0.   ] Converged in :15 steps
+U:1.67 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.856  0.     0.   ] Converged in :13 steps
+U:1.67 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.741  0.8   -0.14   0.682  0.044] Converged in :17 steps
+U:1.67 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.804  0.84  -0.11   0.749  0.036] Converged in :15 steps
+U:1.67 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.886  0.96  -0.031  0.869  0.049] Converged in :12 steps
+U:1.67 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.919  1.    -0.     0.919  0.054] Converged in :11 steps
+U:2.33 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.12  -0.739  0.001 -0.   ] Converged in :21 steps
+U:2.33 J:2.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.003  0.36  -0.505  0.002  0.   ] Converged in :45 steps
+U:2.33 J:2.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.075  0.36  -0.424  0.061  0.008] Converged in :138 steps
+U:2.33 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.469  0.52  -0.319  0.401  0.037] Converged in :26 steps
+U:0.67 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.001  0.    -0.948  0.    -0.001] Converged in :17 steps
+U:0.67 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.835  0.     0.   ] Converged in :12 steps
+U:0.67 J:1.33 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.002  0.04  -0.61   0.    -0.   ] Converged in :25 steps
+U:0.67 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.009  0.36  -0.477  0.006  0.   ] Converged in :92 steps
+U:1.33 J:2.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.246  0.36  -0.407  0.177  0.016] Converged in :48 steps
+U:1.33 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.527  0.52  -0.302  0.414  0.028] Converged in :24 steps
+U:1.33 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.748  0.8   -0.139  0.683  0.041] Converged in :14 steps
+U:1.33 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.809  0.84  -0.109  0.749  0.034] Converged in :14 steps
+U:2.00 J:2.67 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.142  0.36  -0.419  0.112  0.013] Converged in :77 steps
+U:2.00 J:3.33 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.488  0.52  -0.314  0.405  0.034] Converged in :23 steps
+U:2.00 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.733  0.8   -0.142  0.682  0.047] Converged in :141 steps
+U:2.00 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.798  0.84  -0.111  0.749  0.038] Converged in :19 steps
+U:0.67 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.234  0.     0.   ] Converged in :12 steps
+U:0.67 J:6.00 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.214  0.     0.   ] Converged in :24 steps
+U:1.00 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.    -0.952  0.    -0.   ] Converged in :17 steps
+U:1.00 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.843  0.     0.   ] Converged in :12 steps
+U:1.00 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.742  0.76  -0.153  0.655  0.035] Converged in :15 steps
+U:1.00 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.814  0.84  -0.107  0.749  0.031] Converged in :14 steps
+U:1.00 J:5.33 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.2   -0.236  0.     0.   ] Converged in :12 steps
+U:1.00 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.921  1.    -0.     0.921  0.053] Converged in :11 steps
+U:1.33 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.    -0.956  0.    -0.   ] Converged in :16 steps
+U:1.33 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.    0.04 -0.85  0.    0.  ] Converged in :12 steps
+U:1.33 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.001  0.12  -0.668  0.001 -0.   ] Converged in :23 steps
+U:1.33 J:2.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.005  0.36  -0.489  0.004  0.   ] Converged in :61 steps
+U:2.00 J:0.00 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.     0.    -0.963  0.001 -0.   ] Converged in :15 steps
+U:2.00 J:0.67 Initial MFP: [0.  0.2 0.5 0.  0. ] Final MFP: [ 0.     0.04  -0.862  0.     0.   ] Converged in :13 steps
+U:2.00 J:1.33 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:2.00 J:2.00 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.003  0.36  -0.5    0.003  0.   ] Converged in :45 steps
+U:0.67 J:2.67 Initial MFP: [0.5 0.5 0.5 0.5 0.5] Final MFP: [ 0.33   0.36  -0.392  0.219  0.014] Converged in :31 steps
+U:0.67 J:3.33 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.563  0.52  -0.289  0.42   0.021] Converged in :105 steps
+U:0.67 J:4.00 Initial MFP: [0.1 0.5 1.  0.5 0.1] Final MFP: [ 0.654  0.52  -0.243  0.471  0.019] Converged in :142 steps
+U:0.67 J:4.67 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.82   0.84  -0.106  0.749  0.029] Converged in :12 steps
+U:2.33 J:4.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.749  0.84  -0.121  0.714  0.053] Converged in :15 steps
+U:2.33 J:4.67 Initial MFP: [1.   0.5  0.   1.   0.15] Final MFP: [ 0.793  0.84  -0.113  0.75   0.041] Converged in :13 steps
+U:2.33 J:5.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.9    1.    -0.     0.9    0.065] Converged in :11 steps
+U:2.33 J:6.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.917  1.    -0.     0.917  0.056] Converged in :11 steps
+U:3.00 J:1.33 Initial MFP: [0.5 0.5 0.  0.5 0.1] Final MFP: [ 0.001  0.12  -0.755  0.001 -0.   ] Converged in :19 steps
+U:3.00 J:2.00 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.002  0.36  -0.515  0.002  0.   ] Converged in :41 steps
+U:3.00 J:2.67 Initial MFP: [1.   1.   0.   1.   0.15] Did Not Converge
+U:3.00 J:3.33 Initial MFP: [1.   1.   0.   1.   0.15] Final MFP: [ 0.432  0.52  -0.33   0.391  0.042] Converged in :31 steps
+Initial guess sweep and final calculations are consistent:True
+time to complete (s):10.486 Converged points:98.0 % 
+

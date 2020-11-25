@@ -17,8 +17,8 @@ Model_Params = dict(
     J=1)
 
 i, j = 'U', 'J',
-i_values = np.linspace(0, 3, 40)
-j_values = np.linspace(0, 6, 40)
+i_values = np.linspace(0, 6, 40)
+j_values = np.linspace(0, 3, 40)
 
 method = 'sigmoid'
 beta = 1.5

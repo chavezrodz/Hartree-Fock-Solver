@@ -15,36 +15,36 @@ sns.set_context("paper")
 
 def MFP_plots(MFPs, i_label, i_values, j_label, j_values, Dict, results_folder, show, transparent):
     for i in range(len(Dict)):
-        arr = np.abs(MFPs[:,:,i].T)
-        plt.pcolormesh(arr,vmin=0,vmax=1)
+        arr = np.abs(MFPs[:, :, i].T)
+        plt.pcolormesh(arr, vmin=0, vmax=1)
         plt.title(Dict[i])
         plt.xlabel(i_label)
         plt.ylabel(j_label)
-        plt.xticks(np.linspace(0,len(i_values),4),np.linspace(0,max(i_values),4,dtype=int))
-        plt.yticks(np.linspace(0,len(j_values),4),np.linspace(0,max(j_values),4,dtype=int))
+        plt.xticks(np.linspace(0, len(i_values), 4), np.linspace(0, max(i_values), 4, dtype=int))
+        plt.yticks(np.linspace(0, len(j_values), 4), np.linspace(0, max(j_values), 4, dtype=int))
         plt.colorbar()
         if results_folder is not None:
-            MFPs_folder = os.path.join(results_folder,'Plots','Mean Field Parameters')
+            MFPs_folder = os.path.join(results_folder, 'Plots', 'Mean Field Parameters')
             if not os.path.exists(MFPs_folder): os.mkdir(MFPs_folder)
-            plt.savefig(MFPs_folder+'/'+Dict[i]+'.png',transparent=transparent)
+            plt.savefig(MFPs_folder+'/'+Dict[i]+'.png', transparent=transparent)
         if show:
             plt.show()
         plt.close()
 
 
-def feature_plot(feature,i_label, i_values, j_label,j_values, results_folder, show, transparent):
+def feature_plot(feature, i_label, i_values, j_label, j_values, results_folder, show, transparent):
     plt.title(feature)
     plt.pcolormesh(np.loadtxt(results_folder+'/'+feature+'.csv',delimiter=',').T)
     plt.xlabel(i_label)
     plt.ylabel(j_label)
-    plt.xticks(np.linspace(0,len(i_values),4),np.linspace(0,max(i_values),4,dtype=int))
-    plt.yticks(np.linspace(0,len(j_values),4),np.linspace(0,max(j_values),4,dtype=int))
+    plt.xticks(np.linspace(0, len(i_values), 4), np.linspace(0, max(i_values), 4, dtype=int))
+    plt.yticks(np.linspace(0, len(j_values), 4), np.linspace(0, max(j_values), 4, dtype=int))
     plt.colorbar()
 
     if results_folder is not None:
         features_folder = os.path.join(results_folder,'Plots','Features')
         if not os.path.exists(features_folder): os.mkdir(features_folder)
-        plt.savefig(features_folder+'/'+feature+'.png',transparent=transparent)
+        plt.savefig(features_folder+'/'+feature+'.png', transparent=transparent)
     if show:
         plt.show()
     plt.close()

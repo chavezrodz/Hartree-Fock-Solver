@@ -4,20 +4,33 @@ import numpy as np
 
 
 def spin_interpreter(mfps, rounding=1):
-    b1 = np.array([1,1])
-    b2 = np.array([1,-1])
+    b1 = np.array([1, 1])
+    b2 = np.array([1, -1])
 
     spin = mfps[1]*b1 + mfps[3]*b2
+    for i in [0, 1]:
+        if spin[i] > 0.1 and spin[i] < 0.5:
+            spin[i] += 0.5
+        elif spin[i] < -0.1 and spin[i] > -0.5:
+            spin[i] -= 0.5
+
     spin = np.rint(spin*rounding)
 
     return spin
 
 
 def orbit_interpreter(mfps, rounding=1):
-    b1 = np.array([1,1])
-    b2 = np.array([1,-1])
+    b1 = np.array([1, 1])
+    b2 = np.array([1, -1])
 
     orbit = mfps[2]*b1 + mfps[4]*b2
+
+    for i in [0, 1]:
+        if orbit[i] > 0.1 and orbit[i] < 0.5:
+            orbit[i] += 0.5
+        elif orbit[i] < -0.1 and orbit[i] > -0.5:
+            orbit[i] -= 0.5
+
     orbit = np.rint(orbit*rounding)
     return orbit
 
