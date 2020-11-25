@@ -13,7 +13,7 @@ Model_Params = dict(
     N_shape=(50, 50),
     Filling=0.25,
     BZ_rot=1,
-    stress=-1,
+    stress=0,
     Delta_CT=0,
     eps=0,
     t_1=1,
@@ -23,8 +23,8 @@ Model_Params = dict(
     J=1)
 
 i, j = 'U', 'J',
-i_values = np.linspace(0, 3, 40)
-j_values = np.linspace(0, 6, 40)
+i_values = np.linspace(0, 3, 30)
+j_values = np.linspace(0, 6, 30)
 
 method = 'sigmoid'
 beta = 1.5
@@ -46,14 +46,14 @@ params_list = [
 
 Batch_Folder = 'Meta'
 
+epsilons = np.linspace(0, 1, 10)
+delta_cts = np.linspace(-1.5, 1.5, 10)
+
 # Command Line Arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--n_threads', type=int, default=8)
 parser.add_argument('--run_ind', type=int, default=0)
 args = parser.parse_args()
-
-epsilons = np.linspace(0, 1, 10)
-delta_cts = np.linspace(-1.5, 1.5, 10)
 
 model_params_lists = Utils.tuplelist([epsilons, delta_cts])
 Model_Params['eps'], Model_Params['Delta_CT'] = model_params_lists[args.run_ind]
@@ -61,7 +61,7 @@ Model_Params['eps'], Model_Params['Delta_CT'] = model_params_lists[args.run_ind]
 Run_ID = 'Itterated:'+str(i)+'_'+str(j)+'_'
 Run_ID = Run_ID + '_'.join("{!s}={!r}".format(key, val) for (key, val) in Model_Params.items())
 
-Results_Folder = os.path.join(Batch_Folder, Run_ID)
+Results_Folder = os.path.join('Results', Batch_Folder, Run_ID)
 if not os.path.exists(Results_Folder):  os.makedirs(Results_Folder)
 
 sys.stdout = open(Results_Folder+'/logs.txt', 'w+')
