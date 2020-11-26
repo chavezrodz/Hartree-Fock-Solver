@@ -41,7 +41,8 @@ Solver.Itterate(verbose=True)
 
 # Itteration_sequence(Solver)
 # DR.DispersionRelation(Solver)
-DR.DOS(Solver)
+DR.fermi_surface(Solver, save=True)
+# DR.DOS(Solver)
 
 # print(Solver.Conductor)
 

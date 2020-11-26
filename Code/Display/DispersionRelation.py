@@ -15,7 +15,6 @@ def DispersionRelation(Solver):
 
     Q = Solver.Hamiltonian.Q
     Qv = Solver.Hamiltonian.Qv
-    print('check')
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     for b in range(mat_dim):
@@ -57,3 +56,33 @@ def DOS(Solver, transparent=False):
     plt.savefig('DOS.png',transparent=transparent)
     plt.show()
     plt.close()
+
+
+def fermi_surface(Solver, tol=0.8, transparent=False, save=False):
+    mat_dim = Solver.Hamiltonian.mat_dim
+    Energies = Solver.Energies
+
+    Q = Solver.Hamiltonian.Q
+    Qv = Solver.Hamiltonian.Qv
+
+    qxs = []
+    qys = []
+    zs = []
+    for b in range(mat_dim):
+        for i, q in enumerate(Q):
+            qx, qy = Qv[i]
+            qxs.append(qx)
+            qys.append(qy)
+            zs.append(Energies[q][b])
+    qxs, qys, zs = np.array(qxs), np.array(qys), np.array(zs)
+    fermi_idx = np.where(np.abs(zs - Solver.Fermi_Energy) < tol)
+
+    plt.scatter(qxs[fermi_idx], qys[fermi_idx])
+    plt.title('Fermi Surface')
+    plt.xlabel('$K_x$  ($\pi/a$)')
+    plt.ylabel('$K_Y$  ($\pi/a$)')
+    if save:
+        plt.savefig('fermi_surface.png')
+    plt.show()
+
+
