@@ -58,7 +58,7 @@ def DOS(Solver, transparent=False):
     plt.close()
 
 
-def fermi_surface(Solver, tol=0.8, transparent=False, save=False):
+def fermi_surface(Solver, tol=0.1, transparent=False, save=False):
     mat_dim = Solver.Hamiltonian.mat_dim
     Energies = Solver.Energies
 
@@ -84,5 +84,3 @@ def fermi_surface(Solver, tol=0.8, transparent=False, save=False):
     if save:
         plt.savefig('fermi_surface.png')
     plt.show()
-
-

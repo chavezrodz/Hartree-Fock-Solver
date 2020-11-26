@@ -6,7 +6,7 @@ from Code.Display.Itteration_sequence import Itteration_sequence
 import Code.Display.DispersionRelation as DR
 
 Model_Params = dict(
-    N_shape=(25, 25),
+    N_shape=(50, 50),
     Filling=0.25,
     stress=0,
     BZ_rot=1,
@@ -21,7 +21,8 @@ Model_Params = dict(
 # Code
 a = time()
 # MF_params = np.zeros(5)
-MF_params = np.array([ 0.759 , 0.759 ,-0.082 , 0.682 , 0.089])
+MF_params = np.array([ 0 , 0 ,-0.991 , 0.481 , 0])
+# MF_params = np.array([ 0.759 , 0.759 ,-0.082 , 0.682 , 0.089])
 # MF_params = np.array([ 0.924, -0.934,  0.817, -0.668, -0.02 ])
 # MF_params = np.array([ 0.758, -0.712, -0.111, -0.642,  0.056])
 # MF_params = np.array([ 0.255, -0.712, -0.384, -0.914,  0.904])

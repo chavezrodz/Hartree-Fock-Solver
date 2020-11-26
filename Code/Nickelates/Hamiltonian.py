@@ -50,9 +50,9 @@ class Hamiltonian:
         self.Qx, self.Qy = self.Qx.flatten(), self.Qy.flatten()
 
         # Allowed Momentum Values
-        self.Qxv = self.Qx*np.pi/self.N_shape[0] - np.pi/2
-        self.Qyv = self.Qy*np.pi/self.N_shape[1] - np.pi/2
-    
+        self.Qxv = np.linspace(-np.pi/2, np.pi/2, self.N_shape[0])  # self.Qx*np.pi/self.N_shape[0] - np.pi/2
+        self.Qyv = np.linspace(-np.pi/2, np.pi/2, self.N_shape[1])  # self.Qy*np.pi/self.N_shape[1] - np.pi/2
+
         # Static variables, these never change, may depend on momentum indices
         self.mat_dim = 8
         self.tzz = np.zeros(self.N_shape)
