@@ -33,7 +33,7 @@ tolerance = 1e-3
 bw_norm = True
 
 verbose = True
-save_guess_mfps = True
+save_guess_mfps = False
 
 params_list = [
     (1, 1, 0, 1, 0.15),
@@ -44,10 +44,10 @@ params_list = [
     (0.5, 0.5, 0.5, 0.5, 0.5)
 ]
 
-Batch_Folder = 'Meta'
+Batch_Folder = 'Meta_2'
 
-epsilons = np.linspace(0, 1, 10)
-delta_cts = np.linspace(-1.5, 1.5, 10)
+epsilons = np.linspace(0, 2, 20)
+delta_cts = np.linspace(0, 2, 20)
 
 # Command Line Arguments
 parser = argparse.ArgumentParser()

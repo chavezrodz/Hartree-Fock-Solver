@@ -4,7 +4,7 @@
 #PBS -l walltime=12:00:00,select=1:ncpus=32:mem=128gb
 #PBS -o PBS/out_^array_index^.txt
 #PBS -e PBS/err_^array_index^.txt
-#PBS -J 0-100
+#PBS -J 0-399
 
 cd $PBS_O_WORKDIR
 source ../.venvs/HFA/bin/activate
