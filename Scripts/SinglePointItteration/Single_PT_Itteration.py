@@ -14,14 +14,14 @@ Model_Params = dict(
     eps=0.5,
     t_1=1,
     t_2=0.15,
-    t_4=0,
-    U=5,
-    J=0.5)
+    t_4=0.05,
+    U=0,
+    J=0)
 
 # Code
 a = time()
-# MF_params = np.zeros(5)
-MF_params = np.array([ 0 , 0 ,-0.991 , 0.481 , 0])
+MF_params = np.zeros(5)
+# MF_params = np.array([ 0 , 0 ,-0.991 , 0.481 , 0])
 # MF_params = np.array([ 0.759 , 0.759 ,-0.082 , 0.682 , 0.089])
 # MF_params = np.array([ 0.924, -0.934,  0.817, -0.668, -0.02 ])
 # MF_params = np.array([ 0.758, -0.712, -0.111, -0.642,  0.056])
@@ -36,15 +36,15 @@ MF_params = np.array([ 0 , 0 ,-0.991 , 0.481 , 0])
 
 Model = Hamiltonian(Model_Params, MF_params)
 
-Solver = HFA_Solver(Model, method='sigmoid', beta=1, Itteration_limit=50, tol=1e-3,save_seq=True)
+Solver = HFA_Solver(Model, method='sigmoid', beta=1, Itteration_limit=50, tol=1e-3, save_seq=True)
 
 Solver.Itterate(verbose=True)
 
-# Itteration_sequence(Solver)
+Itteration_sequence(Solver)
 # DR.DispersionRelation(Solver)
-DR.fermi_surface(Solver, save=True)
-# DR.DOS(Solver)
+# DR.fermi_surface(Solver, save=True)
+print(Solver.Conductor)
+DR.DOS(Solver)
 
-# print(Solver.Conductor)
 
 # print(Solver.bandwidth_calculation())

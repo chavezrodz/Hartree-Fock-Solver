@@ -44,10 +44,10 @@ params_list = [
     (0.5, 0.5, 0.5, 0.5, 0.5)
 ]
 
-Batch_Folder = 'Meta_2'
+Batch_Folder = 'Meta_3'
 
-epsilons = np.linspace(0, 2, 20)
-delta_cts = np.linspace(0, 2, 20)
+epsilons = np.linspace(0, 1.5, 20)
+delta_cts = np.linspace(0, 1.5, 20)
 
 # Command Line Arguments
 parser = argparse.ArgumentParser()

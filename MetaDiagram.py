@@ -19,8 +19,8 @@ Model_Params = dict(
     J=1)
 
 i, j = 'U', 'J',
-i_values = np.linspace(0, 3, 30)
-j_values = np.linspace(0, 6, 30)
+i_values = np.linspace(0, 4, 30)
+j_values = np.linspace(0, 0.5, 30)
 
 method = 'sigmoid'
 beta = 1.5
@@ -29,21 +29,12 @@ tolerance = 1e-3
 bw_norm = True
 
 verbose = True
-save_guess_mfps = True
+save_guess_mfps = False
 
-params_list = [
-    (1, 1, 0, 1, 0.15),
-    (1, 0.5, 0, 1, 0.15),
-    (0, 0.2, 0.5, 0, 0),
-    (0.1, 0.5, 1, 0.5, 0.1),
-    (0.5, 0.5, 0, 0.5, 0.1),
-    (0.5, 0.5, 0.5, 0.5, 0.5)
-]
+Batch_Folder = 'Meta_2'
 
-Batch_Folder = 'Meta'
-
-epsilons = np.linspace(0, 1, 10)
-delta_cts = np.linspace(-1.5, 1.5, 10)
+epsilons = np.linspace(0, 2, 20)[:13]
+delta_cts = np.linspace(0, 2, 20)[:13]
 
 
 def Diagram_stats(mfps, phase=38):

@@ -50,15 +50,15 @@ def DispersionRelation(Solver):
 def DOS(Solver, transparent=False):
     plt.hist(Solver.Energies.flatten(),bins='fd')
     plt.title('Density of states')
-    plt.axvline(Solver.Fermi_Energy, label='Fermi Energy',color='red')
+    plt.axvline(Solver.Fermi_Energy, label='Fermi Energy', color='red')
     plt.xlabel('Energy (Ev)')
     plt.legend()
-    plt.savefig('DOS.png',transparent=transparent)
+    plt.savefig('DOS.png', transparent=transparent)
     plt.show()
     plt.close()
 
 
-def fermi_surface(Solver, tol=0.1, transparent=False, save=False):
+def fermi_surface(Solver, tol=0.09, transparent=False, save=False):
     mat_dim = Solver.Hamiltonian.mat_dim
     Energies = Solver.Energies
 
