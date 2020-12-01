@@ -70,7 +70,7 @@ class Hamiltonian:
         rotate = np.array(((np.cos(angle), -np.sin(angle)),
                            (np.sin(angle),  np.cos(angle))))
 
-        scaling = (1./np.sqrt(2.))*self.BZ_rot + 1.*(1. - self.BZ_rot)
+        scaling = (2/np.sqrt(2.))*self.BZ_rot + 1.*(1. - self.BZ_rot)
         scale = np.array(((scaling, 0), (0, scaling)))  # scale to only allow up to pi/2 momentum values
 
         self.Qv = np.array([np.dot(scale, np.dot(rotate, np.array([k_x, k_y]))) for k_x in self.Qxv for k_y in self.Qyv])
