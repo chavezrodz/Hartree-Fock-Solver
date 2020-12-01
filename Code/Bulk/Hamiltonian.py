@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 from numpy import linalg as LA
 
@@ -51,26 +52,52 @@ class Hamiltonian:
         # Allowed Momentum Values
         self.Qv = np.mgrid[
             -np.pi:np.pi:(self.N_shape[0]*1j),
-            -np.pi:np.pi:(self.N_shape[1]*1j)].reshape(self.N_dim, -1).T
+            -np.pi:np.pi:(self.N_shape[1]*1j),
+            -np.pi:np.pi:(self.N_shape[2]*1j)].reshape(self.N_dim, -1).T
+
+        self.Z_cut_ind = list(map(int, np.where(self.Qv[:, 2] == 0)[0]))
 
         # Vectors Rotation by 45 degrees to re-create true BZ
         angle = -np.pi / 4.*self.BZ_rot
-        rotate = np.array([
-             [np.cos(angle), -np.sin(angle)],
-             [np.sin(angle),  np.cos(angle)]])
+        rotate_1 = np.array([
+             [np.cos(angle), -np.sin(angle), 0],
+             [np.sin(angle),  np.cos(angle), 0],
+             [0,  0, 1]])
 
-        # scale to only allow up to pi/2 momentum values
-        scaling = (1/np.sqrt(2.))*self.BZ_rot + 1.*(1. - self.BZ_rot)
-        scale = np.array([
-                 [scaling, 0],
-                 [0, scaling]])
+        scaling = (1/np.sqrt(2))*self.BZ_rot + (1 - self.BZ_rot)
 
-        self.Qv = np.array([np.dot(scale, np.dot(rotate, k)) for k in self.Qv])
+        scale_1 = np.array([
+                 [scaling, 0, 0],
+                 [0, scaling, 0],
+                 [0, 0, 1]])
+
+        rotate_2 = np.array([
+           [np.cos(angle), 0, np.sin(angle)],
+           [0,  1, 0],
+           [-np.sin(angle),  0, np.cos(angle)]])
+
+        scale_2 = np.array([
+                 [scaling, 0, 0],
+                 [0, 1, 0],
+                 [0, 0, scaling]])
+
+        # rotate_2 = np.identity(3)
+        # scale_2 = np.identity(3)
+
+        self.Qv = np.array([
+            np.dot(scale_2, np.dot(rotate_2, np.dot(scale_1, np.dot(rotate_1, k))))
+            for k in self.Qv])
+
+        # fig = plt.figure()
+        # ax = fig.add_subplot(111, projection='3d')
+        # ax.scatter(self.Qv[:, 0], self.Qv[:, 1], self.Qv[:, 2], '.')
+        # plt.show()
 
         # Allowed Momentum Indices for itterator
         self.Qg = np.mgrid[
             0:self.N_shape[0],
-            0:self.N_shape[1]].reshape(self.N_dim, -1).T
+            0:self.N_shape[1],
+            0:self.N_shape[2]].reshape(self.N_dim, -1).T
 
         self.Q = list(map(tuple, self.Qg))
 
@@ -86,17 +113,29 @@ class Hamiltonian:
         self.tzz_b = np.zeros(self.N_shape)
         self.tzz_b_c = np.zeros(self.N_shape)
 
-        for i, q in enumerate(self.Q):
-            qx, qy = self.Qv[i]
+        b = self.b
 
-            self.tzz[q] = -self.t_1/2*(np.cos(qx) + np.cos(qy)) - self.t_4/2*(np.cos(2*qx) + np.cos(2*qy)) - 4*self.t_2*np.cos(qx)*np.cos(qy)
-            self.tzz_c[q] = -self.t_1/2*(np.cos(qx+qc) + np.cos(qy+qc)) - self.t_4/2*(np.cos(2*(qx+qc)) + np.cos(2*(qy+qc))) - 4*self.t_2*np.cos(qx+qc)*np.cos(qy+qc)
+        for i, q in enumerate(self.Q):
+            qx, qy, qz = self.Qv[i]
+
+            self.tzz[q] = -2*self.t_1*(b*np.cos(qz) + 1/4*(np.cos(qx) + np.cos(qy))) \
+                - 2*self.t_4*(b*np.cos(2*qz) + 1/4*(np.cos(2*qx) + np.cos(2*qy)))\
+                - 2*self.t_2*(np.cos(qx)*np.cos(qy) -2*b*np.cos(qz)*(np.cos(qy) + np.cos(qx)))
+
+            self.tzz_c[q] = -2*self.t_1*(b*np.cos(qz + qc) + 1/4*(np.cos(qx + qc) + np.cos(qy + qc))) \
+                - 2*self.t_4*(b*np.cos(2*(qz + qc)) + 1/4*(np.cos(2*(qx + qc)) + np.cos(2*(qy + qc))))\
+                - 2*self.t_2*(np.cos(qx + qc)*np.cos(qy + qc) - 2*b*np.cos(qz + qc)*(np.cos(qy + qc) + np.cos(qx + qc)))
 
             self.tz_bz_b[q] = -self.t_1*3/2*(np.cos(qx) + np.cos(qy)) - self.t_4*3/2*(np.cos(2*qx) + np.cos(2*qy)) - 12*self.t_2*np.cos(qx)*np.cos(qy)
             self.tz_bz_b_c[q] = -self.t_1*3/2*(np.cos(qx+qc) + np.cos(qy+qc)) - self.t_4*3/2*(np.cos(2*(qx+qc)) + np.cos(2*(qy+qc))) - 12*self.t_2*np.cos(qx+qc)*np.cos(qy+qc)
 
-            self.tzz_b[q] = np.sqrt(3)/2*self.t_1*(np.cos(qx) - np.cos(qy)) + np.sqrt(3)/2*self.t_4*(np.cos(2*qx) - np.cos(2*qy))
-            self.tzz_b_c[q] = np.sqrt(3)/2*self.t_1*(np.cos(qx+qc) - np.cos(qy+qc)) + np.sqrt(3)/2*self.t_4*(np.cos(2*(qx + qc)) - np.cos(2*(qy + qc)))
+            self.tzz_b[q] = np.sqrt(3)/2*self.t_1*(np.cos(qx) - np.cos(qy))\
+                + np.sqrt(3)/2*self.t_4*(np.cos(2*qx) - np.cos(2*qy))\
+                - 2*np.sqrt(3)*self.t_2*b*np.cos(qz)*(np.cos(qx) - np.cos(qy))
+
+            self.tzz_b_c[q] = np.sqrt(3)/2*self.t_1*(np.cos(qx+qc) - np.cos(qy+qc))\
+                + np.sqrt(3)/2*self.t_4*(np.cos(2*(qx+qc)) - np.cos(2*(qy+qc)))\
+                - 2*np.sqrt(3)*self.t_2*b*np.cos(qz+qc)*(np.cos(qx+qc) - np.cos(qy+qc))
 
     def update_variables(self):
         """

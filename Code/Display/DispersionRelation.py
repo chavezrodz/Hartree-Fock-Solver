@@ -22,11 +22,11 @@ def DispersionRelation(Solver):
         qys = []
         zs = []
 
-        for i, q in enumerate(Q):
-            qx, qy = Qv[i]
+        for i in Solver.Hamiltonian.Z_cut_ind:
+            qx, qy = Qv[i][0], Qv[i][1]
             qxs.append(qx)
             qys.append(qy)
-            zs.append(Energies[q][b])
+            zs.append(Energies[Q[i]][b])
 
         ax.scatter(qxs, qys, zs, label='Band '+str(b+1))
 
@@ -75,7 +75,7 @@ def fermi_surface(Solver, tol=0.05, transparent=False, save=False):
             qys.append(qy)
             zs.append(Energies[q][b])
     qxs, qys, zs = np.array(qxs), np.array(qys), np.array(zs)
-    tol = 5*np.min(np.diff(Energies))
+    tol = 10*np.min(np.diff(Energies))
     fermi_idx = np.where(np.abs(zs - Solver.Fermi_Energy) < tol)
     # contour3d(Energies[:,:,:, 0], contours=e_f)
 
