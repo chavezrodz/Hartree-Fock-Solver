@@ -58,7 +58,7 @@ def DOS(Solver, transparent=False):
     plt.close()
 
 
-def fermi_surface(Solver, tol=0.09, transparent=False, save=False):
+def fermi_surface(Solver, tol=0.05, transparent=False, save=False):
     mat_dim = Solver.Hamiltonian.mat_dim
     Energies = Solver.Energies
 
@@ -75,7 +75,9 @@ def fermi_surface(Solver, tol=0.09, transparent=False, save=False):
             qys.append(qy)
             zs.append(Energies[q][b])
     qxs, qys, zs = np.array(qxs), np.array(qys), np.array(zs)
+    tol = 5*np.min(np.diff(Energies))
     fermi_idx = np.where(np.abs(zs - Solver.Fermi_Energy) < tol)
+    # contour3d(Energies[:,:,:, 0], contours=e_f)
 
     plt.scatter(qxs[fermi_idx], qys[fermi_idx])
     plt.title('Fermi Surface')
