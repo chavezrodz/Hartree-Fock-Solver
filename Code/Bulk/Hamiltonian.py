@@ -55,16 +55,15 @@ class Hamiltonian:
             -np.pi:np.pi:(self.N_shape[1]*1j),
             -np.pi:np.pi:(self.N_shape[2]*1j)].reshape(self.N_dim, -1).T
 
-        self.Z_cut_ind = list(map(int, np.where(self.Qv[:, 2] == 0)[0]))
 
         # Vectors Rotation by 45 degrees to re-create true BZ
-        angle = -np.pi / 4.*self.BZ_rot
+        angle = np.pi / 4.*self.BZ_rot
+        scaling = (1/np.sqrt(2))*self.BZ_rot + (1 - self.BZ_rot)
+
         rotate_1 = np.array([
              [np.cos(angle), -np.sin(angle), 0],
              [np.sin(angle),  np.cos(angle), 0],
              [0,  0, 1]])
-
-        scaling = (1/np.sqrt(2))*self.BZ_rot + (1 - self.BZ_rot)
 
         scale_1 = np.array([
                  [scaling, 0, 0],
@@ -88,6 +87,7 @@ class Hamiltonian:
             np.dot(scale_2, np.dot(rotate_2, np.dot(scale_1, np.dot(rotate_1, k))))
             for k in self.Qv])
 
+        self.Z_cut_ind = np.where(np.abs(self.Qv[:, 2]) < 0.01)[0]
         # fig = plt.figure()
         # ax = fig.add_subplot(111, projection='3d')
         # ax.scatter(self.Qv[:, 0], self.Qv[:, 1], self.Qv[:, 2], '.')
@@ -126,8 +126,13 @@ class Hamiltonian:
                 - 2*self.t_4*(b*np.cos(2*(qz + qc)) + 1/4*(np.cos(2*(qx + qc)) + np.cos(2*(qy + qc))))\
                 - 2*self.t_2*(np.cos(qx + qc)*np.cos(qy + qc) - 2*b*np.cos(qz + qc)*(np.cos(qy + qc) + np.cos(qx + qc)))
 
-            self.tz_bz_b[q] = -self.t_1*3/2*(np.cos(qx) + np.cos(qy)) - self.t_4*3/2*(np.cos(2*qx) + np.cos(2*qy)) - 12*self.t_2*np.cos(qx)*np.cos(qy)
-            self.tz_bz_b_c[q] = -self.t_1*3/2*(np.cos(qx+qc) + np.cos(qy+qc)) - self.t_4*3/2*(np.cos(2*(qx+qc)) + np.cos(2*(qy+qc))) - 12*self.t_2*np.cos(qx+qc)*np.cos(qy+qc)
+            self.tz_bz_b[q] = -self.t_1*3/2*(np.cos(qx) + np.cos(qy))\
+                - self.t_4*3/2*(np.cos(2*qx) + np.cos(2*qy))\
+                - 12*self.t_2*np.cos(qx)*np.cos(qy)
+
+            self.tz_bz_b_c[q] = -self.t_1*3/2*(np.cos(qx+qc) + np.cos(qy+qc))\
+                - self.t_4*3/2*(np.cos(2*(qx+qc)) + np.cos(2*(qy+qc)))\
+                - 12*self.t_2*np.cos(qx+qc)*np.cos(qy+qc)
 
             self.tzz_b[q] = np.sqrt(3)/2*self.t_1*(np.cos(qx) - np.cos(qy))\
                 + np.sqrt(3)/2*self.t_4*(np.cos(2*qx) - np.cos(2*qy))\
@@ -235,5 +240,10 @@ class Hamiltonian:
         return a, b, c, d, e
 
     def Calculate_Energy(self, E_occ):
-        E = E_occ/self.N_cells + 2*self.eps*(self.u**2/2 + self.u**4/4) - (self.U_bar/2*(self.f**2+self.MF_params[0]**2) - self.U_0*(self.MF_params[1]**2 + self.MF_params[3]**2) + self.J_bar*(self.MF_params[2]**2 + self.MF_params[4]**2))/self.N_cells
+        E = E_occ/self.N_cells
+        + 2*self.eps*(self.u**2/2 + self.u**4/4) - (
+            self.U_bar/2*(self.f**2+self.MF_params[0]**2) -
+            self.U_0*(self.MF_params[1]**2 + self.MF_params[3]**2) +
+            self.J_bar*(self.MF_params[2]**2 + self.MF_params[4]**2)
+            )/self.N_cells
         return E
