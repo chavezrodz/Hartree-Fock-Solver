@@ -87,7 +87,11 @@ class Hamiltonian:
             np.dot(scale_2, np.dot(rotate_2, np.dot(scale_1, np.dot(rotate_1, k))))
             for k in self.Qv])
 
-        self.Z_cut_ind = np.where(np.abs(self.Qv[:, 2]) < 0.01)[0]
+        # self.Z_cut_ind = np.where(np.abs(self.Qv[:, 2]) < 0.02)[0]
+        self.Z_cut_ind = np.argpartition(np.abs(self.Qv[:, 2]), 225)[:225]
+        print(self.Z_cut_ind.shape)
+        print(self.Z_cut_ind.shape)
+
         # fig = plt.figure()
         # ax = fig.add_subplot(111, projection='3d')
         # ax.scatter(self.Qv[:, 0], self.Qv[:, 1], self.Qv[:, 2], '.')
