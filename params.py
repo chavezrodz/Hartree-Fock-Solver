@@ -31,7 +31,7 @@ bw_norm = True
 
 # Sweeper params
 verbose = True
-save_guess_mfps = False
+save_guess_mfps = True
 
 Run_ID = 'Itterated:'+str(i)+'_'+str(j)+'_'
 Run_ID = Run_ID+'_'.join("{!s}={!r}".format(key, val) for (key, val) in Model_Params.items())
