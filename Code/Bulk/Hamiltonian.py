@@ -55,7 +55,6 @@ class Hamiltonian:
             -np.pi:np.pi:(self.N_shape[1]*1j),
             -np.pi:np.pi:(self.N_shape[2]*1j)].reshape(self.N_dim, -1).T
 
-
         # Vectors Rotation by 45 degrees to re-create true BZ
         angle = np.pi / 4.*self.BZ_rot
         scaling = (1/np.sqrt(2))*self.BZ_rot + (1 - self.BZ_rot)
@@ -87,15 +86,13 @@ class Hamiltonian:
             np.dot(scale_2, np.dot(rotate_2, np.dot(scale_1, np.dot(rotate_1, k))))
             for k in self.Qv])
 
-        # self.Z_cut_ind = np.where(np.abs(self.Qv[:, 2]) < 0.02)[0]
-        self.Z_cut_ind = np.argpartition(np.abs(self.Qv[:, 2]), 225)[:225]
-        print(self.Z_cut_ind.shape)
-        print(self.Z_cut_ind.shape)
+        cut_cells = int(np.power(self.N_cells, 2/3))
+        self.Z_cut_ind = np.argpartition(np.abs(self.Qv[:, 2]), cut_cells)[:cut_cells]
 
-        # fig = plt.figure()
-        # ax = fig.add_subplot(111, projection='3d')
-        # ax.scatter(self.Qv[:, 0], self.Qv[:, 1], self.Qv[:, 2], '.')
-        # plt.show()
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.scatter(self.Qv[:, 0], self.Qv[:, 1], self.Qv[:, 2], '.')
+        plt.show()
 
         # Allowed Momentum Indices for itterator
         self.Qg = np.mgrid[

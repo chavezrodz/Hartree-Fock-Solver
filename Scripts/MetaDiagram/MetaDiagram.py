@@ -31,10 +31,10 @@ bw_norm = True
 verbose = True
 save_guess_mfps = False
 
-Batch_Folder = 'Meta_2'
+Batch_Folder = 'Meta_4'
 
-epsilons = np.linspace(0, 2, 20)[:13]
-delta_cts = np.linspace(0, 2, 20)[:13]
+epsilons = np.linspace(0, 2, 20)
+delta_cts = np.linspace(0, 2, 20)
 
 
 def Diagram_stats(mfps, phase=38):
@@ -59,8 +59,6 @@ Run_ID = 'Itterated:'+str(i)+'_'+str(j)+'_'
 Run_ID = Run_ID + '_'.join("{!s}={!r}".format(key, val) for (key, val) in Model_Params.items())
 mfps = Utils.Read_MFPs(os.path.join('Results', Batch_Folder, Run_ID, 'Final_Results', 'MF_Solutions'))
 value_at_origin = Diagram_stats(mfps)
-print(value_at_origin)
-
 
 for x, y in itertools.product(np.arange(len(epsilons)), np.arange(len(delta_cts))):
 

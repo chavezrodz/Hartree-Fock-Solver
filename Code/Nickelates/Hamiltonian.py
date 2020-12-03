@@ -24,12 +24,25 @@ class Hamiltonian:
     All itterations done in HFA solver.
     """
     def __init__(self, Model_params, MF_params=np.array([0, 0, 0, 0, 0])):
-        # initiates Model parameters
-        for key, value in Model_params.items():
-            setattr(self, key, value)
 
         # initiates Mean field parameters
         self.MF_params = MF_params
+
+        # initiates Model parameters
+        self.N_shape = (50, 50)
+        self.Filling = 0.25
+        self.BZ_rot = 1
+        self.stress = 0
+        self.Delta_CT = 0
+        self.eps = 0
+        self.t_1 = 1
+        self.t_2 = 0.15
+        self.t_4 = 0.05
+        self.U = 0
+        self.J = 0
+
+        for key, value in Model_params.items():
+            setattr(self, key, value)
 
         # Strain Effect
         decay = 1
