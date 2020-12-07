@@ -39,19 +39,22 @@ def orbit_interpreter(mfps, rounding=1):
 def symetries(phase):
     spin, orbit = phase[:2], phase[2:]
     # spin
-    if np.product(np.sign(spin)) == 1:
-        spin = np.abs(spin)
-    if np.product(np.sign(spin)) == -1 and np.sign(spin[0]) == -1:
-        spin = np.roll(spin, 1)
-    if spin[0] == 0:
-        spin = np.roll(spin, 1)
     if 0 in spin:
         spin = np.abs(spin)
+    if spin[0] == 0:
+        spin = np.roll(spin, 1)
+    if np.product(np.sign(spin)) == 1:
+        spin = np.abs(spin)
+    if np.product(np.sign(spin)) == 1 and np.abs(spin[1]) == 2:
+        spin = np.roll(spin, 1)
+    if np.product(np.sign(spin)) == -1 and np.sign(spin[0]) == -1:
+        spin = np.roll(spin, 1)
     # orbit
     if orbit[0] == 0:
         orbit = np.roll(orbit, 1)
     if np.product(np.sign(orbit)) == -1 and np.sign(orbit[0]) == -1:
         orbit = np.roll(orbit, 1)
+
     phase[:2], phase[2:] = spin, orbit
     return phase
 
@@ -105,13 +108,13 @@ Orbit_Dict = {-2: r' \bar{Z}', -1: r' \bar{z}', 0: r' 0', 1: r' z', 2: r' Z'}
 All_states_pre_sym = [np.array([i, j, k, l]) for i, j, k, l in itertools.product(np.arange(-2, 3), repeat=4)]
 All_states_post_sym = np.unique([vec_to_int(symetries(state)) for state in All_states_pre_sym], axis=0)
 
-
+# print(len(All_states_post_sym))
 state_to_pos = {state: i for i, state in enumerate(All_states_post_sym)}
 
-indices = np.arange(len(state_to_pos))
-np.random.seed(42)
-np.random.shuffle(indices)
-state_to_pos_rand = {All_states_post_sym[v]: i for i, v in enumerate(indices)}
+# indices = np.arange(len(state_to_pos))
+# np.random.seed(42)
+# np.random.shuffle(indices)
+# state_to_pos_rand = {All_states_post_sym[v]: i for i, v in enumerate(indices)}
 # state_to_pos = state_to_pos_rand
 
 state_to_label = {

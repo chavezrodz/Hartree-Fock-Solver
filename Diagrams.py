@@ -11,20 +11,12 @@ from Code.Solver.Optimizer import Optimizer_exhaustive as Optimizer_exhaustive
 
 Model_Params = dict(
     N_shape=(50, 50),
-    Filling=0.25,
-    BZ_rot=1,
-    stress=0,
     Delta_CT=0,
-    eps=0,
-    t_1=1,
-    t_2=0.15,
-    t_4=0.05,
-    U=1,
-    J=1)
+    eps=0)
 
 i, j = 'U', 'J',
-i_values = np.linspace(0, 4, 30)
-j_values = np.linspace(0, 0.5, 30)
+i_values = np.linspace(0, 1, 30)
+j_values = np.linspace(0, 0.25, 30)
 
 method = 'sigmoid'
 beta = 1.5
@@ -36,15 +28,16 @@ verbose = True
 save_guess_mfps = False
 
 params_list = [
-    (1, 1, 0, 1, 0.15),
-    (1, 0.5, 0, 1, 0.15),
-    (0, 0.2, 0.5, 0, 0),
-    (0.1, 0.5, 1, 0.5, 0.1),
+    (0.8, 1, 0, 0.7, 0.15),
+    (1, 0.6, 0, 0.7, 0.15),
+    (0, 0.2, 0.5, 0, 0.2),
+    (0.2, 0.5, 1, 1, 0),
     (0.5, 0.5, 0, 0.5, 0.1),
-    (0.5, 0.5, 0.5, 0.5, 0.5)
+    (0.5, 0.5, 0.5, 0.5, 0.5),
+    (0, 0, 0, 0, 0)
 ]
 
-Batch_Folder = 'Meta_4'
+Batch_Folder = 'Meta_dum'
 
 epsilons = np.linspace(0, 2, 20)
 delta_cts = np.linspace(0, 2, 20)
@@ -65,6 +58,7 @@ Results_Folder = os.path.join('Results', Batch_Folder, Run_ID)
 if not os.path.exists(Results_Folder):  os.makedirs(Results_Folder)
 
 sys.stdout = open(Results_Folder+'/logs.txt', 'w+')
+
 for (key, val) in Model_Params.items():
     print("{!s}={!r}".format(key, val))
 print("Itterated : {} Values: {} \n ".format(i, i_values))

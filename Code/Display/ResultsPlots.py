@@ -51,12 +51,12 @@ def feature_plot(feature, i_label, i_values, j_label, j_values, results_folder, 
 
 
 def phases_plot(Phase,i_label, i_values, j_label,j_values, results_folder, show, transparent):
-    CM = Phase[:,:,0]
-    MF_Spin_orb = Phase[:,:,1:]
+    CM = Phase[:, :, 0]
+    MF_Spin_orb = Phase[:, :, 1:]
     spin_orb = In.arr_to_int(MF_Spin_orb)
     unique_states = np.unique(spin_orb)
 
-    f, ax = plt.subplots(figsize=(8,5))
+    f, ax = plt.subplots(figsize=(8, 5))
     ax.set_xlabel(i_label)
     ax.set_ylabel(j_label)
     ax.set(frame_on=False)
@@ -68,7 +68,7 @@ def phases_plot(Phase,i_label, i_values, j_label,j_values, results_folder, show,
     plt.yticks(np.linspace(0, len(j_values), N_y), np.linspace(np.min(j_values), np.max(j_values), N_y))
 
     # Charge Contour
-    CS = ax.contour(CM.T,colors='red',levels=[0.1, 0.3, 0.5])
+    CS = ax.contour(CM.T, colors='red', levels=[0.1, 0.3, 0.5])
     ax.clabel(CS, inline=True, fontsize=10)
 
     # spin-orbit
@@ -79,7 +79,7 @@ def phases_plot(Phase,i_label, i_values, j_label,j_values, results_folder, show,
 
     plt.tight_layout()
     if results_folder is not None:
-        plt.savefig(results_folder+'/Plots/PhaseDiagram.png',transparent=transparent)
+        plt.savefig(results_folder+'/Plots/PhaseDiagram.png', transparent=transparent)
     if show:
         plt.show()
     plt.close()
@@ -91,7 +91,7 @@ def one_dimensional_phases(Phase, i_label, i_values, results_folder, show, trans
     spin_orb = In.arr_to_int(MF_Spin_orb)
     unique_states = np.unique(spin_orb)
 
-    f, ax = plt.subplots(figsize=(8,2))
+    f, ax = plt.subplots(figsize=(8, 2))
     ax.set_title('1d cut')
     ax.set_xlabel(i_label)
     ax.set(frame_on=False)
