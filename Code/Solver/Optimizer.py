@@ -20,7 +20,7 @@ def Optimizer_touchup(MFPs, Convergence_Grid):
     # Indices where convergence failed
     indices = np.where(Convergence_Grid==0,)
     indices = np.transpose(np.stack(indices))
-    indices = list(map(tuple,indices))
+    indices = list(map(tuple, indices))
 
     # Replace unconverged with Nans
     for v in indices:
@@ -32,7 +32,7 @@ def Optimizer_touchup(MFPs, Convergence_Grid):
     return MFPs
 
 
-def Optimizer_smoothing(mfps,sigma=[1,1]):
+def Optimizer_smoothing(mfps, sigma=[1, 1]):
     y = np.zeros(mfps.shape)
     for i in range(mfps.shape[2]):
         y[:, :, i] = sp.ndimage.filters.gaussian_filter(mfps[:, :, i], sigma, mode='nearest')

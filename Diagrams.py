@@ -28,13 +28,13 @@ verbose = True
 save_guess_mfps = False
 
 params_list = [
-    (0.8, 1, 0, 0.7, 0.15),
-    (1, 0.6, 0, 0.7, 0.15),
-    (0, 0.2, 0.5, 0, 0.2),
-    (0.2, 0.5, 1, 1, 0),
-    (0.5, 0.5, 0, 0.5, 0.1),
+    (0.8, 1.0, 0.0, 0.7, 0.15),
+    (1.0, 0.6, 0.0, 0.7, 0.15),
+    (0.0, 0.2, 0.5, 0.0, 0.2),
+    (0.2, 0.5, 1.0, 1.0, 0.0),
+    (0.5, 0.5, 0.0, 0.5, 0.1),
     (0.5, 0.5, 0.5, 0.5, 0.5),
-    (0, 0, 0, 0, 0)
+    (0.0, 0.0, 0.0, 0.0, 0.0)
 ]
 
 Batch_Folder = 'Meta_5'
@@ -57,12 +57,13 @@ Run_ID = Run_ID + '_'.join("{!s}={!r}".format(key, val) for (key, val) in Model_
 Results_Folder = os.path.join('Results', Batch_Folder, Run_ID)
 if not os.path.exists(Results_Folder):  os.makedirs(Results_Folder)
 
-sys.stdout = open(Results_Folder+'/logs.txt', 'w+')
-
+settings = open(Results_Folder+"/parameters.txt", "w+") 
 for (key, val) in Model_Params.items():
-    print("{!s}={!r}".format(key, val))
-print("Itterated : {} Values: {} \n ".format(i, i_values))
-print("Itterated : {} Values: {}".format(j, j_values))
+    settings.write("{!s}={!r} \n".format(key, val))
+    # print("{!s}={!r}".format(key, val))
+settings.write("Itterated : {} Values: {}\n ".format(i, i_values))
+settings.write("Itterated : {} Values: {}".format(j, j_values))
+settings.close()
 
 for n in range(len(params_list)):
     # Guesses Input
@@ -71,6 +72,7 @@ for n in range(len(params_list)):
     Guess_Name = 'Guess'+str(MF_params)
     outfolder = os.path.join(Results_Folder, 'Guesses_Results', Guess_Name)
     if not os.path.exists(outfolder):  os.makedirs(outfolder)
+    sys.stdout = open(outfolder+'/logs.txt', 'w+')
 
     # Code
     a = time()
@@ -89,6 +91,7 @@ Input_Folder = os.path.join(Results_Folder, 'Guesses_Results')
 Final_Results_Folder = os.path.join(Results_Folder, 'Final_Results')
 
 if not os.path.exists(Final_Results_Folder): os.makedirs(Final_Results_Folder)
+sys.stdout = open(Final_Results_Folder+'/logs.txt', 'w+')
 
 Model = Hamiltonian(Model_Params)
 Solver = HFA_Solver(Model, method=method, beta=beta, Itteration_limit=Itteration_limit, tol=tolerance)
