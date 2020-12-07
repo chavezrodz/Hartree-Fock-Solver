@@ -37,7 +37,7 @@ params_list = [
     (0, 0, 0, 0, 0)
 ]
 
-Batch_Folder = 'Meta_dum'
+Batch_Folder = 'Meta_5'
 
 epsilons = np.linspace(0, 2, 20)
 delta_cts = np.linspace(0, 2, 20)
