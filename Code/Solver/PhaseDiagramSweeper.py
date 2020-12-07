@@ -35,14 +35,14 @@ class Phase_Diagram_Sweeper():
             self.i_values = i_values
             self.j_values = j_values
 
-        self.Diag_shape = (len(i_values),len(j_values))
+        self.Diag_shape = (len(i_values), len(j_values))
 
-        self.i_idx,self.j_idx = np.indices(self.Diag_shape,sparse=True)
-        self.i_idx,self.j_idx = self.i_idx.flatten(),self.j_idx.flatten()
+        self.i_idx, self.j_idx = np.indices(self.Diag_shape,sparse=True)
+        self.i_idx, self.j_idx = self.i_idx.flatten(), self.j_idx.flatten()
 
         if Initial_params.ndim == 1:
-            self.Initial_params = np.zeros((*self.Diag_shape,len(Model.MF_params)))
-            self.Initial_params[:,:,:] = Initial_params
+            self.Initial_params = np.zeros((*self.Diag_shape, len(Model.MF_params)))
+            self.Initial_params[:, :, :] = Initial_params
         else:
             self.Initial_params = Initial_params
 
@@ -73,13 +73,13 @@ class Phase_Diagram_Sweeper():
     def Sweep(self):
 
         # MP way
-        PD_grid = itertools.product(self.i_idx,self.j_idx)
+        PD_grid = itertools.product(self.i_idx, self.j_idx)
         with Pool(self.n_threads) as p:
             results = p.map(self.Phase_Diagram_point, PD_grid)
 
         # Energies results list to array to csv
-        PD_grid = itertools.product(self.i_idx,self.j_idx)
-        for i,v in enumerate(PD_grid):
+        PD_grid = itertools.product(self.i_idx, self.j_idx)
+        for i, v in enumerate(PD_grid):
             self.Es_trial[v] = results[i][0]
             self.Final_params[v] = results[i][1]
             self.Convergence_Grid[v] = results[i][2]
@@ -91,10 +91,10 @@ class Phase_Diagram_Sweeper():
         self.Convergence_pc = 100*np.mean(self.Convergence_Grid)
 
     def save_results(self, outfolder, Include_MFPs=False):
-        np.savetxt(os.path.join(outfolder,'Energies.csv'),self.Es_trial,delimiter=',')
-        np.savetxt(os.path.join(outfolder,'Convergence.csv'),self.Convergence_Grid,delimiter=',')
-        np.savetxt(os.path.join(outfolder,'Conductance.csv'),self.MIT,delimiter=',')
-        np.savetxt(os.path.join(outfolder,'Distortion.csv'),self.Distortion,delimiter=',')
+        np.savetxt(os.path.join(outfolder, 'Energies.csv'), self.Es_trial, delimiter=',')
+        np.savetxt(os.path.join(outfolder, 'Convergence.csv'), self.Convergence_Grid, delimiter=',')
+        np.savetxt(os.path.join(outfolder, 'Conductance.csv'), self.MIT, delimiter=',')
+        np.savetxt(os.path.join(outfolder, 'Distortion.csv'), self.Distortion, delimiter=',')
         if Include_MFPs:
             if not os.path.exists(os.path.join(outfolder,'MF_Solutions')):
                 os.makedirs(os.path.join(outfolder,'MF_Solutions'))

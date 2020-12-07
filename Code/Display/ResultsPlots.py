@@ -60,8 +60,12 @@ def phases_plot(Phase,i_label, i_values, j_label,j_values, results_folder, show,
     ax.set_xlabel(i_label)
     ax.set_ylabel(j_label)
     ax.set(frame_on=False)
-    plt.xticks(np.linspace(0, len(i_values), 4), np.linspace(0, max(i_values), 4, dtype=int))
-    plt.yticks(np.linspace(0, len(j_values), 4), np.linspace(0, max(j_values), 4, dtype=int)) 
+
+    # ticks
+    N_x = np.min([len(i_values), 5])
+    N_y = np.min([len(j_values), 5])
+    plt.xticks(np.linspace(0, len(i_values), N_x), np.linspace(np.min(i_values), np.max(i_values), N_x))
+    plt.yticks(np.linspace(0, len(j_values), N_y), np.linspace(np.min(j_values), np.max(j_values), N_y))
 
     # Charge Contour
     CS = ax.contour(CM.T,colors='red',levels=[0.1, 0.3, 0.5])
@@ -69,7 +73,7 @@ def phases_plot(Phase,i_label, i_values, j_label,j_values, results_folder, show,
 
     # spin-orbit
     cmap = plt.cm.get_cmap('prism', 170)
-    im = ax.pcolormesh(spin_orb.T,alpha=1,cmap=cmap,vmin=0,vmax=169)
+    im = ax.pcolormesh(spin_orb.T, alpha=1, cmap=cmap, vmin=0, vmax=169)
     patches = [mpatches.Patch(color=cmap(state), label=In.pos_to_label[state]) for state in unique_states]
     ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.0, prop={"size": 13})
 

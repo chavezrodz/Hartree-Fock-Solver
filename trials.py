@@ -17,15 +17,14 @@ args = parser.parse_args()
 # Local test
 for n in range(len(params.params_list)):
     # Guesses Input
-    args.trial_ind = n
+    args.run_ind = n
 """
 
-MF_params = np.array(params.params_list[args.trial_ind])
+MF_params = np.array(params.params_list[args.run_ind])
 Guess_Name = 'Guess'+str(MF_params)
 outfolder = os.path.join(params.Results_Folder, 'Guesses_Results', Guess_Name)
 if not os.path.exists(outfolder):
     os.makedirs(outfolder)
-
 sys.stdout = open(outfolder+'/logs.txt', 'w+')
 # Code
 a = time()
@@ -49,4 +48,4 @@ sweeper = Phase_Diagram_Sweeper(
 
 sweeper.Sweep()
 sweeper.save_results(outfolder, Include_MFPs=params.save_guess_mfps)
-print(f'Diagram itteration:{args.trial_ind} time to complete (s): {round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} ')
+print(f'Diagram itteration:{args.run_ind} time to complete (s): {round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} ')

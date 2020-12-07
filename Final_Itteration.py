@@ -33,7 +33,10 @@ Solver = HFA_Solver(
     tol=params.tolerance
     )
 
-Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(Input_Folder, params.params_list, input_MFP=params.save_guess_mfps)
+Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(
+    Input_Folder, params.params_list,
+    input_MFP=params.save_guess_mfps,
+    verbose=params.verbose)
 
 sweeper = Phase_Diagram_Sweeper(
     Model, Solver, Optimal_guesses,
@@ -47,6 +50,7 @@ sweeper.Sweep()
 sweeper.save_results(outfolder, Include_MFPs=True)
 
 Final_Energies = sweeper.Es_trial
+print(Final_Energies, '\n', Optimal_Energy)
 
 print(f'Initial guess sweep and final calculations are consistent: {np.array_equal(Final_Energies, Optimal_Energy)}')
 print(f'time to complete (s):{round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} % \n')

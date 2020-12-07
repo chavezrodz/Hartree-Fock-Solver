@@ -90,9 +90,11 @@ class HFA_Solver:
     def Itteration_Step(self, verbose):
         #   Calculate Dynamic Variables
         self.Hamiltonian.update_variables()
+
         # Solve Matrix Across all momenta
         for q in self.Hamiltonian.Q:
             self.Energies[q], self.Eigenvectors[q] = self.Hamiltonian.Mat_q_calc(q)
+
         # Find Indices of all required lowest energies
         self.Find_filling_lowest_energies()
         # Calculate Mean Field Parameters with lowest energies
