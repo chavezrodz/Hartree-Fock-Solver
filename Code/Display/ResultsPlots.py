@@ -68,16 +68,16 @@ def phases_plot(Phase,i_label, i_values, j_label,j_values, results_folder, show,
     plt.yticks(np.linspace(0, len(j_values), N_y), np.linspace(np.min(j_values), np.max(j_values), N_y))
 
     # Charge Contour
-    CS = ax.contour(CM.T, colors='red', levels=[0.1, 0.3, 0.5])
+    CS = ax.contour(np.abs(CM.T), colors='red', levels=[0.1, 0.3, 0.5])
     ax.clabel(CS, inline=True, fontsize=10)
 
     # spin-orbit
-    cmap = plt.cm.get_cmap('prism', 170)
-    im = ax.pcolormesh(spin_orb.T, alpha=1, cmap=cmap, vmin=0, vmax=169)
+    cmap = plt.cm.get_cmap('prism', 120)
+    im = ax.pcolormesh(spin_orb.T, alpha=1, cmap=cmap, vmin=0, vmax=119)
     patches = [mpatches.Patch(color=cmap(state), label=In.pos_to_label[state]) for state in unique_states]
     ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.0, prop={"size": 13})
-
     plt.tight_layout()
+
     if results_folder is not None:
         plt.savefig(results_folder+'/Plots/PhaseDiagram.png', transparent=transparent)
     if show:
@@ -101,8 +101,8 @@ def one_dimensional_phases(Phase, i_label, i_values, results_folder, show, trans
     # print(CM)
 
     # spin-orbit
-    cmap = plt.cm.get_cmap('prism', 170)
-    im = ax.pcolormesh(spin_orb, alpha=1, cmap=cmap, vmin=0, vmax=169)
+    cmap = plt.cm.get_cmap('prism', 120)
+    im = ax.pcolormesh(spin_orb, alpha=1, cmap=cmap, vmin=0, vmax=119)
     patches = [mpatches.Patch(color=cmap(state), label=In.pos_to_label[state]) for state in unique_states]
     ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.0, prop={"size": 13})
 

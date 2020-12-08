@@ -39,21 +39,34 @@ def orbit_interpreter(mfps, rounding=1):
 def symetries(phase):
     spin, orbit = phase[:2], phase[2:]
     # spin
+    spin = np.sign(spin)
+
     if 0 in spin:
         spin = np.abs(spin)
-    if spin[0] == 0:
-        spin = np.roll(spin, 1)
+    # if spin[0] == 0:
+    #     spin = np.roll(spin, 1)
     if np.product(np.sign(spin)) == 1:
         spin = np.abs(spin)
-    if np.product(np.sign(spin)) == 1 and np.abs(spin[1]) == 2:
-        spin = np.roll(spin, 1)
+    # if np.product(np.sign(spin)) == 1 and np.abs(spin[1]) == 2:
+    #     spin = np.roll(spin, 1)
     if np.product(np.sign(spin)) == -1 and np.sign(spin[0]) == -1:
-        spin = np.roll(spin, 1)
+        if orbit[0] == orbit[1]:
+            spin = np.roll(spin, 1)
+    # print(np.argsort(spin))
+
+    if spin[0] < spin[1]:
+        if orbit[0] == orbit[1]:
+            spin = np.roll(spin, 1)
+
+    if orbit[0] < orbit[1]:
+        if spin[0] == spin[1]:
+            orbit = np.roll(orbit, 1)
+
     # orbit
-    if orbit[0] == 0:
-        orbit = np.roll(orbit, 1)
-    if np.product(np.sign(orbit)) == -1 and np.sign(orbit[0]) == -1:
-        orbit = np.roll(orbit, 1)
+    # if orbit[0] == 0:
+    #     orbit = np.roll(orbit, 1)
+    # if np.product(np.sign(orbit)) == -1 and np.sign(orbit[0]) == -1:
+    #     orbit = np.roll(orbit, 1)
 
     phase[:2], phase[2:] = spin, orbit
     return phase

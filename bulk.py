@@ -10,9 +10,8 @@ from Code.Solver.PhaseDiagramSweeper import Phase_Diagram_Sweeper
 from Code.Solver.Optimizer import Optimizer_exhaustive as Optimizer_exhaustive
 
 Model_Params = dict(
-    N_shape=(50, 50),
-    Delta_CT=0,
-    eps=0)
+    N_shape=(25, 25, 25),
+    b=0)
 
 i, j = 'U', 'J',
 i_values = np.linspace(0, 1, 30)
@@ -32,22 +31,20 @@ params_list = [
     (1.0, 0.6, 0.0, 0.7, 0.15),
     (0.0, 0.2, 0.5, 0.0, 0.2),
     (0.2, 0.5, 1.0, 1.0, 0.0),
-    (0.5, 0.5, 0.0, 0.5, 0.1)
+    (0.5, 0.5, 0.0, 0.5, 0.1),
 ]
 
-Batch_Folder = 'Meta_5'
+Batch_Folder = 'bulk_comp'
 
-epsilons = np.linspace(0, 2, 20)
-delta_cts = np.linspace(0, 2, 20)
+bs = np.linspace(0, 1, 4)
 
 # Command Line Arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--n_threads', type=int, default=8)
-parser.add_argument('--run_ind', type=int, default=0)
+parser.add_argument('--run_ind', type=int, default=1)
 args = parser.parse_args()
 
-model_params_lists = Utils.tuplelist([epsilons, delta_cts])
-Model_Params['eps'], Model_Params['Delta_CT'] = model_params_lists[args.run_ind]
+Model_Params['b'] = bs[args.run_ind]
 
 Run_ID = 'Itterated:'+str(i)+'_'+str(j)+'_'
 Run_ID = Run_ID + '_'.join("{!s}={!r}".format(key, val) for (key, val) in Model_Params.items())

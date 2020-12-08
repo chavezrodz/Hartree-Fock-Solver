@@ -1,10 +1,12 @@
+import matplotlib.pyplot as plt
 import numpy as np
 from numpy import linalg as LA
 
 
 class Hamiltonian:
     """
-    Contains: Matrix structure, elements, consistency equations, total energy equation
+    Contains: Matrix structure, elements,
+    consistency equations, total energy equation
     and both static and dynamic parameters
 
     Model_Params must be a dictionary and at least contain:
@@ -29,7 +31,6 @@ class Hamiltonian:
         self.MF_params = MF_params
 
         # initiates Model parameters
-        self.N_shape = (50, 50)
         self.Filling = 0.25
         self.BZ_rot = 1
         self.stress = 0
@@ -51,6 +52,7 @@ class Hamiltonian:
         self.t_2 = self.t_2*np.exp(-decay*np.sqrt(2)*self.stress)
         self.t_4 = self.t_4*np.exp(-decay*self.stress)
 
+        # MFPs Names
         self.Dict = {0: 'Charge Modulation',
                      1: 'Ferromagnetism',
                      2: 'Orbital Disproportionation',
@@ -58,32 +60,61 @@ class Hamiltonian:
                      4: 'Anti Ferroorbital'}
 
         self.mat_dim = 8
-        self.N_dim = len(self.N_shape)
+        # Lattice structure
         self.N_cells = int(np.prod(self.N_shape))
 
         # Allowed Momentum Values
         self.Qv = np.mgrid[
             -np.pi:np.pi:(self.N_shape[0]*1j),
-            -np.pi:np.pi:(self.N_shape[1]*1j)].reshape(self.N_dim, -1).T
+            -np.pi:np.pi:(self.N_shape[1]*1j),
+            -np.pi:np.pi:(self.N_shape[2]*1j)].reshape(3, -1).T
 
         # Vectors Rotation by 45 degrees to re-create true BZ
-        angle = -np.pi / 4.*self.BZ_rot
-        rotate = np.array([
-             [np.cos(angle), -np.sin(angle)],
-             [np.sin(angle),  np.cos(angle)]])
+        angle = np.pi / 4.*self.BZ_rot
+        scaling = (1/np.sqrt(2))*self.BZ_rot + (1 - self.BZ_rot)
 
-        # scale to only allow up to pi/2 momentum values
-        scaling = (1/np.sqrt(2.))*self.BZ_rot + 1.*(1. - self.BZ_rot)
-        scale = np.array([
-                 [scaling, 0],
-                 [0, scaling]])
+        rotate_1 = np.array([
+             [np.cos(angle), -np.sin(angle), 0],
+             [np.sin(angle),  np.cos(angle), 0],
+             [0,  0, 1]])
 
-        self.Qv = np.array([np.dot(scale, np.dot(rotate, k)) for k in self.Qv])
+        scale_1 = np.array([
+                 [scaling, 0, 0],
+                 [0, scaling, 0],
+                 [0, 0, 1]])
+
+        rotate_2 = np.array([
+           [np.cos(angle), 0, np.sin(angle)],
+           [0,  1, 0],
+           [-np.sin(angle),  0, np.cos(angle)]])
+
+        scale_2 = np.array([
+                 [scaling, 0, 0],
+                 [0, 1, 0],
+                 [0, 0, scaling]])
+
+        rotate_2 = np.identity(3)
+        scale_2 = np.identity(3)
+
+        self.Qv = np.array([
+            np.dot(scale_2, np.dot(rotate_2, np.dot(scale_1, np.dot(rotate_1, k))))
+            for k in self.Qv])
+
+        # 2d cut
+        # cut_cells = int(np.power(self.N_cells, 2/3))
+        # self.Z_cut_ind = np.argpartition(np.abs(self.Qv[:, 2]), cut_cells)[:cut_cells]
+
+        # Brillouin Zone
+        # fig = plt.figure()
+        # ax = fig.add_subplot(111, projection='3d')
+        # ax.scatter(self.Qv[:, 0], self.Qv[:, 1], self.Qv[:, 2], '.')
+        # plt.show()
 
         # Allowed Momentum Indices for itterator
         self.Qg = np.mgrid[
             0:self.N_shape[0],
-            0:self.N_shape[1]].reshape(self.N_dim, -1).T
+            0:self.N_shape[1],
+            0:self.N_shape[2]].reshape(3, -1).T
 
         self.Q = list(map(tuple, self.Qg))
 
@@ -99,17 +130,35 @@ class Hamiltonian:
         self.tzz_b = np.zeros(self.N_shape)
         self.tzz_b_c = np.zeros(self.N_shape)
 
+        B = self.b
+
         for i, q in enumerate(self.Q):
-            qx, qy = self.Qv[i]
+            qx, qy, qz = self.Qv[i]
+            qxc, qyc, qzc = qx + qc, qy + qc, qz + qc
 
-            self.tzz[q] = -self.t_1/2*(np.cos(qx) + np.cos(qy)) - self.t_4/2*(np.cos(2*qx) + np.cos(2*qy)) - 4*self.t_2*np.cos(qx)*np.cos(qy)
-            self.tzz_c[q] = -self.t_1/2*(np.cos(qx+qc) + np.cos(qy+qc)) - self.t_4/2*(np.cos(2*(qx+qc)) + np.cos(2*(qy+qc))) - 4*self.t_2*np.cos(qx+qc)*np.cos(qy+qc)
+            self.tzz[q] = -2*self.t_1*(B*np.cos(qz) + 1/4*(np.cos(qx) + np.cos(qy))) \
+                - 2*self.t_4*(B*np.cos(2*qz) + 1/4*(np.cos(2*qx) + np.cos(2*qy)))\
+                - 2*self.t_2*(np.cos(qx)*np.cos(qy) - 2*B*np.cos(qz)*(np.cos(qy) + np.cos(qx)))
 
-            self.tz_bz_b[q] = -self.t_1*3/2*(np.cos(qx) + np.cos(qy)) - self.t_4*3/2*(np.cos(2*qx) + np.cos(2*qy)) - 12*self.t_2*np.cos(qx)*np.cos(qy)
-            self.tz_bz_b_c[q] = -self.t_1*3/2*(np.cos(qx+qc) + np.cos(qy+qc)) - self.t_4*3/2*(np.cos(2*(qx+qc)) + np.cos(2*(qy+qc))) - 12*self.t_2*np.cos(qx+qc)*np.cos(qy+qc)
+            self.tzz_c[q] = -2*self.t_1*(B*np.cos(qzc) + 1/4*(np.cos(qxc) + np.cos(qyc))) \
+                - 2*self.t_4*(B*np.cos(2*qzc) + 1/4*(np.cos(2*qxc) + np.cos(2*qyc)))\
+                - 2*self.t_2*(np.cos(qxc)*np.cos(qyc) - 2*B*np.cos(qzc)*(np.cos(qyc) + np.cos(qxc)))
 
-            self.tzz_b[q] = np.sqrt(3)/2*self.t_1*(np.cos(qx) - np.cos(qy)) + np.sqrt(3)/2*self.t_4*(np.cos(2*qx) - np.cos(2*qy))
-            self.tzz_b_c[q] = np.sqrt(3)/2*self.t_1*(np.cos(qx+qc) - np.cos(qy+qc)) + np.sqrt(3)/2*self.t_4*(np.cos(2*(qx + qc)) - np.cos(2*(qy + qc)))
+            self.tz_bz_b[q] = -self.t_1*3/2*(np.cos(qx) + np.cos(qy))\
+                - self.t_4*3/2*(np.cos(2*qx) + np.cos(2*qy))\
+                + 12*self.t_2*np.cos(qx)*np.cos(qy)
+
+            self.tz_bz_b_c[q] = -self.t_1*3/2*(np.cos(qxc) + np.cos(qyc))\
+                - self.t_4*3/2*(np.cos(2*qxc) + np.cos(2*qyc))\
+                + 12*self.t_2*np.cos(qxc)*np.cos(qyc)
+
+            self.tzz_b[q] = np.sqrt(3)/2*self.t_1*(np.cos(qx) - np.cos(qy))\
+                + np.sqrt(3)/2*self.t_4*(np.cos(2*qx) - np.cos(2*qy))\
+                - 2*np.sqrt(3)*self.t_2*B*np.cos(qz)*(np.cos(qx) - np.cos(qy))
+
+            self.tzz_b_c[q] = np.sqrt(3)/2*self.t_1*(np.cos(qxc) - np.cos(qyc))\
+                + np.sqrt(3)/2*self.t_4*(np.cos(2*qxc) - np.cos(2*qyc))\
+                - 2*np.sqrt(3)*self.t_2*B*np.cos(qzc)*(np.cos(qxc) - np.cos(qyc))
 
     def update_variables(self):
         """
@@ -209,5 +258,10 @@ class Hamiltonian:
         return a, b, c, d, e
 
     def Calculate_Energy(self, E_occ):
-        E = E_occ/self.N_cells + 2*self.eps*(self.u**2/2 + self.u**4/4) - (self.U_bar/2*(self.f**2+self.MF_params[0]**2) - self.U_0*(self.MF_params[1]**2 + self.MF_params[3]**2) + self.J_bar*(self.MF_params[2]**2 + self.MF_params[4]**2))/self.N_cells
+        E = E_occ/self.N_cells
+        + 2*self.eps*(self.u**2/2 + self.u**4/4) - (
+            self.U_bar/2*(self.f**2+self.MF_params[0]**2) -
+            self.U_0*(self.MF_params[1]**2 + self.MF_params[3]**2) +
+            self.J_bar*(self.MF_params[2]**2 + self.MF_params[4]**2)
+            )/self.N_cells
         return E

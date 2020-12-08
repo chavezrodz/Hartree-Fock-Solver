@@ -32,7 +32,7 @@ run_folders = 'Dummy'
 for folder in sorted(os.listdir(os.path.join('Results', run_folders))):
     frf = os.path.join('Results', run_folders, folder, 'Final_Results')
     print(frf)
-    sweeper_plots(i, i_values, j, j_values, Model.Dict, frf, BW_norm=bw_norm)
+    sweeper_plots(i, i_values, j, j_values, Model.Dict, frf, BW_norm=bw_norm, show=False)
     # break
     # break
     # guesses_folder = os.path.join('Results', run_folders, folder, 'Guesses_Results')
