@@ -2,8 +2,8 @@
 #PBS -A st-anocera-1
 #PBS -N RNiO3 
 #PBS -l walltime=12:00:00,select=1:ncpus=32:mem=128gb
-#PBS -o PBS/out_^array_index^.txt
-#PBS -e PBS/err_^array_index^.txt
+#PBS -o PBS/bulk_out_^array_index^.txt
+#PBS -e PBS/bulk_err_^array_index^.txt
 #PBS -J 0-4
 
 cd $PBS_O_WORKDIR
