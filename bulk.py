@@ -36,7 +36,7 @@ params_list = [
 
 Batch_Folder = 'bulk_comp'
 
-bs = np.linspace(0, 1, 4)
+bs = np.linspace(0, 1, 5)
 
 # Command Line Arguments
 parser = argparse.ArgumentParser()

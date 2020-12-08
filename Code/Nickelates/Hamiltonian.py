@@ -148,13 +148,13 @@ class Hamiltonian:
                 - 2*self.t_4*(B*np.cos(2*qzc) + 1/4*(np.cos(2*qxc) + np.cos(2*qyc)))\
                 - 2*self.t_2*(np.cos(qxc)*np.cos(qyc) - 2*B*np.cos(qzc)*(np.cos(qyc) + np.cos(qxc)))
 
-            self.tz_bz_b[q] = -self.t_1*3/2*(np.cos(qx) + np.cos(qy))\
-                - self.t_4*3/2*(np.cos(2*qx) + np.cos(2*qy))\
-                + 12*self.t_2*np.cos(qx)*np.cos(qy)
+            self.tz_bz_b[q] = -3/2*self.t_1*(np.cos(qx) + np.cos(qy))\
+                - 3/2*self.t_4*(np.cos(2*qx) + np.cos(2*qy))\
+                + 6*self.t_2*np.cos(qx)*np.cos(qy)
 
-            self.tz_bz_b_c[q] = -self.t_1*3/2*(np.cos(qxc) + np.cos(qyc))\
-                - self.t_4*3/2*(np.cos(2*qxc) + np.cos(2*qyc))\
-                + 12*self.t_2*np.cos(qxc)*np.cos(qyc)
+            self.tz_bz_b_c[q] = -3/2*self.t_1*(np.cos(qxc) + np.cos(qyc))\
+                - 3/2*self.t_4*(np.cos(2*qxc) + np.cos(2*qyc))\
+                + 6*self.t_2*np.cos(qxc)*np.cos(qyc)
 
             self.tzz_b[q] = np.sqrt(3)/2*self.t_1*(np.cos(qx) - np.cos(qy))\
                 + np.sqrt(3)/2*self.t_4*(np.cos(2*qx) - np.cos(2*qy))\
