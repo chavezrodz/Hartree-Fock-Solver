@@ -63,6 +63,10 @@ class Hamiltonian:
         # Lattice structure
         self.N_cells = int(np.prod(self.N_shape))
 
+        if len(self.N_shape) == 2:
+            self.b = 0
+            self.N_shape = (*self.N_shape, 1)
+
         # Allowed Momentum Values
         self.Qv = np.mgrid[
             -np.pi:np.pi:(self.N_shape[0]*1j),
