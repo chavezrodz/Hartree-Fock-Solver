@@ -10,7 +10,7 @@ from Code.Solver.PhaseDiagramSweeper import Phase_Diagram_Sweeper
 from Code.Solver.Optimizer import Optimizer_exhaustive as Optimizer_exhaustive
 
 Model_Params = dict(
-    N_shape=(25, 25, 25),
+    N_shape=(15, 15, 15),
     b=0)
 
 i, j = 'U', 'J',
