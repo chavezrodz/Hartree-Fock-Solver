@@ -105,8 +105,11 @@ class Hamiltonian:
             for k in self.Qv])
 
         # 2d cut
-        # cut_cells = int(np.power(self.N_cells, 2/3))
-        # self.Z_cut_ind = np.argpartition(np.abs(self.Qv[:, 2]), cut_cells)[:cut_cells]
+        if self.b == 0:
+            self.Z_cut_ind = np.arange(self.N_cells)
+        else:
+            cut_cells = int(self.N_cells/self.N_shape[2])
+            self.Z_cut_ind = np.argpartition(np.abs(self.Qv[:, 2] - np.pi), cut_cells)[:cut_cells]
 
         # Brillouin Zone
         # fig = plt.figure()
