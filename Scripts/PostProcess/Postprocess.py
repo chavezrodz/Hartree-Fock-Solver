@@ -4,33 +4,29 @@ from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Display.ResultsPlots import sweeper_plots
 
 Model_Params = dict(
-    N_shape=(50, 50),
-    Filling=0.25,
-    BZ_rot=1,
-    stress=0,
-    Delta_CT=0.5,
-    eps=0.5,
-    t_1=1,
-    t_2=0.15,
-    t_4=0.05,
-    U=1,
-    J=1)
+    N_shape=(10, 10),
+    eps=0,
+    Delta_CT=0
+    )
 
-i, j = 'U', 'J',
-i_values = np.linspace(0, 1, 30)
-j_values = np.linspace(0, 0.25, 30)
-
+# Diagram Ranges
+i, j = 'U', 'J'
+i_values = np.linspace(0, 1, 10)
+j_values = np.linspace(0, 0.25, 10)
 method = 'sigmoid'
 beta = 1.5
 Itteration_limit = 250
 tolerance = 1e-3
 bw_norm = True
 
+verbose = True
+save_guess_mfps = False
+
+Batch_Folder = 'Dummy'
 Model = Hamiltonian(Model_Params)
 
-run_folders = 'Dummy'
-for folder in sorted(os.listdir(os.path.join('Results', run_folders))):
-    frf = os.path.join('Results', run_folders, folder, 'Final_Results')
+for folder in sorted(os.listdir(os.path.join('Results', Batch_Folder))):
+    frf = os.path.join('Results', Batch_Folder, folder, 'Final_Results')
     print(frf)
     sweeper_plots(i, i_values, j, j_values, Model.Dict, frf, BW_norm=bw_norm, show=False)
     # break

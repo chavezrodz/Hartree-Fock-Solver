@@ -26,6 +26,10 @@ bw_norm = True
 verbose = True
 save_guess_mfps = False
 
+Batch_Folder = 'bulk_comp'
+
+bs = np.linspace(0, 1, 5)
+
 params_list = [
     (0.8, 1.0, 0.0, 0.7, 0.15),
     (1.0, 0.6, 0.0, 0.7, 0.15),
@@ -34,9 +38,6 @@ params_list = [
     (0.5, 0.5, 0.0, 0.5, 0.1),
 ]
 
-Batch_Folder = 'bulk_comp'
-
-bs = np.linspace(0, 1, 5)
 
 # Command Line Arguments
 parser = argparse.ArgumentParser()

@@ -6,17 +6,15 @@ import Code.Display.DispersionRelation as DR
 from Code.Nickelates.Hamiltonian import Hamiltonian
 
 Model_Params = dict(
-    N_shape=(25, 25),
-    U=1,
-    J=1,
-    b=0
+    N_shape=(15, 15, 15),
+    b=0.25
     )
 
 # Code
 a = time()
 
-# MF_params = np.array([0,  0.004, 0.477,  0,   0])
-MF_params = np.zeros(5)
+# MF_params = np.zeros(5)
+MF_params = np.array([0,  0., -0.443,  0,   0])
 method = 'sigmoid'; beta = 3
 # method = 'momentum'; beta = 0.5
 Model = Hamiltonian(Model_Params, MF_params)
@@ -24,11 +22,13 @@ Solver = HFA_Solver(Model, method=method, beta=beta,
                     Itteration_limit=250, tol=1e-3, save_seq=True)
 Solver.Itterate(verbose=True)
 
-IS.Itteration_sequence(Solver)
-DR.DOS(Solver, bins=30)
-print(Solver.Conductor)
-DR.DispersionRelation_Zcut(Solver)
-DR.fermi_surface_Zcut(Solver, save=False)
+DR.DOS(Solver)
+print(Solver.bandwidth_calculation())
+
+# IS.Itteration_sequence(Solver)
+# print(Solver.Conductor)
+# DR.DispersionRelation_Zcut(Solver)
+# DR.fermi_surface_Zcut(Solver, save=False)
 
 
 """
