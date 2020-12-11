@@ -38,29 +38,21 @@ def orbit_interpreter(mfps, rounding=1):
 
 def symetries(phase):
     spin, orbit = phase[:2], phase[2:]
-    # spin
-    spin = np.sign(spin)
+    # spin = np.sign(spin)
 
-    if 0 in spin:
+    if 0 in spin or np.product(np.sign(spin)) == 1:
         spin = np.abs(spin)
-    # if spin[0] == 0:
-    #     spin = np.roll(spin, 1)
-    if np.product(np.sign(spin)) == 1:
-        spin = np.abs(spin)
-    # if np.product(np.sign(spin)) == 1 and np.abs(spin[1]) == 2:
-    #     spin = np.roll(spin, 1)
-    if np.product(np.sign(spin)) == -1 and np.sign(spin[0]) == -1:
-        if orbit[0] == orbit[1]:
-            spin = np.roll(spin, 1)
-    # print(np.argsort(spin))
 
-    if spin[0] < spin[1]:
-        if orbit[0] == orbit[1]:
+    if orbit[0] == orbit[1]:
+        if spin[0] < spin[1]:
             spin = np.roll(spin, 1)
 
-    if orbit[0] < orbit[1]:
-        if spin[0] == spin[1]:
+    if spin[0] == spin[1]:
+        if orbit[0] < orbit[1]:
             orbit = np.roll(orbit, 1)
+
+    if spin[0] < spin[1] and orbit[0] < orbit[1]:
+        spin, orbit = np.roll(spin, 1), np.roll(orbit, 1)
 
     # orbit
     # if orbit[0] == 0:
@@ -121,7 +113,8 @@ Orbit_Dict = {-2: r' \bar{Z}', -1: r' \bar{z}', 0: r' 0', 1: r' z', 2: r' Z'}
 All_states_pre_sym = [np.array([i, j, k, l]) for i, j, k, l in itertools.product(np.arange(-2, 3), repeat=4)]
 All_states_post_sym = np.unique([vec_to_int(symetries(state)) for state in All_states_pre_sym], axis=0)
 
-# print(len(All_states_post_sym))
+N_possible_states = len(All_states_post_sym)
+print(f'Total Possible States: {N_possible_states}')
 state_to_pos = {state: i for i, state in enumerate(All_states_post_sym)}
 
 # indices = np.arange(len(state_to_pos))
@@ -143,11 +136,11 @@ pos_to_label = {
 def phase_to_label(phase):
     out = vec_to_int(symetries(phase))
     out = state_to_pos[out]
-    print('label: ', out)
-    print('checking: ', pos_to_label[out])
+    print('int: ', out)
+    print('label: ', pos_to_label[out])
 
 
-# phase_to_label(np.array([1, -1, -1, -1]))
+phase_to_label(np.array([1, -1, -1, -1]))
 # print(vec_to_int(symetries(np.array([1, -1, -1, -1]))))
 # print(state_to_pos[4222])
 # print(pos_to_label[38])

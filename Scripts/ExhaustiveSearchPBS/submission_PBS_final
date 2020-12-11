@@ -7,4 +7,4 @@
 
 cd $PBS_O_WORKDIR
 source ../.venvs/HFA/bin/activate
-python trials.py --n_threads 32 
+python final_itteration.py --n_threads 32 

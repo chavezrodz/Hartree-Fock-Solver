@@ -13,10 +13,14 @@ sns.set_theme()
 sns.set_context("paper")
 
 
-def MFP_plots(MFPs, i_label, i_values, j_label, j_values, Dict, results_folder, show, transparent):
+def MFP_plots(MFPs, i_label, i_values, j_label, j_values, Dict, results_folder, show, transparent, standardize=False):
     for i in range(len(Dict)):
-        arr = np.abs(MFPs[:, :, i].T)
-        plt.pcolormesh(arr, vmin=0, vmax=1)
+        arr = MFPs[:, :, i].T
+        if standardize:
+            arr = np.abs(arr)
+            plt.pcolormesh(arr, vmin=0, vmax=1)
+        else:
+            plt.pcolormesh(arr)
         plt.title(Dict[i])
         plt.xlabel(i_label)
         plt.ylabel(j_label)
@@ -72,8 +76,8 @@ def phases_plot(Phase,i_label, i_values, j_label,j_values, results_folder, show,
     ax.clabel(CS, inline=True, fontsize=10)
 
     # spin-orbit
-    cmap = plt.cm.get_cmap('prism', 120)
-    im = ax.pcolormesh(spin_orb.T, alpha=1, cmap=cmap, vmin=0, vmax=119)
+    cmap = plt.cm.get_cmap('prism', In.N_possible_states)
+    im = ax.pcolormesh(spin_orb.T, alpha=1, cmap=cmap, vmin=0, vmax=In.N_possible_states-1)
     patches = [mpatches.Patch(color=cmap(state), label=In.pos_to_label[state]) for state in unique_states]
     ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.0, prop={"size": 13})
     plt.tight_layout()
