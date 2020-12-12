@@ -140,8 +140,7 @@ class Hamiltonian:
         B = self.b
 
         for i, q in enumerate(self.Q):
-            qx, qy, qz = self.Qv[i]
-            qxc, qyc, qzc = qx + qc, qy + qc, qz + qc
+            (qx, qy, qz), (qxc, qyc, qzc) = self.Qv[i], self.Qv[i] + qc
 
             self.tzz[q] = -2*self.t_1*(B*np.cos(qz) + 1/4*(np.cos(qx) + np.cos(qy))) \
                 - 2*self.t_4*(B*np.cos(2*qz) + 1/4*(np.cos(2*qx) + np.cos(2*qy)))\

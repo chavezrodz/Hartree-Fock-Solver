@@ -44,8 +44,6 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
     Input list of arrays of energy across phase region,
     return best guess per region
     """
-    folderlist = sorted(os.listdir(os.path.join(Input_Folder)))
-
     folderlist = ['Guess'+str(MF_params)
                   for MF_params in np.array(params_list)]
 
@@ -71,6 +69,7 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
     Optimal_Convergence = np.squeeze(Optimal_Convergence)
 
     if input_MFP:
+        # Recover best solutions from all guesses
         print('Loading Solutions')
         Solutions = []
         States = []

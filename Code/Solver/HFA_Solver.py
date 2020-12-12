@@ -91,6 +91,13 @@ class HFA_Solver:
         #   Calculate Dynamic Variables
         self.Hamiltonian.update_variables()
 
+        # TO DO
+        # vec_f = vectorize(mat_q_calc)
+        # self.vec_f = np.vectorize(self.Hamiltonian.Mat_q_calc, excluded='self')
+        # print(self.vec_f((0, 0, 0)))
+
+        # self.Energies ,self.Eigenvectors = vec_f(Q)
+
         # Solve Matrix Across all momenta
         for q in self.Hamiltonian.Q:
             self.Energies[q], self.Eigenvectors[q] = self.Hamiltonian.Mat_q_calc(q)
