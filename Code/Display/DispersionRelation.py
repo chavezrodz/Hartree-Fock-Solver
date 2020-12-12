@@ -13,7 +13,6 @@ def DispersionRelation_Zcut(Solver):
     mat_dim = Solver.Hamiltonian.mat_dim
     Energies = Solver.Energies
 
-    Q = Solver.Hamiltonian.Q
     Qv = Solver.Hamiltonian.Qv
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
@@ -26,7 +25,7 @@ def DispersionRelation_Zcut(Solver):
             qx, qy = Qv[i][0], Qv[i][1]
             qxs.append(qx)
             qys.append(qy)
-            zs.append(Energies[Q[i]][b])
+            zs.append(Energies[i][b])
 
         ax.scatter(qxs, qys, zs, label='Band '+str(b+1))
 
@@ -62,7 +61,6 @@ def fermi_surface_Zcut(Solver, tol=0.05, transparent=False, save=False):
     mat_dim = Solver.Hamiltonian.mat_dim
     Energies = Solver.Energies
 
-    Q = Solver.Hamiltonian.Q
     Qv = Solver.Hamiltonian.Qv
 
     qxs = []
@@ -73,7 +71,7 @@ def fermi_surface_Zcut(Solver, tol=0.05, transparent=False, save=False):
             qx, qy = Qv[i][0], Qv[i][1]
             qxs.append(qx)
             qys.append(qy)
-            zs.append(Energies[Q[i]][b])
+            zs.append(Energies[i][b])
     qxs, qys, zs = np.array(qxs), np.array(qys), np.array(zs)
     # tol = 10*np.min(np.diff(Energies))
 

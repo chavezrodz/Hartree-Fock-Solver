@@ -177,6 +177,6 @@ site2_DOS = ax6.hist(site2_energies[:,0], bins=bins, weights = \
                                             site2_energies[:,1])
 ax6.set_ylim(0, top_cutoff)
 plt.tight_layout()
-# plt.show()
+plt.show()
 
 print(Solver.bandwidth_calculation())

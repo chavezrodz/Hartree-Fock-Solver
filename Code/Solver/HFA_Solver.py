@@ -12,9 +12,6 @@ class HFA_Solver:
     def __init__(self, Ham, method='momentum', beta=0.7, Itteration_limit=50, tol=1e-3, save_seq=False):
         self.Hamiltonian = Ham
 
-        self.Energies = np.zeros((*Ham.N_shape, Ham.mat_dim))
-        self.Eigenvectors = np.zeros((*Ham.N_shape, Ham.mat_dim, Ham.mat_dim), dtype=complex)
-
         # Itteration Method Params
         self.beta = beta
         self.Itteration_limit = Itteration_limit
@@ -22,11 +19,10 @@ class HFA_Solver:
         self.method = method
         self.save_seq = save_seq
 
-        self.N_states = self.Energies.size  # Bands x N
+        self.N_states = Ham.N_states
         self.N_occ_states = int(Ham.Filling*self.N_states)
         self.N_params = len(Ham.MF_params)
         self.N_digits = int(np.abs(np.log10(self.tol)))
-        self.occupied_energies = np.zeros(self.N_occ_states)
         self.sub_params = np.zeros((self.N_params, self.N_occ_states))
 
     def Find_filling_lowest_energies(self):
@@ -91,16 +87,8 @@ class HFA_Solver:
         #   Calculate Dynamic Variables
         self.Hamiltonian.update_variables()
 
-        # TO DO
-        # vec_f = vectorize(mat_q_calc)
-        # self.vec_f = np.vectorize(self.Hamiltonian.Mat_q_calc, excluded='self')
-        # print(self.vec_f((0, 0, 0)))
-
-        # self.Energies ,self.Eigenvectors = vec_f(Q)
-
         # Solve Matrix Across all momenta
-        for q in self.Hamiltonian.Q:
-            self.Energies[q], self.Eigenvectors[q] = self.Hamiltonian.Mat_q_calc(q)
+        self.Energies, self.Eigenvectors = self.Hamiltonian.Mat_q_calc()
 
         # Find Indices of all required lowest energies
         self.Find_filling_lowest_energies()
@@ -119,18 +107,18 @@ class HFA_Solver:
         return New_MFP, New_Guess
 
     def Calculate_Total_E(self):
-        for i, ind in enumerate(self.indices):
-            self.occupied_energies[i] = self.Energies[ind]
-        return self.Hamiltonian.Calculate_Energy(np.sum(self.occupied_energies))
+        self.occupied_energies = [self.Energies[ind] for ind in self.indices]
+        self.Fermi_Energy = np.max(self.occupied_energies)
+        total_occ = np.sum(self.occupied_energies)
+        return self.Hamiltonian.Calculate_Energy(total_occ)
 
     def MIT_determination(self, binning='fd'):
-        self.Fermi_Energy = np.max(self.occupied_energies)
         self.Energies = np.sort(self.Energies)
 
         hist, bins = np.histogram(self.Energies, bins=binning)
         a = np.digitize(self.Fermi_Energy, bins)
         if a < len(hist):
-            if hist[a] >0:
+            if hist[a] > 0:
                 self.Conductor = True
             else:
                 self.Conductor = False
@@ -164,6 +152,7 @@ class HFA_Solver:
                 bandwidths_per_E = bandwidths_per_E + v*[v]
             elif v == 0:
                 bandwidths_per_E = bandwidths_per_E + [0]
+
         bandwidths_per_E = E_dist*np.array(bandwidths_per_E)
 
         self.Fermi_bandwidth = bandwidths_per_E[a-1]

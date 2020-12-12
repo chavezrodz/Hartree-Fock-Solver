@@ -6,8 +6,7 @@ import Code.Display.DispersionRelation as DR
 from Code.Nickelates.Hamiltonian import Hamiltonian
 
 Model_Params = dict(
-    N_shape=(15, 15, 15),
-    b=0.25
+    N_shape=(25, 25),
     )
 
 # Code
@@ -22,13 +21,14 @@ Solver = HFA_Solver(Model, method=method, beta=beta,
                     Itteration_limit=250, tol=1e-3, save_seq=True)
 Solver.Itterate(verbose=True)
 
-DR.DOS(Solver)
-print(Solver.bandwidth_calculation())
+print(time() - a)
+# DR.DOS(Solver)
+# print(Solver.bandwidth_calculation())
 
 # IS.Itteration_sequence(Solver)
 # print(Solver.Conductor)
-# DR.DispersionRelation_Zcut(Solver)
-# DR.fermi_surface_Zcut(Solver, save=False)
+DR.DispersionRelation_Zcut(Solver)
+DR.fermi_surface_Zcut(Solver, save=False)
 
 
 """

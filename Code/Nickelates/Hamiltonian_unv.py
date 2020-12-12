@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 from numpy import linalg as LA
 
@@ -62,7 +63,7 @@ class Hamiltonian:
         # Lattice structure
         self.N_cells = int(np.prod(self.N_shape))
         self.N_states = self.N_cells*self.mat_dim
-
+        
         if len(self.N_shape) == 2:
             self.b = 0
             self.N_shape = (*self.N_shape, 1)
@@ -118,45 +119,53 @@ class Hamiltonian:
         # plt.show()
 
         # Allowed Momentum Indices for itterator
-        # self.Qg = np.mgrid[
-        #     0:self.N_shape[0],
-        #     0:self.N_shape[1],
-        #     0:self.N_shape[2]].reshape(3, -1).T
+        self.Qg = np.mgrid[
+            0:self.N_shape[0],
+            0:self.N_shape[1],
+            0:self.N_shape[2]].reshape(3, -1).T
 
-        # self.Q = list(map(tuple, self.Qg))
+        self.Q = list(map(tuple, self.Qg))
 
         # Static variables, these never change, may depend on momentum indices
-
         qc = np.pi
-        self.Qvc = self.Qv + qc
-        (qx, qy, qz) = (self.Qv[:, 0], self.Qv[:, 1], self.Qv[:, 2])
-        (qxc, qyc, qzc) = (self.Qvc[:, 0], self.Qvc[:, 1], self.Qvc[:, 2])
+
+        self.tzz = np.zeros(self.N_shape)
+        self.tzz_c = np.zeros(self.N_shape)
+
+        self.tz_bz_b = np.zeros(self.N_shape)
+        self.tz_bz_b_c = np.zeros(self.N_shape)
+
+        self.tzz_b = np.zeros(self.N_shape)
+        self.tzz_b_c = np.zeros(self.N_shape)
 
         B = self.b
 
-        self.tzz = -2*self.t_1*(B*np.cos(qz) + 1/4*(np.cos(qx) + np.cos(qy))) \
-            - 2*self.t_4*(B*np.cos(2*qz) + 1/4*(np.cos(2*qx) + np.cos(2*qy)))\
-            - 2*self.t_2*(np.cos(qx)*np.cos(qy) - 2*B*np.cos(qz)*(np.cos(qy) + np.cos(qx)))
+        for i, q in enumerate(self.Q):
+            (qx, qy, qz), (qxc, qyc, qzc) = self.Qv[i], self.Qv[i] + qc
 
-        self.tzz_c = -2*self.t_1*(B*np.cos(qzc) + 1/4*(np.cos(qxc) + np.cos(qyc))) \
-            - 2*self.t_4*(B*np.cos(2*qzc) + 1/4*(np.cos(2*qxc) + np.cos(2*qyc)))\
-            - 2*self.t_2*(np.cos(qxc)*np.cos(qyc) - 2*B*np.cos(qzc)*(np.cos(qyc) + np.cos(qxc)))
+            self.tzz[q] = -2*self.t_1*(B*np.cos(qz) + 1/4*(np.cos(qx) + np.cos(qy))) \
+                - 2*self.t_4*(B*np.cos(2*qz) + 1/4*(np.cos(2*qx) + np.cos(2*qy)))\
+                - 2*self.t_2*(np.cos(qx)*np.cos(qy) - 2*B*np.cos(qz)*(np.cos(qy) + np.cos(qx)))
 
-        self.tz_bz_b = -3/2*self.t_1*(np.cos(qx) + np.cos(qy))\
-            - 3/2*self.t_4*(np.cos(2*qx) + np.cos(2*qy))\
-            + 6*self.t_2*np.cos(qx)*np.cos(qy)
+            self.tzz_c[q] = -2*self.t_1*(B*np.cos(qzc) + 1/4*(np.cos(qxc) + np.cos(qyc))) \
+                - 2*self.t_4*(B*np.cos(2*qzc) + 1/4*(np.cos(2*qxc) + np.cos(2*qyc)))\
+                - 2*self.t_2*(np.cos(qxc)*np.cos(qyc) - 2*B*np.cos(qzc)*(np.cos(qyc) + np.cos(qxc)))
 
-        self.tz_bz_b_c = -3/2*self.t_1*(np.cos(qxc) + np.cos(qyc))\
-            - 3/2*self.t_4*(np.cos(2*qxc) + np.cos(2*qyc))\
-            + 6*self.t_2*np.cos(qxc)*np.cos(qyc)
+            self.tz_bz_b[q] = -3/2*self.t_1*(np.cos(qx) + np.cos(qy))\
+                - 3/2*self.t_4*(np.cos(2*qx) + np.cos(2*qy))\
+                + 6*self.t_2*np.cos(qx)*np.cos(qy)
 
-        self.tzz_b = np.sqrt(3)/2*self.t_1*(np.cos(qx) - np.cos(qy))\
-            + np.sqrt(3)/2*self.t_4*(np.cos(2*qx) - np.cos(2*qy))\
-            - 2*np.sqrt(3)*self.t_2*B*np.cos(qz)*(np.cos(qx) - np.cos(qy))
+            self.tz_bz_b_c[q] = -3/2*self.t_1*(np.cos(qxc) + np.cos(qyc))\
+                - 3/2*self.t_4*(np.cos(2*qxc) + np.cos(2*qyc))\
+                + 6*self.t_2*np.cos(qxc)*np.cos(qyc)
 
-        self.tzz_b_c = np.sqrt(3)/2*self.t_1*(np.cos(qxc) - np.cos(qyc))\
-            + np.sqrt(3)/2*self.t_4*(np.cos(2*qxc) - np.cos(2*qyc))\
-            - 2*np.sqrt(3)*self.t_2*B*np.cos(qzc)*(np.cos(qxc) - np.cos(qyc))
+            self.tzz_b[q] = np.sqrt(3)/2*self.t_1*(np.cos(qx) - np.cos(qy))\
+                + np.sqrt(3)/2*self.t_4*(np.cos(2*qx) - np.cos(2*qy))\
+                - 2*np.sqrt(3)*self.t_2*B*np.cos(qz)*(np.cos(qx) - np.cos(qy))
+
+            self.tzz_b_c[q] = np.sqrt(3)/2*self.t_1*(np.cos(qxc) - np.cos(qyc))\
+                + np.sqrt(3)/2*self.t_4*(np.cos(2*qxc) - np.cos(2*qyc))\
+                - 2*np.sqrt(3)*self.t_2*B*np.cos(qzc)*(np.cos(qxc) - np.cos(qyc))
 
     def update_variables(self):
         """
@@ -176,9 +185,9 @@ class Hamiltonian:
         else:
             self.u = 3*self.MF_params[0] / (2*np.cbrt(beta)) * (np.cbrt(1 + np.sqrt(1 + 1/beta)) + np.cbrt(1 - np.sqrt(1 + 1/beta)))
 
-    def Mat_q_calc(self):
+    def Mat_q_calc(self, q):
         """
-        Declaration of the matrices to diagonalize
+        Declaration of the matrix to diagonalize, momentum dependent
         """
 
         # Call matrix elements
@@ -186,55 +195,50 @@ class Hamiltonian:
 
         a0 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] + self.J_bar*self.MF_params[4]
         a1 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] - self.J_bar*self.MF_params[4]
-        b = self.tzz_b
-        c = self.tzz_b_c
+        b = self.tzz_b[q]
+        c = self.tzz_b_c[q]
 
-        d0 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz + self.Delta_CT/2
-        d1 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c + self.Delta_CT/2
-        d2 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b - self.Delta_CT/2
-        d3 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c - self.Delta_CT/2
+        d0 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz[q] + self.Delta_CT/2
+        d1 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c[q] + self.Delta_CT/2
+        d2 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b[q] - self.Delta_CT/2
+        d3 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c[q] - self.Delta_CT/2
 
         # Declare sub-block
-        sub_1 = np.zeros((self.N_cells, 4, 4))
-        for i in range(self.N_cells):
-            sub_1[i] = np.array([
-                [d0[i], a0, b[i], 0],
-                [a0, d1[i], 0, c[i]],
-                [b[i], 0, d2[i], a1],
-                [0, c[i], a1, d3[i]]])
+        sub_1 = np.array([
+            [d0, a0, b, 0],
+            [a0, d1, 0, c],
+            [b, 0, d2, a1],
+            [0, c, a1, d3]])
 
         # Call matrix elements
         sigma = -1
 
         a0 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] + self.J_bar*self.MF_params[4]
         a1 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] - self.J_bar*self.MF_params[4]
-        b = self.tzz_b
-        c = self.tzz_b_c
+        b = self.tzz_b[q]
+        c = self.tzz_b_c[q]
 
-        d0 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz + self.Delta_CT/2
-        d1 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c + self.Delta_CT/2
-        d2 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b - self.Delta_CT/2
-        d3 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c - self.Delta_CT/2
+        d0 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz[q] + self.Delta_CT/2
+        d1 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c[q] + self.Delta_CT/2
+        d2 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b[q] - self.Delta_CT/2
+        d3 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c[q] - self.Delta_CT/2
 
         # Declare sub-block
-        sub_2 = np.zeros((self.N_cells, 4, 4))
-        for i in range(self.N_cells):
-            sub_2[i] = np.array([
-                [d0[i], a0, b[i], 0],
-                [a0, d1[i], 0, c[i]],
-                [b[i], 0, d2[i], a1],
-                [0, c[i], a1, d3[i]]])
+        sub_2 = np.array([
+            [d0, a0, b, 0],
+            [a0, d1, 0, c],
+            [b, 0, d2, a1],
+            [0, c, a1, d3]])
 
         # Declare matrix
-        matrices = np.zeros((self.N_cells, 8, 8))
-        for i in range(self.N_cells):
+        mat = np.block([
+            [sub_1, np.zeros((4, 4))],
+            [np.zeros((4, 4)), sub_2]
+            ])
 
-            matrices[i] = np.block([
-                [sub_1[i], np.zeros((4, 4))],
-                [np.zeros((4, 4)), sub_2[i]]
-                ])
-        w, v = LA.eig(matrices)
-        return np.real(w), v
+        # Diagonalize Matrix
+        w, v = LA.eig(mat)
+        return w, v
 
     def Consistency(self, v):
         # Consistency Equations, keep order of MFP
@@ -268,11 +272,3 @@ class Hamiltonian:
             self.J_bar*(self.MF_params[2]**2 + self.MF_params[4]**2)
             )/self.N_cells
         return E
-
-
-# Model_params = dict(
-#     N_shape=(2, 2)
-#     )
-# model = Hamiltonian(Model_params)
-# model.update_variables()
-# print(model.Mat_q_calc()[1].shape)
