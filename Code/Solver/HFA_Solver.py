@@ -47,11 +47,9 @@ class HFA_Solver:
             return
 
     def Calculate_new_del(self):
-        for i, ind in enumerate(self.indices):
-            v = self.Eigenvectors[ind[:-1]][:, ind[-1]]
-            self.sub_params[:, i] = np.real(self.Hamiltonian.Consistency(v))
         b = self.Hamiltonian.MF_params
-        a = np.sum(self.sub_params, axis=1)
+        occupied_eigenvectors = self.Eigenvectors[self.indices_array[0], :, self.indices_array[-1]]
+        a = self.Hamiltonian.Consistency(occupied_eigenvectors)
         return a, b
 
     def update_guess(self, a, b):
@@ -86,10 +84,8 @@ class HFA_Solver:
     def Itteration_Step(self, verbose):
         #   Calculate Dynamic Variables
         self.Hamiltonian.update_variables()
-
         # Solve Matrix Across all momenta
         self.Energies, self.Eigenvectors = self.Hamiltonian.Mat_q_calc()
-
         # Find Indices of all required lowest energies
         self.Find_filling_lowest_energies()
         # Calculate Mean Field Parameters with lowest energies
@@ -107,7 +103,7 @@ class HFA_Solver:
         return New_MFP, New_Guess
 
     def Calculate_Total_E(self):
-        self.occupied_energies = [self.Energies[ind] for ind in self.indices]
+        self.occupied_energies = self.Energies[self.indices_array]
         self.Fermi_Energy = np.max(self.occupied_energies)
         total_occ = np.sum(self.occupied_energies)
         return self.Hamiltonian.Calculate_Energy(total_occ)
@@ -131,7 +127,6 @@ class HFA_Solver:
         E_dist = np.mean(np.diff(bins))
 
         bandwidths = []
-        gaps = []
         count = 0
         hist = np.sign(hist)
         for i, v in enumerate(hist):

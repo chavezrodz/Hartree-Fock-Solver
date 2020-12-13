@@ -27,7 +27,7 @@ print(time() - a)
 
 # IS.Itteration_sequence(Solver)
 # print(Solver.Conductor)
-DR.DispersionRelation_Zcut(Solver)
+# DR.DispersionRelation_Zcut(Solver)
 DR.fermi_surface_Zcut(Solver, save=False)
 
 

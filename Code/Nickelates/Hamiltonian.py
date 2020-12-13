@@ -117,16 +117,7 @@ class Hamiltonian:
         # ax.scatter(self.Qv[:, 0], self.Qv[:, 1], self.Qv[:, 2], '.')
         # plt.show()
 
-        # Allowed Momentum Indices for itterator
-        # self.Qg = np.mgrid[
-        #     0:self.N_shape[0],
-        #     0:self.N_shape[1],
-        #     0:self.N_shape[2]].reshape(3, -1).T
-
-        # self.Q = list(map(tuple, self.Qg))
-
         # Static variables, these never change, may depend on momentum indices
-
         qc = np.pi
         self.Qvc = self.Qv + qc
         (qx, qy, qz) = (self.Qv[:, 0], self.Qv[:, 1], self.Qv[:, 2])
@@ -238,27 +229,37 @@ class Hamiltonian:
 
     def Consistency(self, v):
         # Consistency Equations, keep order of MFP
-        a = 0.5*(np.conj(v[0])*v[1] + np.conj(v[2])*v[3] + np.conj(v[4])*v[5] +
-                 np.conj(v[6])*v[7] + np.conj(v[1])*v[0] + np.conj(v[3])*v[2] +
-                 np.conj(v[5])*v[4] + np.conj(v[7])*v[6])/self.N_cells
+        a = 0.5*(np.conj(v[:, 0])*v[:, 1] + np.conj(v[:, 2])*v[:, 3] +
+                 np.conj(v[:, 4])*v[:, 5] + np.conj(v[:, 6])*v[:, 7] +
+                 np.conj(v[:, 1])*v[:, 0] + np.conj(v[:, 3])*v[:, 2] +
+                 np.conj(v[:, 5])*v[:, 4] + np.conj(v[:, 7])*v[:, 6]
+                 )/self.N_cells
 
-        b = 0.5*(np.abs(v[0])**2 + np.abs(v[1])**2 + np.abs(v[2])**2 +
-                 np.abs(v[3])**2 - np.abs(v[4])**2 - np.abs(v[5])**2 -
-                 np.abs(v[6])**2 - np.abs(v[7])**2)/self.N_cells
+        b = 0.5*(np.abs(v[:, 0])**2 + np.abs(v[:, 1])**2 +
+                 np.abs(v[:, 2])**2 + np.abs(v[:, 3])**2 -
+                 np.abs(v[:, 4])**2 - np.abs(v[:, 5])**2 -
+                 np.abs(v[:, 6])**2 - np.abs(v[:, 7])**2
+                 )/self.N_cells
 
-        c = 0.5*(np.abs(v[0])**2 + np.abs(v[1])**2 - np.abs(v[2])**2 -
-                 np.abs(v[3])**2 + np.abs(v[4])**2 + np.abs(v[5])**2 -
-                 np.abs(v[6])**2 - np.abs(v[7])**2)/self.N_cells
+        c = 0.5*(np.abs(v[:, 0])**2 + np.abs(v[:, 1])**2 -
+                 np.abs(v[:, 2])**2 - np.abs(v[:, 3])**2 +
+                 np.abs(v[:, 4])**2 + np.abs(v[:, 5])**2 -
+                 np.abs(v[:, 6])**2 - np.abs(v[:, 7])**2
+                 )/self.N_cells
 
-        d = 0.5*(np.conj(v[0])*v[1] + np.conj(v[2])*v[3] - np.conj(v[4])*v[5] -
-                 np.conj(v[6])*v[7] + np.conj(v[1])*v[0] + np.conj(v[3])*v[2] -
-                 np.conj(v[5])*v[4] - np.conj(v[7])*v[6])/self.N_cells
+        d = 0.5*(np.conj(v[:, 0])*v[:, 1] + np.conj(v[:, 2])*v[:, 3] -
+                 np.conj(v[:, 4])*v[:, 5] - np.conj(v[:, 6])*v[:, 7] +
+                 np.conj(v[:, 1])*v[:, 0] + np.conj(v[:, 3])*v[:, 2] -
+                 np.conj(v[:, 5])*v[:, 4] - np.conj(v[:, 7])*v[:, 6]
+                 )/self.N_cells
 
-        e = 0.5*(np.conj(v[0])*v[1] - np.conj(v[2])*v[3] + np.conj(v[4])*v[5] -
-                 np.conj(v[6])*v[7] + np.conj(v[1])*v[0] - np.conj(v[3])*v[2] +
-                 np.conj(v[5])*v[4] - np.conj(v[7])*v[6])/self.N_cells
-
-        return a, b, c, d, e
+        e = 0.5*(np.conj(v[:, 0])*v[:, 1] - np.conj(v[:, 2])*v[:, 3] +
+                 np.conj(v[:, 4])*v[:, 5] - np.conj(v[:, 6])*v[:, 7] +
+                 np.conj(v[:, 1])*v[:, 0] - np.conj(v[:, 3])*v[:, 2] +
+                 np.conj(v[:, 5])*v[:, 4] - np.conj(v[:, 7])*v[:, 6]
+                 )/self.N_cells
+        sub_params = np.real([a, b, c, d, e])
+        return np.sum(sub_params, axis=1)
 
     def Calculate_Energy(self, E_occ):
         E = E_occ/self.N_cells
