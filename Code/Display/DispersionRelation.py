@@ -1,154 +1,81 @@
-from matplotlib.colors import LogNorm
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
+
 import seaborn as sns
-
-
 sns.set_theme()
 sns.set_context("paper")
 
 
-def DispersionRelation_Zcut(Solver):
-    mat_dim = Solver.Hamiltonian.mat_dim
-    Energies = Solver.Energies
+def Bandstructure(Model, fermi=True, results_folder=None, show=True):
+    f = plt.figure()
+    ax = f.add_subplot(111)
+    ax.yaxis.set_label_position("left")
+    ax.yaxis.set_ticks_position('both')
+    if fermi:
+        ax.plot(np.arange(Model.path_energies.shape[0]), Model.path_energies - Model.fermi_e)
+        ax.set_ylabel(r'($\epsilon - \mu)/ t_1 $')
+    else:
+        ax.plot(np.arange(Model.path_energies.shape[0]), Model.path_energies)
+        ax.set_ylabel(r'$\epsilon/ t_1 $')
+    plt.xticks(Model.indices, Model.k_labels)
+    plt.tight_layout()
+    if results_folder is not None:
+        plt.savefig(results_folder+'/Bandstructure.png')
+    if show:
+        plt.show()
+    plt.close()
 
-    Qv = Solver.Hamiltonian.Qv
+
+def DispersionRelation(Model):
+    mat_dim = Model.mat_dim
+    Energies = Model.Energies
+
+    z_ind = 0
+    Qv = Model.Q
+    qx, qy = Qv[0][:, :, z_ind], Qv[1][:, :, z_ind]
+    Fermi_E = Model.fermi_e
+
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
+
     for b in range(mat_dim):
-        qxs = []
-        qys = []
-        zs = []
+        ax.plot_surface(qx, qy, Energies[:, :, z_ind, b], label='Band '+str(b+1), alpha=0.25)
+        ax.contour(qx, qy, Energies[:, :, z_ind, b], [Fermi_E], cmap="Accent", linestyles="solid", offset=-2.5)
 
-        for i in Solver.Hamiltonian.Z_cut_ind:
-            qx, qy = Qv[i][0], Qv[i][1]
-            qxs.append(qx)
-            qys.append(qy)
-            zs.append(Energies[i][b])
-
-        ax.scatter(qxs, qys, zs, label='Band '+str(b+1))
-
-    qx_range = np.linspace(np.min(qxs), np.max(qxs), 2)
-    qy_range = np.linspace(np.min(qys), np.max(qys), 2)
-    xx, yy = np.meshgrid(qx_range, qy_range)
-    z = np.ones(xx.shape)
-    z = z*Solver.Fermi_Energy
-    ax.plot_surface(xx, yy, z, alpha=0.5)
-
+    z = Fermi_E*np.ones(qx.shape)
+    ax.plot_surface(qx, qy, z, alpha=0.5)
     ax.set_xlabel('$K_x$  ($\pi/a$)')
     ax.set_ylabel('$K_Y$  ($\pi/a$)')
     ax.set_zlabel('Energy')
 
-    handles, labels = ax.get_legend_handles_labels()
-    ax.legend(reversed(handles), reversed(labels))
+    # handles, labels = ax.get_legend_handles_labels()
+    # ax.legend(reversed(handles), reversed(labels))
     plt.show()
     plt.close()
 
 
-def DOS(Solver, bins='fd', transparent=False):
-    plt.hist(Solver.Energies.flatten(),bins=bins)
-    plt.title('Density of states')
-    plt.axvline(Solver.Fermi_Energy, label='Fermi Energy', color='red')
-    plt.xlabel('Energy (Ev)')
-    plt.legend()
-    plt.savefig('DOS.png', transparent=transparent)
-    plt.show()
-    plt.close()
+def fermi_surface(Model, tol=0.05, transparent=False, results_folder=None, show=True):
+    mat_dim = Model.mat_dim
+    Energies = Model.Energies
 
+    Qv = Model.Q
 
-def fermi_surface_Zcut(Solver, tol=0.05, transparent=False, save=False):
-    mat_dim = Solver.Hamiltonian.mat_dim
-    Energies = Solver.Energies
+    z_ind = 0
+    Fermi_E = Model.fermi_e
+    qx, qy = Qv[0][:, :, z_ind], Qv[1][:, :, z_ind]
 
-    Qv = Solver.Hamiltonian.Qv
-
-    qxs = []
-    qys = []
-    zs = []
-    for b in range(mat_dim):
-        for i in Solver.Hamiltonian.Z_cut_ind:
-            qx, qy = Qv[i][0], Qv[i][1]
-            qxs.append(qx)
-            qys.append(qy)
-            zs.append(Energies[i][b])
-    qxs, qys, zs = np.array(qxs), np.array(qys), np.array(zs)
-    # tol = 10*np.min(np.diff(Energies))
-
-    fermi_idx = np.where(np.abs(zs - Solver.Fermi_Energy) < tol)
-
-    plt.scatter(qxs[fermi_idx], qys[fermi_idx])
-    plt.title('Fermi Surface')
-    plt.xlabel('$K_x$  ($\pi/a$)')
-    plt.ylabel('$K_Y$  ($\pi/a$)')
-    if save:
-        plt.savefig('fermi_surface.png')
-    plt.show()
-
-
-def DispersionRelation(Solver):
-    mat_dim = Solver.Hamiltonian.mat_dim
-    Energies = Solver.Energies
-
-    Q = Solver.Hamiltonian.Q
-    Qv = Solver.Hamiltonian.Qv
     fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
+    ax = fig.add_subplot(111)
+
     for b in range(mat_dim):
-        qxs = []
-        qys = []
-        zs = []
-
-        for i, q in enumerate(Q):
-            qx, qy = Qv[i]
-            qxs.append(qx)
-            qys.append(qy)
-            zs.append(Energies[q][b])
-
-        ax.scatter(qxs, qys, zs, label='Band '+str(b+1))
-
-    qx_range = np.linspace(np.min(qxs), np.max(qxs), 2)
-    qy_range = np.linspace(np.min(qys), np.max(qys), 2)
-    xx, yy = np.meshgrid(qx_range, qy_range)
-    z = np.ones(xx.shape)
-    z = z*Solver.Fermi_Energy
-    ax.plot_surface(xx, yy, z, alpha=0.5)
+        ax.contour(qx, qy, Energies[:, :, z_ind, b], [Fermi_E], cmap="Accent", linestyles="solid", offset=-2.5)
 
     ax.set_xlabel('$K_x$  ($\pi/a$)')
     ax.set_ylabel('$K_Y$  ($\pi/a$)')
-    ax.set_zlabel('Energy')
-
-    handles, labels = ax.get_legend_handles_labels()
-    ax.legend(reversed(handles), reversed(labels))
-    plt.show()
-    plt.close()
-
-
-def fermi_surface(Solver, tol=0.05, transparent=False, save=False):
-    mat_dim = Solver.Hamiltonian.mat_dim
-    Energies = Solver.Energies
-
-    Q = Solver.Hamiltonian.Q
-    Qv = Solver.Hamiltonian.Qv
-
-    qxs = []
-    qys = []
-    zs = []
-    for b in range(mat_dim):
-        for i, q in enumerate(Q):
-            qx, qy = Qv[i]
-            qxs.append(qx)
-            qys.append(qy)
-            zs.append(Energies[q][b])
-    qxs, qys, zs = np.array(qxs), np.array(qys), np.array(zs)
-    tol = 10*np.min(np.diff(Energies))
-    fermi_idx = np.where(np.abs(zs - Solver.Fermi_Energy) < tol)
-    # contour3d(Energies[:,:,:, 0], contours=e_f)
-
-    plt.scatter(qxs[fermi_idx], qys[fermi_idx])
     plt.title('Fermi Surface')
-    plt.xlabel('$K_x$  ($\pi/a$)')
-    plt.ylabel('$K_Y$  ($\pi/a$)')
-    if save:
-        plt.savefig('fermi_surface.png')
-    plt.show()
+    if results_folder is not None:
+        plt.savefig(results_folder+'/fermi_surface.png')
+    if show:
+        plt.show()
+    plt.close()

@@ -25,14 +25,11 @@ class Hamiltonian:
     All itterations done in HFA solver.
     """
     def __init__(self, Model_params, MF_params=np.array([0, 0, 0, 0, 0])):
-
-        # initiates Mean field parameters
-        self.MF_params = MF_params
-
         # initiates Model parameters
         self.Filling = 0.25
         self.BZ_rot = 1
         self.stress = 0
+        self.b = 0
         self.Delta_CT = 0
         self.eps = 0
         self.t_1 = 1
@@ -43,13 +40,8 @@ class Hamiltonian:
 
         for key, value in Model_params.items():
             setattr(self, key, value)
-
-        # Strain Effect
-        decay = 1
-        self.f = 4*self.Filling
-        self.t_1 = self.t_1*np.exp(-decay*self.stress)
-        self.t_2 = self.t_2*np.exp(-decay*np.sqrt(2)*self.stress)
-        self.t_4 = self.t_4*np.exp(-decay*self.stress)
+        # initiates Mean field parameters
+        self.MF_params = MF_params
 
         # MFPs Names
         self.Dict = {0: 'Charge Modulation',
@@ -58,98 +50,85 @@ class Hamiltonian:
                      3: 'Anti Ferromagnetism',
                      4: 'Anti Ferroorbital'}
 
+        # K_patn for bandstructure
+        self.k_points = np.array([[0, 0, 0],
+                                  [np.pi, 0, 0],
+                                  [np.pi, np.pi/2, 0],
+                                  [0, 0, 0]])
+        self.k_labels = ['M', r'$\Gamma$', 'X', 'M']
+
+        # projectors foor DOS
+
+        Id = np.identity(8)
+        z2_projectors = Id[[0, 1, 4, 5]]
+        x2my2_projectors = Id[[2, 3, 6, 7]]
+        spin_up = Id[:4]
+        spin_down = Id[4:]
+        site1 = Id[[0, 2, 4, 6]]
+        site2 = Id[[1, 3, 5, 7]]
+
+        self.state_projectors = [
+            z2_projectors,
+            x2my2_projectors,
+            spin_up,
+            spin_down,
+            site1,
+            site2
+            ]
+
+        self.state_labels = [
+            r'$3z^2-r^2$ orbital DOS', r'$x^2-y^2$ orbital DOS',
+            r'Spin $\uparrow$ DOS', r'Spin $\downarrow$ DOS',
+            r'Homogeneous DOS', r'Site-alternating DOS'
+          ]
+
         self.mat_dim = 8
-        # Lattice structure
-        self.N_cells = int(np.prod(self.N_shape))
-        self.N_states = self.N_cells*self.mat_dim
 
-        if len(self.N_shape) == 2:
-            self.b = 0
-            self.N_shape = (*self.N_shape, 1)
-
-        # Allowed Momentum Values
-        self.Qv = np.mgrid[
-            -np.pi:np.pi:(self.N_shape[0]*1j),
-            -np.pi:np.pi:(self.N_shape[1]*1j),
-            -np.pi:np.pi:(self.N_shape[2]*1j)].reshape(3, -1).T
-
-        # Vectors Rotation by 45 degrees to re-create true BZ
-        angle = np.pi / 4.*self.BZ_rot
-        scaling = (1/np.sqrt(2))*self.BZ_rot + (1 - self.BZ_rot)
-
-        rotate_1 = np.array([
-             [np.cos(angle), -np.sin(angle), 0],
-             [np.sin(angle),  np.cos(angle), 0],
-             [0,  0, 1]])
-
-        scale_1 = np.array([
-                 [scaling, 0, 0],
-                 [0, scaling, 0],
-                 [0, 0, 1]])
-
-        rotate_2 = np.array([
-           [np.cos(angle), 0, np.sin(angle)],
-           [0,  1, 0],
-           [-np.sin(angle),  0, np.cos(angle)]])
-
-        scale_2 = np.array([
-                 [scaling, 0, 0],
-                 [0, 1, 0],
-                 [0, 0, scaling]])
-
-        rotate_2 = np.identity(3)
-        scale_2 = np.identity(3)
-
-        self.Qv = np.array([
-            np.dot(scale_2, np.dot(rotate_2, np.dot(scale_1, np.dot(rotate_1, k))))
-            for k in self.Qv])
-
-        # 2d cut
-        if self.b == 0:
-            self.Z_cut_ind = np.arange(self.N_cells)
-        else:
-            cut_cells = int(self.N_cells/self.N_shape[2])
-            self.Z_cut_ind = np.argpartition(np.abs(self.Qv[:, 2] - np.pi), cut_cells)[:cut_cells]
-
-        # Brillouin Zone
-        # fig = plt.figure()
-        # ax = fig.add_subplot(111, projection='3d')
-        # ax.scatter(self.Qv[:, 0], self.Qv[:, 1], self.Qv[:, 2], '.')
-        # plt.show()
-
-        # Static variables, these never change, may depend on momentum indices
-        qc = np.pi
-        self.Qvc = self.Qv + qc
-        (qx, qy, qz) = (self.Qv[:, 0], self.Qv[:, 1], self.Qv[:, 2])
-        (qxc, qyc, qzc) = (self.Qvc[:, 0], self.Qvc[:, 1], self.Qvc[:, 2])
-
+    def func_tzz(self, Q):
+        qx, qy, qz = Q
         B = self.b
-
-        self.tzz = -2*self.t_1*(B*np.cos(qz) + 1/4*(np.cos(qx) + np.cos(qy))) \
+        return -2*self.t_1*(B*np.cos(qz) + 1/4*(np.cos(qx) + np.cos(qy)))\
             - 2*self.t_4*(B*np.cos(2*qz) + 1/4*(np.cos(2*qx) + np.cos(2*qy)))\
             - 2*self.t_2*(np.cos(qx)*np.cos(qy) - 2*B*np.cos(qz)*(np.cos(qy) + np.cos(qx)))
 
-        self.tzz_c = -2*self.t_1*(B*np.cos(qzc) + 1/4*(np.cos(qxc) + np.cos(qyc))) \
-            - 2*self.t_4*(B*np.cos(2*qzc) + 1/4*(np.cos(2*qxc) + np.cos(2*qyc)))\
-            - 2*self.t_2*(np.cos(qxc)*np.cos(qyc) - 2*B*np.cos(qzc)*(np.cos(qyc) + np.cos(qxc)))
-
-        self.tz_bz_b = -3/2*self.t_1*(np.cos(qx) + np.cos(qy))\
+    def func_tz_bz_b(self, Q):
+        qx, qy, qz = Q
+        return -3/2*self.t_1*(np.cos(qx) + np.cos(qy))\
             - 3/2*self.t_4*(np.cos(2*qx) + np.cos(2*qy))\
             + 6*self.t_2*np.cos(qx)*np.cos(qy)
 
-        self.tz_bz_b_c = -3/2*self.t_1*(np.cos(qxc) + np.cos(qyc))\
-            - 3/2*self.t_4*(np.cos(2*qxc) + np.cos(2*qyc))\
-            + 6*self.t_2*np.cos(qxc)*np.cos(qyc)
-
-        self.tzz_b = np.sqrt(3)/2*self.t_1*(np.cos(qx) - np.cos(qy))\
+    def func_tzz_b(self, Q):
+        qx, qy, qz = Q
+        B = self.b
+        return np.sqrt(3)/2*self.t_1*(np.cos(qx) - np.cos(qy))\
             + np.sqrt(3)/2*self.t_4*(np.cos(2*qx) - np.cos(2*qy))\
             - 2*np.sqrt(3)*self.t_2*B*np.cos(qz)*(np.cos(qx) - np.cos(qy))
 
-        self.tzz_b_c = np.sqrt(3)/2*self.t_1*(np.cos(qxc) - np.cos(qyc))\
-            + np.sqrt(3)/2*self.t_4*(np.cos(2*qxc) - np.cos(2*qyc))\
-            - 2*np.sqrt(3)*self.t_2*B*np.cos(qzc)*(np.cos(qxc) - np.cos(qyc))
+    def static_variables(self):
+        # Static variables, these never change, may depend on momentum indices
 
-    def update_variables(self):
+        # Strain Effect
+        decay = 1
+        self.f = 4*self.Filling
+        self.t_1 = self.t_1*np.exp(-decay*self.stress)
+        self.t_2 = self.t_2*np.exp(-decay*np.sqrt(2)*self.stress)
+        self.t_4 = self.t_4*np.exp(-decay*self.stress)
+
+        self.N_cells = int(np.prod(self.N_shape))
+
+        # self.Q gets updated outside
+        qc = np.pi
+        Q = self.Q
+        Qc = self.Q + qc
+
+        self.tzz = self.func_tzz(Q)
+        self.tzz_c = self.func_tzz(Qc)
+        self.tz_bz_b = self.func_tz_bz_b(Q)
+        self.tz_bz_b_c = self.func_tz_bz_b(Qc)
+        self.tzz_b = self.func_tzz_b(Q)
+        self.tzz_b_c = self.func_tzz_b(Qc)
+
+    def dynamic_variables(self):
         """
         Calculate dynamic variables
         These depend on MFP, not on momentum
@@ -167,38 +146,25 @@ class Hamiltonian:
         else:
             self.u = 3*self.MF_params[0] / (2*np.cbrt(beta)) * (np.cbrt(1 + np.sqrt(1 + 1/beta)) + np.cbrt(1 - np.sqrt(1 + 1/beta)))
 
-    def Mat_q_calc(self):
-        """
-        Declaration of the matrices to diagonalize
-        """
-
-        # Call matrix elements
         sigma = 1
+        self.a0p = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] + self.J_bar*self.MF_params[4]
+        self.a1p = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] - self.J_bar*self.MF_params[4]
 
-        a0 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] + self.J_bar*self.MF_params[4]
-        a1 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] - self.J_bar*self.MF_params[4]
-        b = self.tzz_b
-        c = self.tzz_b_c
-
-        d0 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz + self.Delta_CT/2
-        d1 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] + self.J_bar*self.MF_params[2] + self.tzz_c + self.Delta_CT/2
-        d2 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b - self.Delta_CT/2
-        d3 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c - self.Delta_CT/2
-
-        # Declare sub-block
-        sub_1 = np.zeros((self.N_cells, 4, 4))
-        for i in range(self.N_cells):
-            sub_1[i] = np.array([
-                [d0[i], a0, b[i], 0],
-                [a0, d1[i], 0, c[i]],
-                [b[i], 0, d2[i], a1],
-                [0, c[i], a1, d3[i]]])
-
-        # Call matrix elements
         sigma = -1
+        self.a0m = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] + self.J_bar*self.MF_params[4]
+        self.a1m = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] - self.J_bar*self.MF_params[4]
 
-        a0 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] + self.J_bar*self.MF_params[4]
-        a1 = self.U_bar*self.MF_params[0] - 2*self.eps*self.u - sigma * self.U_0*self.MF_params[3] - self.J_bar*self.MF_params[4]
+    def submatrix(self, sigma):
+        # Call matrix elements
+
+        if sigma == 1:
+            a0 = np.full(self.Q[0].shape, self.a0p)
+            a1 = np.full(self.Q[0].shape, self.a0p)
+        elif sigma == -1:
+            a0 = np.full(self.Q[0].shape, self.a0m)
+            a1 = np.full(self.Q[0].shape, self.a0m)
+
+        zeros = np.zeros(self.Q[0].shape)
         b = self.tzz_b
         c = self.tzz_b_c
 
@@ -208,57 +174,60 @@ class Hamiltonian:
         d3 = self.U_bar*self.f - sigma*self.U_0*self.MF_params[1] - self.J_bar*self.MF_params[2] + self.tz_bz_b_c - self.Delta_CT/2
 
         # Declare sub-block
-        sub_2 = np.zeros((self.N_cells, 4, 4))
-        for i in range(self.N_cells):
-            sub_2[i] = np.array([
-                [d0[i], a0, b[i], 0],
-                [a0, d1[i], 0, c[i]],
-                [b[i], 0, d2[i], a1],
-                [0, c[i], a1, d3[i]]])
+        sub = np.array([
+                [d0, a0, b, zeros],
+                [a0, d1, zeros, c],
+                [b, zeros, d2, a1],
+                [zeros, c, a1, d3]])
 
-        # Declare matrix
-        matrices = np.zeros((self.N_cells, 8, 8))
-        for i in range(self.N_cells):
+        return np.moveaxis(sub, [0, 1], [-2, -1])
 
-            matrices[i] = np.block([
-                [sub_1[i], np.zeros((4, 4))],
-                [np.zeros((4, 4)), sub_2[i]]
+    def matrices(self):
+        self.dynamic_variables()
+
+        sub_1 = self.submatrix(1)
+        sub_2 = self.submatrix(-1)
+
+        zeros = np.zeros(sub_1.shape)
+        matrices = np.block([
+                [sub_1, zeros],
+                [zeros, sub_2]
                 ])
-        w, v = LA.eig(matrices)
-        return np.real(w), v
+        w, v = LA.eigh(matrices)
+        return w, np.moveaxis(v, -1, -2)
 
     def Consistency(self, v):
-        # Consistency Equations, keep order of MFP
+        """
+        Consistency Equations, keeps order of MFPs
+        v: occupied eigenvectors, shape = (N_occ,dims)
+        """
         a = 0.5*(np.conj(v[:, 0])*v[:, 1] + np.conj(v[:, 2])*v[:, 3] +
                  np.conj(v[:, 4])*v[:, 5] + np.conj(v[:, 6])*v[:, 7] +
                  np.conj(v[:, 1])*v[:, 0] + np.conj(v[:, 3])*v[:, 2] +
-                 np.conj(v[:, 5])*v[:, 4] + np.conj(v[:, 7])*v[:, 6]
-                 )/self.N_cells
+                 np.conj(v[:, 5])*v[:, 4] + np.conj(v[:, 7])*v[:, 6])
 
         b = 0.5*(np.abs(v[:, 0])**2 + np.abs(v[:, 1])**2 +
                  np.abs(v[:, 2])**2 + np.abs(v[:, 3])**2 -
                  np.abs(v[:, 4])**2 - np.abs(v[:, 5])**2 -
-                 np.abs(v[:, 6])**2 - np.abs(v[:, 7])**2
-                 )/self.N_cells
+                 np.abs(v[:, 6])**2 - np.abs(v[:, 7])**2)
 
         c = 0.5*(np.abs(v[:, 0])**2 + np.abs(v[:, 1])**2 -
                  np.abs(v[:, 2])**2 - np.abs(v[:, 3])**2 +
                  np.abs(v[:, 4])**2 + np.abs(v[:, 5])**2 -
-                 np.abs(v[:, 6])**2 - np.abs(v[:, 7])**2
-                 )/self.N_cells
+                 np.abs(v[:, 6])**2 - np.abs(v[:, 7])**2)
 
         d = 0.5*(np.conj(v[:, 0])*v[:, 1] + np.conj(v[:, 2])*v[:, 3] -
                  np.conj(v[:, 4])*v[:, 5] - np.conj(v[:, 6])*v[:, 7] +
                  np.conj(v[:, 1])*v[:, 0] + np.conj(v[:, 3])*v[:, 2] -
-                 np.conj(v[:, 5])*v[:, 4] - np.conj(v[:, 7])*v[:, 6]
-                 )/self.N_cells
+                 np.conj(v[:, 5])*v[:, 4] - np.conj(v[:, 7])*v[:, 6])
 
         e = 0.5*(np.conj(v[:, 0])*v[:, 1] - np.conj(v[:, 2])*v[:, 3] +
                  np.conj(v[:, 4])*v[:, 5] - np.conj(v[:, 6])*v[:, 7] +
                  np.conj(v[:, 1])*v[:, 0] - np.conj(v[:, 3])*v[:, 2] +
-                 np.conj(v[:, 5])*v[:, 4] - np.conj(v[:, 7])*v[:, 6]
-                 )/self.N_cells
-        sub_params = np.real([a, b, c, d, e])
+                 np.conj(v[:, 5])*v[:, 4] - np.conj(v[:, 7])*v[:, 6])
+
+        sub_params = np.real([a, b, c, d, e])/self.N_cells
+
         return np.sum(sub_params, axis=1)
 
     def Calculate_Energy(self, E_occ):
@@ -269,11 +238,3 @@ class Hamiltonian:
             self.J_bar*(self.MF_params[2]**2 + self.MF_params[4]**2)
             )/self.N_cells
         return E
-
-
-# Model_params = dict(
-#     N_shape=(2, 2)
-#     )
-# model = Hamiltonian(Model_params)
-# model.update_variables()
-# print(model.Mat_q_calc()[1].shape)

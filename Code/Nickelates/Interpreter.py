@@ -1,4 +1,3 @@
-import os
 import itertools
 import numpy as np
 
@@ -140,7 +139,7 @@ def phase_to_label(phase):
     print('label: ', pos_to_label[out])
 
 
-phase_to_label(np.array([1, -1, -1, -1]))
+# phase_to_label(np.array([1, -1, -1, -1]))
 # print(vec_to_int(symetries(np.array([1, -1, -1, -1]))))
 # print(state_to_pos[4222])
 # print(pos_to_label[38])
