@@ -4,19 +4,14 @@ from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Display.ResultsPlots import sweeper_plots
 
 
-Batch_Folder = 'Exhaustive'
-
-Model_Params = dict(
-    N_shape=(100, 100),
-    Delta_CT=0,
-    eps=0)
+Batch_Folder = 'Diagrams'
 
 i, j = 'U', 'J',
 i_values = np.linspace(0, 1, 30)
 j_values = np.linspace(0, 0.25, 30)
 bw_norm = True
 
-Model = Hamiltonian(Model_Params)
+Model = Hamiltonian()
 
 for folder in sorted(os.listdir(os.path.join('Results', Batch_Folder))):
     frf = os.path.join('Results', Batch_Folder, folder, 'Final_Results')

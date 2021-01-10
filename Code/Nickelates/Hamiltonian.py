@@ -24,14 +24,17 @@ class Hamiltonian:
 
     All itterations done in HFA solver.
     """
-    def __init__(self, Model_params, MF_params=np.array([0, 0, 0, 0, 0])):
+    def __init__(self, Model_params={}, MF_params=np.array([0, 0, 0, 0, 0])):
         # initiates Model parameters
-        self.Filling = 0.25
         self.BZ_rot = 1
-        self.stress = 0
         self.b = 0
+        self.N_shape = (100, 100)
+
+        self.Filling = 0.25
+        self.stress = 0
         self.Delta_CT = 0
         self.eps = 0
+
         self.t_1 = 1
         self.t_2 = 0.15
         self.t_4 = 0.05

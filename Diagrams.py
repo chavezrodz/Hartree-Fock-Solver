@@ -31,8 +31,7 @@ solver_args = dict(
 
 model_params = dict(
     N_shape=(100, 100),
-    Delta_CT=0,
-    eps=0)
+    )
 
 params_list = [
     (0.8, 1.0, 0.0, 0.7, 0.15),
@@ -44,8 +43,9 @@ params_list = [
 
 epsilons = np.linspace(0, 1, 5)
 delta_cts = np.linspace(0, 1, 5)
-stress = [0]  # np.linspace(-2.5, 2.5, 5)
-model_params_lists = Utils.tuplelist([epsilons, delta_cts, stress])
+stress = np.linspace(-2.5, 2.5, 5)
+fillings = np.linspace(0.25, 0.30, 3)
+model_params_lists = Utils.tuplelist([epsilons, delta_cts, stress, fillings])
 
 """
 # Local test
@@ -55,7 +55,7 @@ model_params_lists = Utils.tuplelist([epsilons, delta_cts, stress])
 #     args.run_ind = i
 
 hyper = model_params_lists[args.run_ind]
-model_params['eps'], model_params['Delta_CT'], model_params['stress'] = hyper
+model_params['eps'], model_params['Delta_CT'], model_params['stress'], model_params['Filling'] = hyper
 
 print('Diagram guesses starting')
 
