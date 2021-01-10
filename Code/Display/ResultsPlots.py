@@ -8,7 +8,6 @@ import Code.Utils as Utils
 import numpy as np
 import os
 import Code.Nickelates.Interpreter as In
-
 import seaborn as sns
 sns.set_theme()
 sns.set_context("paper")
@@ -73,9 +72,8 @@ def feature_plot(feature, i_label, i_values, j_label, j_values, results_folder, 
 
 def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, show, transparent):
     CM = Phase[:, :, 0]
-    MF_Spin_orb = Phase[:, :, 1:]
-    spin_orb = In.arr_to_int(MF_Spin_orb)
-    unique_states = np.unique(spin_orb)
+    spin_orb = Phase[:, :, 1]
+    unique_states = np.unique(spin_orb).astype(int)
 
     f, ax = plt.subplots(figsize=(8, 5))
     ax.set_xlabel(i_label)
@@ -108,9 +106,8 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, sho
 
 def one_dimensional_phases(Phase, i_label, i_values, results_folder, show, transparent):
     CM = Phase[:, :, 0]
-    MF_Spin_orb = Phase[:, :, 1:]
-    spin_orb = In.arr_to_int(MF_Spin_orb)
-    unique_states = np.unique(spin_orb)
+    spin_orb = Phase[:, :, 1]
+    unique_states = np.unique(spin_orb).astype(int)
 
     f, ax = plt.subplots(figsize=(8, 2))
     ax.set_title('1d GS phase')

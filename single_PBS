@@ -7,4 +7,4 @@
 
 cd $PBS_O_WORKDIR
 source ../.venvs/HFA/bin/activate
-python Final_Iteration.py --n_threads 32 
+python Diagrams.py --n_threads 32 

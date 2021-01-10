@@ -8,13 +8,13 @@ parser.add_argument('--n_threads', type=int, default=8)
 parser.add_argument('--run_ind', type=int, default=0)
 args = parser.parse_args()
 
-Batch_Folder = 'meta'
-logging = False
+Batch_Folder = 'Diagrams'
+logging = True
 
 sweeper_args = dict(
     variables=['U', 'J'],
-    values_list=[np.linspace(0, 1, 5),
-                 np.linspace(0, 0.25, 5)],
+    values_list=[np.linspace(0, 1, 30),
+                 np.linspace(0, 0.25, 30)],
     bw_norm=True,
     save_guess_mfps=False,
     verbose=True,
@@ -47,9 +47,9 @@ delta_cts = np.linspace(0, 1, 5)
 stress = [0]  # np.linspace(-2.5, 2.5, 5)
 model_params_lists = Utils.tuplelist([epsilons, delta_cts, stress])
 
-# """
-# # Local test
-# """
+"""
+# Local test
+"""
 # for i in range(len(model_params_lists)):
 #     # Guesses Input
 #     args.run_ind = i

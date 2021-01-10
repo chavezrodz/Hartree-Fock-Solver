@@ -4,16 +4,16 @@ from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Display.ResultsPlots import sweeper_plots
 
 
-Batch_Folder = 'meta'
+Batch_Folder = 'Exhaustive'
 
 Model_Params = dict(
-    N_shape=(25, 25),
+    N_shape=(100, 100),
     Delta_CT=0,
     eps=0)
 
 i, j = 'U', 'J',
-i_values = np.linspace(0, 1, 10)
-j_values = np.linspace(0, 0.25, 10)
+i_values = np.linspace(0, 1, 30)
+j_values = np.linspace(0, 0.25, 30)
 bw_norm = True
 
 Model = Hamiltonian(Model_Params)
