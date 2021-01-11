@@ -4,7 +4,7 @@ from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Display.ResultsPlots import sweeper_plots
 
 
-Batch_Folder = 'Diagrams'
+Batch_Folder = 'Exhaustive/Comparison'
 
 i, j = 'U', 'J',
 i_values = np.linspace(0, 1, 30)

@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import os
+import shutil
 from time import time
 import matplotlib.pyplot as plt
 import itertools
@@ -47,7 +48,7 @@ def trial_itteration(Model, Solver, Sweeper, MF_params, outfolder,
 
 
 def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
-                     solver_args, guess_run=True, final_run=True, logging=True):
+                     solver_args, guess_run=True, final_run=True, rm_guesses=True, logging=True):
     Run_ID = make_id(sweeper_args, model_params)
     Results_Folder = os.path.join('Results', batch_folder, Run_ID)
     os.makedirs(Results_Folder, exist_ok=True)
@@ -98,6 +99,8 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
         print(f'Initial guess sweep and final calculations are consistent:{np.array_equal(Final_Energies, Optimal_Energy)}')
         print(f'time to complete (s):{round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} % \n')
 
+    if rm_guesses:
+        shutil.rmtree(os.path.join(Results_Folder, 'Guesses_Results'))
     sys.stdout = open("/dev/stdout", "w")
 
 
