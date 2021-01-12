@@ -13,8 +13,8 @@ logging = True
 
 sweeper_args = dict(
     variables=['U', 'J'],
-    values_list=[np.linspace(0, 1, 3),
-                 np.linspace(0, 0.25, 3)],
+    values_list=[np.linspace(0, 1, 30),
+                 np.linspace(0, 0.25, 30)],
     bw_norm=True,
     save_guess_mfps=False,
     verbose=True,
@@ -30,7 +30,7 @@ solver_args = dict(
     )
 
 model_params = dict(
-    N_shape=(10, 10),
+    N_shape=(100, 100),
     )
 
 params_list = [
