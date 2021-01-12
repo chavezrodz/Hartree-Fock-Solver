@@ -99,8 +99,9 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
         print(f'Initial guess sweep and final calculations are consistent:{np.array_equal(Final_Energies, Optimal_Energy)}')
         print(f'time to complete (s):{round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} % \n')
 
-    if rm_guesses:
-        shutil.rmtree(os.path.join(Results_Folder, 'Guesses_Results'))
+        if rm_guesses:
+            shutil.rmtree(os.path.join(Results_Folder, 'Guesses_Results'))
+
     sys.stdout = open("/dev/stdout", "w")
 
 

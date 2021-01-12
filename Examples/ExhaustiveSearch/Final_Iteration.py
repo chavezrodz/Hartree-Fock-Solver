@@ -49,7 +49,7 @@ print('Diagram itterations starting')
 
 diagrams.generate_diagram(Batch_Folder, model_params, params_list,
                           sweeper_args, solver_args, guess_run=False,
-                          final_run=True, logging=logging)
+                          final_run=True, logging=logging, rm_guesses=False)
 
 sys.stdout = open("/dev/stdout", "w")
 print('Finished succesfully')
