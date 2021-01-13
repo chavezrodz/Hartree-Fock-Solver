@@ -6,7 +6,8 @@
 - 1D cut to study the effect of a single parameter
 - Meta Diagram: To track the change of one phase with two parameters varying
 
-## Single point itteration:(most with or without HFA, arbitrary BZ code in progress)
+## Single point itteration:
+(most with or without HFA, arbitrary BZ code in progress)
 - Fermi surface(2D)
 - Bandstructure spaghetti plot
 - convergence tracking of the mfp evolution
