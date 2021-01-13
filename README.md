@@ -7,10 +7,10 @@
 - Meta Diagram: To track the change of one phase with two parameters varying
 
 ## Single point itteration:(most with or without HFA, arbitrary BZ code in progress)
--Fermi surface(2D)
--Bandstructure spaghetti plot
--convergence tracking of the mfp evolution
--state projections on density of states
+- Fermi surface(2D)
+- Bandstructure spaghetti plot
+- convergence tracking of the mfp evolution
+- state projections on density of states
 
 ## To use:
 Go to examples folders, tutorials are there for most computations. simply paste a script onto the main folder
