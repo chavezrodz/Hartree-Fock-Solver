@@ -52,7 +52,7 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
     Run_ID = make_id(sweeper_args, model_params)
     Results_Folder = os.path.join('Results', batch_folder, Run_ID)
     os.makedirs(Results_Folder, exist_ok=True)
-
+    standard = sys.stdout
     write_settings(Run_ID, Results_Folder, model_params, solver_args, sweeper_args)
 
     if guess_run:
@@ -102,7 +102,7 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
         if rm_guesses:
             shutil.rmtree(os.path.join(Results_Folder, 'Guesses_Results'))
 
-    sys.stdout = open("/dev/stdout", "w")
+    sys.stdout = standard
 
 
 def get_meta_array(Model_Params, sweeper_args, meta_args):

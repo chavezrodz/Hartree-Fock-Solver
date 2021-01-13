@@ -18,7 +18,6 @@ for folder in sorted(os.listdir(os.path.join('Results', Batch_Folder))):
     print(frf)
     sweeper_plots(i, i_values, j, j_values, Model.Dict, frf, BW_norm=bw_norm, show=False)
     # break
-    # break
     # guesses_folder = os.path.join('Results', Batch_Folder, folder, 'Guesses_Results')
     # for guess in os.listdir(guesses_folder):
     #     guess = os.path.join(guesses_folder, guess)

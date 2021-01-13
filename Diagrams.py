@@ -29,9 +29,6 @@ solver_args = dict(
     tol=1e-3,
     )
 
-model_params = dict(
-    N_shape=(100, 100),
-    )
 
 params_list = [
     (0.8, 1.0, 0.0, 0.7, 0.15),
@@ -55,6 +52,7 @@ model_params_lists = Utils.tuplelist([epsilons, delta_cts, stress, fillings])
 #     args.run_ind = i
 
 hyper = model_params_lists[args.run_ind]
+model_params = dict()
 model_params['eps'], model_params['Delta_CT'], model_params['stress'], model_params['Filling'] = hyper
 
 print('Diagram guesses starting')
