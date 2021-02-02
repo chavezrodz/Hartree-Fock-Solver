@@ -40,7 +40,7 @@ params_list = [
 
 epsilons = np.linspace(0, 1, 5)
 delta_cts = np.linspace(0, 1, 5)
-stress = np.linspace(-2.5, 2.5, 5)
+stress = np.linspace(-1, 1, 5)
 fillings = np.linspace(0.25, 0.30, 3)
 model_params_lists = Utils.tuplelist([epsilons, delta_cts, stress, fillings])
 

@@ -32,8 +32,8 @@ class one_d_sweeper:
             Solver.Itterate(verbose=False)
             calc.bandwidth(Model)
             if verbose:
-                print(f'Fermi_bw: {Model.Fermi_bandwidth}')
-            self.i_values = Model.Fermi_bandwidth*i_values
+                print(f'Fermi_bw: {Model.fermi_bw}')
+            self.i_values = Model.fermi_bw*i_values
         else:
             self.i_values = i_values
 

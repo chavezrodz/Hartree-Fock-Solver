@@ -12,11 +12,12 @@ parser.add_argument('--n_threads', type=int, default=8)
 args = parser.parse_args()
 
 Model_Params = dict(
-    N_shape=(25, 25),
+    U=6,
+    J=1.5
 )
 
 i = 'stress'
-i_values = np.linspace(-5, 5, 5)
+i_values = np.linspace(-2, 2, 10)
 # i = 'N_shape'
 # i_values = [
 #     (10, 10),
