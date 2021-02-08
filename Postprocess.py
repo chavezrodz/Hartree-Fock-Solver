@@ -13,7 +13,7 @@ bw_norm = True
 
 Model = Hamiltonian()
 
-for folder in sorted(os.listdir(os.path.join('Results', Batch_Folder))):
+for folder in sorted(os.listdir(os.path.join('Results', Batch_Folder)))[250:]:
     frf = os.path.join('Results', Batch_Folder, folder, 'Final_Results')
     print(frf)
     sweeper_plots(i, i_values, j, j_values, Model.Dict, frf, BW_norm=bw_norm, show=False)

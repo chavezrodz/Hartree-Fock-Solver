@@ -115,7 +115,7 @@ class Hamiltonian:
         self.f = 4*self.Filling
         self.t_1 = self.t_1*np.exp(-decay*self.stress)
         self.t_2 = self.t_2*np.exp(-decay*np.sqrt(2)*self.stress)
-        self.t_4 = self.t_4*np.exp(-decay*self.stress)
+        self.t_4 = self.t_4*np.exp(-decay*2*self.stress)
 
         self.N_cells = int(np.prod(self.N_shape))
 
