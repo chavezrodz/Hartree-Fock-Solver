@@ -1,3 +1,4 @@
+from itertools import product as product
 import Code.Utils as Utils
 import numpy as np
 import argparse
@@ -8,8 +9,8 @@ parser.add_argument('--n_threads', type=int, default=8)
 parser.add_argument('--run_ind', type=int, default=0)
 args = parser.parse_args()
 
-Batch_Folder = 'Diagrams'
-logging = True
+Batch_Folder = 'Stress_cut'
+logging = False
 
 sweeper_args = dict(
     variables=['U', 'J'],
@@ -38,22 +39,24 @@ params_list = [
     (0.5, 0.5, 0.0, 0.5, 0.1)
 ]
 
-epsilons = np.linspace(0, 1, 5)
-delta_cts = np.linspace(0, 1, 5)
-stress = np.linspace(-1, 1, 5)
-fillings = np.linspace(0.25, 0.30, 3)
-model_params_lists = Utils.tuplelist([epsilons, delta_cts, stress, fillings])
+hyper_params = {
+    # 'eps': np.linspace(0, 1, 5),
+    # 'Delta_CT': np.linspace(0, 1, 5),
+    # 'Filling': np.linspace(0.25, 0.30, 3),
+    'stress': np.linspace(-0.3, 0.3, 10),
+}
+
+keys, values = zip(*hyper_params.items())
+combinations = list(product(*values))
 
 """
 # Local test
+for i in range(len(model_params_lists)):
+    # Guesses Input
+    args.run_ind = i
 """
-# for i in range(len(model_params_lists)):
-#     # Guesses Input
-#     args.run_ind = i
+model_params = dict(zip(keys, combinations[args.run_ind]))
 
-hyper = model_params_lists[args.run_ind]
-model_params = dict()
-model_params['eps'], model_params['Delta_CT'], model_params['stress'], model_params['Filling'] = hyper
 
 print('Diagram guesses starting')
 

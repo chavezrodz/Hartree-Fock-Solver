@@ -37,7 +37,7 @@ model_params = dict(
 
 deltas = np.linspace(0, 1, 3)
 sfm = np.linspace(0, 1, 3)
-Deltas_FO = np.linspace(0, 1, 3)
+Deltas_FO = np.linspace(-1, 1, 6)
 safm = np.linspace(0, 1, 3)
 Deltas_AFO = np.linspace(0, 1, 3)
 
