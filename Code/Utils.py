@@ -13,16 +13,16 @@ def tuplelist(x):
 def Read_MFPs(folder):
     N = len(os.listdir(folder))
     for i in range(N):
-        file = os.path.join(folder,'MF'+str(i)+'.csv')
+        file = os.path.join(folder, 'MF'+str(i)+'.csv')
         if i == 0:
             MF = np.loadtxt(file, delimiter=',')
         else:
-            MF = np.dstack((MF, np.loadtxt(file,delimiter=',')))
+            MF = np.dstack((MF, np.loadtxt(file, delimiter=',')))
     return MF
 
 
 def make_id(sweeper_args, model_params):
-    Run_ID = 'Itterated:'
+    Run_ID = 'Iterated:'
     Run_ID = Run_ID + '_'.join("{!s}".format(key)
                                for (key) in sweeper_args['variables'])
     Run_ID = Run_ID + '_'

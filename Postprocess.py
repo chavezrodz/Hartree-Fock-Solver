@@ -4,7 +4,7 @@ from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Display.ResultsPlots import sweeper_plots
 
 
-Batch_Folder = 'Diagrams'
+Batch_Folder = 'stress_cut'
 
 i, j = 'U', 'J',
 i_values = np.linspace(0, 1, 30)
@@ -13,7 +13,7 @@ bw_norm = True
 
 Model = Hamiltonian()
 
-for folder in sorted(os.listdir(os.path.join('Results', Batch_Folder)))[250:]:
+for folder in sorted(os.listdir(os.path.join('Results', Batch_Folder))):
     frf = os.path.join('Results', Batch_Folder, folder, 'Final_Results')
     print(frf)
     sweeper_plots(i, i_values, j, j_values, Model.Dict, frf, BW_norm=bw_norm, show=False)

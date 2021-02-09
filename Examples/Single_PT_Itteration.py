@@ -2,7 +2,7 @@ import numpy as np
 import Code.Scripts.single_point as sp
 
 model_params = dict(
-    N_shape=(50, 50),
+    # N_shape=(50, 50),
     # stress=0,
     # b=0,
     # eps=0,

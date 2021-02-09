@@ -235,9 +235,10 @@ class Hamiltonian:
 
     def Calculate_Energy(self, E_occ):
         E = E_occ/self.N_cells
-        + 2*self.eps*(self.u**2/2 + self.u**4/4) - (
-            self.U_bar/2*(self.f**2+self.MF_params[0]**2) -
-            self.U_0*(self.MF_params[1]**2 + self.MF_params[3]**2) +
-            self.J_bar*(self.MF_params[2]**2 + self.MF_params[4]**2)
-            )/self.N_cells
+        E += 2*self.eps*(self.u**2/2 + self.u**4/4)
+        E -= (
+            self.U_bar/2*(self.f**2+self.MF_params[0]**2)
+            - self.U_0*(self.MF_params[1]**2 + self.MF_params[3]**2)
+            + self.J_bar*(self.MF_params[2]**2 + self.MF_params[4]**2)
+             )
         return E
