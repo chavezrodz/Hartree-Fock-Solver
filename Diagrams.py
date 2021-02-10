@@ -8,13 +8,13 @@ parser.add_argument('--n_threads', type=int, default=8)
 parser.add_argument('--run_ind', type=int, default=0)
 args = parser.parse_args()
 
-Batch_Folder = 'Test'
+Batch_Folder = 'stress_run'
 logging = True
 
 sweeper_args = dict(
     variables=['U', 'J'],
     values_list=[np.linspace(0, 1, 30),
-                 np.linspace(0, 0.1, 30)],
+                 np.linspace(0, 0.25, 30)],
     bw_norm=True,
     save_guess_mfps=True,
     verbose=True,
@@ -39,20 +39,17 @@ params_list = [
 ]
 
 hyper_params = {
-    # 'eps': np.linspace(0, 1, 1),
+    # 'eps': np.linspace(0, 1, 5),
     # 'Delta_CT': np.linspace(0, 1, 5),
     # 'Filling': np.linspace(0.25, 0.30, 3),
-    'stress': np.linspace(-0.3, 0.3, 10),
+    'stress': np.linspace(-2, 2, 7),
 }
 
 keys, values = zip(*hyper_params.items())
 combinations = list(product(*values))
 
 """
-# model_params.update({
-#     'N_shape': (10, 10),
-#     'stress': 0.3,
-#     })
+model_params.update({})
 # Local test
 for i in range(len(model_params_lists)):
     # Guesses Input
