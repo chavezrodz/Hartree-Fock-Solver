@@ -8,7 +8,7 @@ parser.add_argument('--n_threads', type=int, default=8)
 parser.add_argument('--run_ind', type=int, default=0)
 args = parser.parse_args()
 
-Batch_Folder = 'stress_run'
+Batch_Folder = 'diagrams'
 logging = True
 
 sweeper_args = dict(
@@ -39,10 +39,10 @@ params_list = [
 ]
 
 hyper_params = {
-    # 'eps': np.linspace(0, 1, 5),
-    # 'Delta_CT': np.linspace(0, 1, 5),
-    # 'Filling': np.linspace(0.25, 0.30, 3),
-    'stress': np.linspace(-2, 2, 7),
+    'eps': np.linspace(0, 1, 5),
+    'Delta_CT': np.linspace(0, 1, 5),
+    'Filling': np.linspace(0.225, 0.275, 3),
+    'stress': np.linspace(-5, 5, 9),
 }
 
 keys, values = zip(*hyper_params.items())
