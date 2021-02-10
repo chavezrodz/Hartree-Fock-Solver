@@ -10,7 +10,7 @@ from Code.Solver.Optimizer import Optimizer_exhaustive as Optimizer_exhaustive
 import Code.Utils as U
 
 
-def trial_itteration(Model, Solver, Sweeper, MF_params, outfolder,
+def trial_iteration(Model, Solver, Sweeper, MF_params, outfolder,
                      Include_MFPs, logging):
     os.makedirs(outfolder, exist_ok=True)
     if logging:
@@ -46,10 +46,10 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
 
             Sweeper = Phase_Diagram_Sweeper(Model, Solver, MF_params, **sweeper_args)
 
-            dt, convergence_pc = trial_itteration(Model, Solver, Sweeper, MF_params,
+            dt, convergence_pc = trial_iteration(Model, Solver, Sweeper, MF_params,
                                                   outfolder, Include_MFPs=sweeper_args['save_guess_mfps'], logging=logging)
 
-            print(f'Diagram itteration: {n} time to complete (s): {round(dt,3)} Converged points:{round(convergence_pc,3)} % \n')
+            print(f'Diagram iteration: {n} time to complete (s): {round(dt,3)} Converged points:{round(convergence_pc,3)} % \n')
 
     if final_run:
         a = time()

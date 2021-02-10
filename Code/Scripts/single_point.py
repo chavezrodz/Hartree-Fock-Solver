@@ -2,7 +2,7 @@ import os
 from time import time
 import numpy as np
 from Code.Solver.HFA_Solver import HFA_Solver
-import Code.Display.Itteration_sequence as IS
+import Code.Display.Iteration_sequence as IS
 import Code.Display.DispersionRelation as DR
 import Code.Display.Density_Of_States as DOS
 import Code.Solver.calculations as calc
@@ -24,8 +24,8 @@ def point_analysis(model_params, guesses, solver_args, batch_folder, transparent
 
             os.makedirs(results_folder, exist_ok=True)
 
-            Solver.Itterate(verbose=True)
-            IS.Itteration_sequence(Solver, results_folder=results_folder, show=show)
+            Solver.Iterate(verbose=True)
+            IS.Iteration_sequence(Solver, results_folder=results_folder, show=show)
             calc.post_calculations(Model)
 
             DOS.DOS(Model, results_folder=results_folder, show=show)
@@ -47,17 +47,17 @@ def point_analysis(model_params, guesses, solver_args, batch_folder, transparent
         DR.Bandstructure(Model, fermi=False, results_folder=results_folder, show=show)
 
 
-def itteration_comp(model_params, mf_params, solver_args_1, solver_args_2):
+def iteration_comp(model_params, mf_params, solver_args_1, solver_args_2):
     Model = Hamiltonian(model_params, mf_params)
     Solver = HFA_Solver(Model, **solver_args_1)
-    Solver.Itterate(verbose=False)
+    Solver.Iterate(verbose=False)
 
     Solver_1 = Solver
 
     Model = Hamiltonian(model_params, mf_params)
     Solver = HFA_Solver(Model, **solver_args_2)
-    Solver.Itterate(verbose=False)
+    Solver.Iterate(verbose=False)
 
     Solver_2 = Solver
 
-    IS.Itteration_comparison(Solver_1, Solver_2)
+    IS.Iteration_comparison(Solver_1, Solver_2)

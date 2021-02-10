@@ -22,12 +22,12 @@ class Phase_Diagram_Sweeper():
         self.i_values, self.j_values = self.values_list
 
         if bw_norm:
-            Solver = copy.deepcopy(self.Solver)
-            Model = Solver.Hamiltonian
+            Sol = copy.deepcopy(self.Solver)
+            Model = Sol.Hamiltonian
             setattr(Model, self.i, 0)
             setattr(Model, self.j, 0)
             setattr(Model, 'MF_params', np.zeros(len(Model.MF_params)))
-            Solver.Itterate(verbose=False)
+            Sol.Iterate(verbose=False)
             calc.bandwidth(Model)
             if verbose:
                 print(f'Fermi_bw: {Model.fermi_bw}')
@@ -64,7 +64,7 @@ class Phase_Diagram_Sweeper():
 
         Model.MF_params = self.Initial_params[v]
 
-        Sol.Itterate(verbose=False)
+        Sol.Iterate(verbose=False)
         calc.post_calculations(Model)
         if self.verbose:
             if Sol.converged:

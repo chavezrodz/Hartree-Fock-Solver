@@ -22,7 +22,7 @@ class Hamiltonian:
     Consistency
     Calculate_Energy
 
-    All itterations done in HFA solver.
+    All iterations done in HFA solver.
     """
     def __init__(self, Model_params={}, MF_params=np.array([0, 0, 0, 0, 0])):
         # initiates Model parameters

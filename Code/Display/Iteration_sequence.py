@@ -11,7 +11,7 @@ sns.set_theme(font_scale=3)
 sns.set_context("paper", font_scale=3)
 
 
-def Itteration_sequence(Solver, results_folder=None, show=True):
+def Iteration_sequence(Solver, results_folder=None, show=True):
     fig, axs = plt.subplots(2)
     fig.suptitle('Converged: '+str(Solver.converged))
     for i in range(len(Solver.Hamiltonian.MF_params)):
@@ -21,15 +21,15 @@ def Itteration_sequence(Solver, results_folder=None, show=True):
 
     axs[1].scatter(np.arange(len(Solver.beta_seq)), Solver.beta_seq)
     axs[1].set_title('Mixing Factor')
-    plt.xlabel('Itteration')
+    plt.xlabel('Iteration')
     if results_folder is not None:
-        plt.savefig(results_folder+'/Itteration_sequence.png')
+        plt.savefig(results_folder+'/Iteration_sequence.png')
     if show:
         plt.show()
     plt.close()
 
 
-def Itteration_comparison(Solver_fixed, Solver_scheduled):
+def Iteration_comparison(Solver_fixed, Solver_scheduled):
     fig, axs = plt.subplots(3)
     for i in range(Solver_fixed.sol_seq.shape[1]):
         axs[0].plot(np.arange(Solver_fixed.sol_seq.shape[0]), Solver_fixed.sol_seq[:, i], label=Solver_fixed.Hamiltonian.Dict[i])
@@ -46,7 +46,7 @@ def Itteration_comparison(Solver_fixed, Solver_scheduled):
     axs[2].scatter(np.arange(len(Solver_scheduled.beta_seq)), Solver_scheduled.beta_seq)
     axs[2].set_xlim(0, 50)
     axs[2].set_title('Mixing Factor')
-    plt.xlabel('Itteration')
+    plt.xlabel('Iteration')
     plt.tight_layout()
     plt.savefig('FixedVsScheduled.png', transparent=False)
     plt.show()

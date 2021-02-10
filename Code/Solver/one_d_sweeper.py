@@ -3,6 +3,7 @@ import itertools
 from multiprocessing import Pool
 import Code.Solver.calculations as calc
 import numpy.linalg as LA
+import copy
 import os
 
 """
@@ -25,11 +26,11 @@ class one_d_sweeper:
 
         self.i = i
         if Bandwidth_Normalization:
-            Model = self.Model
+            Sol = copy.deepcopy(self.Solver)
+            Model = Sol.Hamiltonian
             setattr(Model, i, 0)
             setattr(Model, 'MF_params', np.zeros(len(Model.MF_params)))
-            Solver = self.Solver
-            Solver.Itterate(verbose=False)
+            Sol.Iterate(verbose=False)
             calc.bandwidth(Model)
             if verbose:
                 print(f'Fermi_bw: {Model.fermi_bw}')
@@ -48,8 +49,8 @@ class one_d_sweeper:
         self.Distortion = np.zeros(self.Diag_shape)
 
     def Phase_Diagram_point(self, v, DOS=False):
-        Model = self.Model
-        Sol = self.Solver
+        Sol = copy.deepcopy(self.Solver)
+        Model = Sol.Hamiltonian
 
         variable = self.i
         value = self.i_values[v[0]]
@@ -58,7 +59,7 @@ class one_d_sweeper:
         setattr(Model, variable, value)
         Model.MF_params = guess
 
-        Sol.Itterate(verbose=False)
+        Sol.Iterate(verbose=False)
         calc.post_calculations(Model)
         if self.verbose:
             if Sol.converged:
@@ -99,7 +100,7 @@ class one_d_sweeper:
             Sol = self.Solver
             setattr(Model, self.i, self.i_values[n])
             Model.MF_params = sol
-            Sol.Itterate(verbose=False)
+            Sol.Iterate(verbose=False)
             sol_fermis.append(Model.fermi_e)
 
         self.fermis = np.array(sol_fermis)

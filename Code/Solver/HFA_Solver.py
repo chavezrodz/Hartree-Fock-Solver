@@ -14,7 +14,7 @@ class HFA_Solver:
     def __init__(self, Ham, method='sigmoid', save_seq=False, tol=1e-3, **kwargs):
         self.Hamiltonian = Ham
 
-        # Itteration Method Params
+        # Iteration Method Params
         self.tol = tol
         self.save_seq = save_seq
         self.method = method
@@ -29,7 +29,7 @@ class HFA_Solver:
         indices = np.unravel_index(indices, self.Energies.shape)
         return indices
 
-    def Itteration_Step(self, verbose):
+    def Iteration_Step(self, verbose):
         # Solve Matrix Across all momenta
         self.Energies, self.Eigenvectors = self.Hamiltonian.matrices()
         # Find Indices of all required lowest energies
@@ -50,7 +50,7 @@ class HFA_Solver:
             self.Print_step(New_MFP)
         return New_MFP, New_Guess
 
-    def Itterate(self, verbose=True, save_seq=False):
+    def Iterate(self, verbose=True, save_seq=False):
         t0 = time()
 
         calc.make_grid(self.Hamiltonian)
@@ -66,12 +66,12 @@ class HFA_Solver:
             self.sol_seq = []
             self.beta_seq = []
 
-        a, b = self.Itteration_Step(verbose)
+        a, b = self.Iteration_Step(verbose)
 
         while LA.norm(a-c) > self.tol:
             c = b
-            a, b = self.Itteration_Step(verbose)
-            if self.count >= self.Itteration_limit:
+            a, b = self.Iteration_Step(verbose)
+            if self.count >= self.Iteration_limit:
                 self.converged = False
                 break
         self.Hamiltonian.converged = self.converged
@@ -91,13 +91,13 @@ class HFA_Solver:
 
     def Print_step(self, a, t=0, method=None):
         if method is None:
-            print('Itteration:', self.count, ' Mean Field parameters:', a.round(self.N_digits))
+            print('Iteration:', self.count, ' Mean Field parameters:', a.round(self.N_digits))
             return
         elif method == 'Initial':
             print('\nInitial Mean Field parameters:', a.round(self.N_digits))
             return
         elif method == 'Final':
-            print(f'Final Mean Field parameter: {a.round(self.N_digits)} Number of itteration steps: {self.count} Time taken:{round(t,3)} \n')
+            print(f'Final Mean Field parameter: {a.round(self.N_digits)} Number of iteration steps: {self.count} Time taken:{round(t,3)} \n')
             return
 
     def update_guess(self, a, b):
@@ -110,15 +110,15 @@ class HFA_Solver:
         if self.method == 'momentum':
             beta = self.beta
         elif self.method == 'sigmoid':
-            beta = sp.expit(-self.count*self.beta/self.Itteration_limit) 
+            beta = sp.expit(-self.count*self.beta/self.Iteration_limit) 
         else:
-            print('Error: Itteration Method not found')
+            print('Error: Iteration Method not found')
 
         if self.count == 0:
             beta = 0
-        elif self.count >= 0.7*self.Itteration_limit and self.count % int(self.Itteration_limit/10) == 0:
+        elif self.count >= 0.7*self.Iteration_limit and self.count % int(self.Iteration_limit/10) == 0:
             beta = 0.5
-        elif self.count == int(0.9*self.Itteration_limit):
+        elif self.count == int(0.9*self.Iteration_limit):
             beta = 1
 
         return (1 - beta)*b + beta*a, beta
