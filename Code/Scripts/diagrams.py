@@ -71,7 +71,8 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
         sweeper.save_results(Final_Results_Folder, Include_MFPs=True)
 
         Final_Energies = sweeper.Es_trial
-        print(f'Initial guess sweep and final calculations are consistent:{np.array_equal(Final_Energies, Optimal_Energy)}')
+        print(np.abs(Final_Energies - Optimal_Energy))
+        print(f'Initial guess sweep and final calculations are consistent:{np.allclose(Final_Energies, Optimal_Energy, atol=1e-2)}')
         print(f'time to complete (s):{round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} % \n')
 
         if rm_guesses:

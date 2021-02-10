@@ -1,3 +1,4 @@
+import copy
 import Code.Solver.calculations as calc
 import numpy as np
 import itertools
@@ -21,11 +22,11 @@ class Phase_Diagram_Sweeper():
         self.i_values, self.j_values = self.values_list
 
         if bw_norm:
-            Model = self.Model
+            Solver = copy.deepcopy(self.Solver)
+            Model = Solver.Hamiltonian
             setattr(Model, self.i, 0)
             setattr(Model, self.j, 0)
             setattr(Model, 'MF_params', np.zeros(len(Model.MF_params)))
-            Solver = self.Solver
             Solver.Itterate(verbose=False)
             calc.bandwidth(Model)
             if verbose:
@@ -50,8 +51,8 @@ class Phase_Diagram_Sweeper():
         self.Distortion = np.zeros(self.Diag_shape)
 
     def Phase_Diagram_point(self, v):
-        Model = self.Model
-        Sol = self.Solver
+        Sol = copy.deepcopy(self.Solver)
+        Model = Sol.Hamiltonian
 
         variable1 = self.i
         value1 = self.i_values[v[0]]
