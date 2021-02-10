@@ -56,7 +56,10 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
         E_Tower.append(np.loadtxt(E_file, delimiter=','))
         C_Tower.append(np.loadtxt(C_file, delimiter=','))
 
-    E_Tower, C_Tower = np.stack(E_Tower, axis=-1), np.stack(C_Tower, axis=-1).astype(bool)
+    E_Tower = np.stack(E_Tower, axis=-1)
+    C_Tower = np.stack(C_Tower, axis=-1).astype(bool)
+    print(E_Tower.shape)
+    print(E_Tower)
 
     # Find Indices of lowest energies across stack
     ind = np.argmin(E_Tower, axis=-1)
@@ -64,6 +67,8 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
     # Lowest achievable energy
     Optimal_Energy = np.take_along_axis(E_Tower, np.expand_dims(ind, axis=-1), axis=-1)
     Optimal_Energy = np.squeeze(Optimal_Energy)
+    print(ind)
+    print(Optimal_Energy)
 
     Optimal_Convergence = np.take_along_axis(C_Tower, np.expand_dims(ind, axis=-1), axis=-1)
     Optimal_Convergence = np.squeeze(Optimal_Convergence)
@@ -78,20 +83,20 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
             MFPs = Utils.Read_MFPs(os.path.join(Input_Folder, folder, 'MF_Solutions'))
             Solutions.append(MFPs)
 
-            Phase = In.array_interpreter(MFPs)
-            MF_Spin_orb = Phase[:, :, 1:]
-            state = In.arr_to_int(MF_Spin_orb)
-            States.append(state)
+            # Phase = In.array_interpreter(MFPs)
+            # MF_Spin_orb = Phase[:, :, 1:]
+            # state = In.arr_to_int(MF_Spin_orb)
+            # States.append(state)
 
-        States = np.stack(States, axis=-1)
+        # States = np.stack(States, axis=-1)
         Solutions = np.stack(Solutions, axis=-1)
         Solutions = np.swapaxes(Solutions, -1, -2)
         Unconverged_Sols = np.empty(Solutions.shape)
         Unconverged_Sols[:] = np.nan
 
         # Solutions and states
-        Optimal_States = np.take_along_axis(States, np.expand_dims(ind, axis=-1), axis=-1)
-        Optimal_States = np.squeeze(Optimal_States)
+        # Optimal_States = np.take_along_axis(States, np.expand_dims(ind, axis=-1), axis=-1)
+        # Optimal_States = np.squeeze(Optimal_States)
 
         Diag_Shape = E_Tower.shape[:-1]
         Optimal_Solutions = np.zeros((*Diag_Shape, len(params_list[0])))

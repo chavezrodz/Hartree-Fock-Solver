@@ -1,8 +1,0 @@
-Diagram run fixing all but stress
-range (-0.3, 0.3, 10)
-
-Then exhaustive on the problematic ones
-
-
-
-Also exhaustive on the one we know fails (stress=0.5)
