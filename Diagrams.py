@@ -42,7 +42,7 @@ hyper_params = {
     'eps': np.linspace(0, 1, 5),
     'Delta_CT': np.linspace(0, 1, 5),
     'Filling': np.linspace(0.225, 0.275, 3),
-    'stress': np.linspace(-5, 5, 9),
+    'stress': np.linspace(-5, 5, 11),
 }
 
 keys, values = zip(*hyper_params.items())
