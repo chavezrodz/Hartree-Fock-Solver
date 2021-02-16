@@ -1,13 +1,14 @@
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
-
+import os
 import seaborn as sns
+
 sns.set_theme()
 sns.set_context("paper")
 
 
-def Bandstructure(Model, fermi=True, results_folder=None, show=True):
+def Bandstructure(Model, fermi=True, results_folder=None, label=None, show=True, transparent=False):
     f = plt.figure()
     ax = f.add_subplot(111)
     ax.yaxis.set_label_position("left")
@@ -21,7 +22,11 @@ def Bandstructure(Model, fermi=True, results_folder=None, show=True):
     plt.xticks(Model.indices, Model.k_labels)
     plt.tight_layout()
     if results_folder is not None:
-        plt.savefig(results_folder+'/Bandstructure.png')
+        if label is not None:
+            label = label+'Bandstructure.png'
+        else:
+            label = 'Bandstructure.png'
+        plt.savefig(os.path.join(results_folder, label), transparent=transparent)
     if show:
         plt.show()
     plt.close()

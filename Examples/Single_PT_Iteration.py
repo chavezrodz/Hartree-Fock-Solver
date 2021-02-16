@@ -13,7 +13,7 @@ model_params = dict(
 solver_args = dict(
     method='sigmoid',
     beta=2,
-    Itteration_limit=50,
+    Iteration_limit=50,
     tol=1e-3,
     save_seq=True
     )

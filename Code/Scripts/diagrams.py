@@ -10,8 +10,8 @@ from Code.Solver.Optimizer import Optimizer_exhaustive as Optimizer_exhaustive
 import Code.Utils as U
 
 
-def trial_iteration(Model, Solver, Sweeper, MF_params, outfolder,
-                     Include_MFPs, logging):
+def trial_iteration(Model, Solver, Sweeper, MF_params,
+                    outfolder, Include_MFPs, logging):
     os.makedirs(outfolder, exist_ok=True)
     if logging:
         sys.stdout = open(outfolder+'/logs.txt', 'w+')
@@ -46,8 +46,9 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
 
             Sweeper = Phase_Diagram_Sweeper(Model, Solver, MF_params, **sweeper_args)
 
-            dt, convergence_pc = trial_iteration(Model, Solver, Sweeper, MF_params,
-                                                  outfolder, Include_MFPs=sweeper_args['save_guess_mfps'], logging=logging)
+            dt, convergence_pc = trial_iteration(
+                Model, Solver, Sweeper, MF_params, outfolder,
+                Include_MFPs=sweeper_args['save_guess_mfps'], logging=logging)
 
             print(f'Diagram iteration: {n} time to complete (s): {round(dt,3)} Converged points:{round(convergence_pc,3)} % \n')
 
@@ -63,7 +64,8 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
         Model = Hamiltonian(model_params)
         Solver = HFA_Solver(Model, **solver_args)
 
-        Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(Input_Folder, params_list, input_MFP=sweeper_args['save_guess_mfps'])
+        Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(
+            Input_Folder, params_list, input_MFP=sweeper_args['save_guess_mfps'])
 
         sweeper = Phase_Diagram_Sweeper(Model, Solver, Optimal_guesses, **sweeper_args)
 

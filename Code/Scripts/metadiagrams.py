@@ -23,11 +23,12 @@ def get_meta_array(Model_Params, sweeper_args, meta_args):
         closest_y_ind = np.argmin(np.abs(meta_args['y_values']))
 
         Model_Params[meta_args['x_label']] = meta_args['x_values'][closest_x_ind]
-        Model_Params[meta_args['y_label']] = meta_args['x_values'][closest_y_ind]
+        Model_Params[meta_args['y_label']] = meta_args['y_values'][closest_y_ind]
 
         Run_ID = U.make_id(sweeper_args, Model_Params)
         mfps = U.Read_MFPs(os.path.join('Results', Batch_Folder, Run_ID, 'Final_Results', 'MF_Solutions'))
         value_at_origin = Diagram_stats(mfps, meta_args['tracked_state'])
+
         for x, y in itertools.product(np.arange(len(x_values)), np.arange(len(y_values))):
             Model_Params[meta_args['x_label']] = x_values[x]
             Model_Params[meta_args['y_label']] = y_values[y]
@@ -45,7 +46,7 @@ def get_meta_array(Model_Params, sweeper_args, meta_args):
 
 def Diagram_stats(mfps, phase):
     Phases = In.array_interpreter(mfps)[:, :, 1:]
-    Phases = In.arr_to_int(Phases)
+    # Phases = In.arr_to_int(Phases)
     Size = np.size(Phases)
     Uniques, counts = np.unique(Phases, return_counts=True)
     counts = counts/Size * 100

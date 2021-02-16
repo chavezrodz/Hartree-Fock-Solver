@@ -1,8 +1,11 @@
+import time
 import numpy as np
 import itertools
-from multiprocessing import Pool
+import Code.Display.DispersionRelation as DR
+import Code.Display.Density_Of_States as DOS
 import Code.Solver.calculations as calc
-import numpy.linalg as LA
+from multiprocessing import Pool
+from Code.Scripts.single_point import point_analysis as point_analysis
 import copy
 import os
 
@@ -16,19 +19,23 @@ class one_d_sweeper:
     """
     """
 
-    def __init__(self, Model, Solver, i, i_values, guesses, n_threads=8, verbose=False, Bandwidth_Normalization=True):
+    def __init__(self, Model, Solver, guesses, Results_folder,
+                 bw_norm=False, n_threads=8, verbose=False,
+                 **kwargs):
         self.Model = Model
         self.Solver = Solver
+        self.guesses = guesses
 
         self.n_threads = n_threads
         self.verbose = verbose
-        self.guesses = guesses
+        self.Results_folder = Results_folder
 
-        self.i = i
-        if Bandwidth_Normalization:
+        self.i = kwargs['variables'][0]
+        i_values = kwargs['values_list'][0]
+        if bw_norm:
             Sol = copy.deepcopy(self.Solver)
             Model = Sol.Hamiltonian
-            setattr(Model, i, 0)
+            setattr(Model, self.i, 0)
             setattr(Model, 'MF_params', np.zeros(len(Model.MF_params)))
             Sol.Iterate(verbose=False)
             calc.bandwidth(Model)
@@ -91,26 +98,46 @@ class one_d_sweeper:
         self.best_E = np.min(self.Es_trial, axis=1)
         self.best_E_ind = np.argmin(self.Es_trial, axis=1)
         self.best_params = np.array([self.Final_params[i, j] for i, j in enumerate(self.best_E_ind)])
-        # print(self.best_E)
-        # print(np.round(self.best_params, 3))
 
-        sol_fermis = []
-        for n, sol in enumerate(self.best_params):
-            Model = self.Model
-            Sol = self.Solver
-            setattr(Model, self.i, self.i_values[n])
-            Model.MF_params = sol
+        BS_folder = os.path.join(self.Results_folder, 'Bandstructure')
+        DOS_folder = os.path.join(self.Results_folder, 'DOS')
+        DOS_state = os.path.join(self.Results_folder, 'DOS_state')
+        DOS_single = os.path.join(self.Results_folder, 'DOS_single')
+        os.makedirs(BS_folder, exist_ok=True)
+        os.makedirs(DOS_folder, exist_ok=True)
+        os.makedirs(DOS_state, exist_ok=True)
+        os.makedirs(DOS_single, exist_ok=True)
+
+        for n, j in enumerate(self.i_values):
+            Sol = copy.deepcopy(self.Solver)
+            Model = Sol.Hamiltonian
+
+            show = False
+            variable = self.i
+            value = j
+            guess = self.best_params[n]
+
+            label = str(variable)+'_'+str(value)
+
+            setattr(Model, variable, value)
+            Model.MF_params = guess
+
             Sol.Iterate(verbose=False)
-            sol_fermis.append(Model.fermi_e)
+            calc.post_calculations(Model)
 
-        self.fermis = np.array(sol_fermis)
+            DOS.DOS(Model, results_folder=DOS_folder, label=label, show=show)
+            DOS.DOS_per_state(Model, results_folder=DOS_state, label=label, show=show)
+            DOS.DOS_single_state(Model, ind=1, results_folder=DOS_single, label=label, show=show)
+            DOS.DOS_single_state(Model, ind=3, results_folder=DOS_single, label=label, show=show)
+            calc.bandstructure(Model)
+            DR.Bandstructure(Model, results_folder=BS_folder, label=label, show=show)
 
-    def save_results(self, outfolder, Include_MFPs=False):
+    def save_results(self, Include_MFPs=False):
+        outfolder = self.Results_folder
         np.savetxt(os.path.join(outfolder, 'Energies.csv'), self.Es_trial, delimiter=',')
         np.savetxt(os.path.join(outfolder, 'Convergence.csv'), self.Convergence_Grid, delimiter=',')
         np.savetxt(os.path.join(outfolder, 'Conductance.csv'), self.MIT, delimiter=',')
         np.savetxt(os.path.join(outfolder, 'Distortion.csv'), self.Distortion, delimiter=',')
-        np.savetxt(os.path.join(outfolder, 'Fermi_Energies.csv'), self.fermis, delimiter=',')
         np.savetxt(os.path.join(outfolder, 'GS_Energy.csv'), self.best_E, delimiter=',')
         if Include_MFPs:
             outfile = os.path.join(outfolder, 'GS_Solutions.csv')

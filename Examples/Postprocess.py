@@ -4,9 +4,8 @@ from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Display.ResultsPlots import sweeper_plots
 
 
-Batch_Folder = 'Diagrams'
-
-i, j = 'U', 'J',
+Batch_Folder = 'Doping_0225'
+i, j = 'U', 'J'
 i_values = np.linspace(0, 1, 30)
 j_values = np.linspace(0, 0.25, 30)
 bw_norm = True

@@ -7,7 +7,6 @@ import Code.Display.DispersionRelation as DR
 import Code.Display.Density_Of_States as DOS
 import Code.Solver.calculations as calc
 from Code.Nickelates.Hamiltonian import Hamiltonian
-# from Code.Graphene.Hamiltonian import Hamiltonian
 
 
 def point_analysis(model_params, guesses, solver_args, batch_folder, transparent=False, show=False, HFA=True):
@@ -30,7 +29,6 @@ def point_analysis(model_params, guesses, solver_args, batch_folder, transparent
 
             DOS.DOS(Model, results_folder=results_folder, show=show)
             DOS.DOS_per_state(Model, results_folder=results_folder, show=show)
-
             DR.fermi_surface(Model, results_folder=results_folder, show=show)
             # calc.bandwidth(Model)
 

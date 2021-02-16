@@ -25,7 +25,7 @@ sweeper_args = dict(
 solver_args = dict(
     method='sigmoid',
     beta=1.5,
-    Itteration_limit=150,
+    Iteration_limit=150,
     tolerance=1e-3,
     tol=1e-3,
     )

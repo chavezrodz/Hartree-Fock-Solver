@@ -8,7 +8,7 @@ parser.add_argument('--n_threads', type=int, default=8)
 parser.add_argument('--run_ind', type=int, default=0)
 args = parser.parse_args()
 
-Batch_Folder = 'diagrams'
+batch_folder = 'diagrams'
 logging = True
 
 sweeper_args = dict(
@@ -24,7 +24,7 @@ sweeper_args = dict(
 solver_args = dict(
     method='sigmoid',
     beta=1.5,
-    Itteration_limit=150,
+    Iteration_limit=150,
     tolerance=1e-3,
     tol=1e-3,
     )
@@ -59,7 +59,7 @@ model_params = dict(zip(keys, combinations[args.run_ind]))
 
 print('Diagram guesses starting')
 
-diagrams.generate_diagram(Batch_Folder, model_params, params_list,
+diagrams.generate_diagram(batch_folder, model_params, params_list,
                           sweeper_args, solver_args, logging=logging)
 
 print('Finished succesfully')
