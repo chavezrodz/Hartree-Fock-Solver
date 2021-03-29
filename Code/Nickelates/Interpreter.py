@@ -1,5 +1,7 @@
 import itertools
 import numpy as np
+from matplotlib.colors import ListedColormap
+import matplotlib
 
 
 def spin_interpreter(mfps, rounding=1):
@@ -41,8 +43,12 @@ def symetries(phase):
     spin, orbit = phase[:2], phase[2:]
     # spin = np.sign(spin)
 
-    idx = (0 in spin) or (np.product(np.sign(spin), axis=-1) ==1)
+    idx = (0 in spin) or (np.product(np.sign(spin), axis=-1) == 1)
     spin[idx] = np.abs(spin)
+
+    idx = (spin[0] == 0) & (orbit[0] == 0)
+    orbit[idx] = np.roll(orbit, 1, axis=-1)
+    spin[idx] = np.roll(spin, 1, axis=-1)
 
     idx = (orbit[0] == orbit[1]) & (spin[0] < spin[1])
     spin[idx] = np.roll(spin, 1, axis=-1)
@@ -61,6 +67,7 @@ def symetries(phase):
 def array_interpreter(mfp):
     phase = np.zeros(mfp.shape)
     CM = mfp[..., 0]
+    OS = mfp[..., 2]
     spin = spin_interpreter(mfp)
     orbit = orbit_interpreter(mfp)
     phase[..., 0], phase[..., 1:3], phase[..., 3:] = CM, spin, orbit
@@ -68,7 +75,8 @@ def array_interpreter(mfp):
         phase[v][1:] = symetries(phase[v][1:])
         phase[v][1] = vec_to_int(phase[v][1:])
         phase[v][1] = state_to_pos[phase[v][1]]
-    return phase[..., :2]
+    phase[..., 2] = OS
+    return phase[..., :3]
 
 
 def unique_states(state_array):
@@ -109,19 +117,88 @@ state_to_label = {
 pos_to_label = {
     state_to_pos[state]: state_to_label[state] for state in All_states_post_sym
 }
-
 # print(pos_to_label)
 
 
 def phase_to_label(phase):
     out = vec_to_int(symetries(phase))
-    out = state_to_pos[out]
-    print('int: ', out)
-    print('label: ', pos_to_label[out])
+    phase_integer = state_to_pos[out]
+    phase_string = pos_to_label[phase_integer]
+    return phase_string, phase_integer
 
 
-# print(f'Total Possible States: {N_possible_states}')
+states_of_interest = np.array([
+    [0,  0, -1, -2],
+    [0,  0, -1, -1],
+    [0,  0, -1,  0],
+    [0,  0,  0, -1],
+    [1, -1, -1, -1],
+    [1, -1,  1,  1],
+    [1,  0, -1, -1],
+    [1,  0, -1,  0],
+    [1,  1, -1, -1],
+    [1,  1,  0, -1],
+    [1,  1,  0,  0],
+    [1,  1,  1,  1],
+    [2,  0, -1,  0],
+    [2,  0,  0,  0],
+    [2,  1, -1, -1],
+    [2,  1, -1,  0],
+    [2,  1,  0, -1],
+    [2,  1,  0,  0]
+    ])
+
+
+colors_of_interest = [
+    'tab:red',
+    'tab:blue',
+    'tab:purple',
+    'tab:orange',
+    'tab:green',
+    'tab:olive',
+    'tab:brown',
+    'darkgrey',
+    'tab:gray',
+    'yellow',
+    'tab:cyan',
+    'lime',
+    'blue',
+    'purple',
+    'brown',
+    'navajowhite',
+    'tab:pink',
+    'red'
+]
+
+assert len(states_of_interest) == len(colors_of_interest)
+
+strings_of_interest = [phase_to_label(v)[0] for v in states_of_interest]
+integers_of_interest = [phase_to_label(v)[1] for v in states_of_interest]
+
+
+# Let's also design our color mapping: 1s should be plotted in blue, 2s in red, etc...
+col_dict = dict(zip(
+    integers_of_interest, colors_of_interest[:len(integers_of_interest)]
+    ))
+
+# We create a colormar from our list of colors
+custom_cmap = ListedColormap([col_dict[x] for x in col_dict.keys()])
+
+# Let's also define the description of each category : 1 (blue) is Sea; 2 (red) is burnt, etc... Order should be respected here ! Or using another dict maybe could help.
+labels = np.array(strings_of_interest)
+len_lab = len(labels)
+
+# prepare normalizer
+#  Prepare bins for the normalizer
+norm_bins = np.sort([*col_dict.keys()]) + 0.5
+norm_bins = np.insert(norm_bins, 0, np.min(norm_bins) - 1.0)
+
+# Make normalizer and formatter
+custom_norm = matplotlib.colors.BoundaryNorm(norm_bins, len_lab, clip=True)
+
+
+print(f'Total Possible States: {N_possible_states}')
 # phase_to_label(np.array([1, -1, -1, -1]))
 # print(vec_to_int(symetries(np.array([1, -1, -1, -1]))))
 # print(state_to_pos[4222])
-# print(pos_to_label[38])
+# print(pos_to_label[114])

@@ -28,7 +28,9 @@ class Hamiltonian:
         # initiates Model parameters
         self.BZ_rot = 1
         self.b = 0
-        self.N_shape = (100, 100)
+
+        self.k_res = 100
+        self.n_dim = 2
 
         self.Filling = 0.25
         self.stress = 0
@@ -67,8 +69,8 @@ class Hamiltonian:
         x2my2_projectors = Id[[2, 3, 6, 7]]
         spin_up = Id[:4]
         spin_down = Id[4:]
-        site1 = Id[[0, 2, 4, 6]]
-        site2 = Id[[1, 3, 5, 7]]
+        site1 = (Id[[0, 2, 4, 6]] + Id[[1, 3, 5, 7]])/np.sqrt(2)
+        site2 = (Id[[0, 2, 4, 6]] - Id[[1, 3, 5, 7]])/np.sqrt(2)
 
         self.state_projectors = [
             z2_projectors,
@@ -80,9 +82,9 @@ class Hamiltonian:
             ]
 
         self.state_labels = [
-            r'$3z^2-r^2$ orbital DOS', r'$x^2-y^2$ orbital DOS',
-            r'Spin $\uparrow$ DOS', r'Spin $\downarrow$ DOS',
-            r'Homogeneous DOS', r'Site-alternating DOS'
+            r'$3z^2-r^2$ orbital', r'$x^2-y^2$ orbital',
+            r'Spin $\uparrow$', r'Spin $\downarrow$',
+            r'Even Sites', r'Odd Sites'
           ]
 
         self.mat_dim = 8
@@ -117,7 +119,7 @@ class Hamiltonian:
         self.t_2 = self.t_2*np.exp(-decay*np.sqrt(2)*self.stress)
         self.t_4 = self.t_4*np.exp(-decay*2*self.stress)
 
-        self.N_cells = int(np.prod(self.N_shape))
+        self.N_cells = np.power(self.k_res, self.n_dim)
 
         # self.Q gets updated outside
         qc = np.pi

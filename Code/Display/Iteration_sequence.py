@@ -7,8 +7,8 @@ import glob
 import os
 
 import seaborn as sns
-sns.set_theme(font_scale=3)
-sns.set_context("paper", font_scale=3)
+sns.set_theme(font_scale=12)
+sns.set_context("paper", font_scale=12)
 
 
 def Iteration_sequence(Solver, results_folder=None, show=True):
@@ -29,24 +29,31 @@ def Iteration_sequence(Solver, results_folder=None, show=True):
     plt.close()
 
 
-def Iteration_comparison(Solver_fixed, Solver_scheduled):
+def Iteration_comparison(Solver_fixed, Solver_scheduled, transparent=False):
     fig, axs = plt.subplots(3)
+
+    steps = Solver_fixed.sol_seq.shape[0]
     for i in range(Solver_fixed.sol_seq.shape[1]):
-        axs[0].plot(np.arange(Solver_fixed.sol_seq.shape[0]), Solver_fixed.sol_seq[:, i], label=Solver_fixed.Hamiltonian.Dict[i])
-    axs[0].set_title('Mean Field Parameters, Fixed Mixing Rate = {}, unconverged'.format(Solver_fixed.beta))
+        axs[0].plot(np.arange(steps), Solver_fixed.sol_seq[:, i], label=Solver_fixed.Hamiltonian.Dict[i])
+    axs[0].set_title('Mean Field Parameters, Fixed Mixing Rate = {}, unconverged'.format(Solver_fixed.beta), fontsize=16)
     axs[0].set_xlim(0, 50)
-    axs[0].legend()
+    axs[0].tick_params(axis='both', which='major', labelsize=12)
 
+    steps = Solver_scheduled.sol_seq.shape[0]
     for i in range(Solver_fixed.sol_seq.shape[1]):
-        axs[1].plot(np.arange(Solver_scheduled.sol_seq.shape[0]), Solver_scheduled.sol_seq[:, i], label=Solver_scheduled.Hamiltonian.Dict[i])
-    axs[1].set_title('Mean Field Parameters, scheduled mixing rate, converged in {} steps'.format(Solver_scheduled.count))
+        axs[1].plot(np.arange(steps), Solver_scheduled.sol_seq[:, i], label=Solver_scheduled.Hamiltonian.Dict[i])
+    axs[1].set_title('Mean Field Parameters, scheduled mixing rate, converged in {} steps'.format(Solver_scheduled.count), fontsize=16)
     axs[1].set_xlim(0, 50)
-    axs[1].legend()
+    axs[1].legend(fontsize=12)
+    axs[1].tick_params(axis='both', which='major', labelsize=12)
 
-    axs[2].scatter(np.arange(len(Solver_scheduled.beta_seq)), Solver_scheduled.beta_seq)
+    steps = len(Solver_scheduled.beta_seq)
+    axs[2].scatter(np.arange(steps), Solver_scheduled.beta_seq)
     axs[2].set_xlim(0, 50)
-    axs[2].set_title('Mixing Factor')
-    plt.xlabel('Iteration')
+    axs[2].set_title('Mixing Factor', fontsize=16)
+
+    plt.tick_params(axis='both', which='major', labelsize=12)
+    plt.xlabel('Iteration', fontsize=16)
     plt.tight_layout()
-    plt.savefig('FixedVsScheduled.png', transparent=False)
+    plt.savefig('FixedVsScheduled.png', transparent=transparent)
     plt.show()

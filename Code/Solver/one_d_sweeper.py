@@ -75,7 +75,7 @@ class one_d_sweeper:
                 print(f'{variable}:{str(value)} Guess:{v[1]} Initial MFP: {guess} Did Not Converge')
         return Model.Final_Total_Energy, Model.MF_params, Model.converged, Model.Conductor, Model.u
 
-    def Sweep(self):
+    def Sweep(self, exhaustive=False):
 
         # MP way
         PD_grid = itertools.product(self.i_idx, self.j_idx)
@@ -99,38 +99,39 @@ class one_d_sweeper:
         self.best_E_ind = np.argmin(self.Es_trial, axis=1)
         self.best_params = np.array([self.Final_params[i, j] for i, j in enumerate(self.best_E_ind)])
 
-        BS_folder = os.path.join(self.Results_folder, 'Bandstructure')
-        DOS_folder = os.path.join(self.Results_folder, 'DOS')
-        DOS_state = os.path.join(self.Results_folder, 'DOS_state')
-        DOS_single = os.path.join(self.Results_folder, 'DOS_single')
-        os.makedirs(BS_folder, exist_ok=True)
-        os.makedirs(DOS_folder, exist_ok=True)
-        os.makedirs(DOS_state, exist_ok=True)
-        os.makedirs(DOS_single, exist_ok=True)
+        if exhaustive:
+            BS_folder = os.path.join(self.Results_folder, 'Bandstructure')
+            DOS_folder = os.path.join(self.Results_folder, 'DOS')
+            DOS_state = os.path.join(self.Results_folder, 'DOS_state')
+            DOS_single = os.path.join(self.Results_folder, 'DOS_single')
+            os.makedirs(BS_folder, exist_ok=True)
+            os.makedirs(DOS_folder, exist_ok=True)
+            os.makedirs(DOS_state, exist_ok=True)
+            os.makedirs(DOS_single, exist_ok=True)
 
-        for n, j in enumerate(self.i_values):
-            Sol = copy.deepcopy(self.Solver)
-            Model = Sol.Hamiltonian
+            for n, j in enumerate(self.i_values):
+                Sol = copy.deepcopy(self.Solver)
+                Model = Sol.Hamiltonian
 
-            show = False
-            variable = self.i
-            value = j
-            guess = self.best_params[n]
+                show = False
+                variable = self.i
+                value = j
+                guess = self.best_params[n]
 
-            label = str(variable)+'_'+str(value)
+                label = str(variable)+'_'+str(value)
 
-            setattr(Model, variable, value)
-            Model.MF_params = guess
+                setattr(Model, variable, value)
+                Model.MF_params = guess
 
-            Sol.Iterate(verbose=False)
-            calc.post_calculations(Model)
+                Sol.Iterate(verbose=False)
+                calc.post_calculations(Model)
 
-            DOS.DOS(Model, results_folder=DOS_folder, label=label, show=show)
-            DOS.DOS_per_state(Model, results_folder=DOS_state, label=label, show=show)
-            DOS.DOS_single_state(Model, ind=1, results_folder=DOS_single, label=label, show=show)
-            DOS.DOS_single_state(Model, ind=3, results_folder=DOS_single, label=label, show=show)
-            calc.bandstructure(Model)
-            DR.Bandstructure(Model, results_folder=BS_folder, label=label, show=show)
+                DOS.DOS(Model, results_folder=DOS_folder, label=label, show=show)
+                DOS.DOS_per_state(Model, results_folder=DOS_state, label=label, show=show)
+                DOS.DOS_single_state(Model, ind=1, results_folder=DOS_single, label=label, show=show)
+                DOS.DOS_single_state(Model, ind=3, results_folder=DOS_single, label=label, show=show)
+                calc.bandstructure(Model)
+                DR.Bandstructure(Model, results_folder=BS_folder, label=label, show=show)
 
     def save_results(self, Include_MFPs=False):
         outfolder = self.Results_folder

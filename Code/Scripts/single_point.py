@@ -1,3 +1,4 @@
+import shutil
 import os
 from time import time
 import numpy as np
@@ -14,7 +15,9 @@ def point_analysis(model_params, guesses, solver_args, batch_folder, transparent
                         for (key, val) in model_params.items())
 
     if HFA:
-        for MF_params in guesses:
+        Energies = np.zeros(len(guesses))
+        for i, MF_params in enumerate(guesses):
+
             Model = Hamiltonian(model_params, MF_params)
             Solver = HFA_Solver(Model, **solver_args)
 
@@ -26,17 +29,29 @@ def point_analysis(model_params, guesses, solver_args, batch_folder, transparent
             Solver.Iterate(verbose=True)
             IS.Iteration_sequence(Solver, results_folder=results_folder, show=show)
             calc.post_calculations(Model)
-
             DOS.DOS(Model, results_folder=results_folder, show=show)
             DOS.DOS_per_state(Model, results_folder=results_folder, show=show)
+            # for j in [0, 2, 4]:
+            # DOS.DOS_single_state(Model, ind=j, results_folder=results_folder, show=show)
             DR.fermi_surface(Model, results_folder=results_folder, show=show)
             # calc.bandwidth(Model)
-
+            print(Energies)
             if show:
                 DR.DispersionRelation(Model)
 
             calc.bandstructure(Model)
             DR.Bandstructure(Model, results_folder=results_folder, show=show)
+
+            Energies[i] = Model.Final_Total_Energy
+        min_arg = np.argmin(Energies)
+        GS_guess = guesses[min_arg]
+        print("Ground State Guess:", GS_guess)
+        guess_ID = os.path.join(point_Id, str(GS_guess))
+        shutil.move(
+            os.path.join('Results', batch_folder, guess_ID),
+            os.path.join('Results', batch_folder, guess_ID+'_GS')
+            )
+
     else:
         Model = Hamiltonian(model_params)
         results_folder = os.path.join('Results', batch_folder, point_Id)

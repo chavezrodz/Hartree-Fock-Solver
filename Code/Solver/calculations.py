@@ -11,17 +11,18 @@ def make_grid(Model):
     # ax.scatter(self.Qv[0], self.Qv[1], self.Qv[2], '.')
     # plt.show()
     # Lattice structure
-
-    N_shape = Model.N_shape
+    k_shape = ()
+    for i in range(Model.n_dim):
+        k_shape += (Model.k_res,)
     BZ_rot = Model.BZ_rot
 
-    if len(N_shape) == 2:
-        N_shape = N_shape + (1,)
+    if Model.n_dim == 2:
+        k_shape = k_shape + (1,)
     # Allowed Momentum Values
     Q = np.mgrid[
-        -np.pi:np.pi:(N_shape[0]*1j),
-        -np.pi:np.pi:(N_shape[1]*1j),
-        -np.pi:np.pi:(N_shape[2]*1j)
+        -np.pi:np.pi:(k_shape[0]*1j),
+        -np.pi:np.pi:(k_shape[1]*1j),
+        -np.pi:np.pi:(k_shape[2]*1j)
         ]
 
     # Vectors Rotation by 45 degrees to re-create true BZ

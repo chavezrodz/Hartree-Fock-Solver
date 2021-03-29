@@ -3,3 +3,4 @@ PBS
 Slurm
 __pycache__
 *.pyc
+submission_scripts

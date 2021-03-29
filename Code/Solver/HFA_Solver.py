@@ -22,7 +22,7 @@ class HFA_Solver:
         self.N_digits = int(np.abs(np.log10(self.tol)))
 
     def Find_filling_lowest_energies(self):
-        N_states = np.product(self.Hamiltonian.N_shape)*self.Hamiltonian.mat_dim
+        N_states = self.Hamiltonian.N_cells*self.Hamiltonian.mat_dim
         N_occ_states = int(self.Hamiltonian.Filling*N_states)
         Es, k = self.Energies.flatten(), N_occ_states
         indices = np.argpartition(Es, k)[:k]
