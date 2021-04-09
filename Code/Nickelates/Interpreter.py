@@ -197,8 +197,8 @@ norm_bins = np.insert(norm_bins, 0, np.min(norm_bins) - 1.0)
 custom_norm = matplotlib.colors.BoundaryNorm(norm_bins, len_lab, clip=True)
 
 
-print(f'Total Possible States: {N_possible_states}')
-# phase_to_label(np.array([1, -1, -1, -1]))
+# print(f'Total Possible States: {N_possible_states}')
+# print(phase_to_label(np.array([1, -1, -1, -1])))
 # print(vec_to_int(symetries(np.array([1, -1, -1, -1]))))
 # print(state_to_pos[4222])
 # print(pos_to_label[114])

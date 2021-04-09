@@ -80,7 +80,11 @@ def feature_plot(feature, i_label, i_values, j_label, j_values, results_folder, 
     plt.close()
 
 
-def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, show, transparent):
+def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, show, transparent, font=20):
+    # Cutting at 0.2
+    len_x, len_y = Phase.shape[:2]
+    Phase = Phase[:, :int(0.8*len_y)]
+
     CM = Phase[:, :, 0]
     spin_orb = Phase[:, :, 1]
     OS = Phase[:, :, 2]
@@ -94,8 +98,8 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, sho
     f, ax = plt.subplots(figsize=(8, 5))  # or 6,5 without legend
     # ax.set_xlabel(i_label)
     # ax.set_ylabel(j_label)
-    ax.set_xlabel(r'$'+i_label+', [t_1]$', fontsize=20)
-    ax.set_ylabel(r'$'+j_label+', [t_1]$', fontsize=20)
+    ax.set_xlabel(r'$'+i_label+'$', fontsize=font)
+    ax.set_ylabel(r'$'+j_label+'$', fontsize=font)
 
     ax.set(frame_on=False)
 
@@ -109,8 +113,8 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, sho
     ax.set_xticklabels([0, '', 0.5, '', 1])
     ax.xaxis.set_ticks_position('bottom')
 
-    ax.set_yticks([0, 0.05, 0.1, 0.15, 0.2, 0.25])
-    ax.set_yticklabels([0, '', 0.1, '', 0.2, 0.25])
+    ax.set_yticks([0, 0.0625, 0.125, 0.1875, 0.25])
+    ax.set_yticklabels([0, '', 0.1, '', 0.2])
     ax.yaxis.set_ticks_position('left')
 
     plt.tick_params(axis='both', which='major', labelsize=16)
@@ -118,11 +122,12 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, sho
     # Charge Contour
     CS = ax.contour(np.abs(CM.T), colors='red', levels=[0.1, 0.3, 0.5],
                     linewidths=2, extent=(0, 1, 0, 0.25))
-    ax.clabel(CS, inline=True, fontsize=14)
+    ax.clabel(CS, inline=True, fontsize=14, fmt='% 1.1f')
 
     OS = ax.contour(np.abs(OS.T), colors='purple', levels=[0.1, 0.5],
                     linestyles='dashed', linewidths=2, extent=(0, 1, 0, 0.25))
-    ax.clabel(OS, inline=True, fontsize=14)
+
+    ax.clabel(OS, inline=True, fontsize=14, fmt='% 1.1f')
     ax.grid(linewidth=0)
 
     # spin-orbit
@@ -133,7 +138,7 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, sho
     ax.imshow(np.rot90(spin_orb), cmap=cmap, norm=norm, aspect='auto', extent=(0, 1, 0, 0.25))
 
     patches = [mpatches.Patch(color=col_dict[state], label=In.pos_to_label[state]) for state in unique_states]
-    ax.legend(handles=patches, bbox_to_anchor=(1.1, 1), loc=2, borderaxespad=0.0, prop={"size": 13})
+    ax.legend(handles=patches, bbox_to_anchor=(1.01, 1), loc=2, borderaxespad=0.0, prop={"size": font}, fontsize=font)
     plt.tight_layout()
 
     if results_folder is not None:
@@ -214,7 +219,7 @@ def difference_plots(features, arrays, i_label, i_values,
     plt.legend(prop={"size": 13})
 
     if results_folder is not None:
-        plt.savefig(results_folder +'/Plots/multi_differences.png', transparent=transparent)
+        plt.savefig(results_folder +'/Plots/multi_differences.png', transparent=transparent, bbox_inches='tight')
     if show:
         plt.show()
     plt.close()

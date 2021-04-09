@@ -1,10 +1,10 @@
 import numpy as np
 import Code.Scripts.single_point as sp
 
-model_params = dict(
-    U=1.2,
-    J=0.6
-    )
+# model_params = dict(
+#     U=1.2,
+#     J=0.6
+#     )
 
 # model_params = dict(
 #     U=4.8,
@@ -16,10 +16,10 @@ model_params = dict(
 #     J=0.6
 #     )
 
-# model_params = dict(
-#     U=3.0,
-#     J=1.2,
-#     )
+model_params = dict(
+    U=3.0,
+    J=1.2,
+    )
 
 
 solver_args = dict(

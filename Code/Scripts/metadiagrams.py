@@ -57,21 +57,28 @@ def Diagram_stats(mfps, phase):
         return counts[phase_ind]
 
 
-def make_meta_fig(MetaArray, meta_args):
+def make_meta_fig(MetaArray, meta_args, font=14):
     f, ax = plt.subplots(figsize=(8, 5))
-    ax.set_xlabel(meta_args['x_label'])
-    ax.set_ylabel(meta_args['y_label'])
+    # ax.set_xlabel(meta_args['x_label'])
+    # ax.set_ylabel(meta_args['y_label'])
+
+    ax.set_xlabel(r'$\epsilon_b, [t_1]$', fontsize=font)
+    ax.set_ylabel(r'$\Delta_{CF}, [t_1]$', fontsize=font)
+
     ax.set(frame_on=False)
-    ax.set_title(r'Relative occupancy of $\uparrow \downarrow,  \bar{z} \bar{z}$')
+    # ax.set_title(r'Relative occupancy of $\uparrow \downarrow,  \bar{z} \bar{z}$')
 
     CS = ax.contour(MetaArray.T, colors='red', levels=[0])
-    ax.clabel(CS, inline=True, fontsize=10)
+    ax.clabel(CS, inline=True, fontsize=font, fmt='% 1.1f')
 
     ax.plot([0., len(meta_args['x_values'])], [0, len(meta_args['y_values'])], c='black')
 
     CM = ax.pcolormesh(MetaArray.T, cmap='RdBu', vmin=-np.max(np.abs(MetaArray)), vmax=np.max(np.abs(MetaArray)))
-    plt.colorbar(CM)
+    # plt.colorbar(CM)
+    cbar = plt.colorbar(CM)
+    cbar.ax.set_ylabel(r'% change in $\uparrow \downarrow, \bar{z} \bar{z}$ phase area', fontsize=font)
 
+    plt.tick_params(axis='both', which='major', labelsize=font)
     x_values = meta_args['x_values']
     y_values = meta_args['y_values']
     N_x = np.min([len(x_values), 5])
@@ -86,5 +93,5 @@ def make_meta_fig(MetaArray, meta_args):
 
     ax.set_aspect('equal')
     plt.tight_layout()
-    plt.savefig('metadiag.png')
+    plt.savefig('MetaDiagram.png', bbox_inches='tight')
     plt.show()

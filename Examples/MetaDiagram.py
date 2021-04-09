@@ -14,13 +14,13 @@ sweeper_args = dict(
     )
 
 meta_args = dict(
-    x_label='Delta_CT',
-    y_label='stress',
+    x_label='eps',
+    y_label='Delta_CT',
     x_values=np.linspace(0, 1, 5),
-    y_values=np.linspace(-5, 5, 11),
-    tracked_state=106,
+    y_values=np.linspace(0, 1, 5),
+    tracked_state=102,
     Batch_Folder='Doping_025',
-    load=False,
+    load=True,
     )
 
 MetaArray = metadiagrams.get_meta_array(model_params, sweeper_args, meta_args)

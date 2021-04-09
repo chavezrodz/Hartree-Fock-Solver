@@ -13,8 +13,8 @@ logging = True
 
 sweeper_args = dict(
     variables=['U', 'J'],
-    values_list=[np.linspace(0, 1, 30),
-                 np.linspace(0, 0.25, 30)],
+    values_list=[np.linspace(0, 1, 3),
+                 np.linspace(0, 0.2, 3)],
     bw_norm=True,
     save_guess_mfps=True,
     verbose=True,
@@ -24,7 +24,7 @@ sweeper_args = dict(
 solver_args = dict(
     method='sigmoid',
     beta=1.5,
-    Iteration_limit=150,
+    Iteration_limit=250,
     tolerance=1e-3,
     tol=1e-3,
     )
@@ -39,10 +39,9 @@ params_list = [
 ]
 
 hyper_params = {
-    'eps': np.linspace(0, 1, 5),
-    'Delta_CT': np.linspace(0, 1, 5),
-    'Filling': np.linspace(0.225, 0.275, 3),
-    'stress': np.linspace(-5, 5, 11),
+    'eps': np.linspace(0, 1, 10),
+    'Delta_CT': np.linspace(0, 1, 10),
+    'stress': np.linspace(-1, 1, 3),
 }
 
 keys, values = zip(*hyper_params.items())

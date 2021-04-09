@@ -1,0 +1,10 @@
+#!/bin/bash
+#PBS -A st-anocera-1
+#PBS -N RNiO3
+#PBS -l walltime=1:00:00,select=1:ncpus=32:mem=8gb
+#PBS -o PBS/out_final.txt
+#PBS -e PBS/err_final.txt
+
+cd $PBS_O_WORKDIR
+source ../.venvs/HFA/bin/activate
+python Diagrams.py --n_threads 32 
