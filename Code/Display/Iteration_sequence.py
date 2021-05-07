@@ -30,30 +30,31 @@ def Iteration_sequence(Solver, results_folder=None, show=True):
 
 
 def Iteration_comparison(Solver_fixed, Solver_scheduled, transparent=False):
-    fig, axs = plt.subplots(3)
-
+    title_font = 12
+    leg_font = 10
+    fig, axs = plt.subplots(3, sharex=True)
     steps = Solver_fixed.sol_seq.shape[0]
     for i in range(Solver_fixed.sol_seq.shape[1]):
         axs[0].plot(np.arange(steps), Solver_fixed.sol_seq[:, i], label=Solver_fixed.Hamiltonian.Dict[i])
-    axs[0].set_title('Mean Field Parameters, Fixed Mixing Rate = {}, unconverged'.format(Solver_fixed.beta), fontsize=16)
+    axs[0].set_title('Mean Field Parameters, Fixed Mixing Rate = {}, unconverged'.format(Solver_fixed.beta), fontsize=title_font)
     axs[0].set_xlim(0, 50)
     axs[0].tick_params(axis='both', which='major', labelsize=12)
 
     steps = Solver_scheduled.sol_seq.shape[0]
     for i in range(Solver_fixed.sol_seq.shape[1]):
         axs[1].plot(np.arange(steps), Solver_scheduled.sol_seq[:, i], label=Solver_scheduled.Hamiltonian.Dict[i])
-    axs[1].set_title('Mean Field Parameters, scheduled mixing rate, converged in {} steps'.format(Solver_scheduled.count), fontsize=16)
+    axs[1].set_title('Mean Field Parameters, scheduled mixing rate, converged in {} steps'.format(Solver_scheduled.count), fontsize=title_font)
     axs[1].set_xlim(0, 50)
-    axs[1].legend(fontsize=12)
+    axs[1].legend(fontsize=leg_font)
     axs[1].tick_params(axis='both', which='major', labelsize=12)
 
     steps = len(Solver_scheduled.beta_seq)
     axs[2].scatter(np.arange(steps), Solver_scheduled.beta_seq)
     axs[2].set_xlim(0, 50)
-    axs[2].set_title('Mixing Factor', fontsize=16)
+    axs[2].set_title('Mixing Factor', fontsize=title_font)
 
     plt.tick_params(axis='both', which='major', labelsize=12)
-    plt.xlabel('Iteration', fontsize=16)
+    plt.xlabel('Iteration', fontsize=title_font)
     plt.tight_layout()
-    plt.savefig('FixedVsScheduled.png', transparent=transparent)
+    plt.savefig('FixedVsScheduled.png', transparent=transparent, bbox_inches='tight')
     plt.show()

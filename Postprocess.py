@@ -15,7 +15,12 @@ make_map = True
 process_guesses = False
 full_analysis = False
 
-Batch_Folders = ['strain_zero', 'strain_tensile', 'strain_compressive']
+Batch_Folders = [
+    # 'strain_zero',
+    'strain_tensile',
+    # 'strain_compressive'
+    ]
+
 Results_Folder = 'Final_Results'
 
 for Batch_Folder in Batch_Folders:

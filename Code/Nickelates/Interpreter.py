@@ -41,7 +41,7 @@ def orbit_interpreter(mfps, rounding=1):
 
 def symetries(phase):
     spin, orbit = phase[:2], phase[2:]
-    # spin = np.sign(spin)
+
 
     idx = (0 in spin) or (np.product(np.sign(spin), axis=-1) == 1)
     spin[idx] = np.abs(spin)
@@ -60,7 +60,11 @@ def symetries(phase):
     spin[idx] = np.roll(spin, 1, axis=-1)
     orbit[idx] = np.roll(orbit, 1, axis=-1)
 
+    spin = np.sign(spin)
+    orbit = np.sign(orbit)
+
     phase[:2], phase[2:] = spin, orbit
+
     return phase
 
 
@@ -131,6 +135,7 @@ states_of_interest = np.array([
     [0,  0, -1, -2],
     [0,  0, -1, -1],
     [0,  0, -1,  0],
+    [0,  0,  0,  0],
     [0,  0,  0, -1],
     [1, -1, -1, -1],
     [1, -1,  1,  1],
@@ -153,24 +158,25 @@ colors_of_interest = [
     'tab:red',
     'tab:blue',
     'tab:purple',
-    'tab:orange',
-    'tab:green',
-    'tab:olive',
-    'tab:brown',
-    'darkgrey',
-    'tab:gray',
+    'red',
     'yellow',
-    'tab:cyan',
-    'lime',
+    'green',
+    'brown',
+    'darkgrey',
+    'tab:green',
+    'tab:gray',
+    'tab:olive',
+    'tab:orange',
     'blue',
     'purple',
-    'brown',
-    'navajowhite',
     'tab:pink',
-    'red'
+    'navajowhite',
+    'tab:brown',
+    'lime',
+    'tab:cyan'
 ]
 
-assert len(states_of_interest) == len(colors_of_interest)
+assert len(states_of_interest) <= len(colors_of_interest)
 
 strings_of_interest = [phase_to_label(v)[0] for v in states_of_interest]
 integers_of_interest = [phase_to_label(v)[1] for v in states_of_interest]
@@ -197,8 +203,8 @@ norm_bins = np.insert(norm_bins, 0, np.min(norm_bins) - 1.0)
 custom_norm = matplotlib.colors.BoundaryNorm(norm_bins, len_lab, clip=True)
 
 
-# print(f'Total Possible States: {N_possible_states}')
+print(f'Total Possible States: {N_possible_states}')
 # print(phase_to_label(np.array([1, -1, -1, -1])))
 # print(vec_to_int(symetries(np.array([1, -1, -1, -1]))))
 # print(state_to_pos[4222])
-# print(pos_to_label[114])
+# print(pos_to_label[45])

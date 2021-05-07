@@ -9,7 +9,7 @@ parser.add_argument('--run_ind', type=int, default=0)
 args = parser.parse_args()
 
 batch_folder = 'diagrams'
-logging = True
+logging = False
 
 sweeper_args = dict(
     variables=['U', 'J'],
@@ -25,7 +25,6 @@ solver_args = dict(
     method='sigmoid',
     beta=1.5,
     Iteration_limit=250,
-    tolerance=1e-3,
     tol=1e-3,
     )
 
@@ -48,13 +47,14 @@ keys, values = zip(*hyper_params.items())
 combinations = list(product(*values))
 
 """
-model_params.update({})
 # Local test
-for i in range(len(model_params_lists)):
+for i in range(len(combinations)):
     # Guesses Input
     args.run_ind = i
 """
 model_params = dict(zip(keys, combinations[args.run_ind]))
+
+# model_params.update({'k_res': 100})
 
 print('Diagram guesses starting')
 

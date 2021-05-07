@@ -1,24 +1,13 @@
 import numpy as np
 import Code.Scripts.single_point as sp
 
-# model_params = dict(
-#     U=1.2,
-#     J=0.6
-#     )
-
-# model_params = dict(
-#     U=4.8,
-#     J=0.3
-#     )
-
-# model_params = dict(
-#     U=4.8,
-#     J=0.6
-#     )
 
 model_params = dict(
-    U=3.0,
-    J=1.2,
+    U=1.2, J=0.6  # Metallic
+    # U=3.0, J=1.2  # CD
+    # U=4.8, J=0.3  # AFM
+    # U=4.8, J=0.6  # FM
+    # , k_res=10
     )
 
 

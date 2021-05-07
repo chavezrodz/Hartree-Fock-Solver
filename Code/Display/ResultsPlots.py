@@ -2,9 +2,7 @@ import numpy.linalg as LA
 import sys
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-from matplotlib.colors import LogNorm
-from matplotlib.colors import BoundaryNorm
+import matplotlib.lines as mlines
 import Code.Utils as Utils
 import numpy as np
 import os
@@ -54,8 +52,8 @@ def feature_plot(feature, i_label, i_values, j_label, j_values, results_folder, 
     # plt.title(feature)
     plt.pcolormesh(np.loadtxt(results_folder+'/'+feature+'.csv', delimiter=',').T)
 
-    plt.xlabel(r'$'+i_label+', [t_1]$', fontsize=16)
-    plt.ylabel(r'$'+j_label+', [t_1]$', fontsize=16)
+    plt.xlabel(r'$'+i_label+'$', fontsize=16)
+    plt.ylabel(r'$'+j_label+'$', fontsize=16)
 
     positions = np.linspace(0, len(i_values), 4)
     ticks = np.round(np.linspace(min(i_values), max(i_values), 4), 2)
@@ -80,11 +78,7 @@ def feature_plot(feature, i_label, i_values, j_label, j_values, results_folder, 
     plt.close()
 
 
-def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, show, transparent, font=20):
-    # Cutting at 0.2
-    len_x, len_y = Phase.shape[:2]
-    Phase = Phase[:, :int(0.8*len_y)]
-
+def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, font=20):
     CM = Phase[:, :, 0]
     spin_orb = Phase[:, :, 1]
     OS = Phase[:, :, 2]
@@ -95,11 +89,14 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, sho
     # for label in unique_labels:
     #     print(label)
 
-    f, ax = plt.subplots(figsize=(8, 5))  # or 6,5 without legend
+    f, ax = plt.subplots(figsize=(8, 8))  # or 6,5 without legend
     # ax.set_xlabel(i_label)
     # ax.set_ylabel(j_label)
     ax.set_xlabel(r'$'+i_label+'$', fontsize=font)
+    ax.xaxis.set_label_coords(0.5, -0.02)
+
     ax.set_ylabel(r'$'+j_label+'$', fontsize=font)
+    ax.yaxis.set_label_coords(-0.02, 0.5)
 
     ax.set(frame_on=False)
 
@@ -110,24 +107,27 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, sho
     # plt.yticks(np.linspace(0, len(j_values), N_y), np.linspace(np.min(j_values), np.max(j_values), N_y))
 
     ax.set_xticks([0, 0.25, 0.5, 0.75, 1])
-    ax.set_xticklabels([0, '', 0.5, '', 1])
+    ax.set_xticklabels([0, 0.25, '', 0.75, 1])
     ax.xaxis.set_ticks_position('bottom')
 
-    ax.set_yticks([0, 0.0625, 0.125, 0.1875, 0.25])
-    ax.set_yticklabels([0, '', 0.1, '', 0.2])
+    ax.set_yticks([0, 0.05, 0.1, 0.15, 0.2])
+    ax.set_yticklabels([0, 0.05, '', 0.15, 0.2])
     ax.yaxis.set_ticks_position('left')
 
-    plt.tick_params(axis='both', which='major', labelsize=16)
+    plt.tick_params(axis='both', which='major', labelsize=20)
+
+    countour_label_font = 20
 
     # Charge Contour
     CS = ax.contour(np.abs(CM.T), colors='red', levels=[0.1, 0.3, 0.5],
-                    linewidths=2, extent=(0, 1, 0, 0.25))
-    ax.clabel(CS, inline=True, fontsize=14, fmt='% 1.1f')
+                    linewidths=2, extent=(0, 1, 0, 0.2))
+    ax.clabel(CS, inline=True, fontsize=countour_label_font, fmt='% 1.1f')
 
-    OS = ax.contour(np.abs(OS.T), colors='purple', levels=[0.1, 0.5],
-                    linestyles='dashed', linewidths=2, extent=(0, 1, 0, 0.25))
+    # Orbital Contour
+    OS = ax.contour(np.abs(OS.T), colors='purple', levels=[0.1, 0.5, 0.9],
+                    linestyles='dashed', linewidths=2, extent=(0, 1, 0, 0.2))
 
-    ax.clabel(OS, inline=True, fontsize=14, fmt='% 1.1f')
+    ax.clabel(OS, inline=True, fontsize=countour_label_font, fmt='% 1.1f')
     ax.grid(linewidth=0)
 
     # spin-orbit
@@ -135,16 +135,48 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, sho
     norm = In.custom_norm
     col_dict = In.col_dict
 
-    ax.imshow(np.rot90(spin_orb), cmap=cmap, norm=norm, aspect='auto', extent=(0, 1, 0, 0.25))
+    ax.imshow(np.rot90(spin_orb), cmap=cmap, norm=norm, aspect='auto', extent=(0, 1, 0, 0.2))
 
     patches = [mpatches.Patch(color=col_dict[state], label=In.pos_to_label[state]) for state in unique_states]
-    ax.legend(handles=patches, bbox_to_anchor=(1.01, 1), loc=2, borderaxespad=0.0, prop={"size": font}, fontsize=font)
-    plt.tight_layout()
 
-    if results_folder is not None:
-        plt.savefig(results_folder+'/Plots/PhaseDiagram.png', transparent=transparent)
-    if show:
-        plt.show()
+    # Plot Specific marker points
+    Metallic = {'x': 0.2, 'y': 0.1,
+                'label': 'Metallic',
+                'marker': 'o', 'color': 'black'}
+
+    AFM = {'x': 0.8, 'y': 0.05,
+           'label': 'AFM',
+           'marker': '*', 'color': 'black'}
+
+    FM = {'x': 0.8, 'y': 0.1,
+          'label': 'FM',
+          'marker': 's', 'color': 'black'}
+
+    CD = {'x': 0.5, 'y': 0.2,
+          'label': 'CD',
+          'marker': 'd', 'color': 'black'}
+
+    points = [Metallic, AFM, FM, CD]
+
+    for point in points:
+        ax.plot(point['x'], point['y'],
+                marker=point['marker'], color=point['color'],
+                markersize=10, label=point['label']
+                )
+
+        # patches.append(mlines.Line2D([], [], linestyle='None',
+        #                marker=point['marker'], color=point['color'],
+        #                markersize=10, label=point['label'])
+        #                )
+
+    ax.legend(handles=patches,
+              bbox_to_anchor=(0.5, -0.075),
+              loc=9, borderaxespad=0.0,
+              prop={"size": font}, fontsize=font,
+              ncol=3, labelspacing=0.2, columnspacing=0.5)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(results_folder, 'Plots', 'PhaseDiagram.png'))
     plt.close()
 
 
@@ -238,7 +270,7 @@ def sweeper_plots(i_label, i_values, j_label, j_values, Dict, final_results_fold
     MFP_plots(MF, i_label, i_values, j_label, j_values, Dict, final_results_folder, show, transparent)
 
     Phase = In.array_interpreter(MF)
-    phases_plot(Phase, i_label, i_values, j_label, j_values, final_results_folder, show, transparent)
+    phases_plot(Phase, i_label, i_values, j_label, j_values, final_results_folder)
 
     features = ['Energies', 'Distortion', 'Convergence', 'Conductance']
     for feature in features:

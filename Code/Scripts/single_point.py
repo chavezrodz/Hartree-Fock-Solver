@@ -1,6 +1,5 @@
 import shutil
 import os
-from time import time
 import numpy as np
 from Code.Solver.HFA_Solver import HFA_Solver
 import Code.Display.Iteration_sequence as IS
@@ -10,7 +9,7 @@ import Code.Solver.calculations as calc
 from Code.Nickelates.Hamiltonian import Hamiltonian
 
 
-def point_analysis(model_params, guesses, solver_args, batch_folder, transparent=False, show=False, HFA=True):
+def point_analysis(model_params, guesses, solver_args, batch_folder, show=False, HFA=True):
     point_Id = '_'.join("{!s}={!r}".format(key, val)
                         for (key, val) in model_params.items())
 
@@ -31,10 +30,7 @@ def point_analysis(model_params, guesses, solver_args, batch_folder, transparent
             calc.post_calculations(Model)
             DOS.DOS(Model, results_folder=results_folder, show=show)
             DOS.DOS_per_state(Model, results_folder=results_folder, show=show)
-            # for j in [0, 2, 4]:
-            # DOS.DOS_single_state(Model, ind=j, results_folder=results_folder, show=show)
             DR.fermi_surface(Model, results_folder=results_folder, show=show)
-            # calc.bandwidth(Model)
             print(Energies)
             if show:
                 DR.DispersionRelation(Model)
