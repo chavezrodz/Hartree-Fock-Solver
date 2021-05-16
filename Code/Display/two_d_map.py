@@ -12,7 +12,6 @@ def two_d_subplot(Phase, ind, ax, css, oss, uniques, font):
     spin_orb = Phase[:, :, 1]
     OS = Phase[:, :, 2]
     uniques.append(np.unique(spin_orb).astype(int))
-
     tickfont = 16
     ax[ind].set(frame_on=False)
 
@@ -46,11 +45,13 @@ def two_d_subplot(Phase, ind, ax, css, oss, uniques, font):
                                extent=(0, 1, 0, 0.2))
     ax[ind].clabel(css[ind], inline=True, fontsize=contour_font, fmt='% 1.1f')
 
-    oss[ind] = ax[ind].contour(np.abs(OS.T), colors='purple',
-                               linewidths=contour_width,
-                               levels=[0.2, 0.5, 0.9],
-                               extent=(0, 1, 0, 0.2),
-                               linestyles='dashed')
+    oss[ind] = ax[ind].contour(
+        np.abs(OS.T),
+        colors='purple',
+        linewidths=contour_width,
+        levels=[0.2, 0.5, 0.9],
+        extent=(0, 1, 0, 0.2),
+        linestyles='dashed')
 
     ax[ind].clabel(oss[ind], inline=True, fontsize=contour_font, fmt='% 1.1f')
 
@@ -94,6 +95,7 @@ def make_2d_map(Results_Folder, Batch_Folder, font=18):
         two_d_subplot(Phase, ind, ax, css, oss, uniques, font=font)
 
     uniques = np.unique(np.concatenate(uniques, axis=0))
+    print(uniques)
     col_dict = In.col_dict
     patches = [mpatches.Patch(color=col_dict[state], label=In.pos_to_label[state]) for state in uniques]
     legend = fig.legend(handles=patches, bbox_to_anchor=(1.151, 0.977), borderaxespad=0.0, prop={"size": font})

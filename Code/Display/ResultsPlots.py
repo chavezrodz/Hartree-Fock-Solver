@@ -119,12 +119,12 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, fon
     countour_label_font = 20
 
     # Charge Contour
-    CS = ax.contour(np.abs(CM.T), colors='red', levels=[0.1, 0.3, 0.5],
+    CS = ax.contour(np.abs(CM.T), colors='red', levels=[0.01, 0.1, 0.3, 0.5],
                     linewidths=2, extent=(0, 1, 0, 0.2))
     ax.clabel(CS, inline=True, fontsize=countour_label_font, fmt='% 1.1f')
 
     # Orbital Contour
-    OS = ax.contour(np.abs(OS.T), colors='purple', levels=[0.1, 0.5, 0.9],
+    OS = ax.contour(np.abs(OS.T), colors='purple', levels=[0.01, 0.1, 0.5, 0.9],
                     linestyles='dashed', linewidths=2, extent=(0, 1, 0, 0.2))
 
     ax.clabel(OS, inline=True, fontsize=countour_label_font, fmt='% 1.1f')

@@ -84,7 +84,7 @@ def make_meta_fig(MetaArray, meta_args, font=16):
     # plt.colorbar(CM)
     cbar = ax.figure.colorbar(CM)
     cbar.ax.tick_params(labelsize=12)
-    cbar.ax.set_ylabel(r'$\Delta \%$ in cuprate-like phase area', fontsize=18)
+    # cbar.ax.set_ylabel(r'$\Delta \%$ in cuprate-like phase area', fontsize=18)
 
     plt.tick_params(axis='both', which='major', labelsize=font)
     x_values = meta_args['x_values']
