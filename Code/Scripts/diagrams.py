@@ -5,6 +5,7 @@ import shutil
 from time import time
 from Code.Nickelates.Hamiltonian import Hamiltonian
 from Code.Solver.HFA_Solver import HFA_Solver
+import Code.Solver.calculations as calc
 from Code.Solver.PhaseDiagramSweeper import Phase_Diagram_Sweeper
 from Code.Solver.Optimizer import Optimizer_exhaustive as Optimizer_exhaustive
 import Code.Utils as U
@@ -22,14 +23,30 @@ def trial_iteration(Model, Solver, Sweeper, MF_params,
     return dt, Sweeper.Convergence_pc
 
 
+def find_fermi_bw(model_params, sweeper_args, solver_args):
+    Model = Hamiltonian(model_params)
+    Solver = HFA_Solver(Model, **solver_args)
+    setattr(Model, sweeper_args['variables'][0], 0)
+    setattr(Model, sweeper_args['variables'][1], 0)
+    setattr(Model, 'eps', 0)
+    setattr(Model, 'Delta_CT', 0)
+    Solver.Iterate(verbose=False)
+    calc.bandwidth(Model)
+    fermi_bw = Model.fermi_bw
+    print(f'Fermi_bw: {fermi_bw}')
+    return fermi_bw
+
+
 def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
-                     solver_args, guess_run=True, final_run=True, rm_guesses=True, logging=True):
+                     solver_args, bw_norm=True,
+                     guess_run=True, final_run=True, rm_guesses=True,
+                     logging=True):
     Run_ID = U.make_id(sweeper_args, model_params)
     Results_Folder = os.path.join('Results', batch_folder, Run_ID)
     os.makedirs(Results_Folder, exist_ok=True)
     standard = sys.stdout
     U.write_settings(Run_ID, Results_Folder, model_params, solver_args, sweeper_args)
-
+    fermi_bw = find_fermi_bw(model_params, sweeper_args, solver_args)
     if guess_run:
         for n in range(len(params_list)):
             # Guesses Input
@@ -44,7 +61,9 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
             Model = Hamiltonian(model_params, MF_params)
             Solver = HFA_Solver(Model, **solver_args)
 
-            Sweeper = Phase_Diagram_Sweeper(Model, Solver, MF_params, **sweeper_args)
+            Sweeper = Phase_Diagram_Sweeper(
+                Model, Solver, MF_params, **sweeper_args, fermi_bw=fermi_bw
+                )
 
             dt, convergence_pc = trial_iteration(
                 Model, Solver, Sweeper, MF_params, outfolder,
@@ -67,15 +86,17 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
         Optimal_guesses, Optimal_Energy = Optimizer_exhaustive(
             Input_Folder, params_list, input_MFP=sweeper_args['save_guess_mfps'])
 
-        sweeper = Phase_Diagram_Sweeper(Model, Solver, Optimal_guesses, **sweeper_args)
+        Sweeper = Phase_Diagram_Sweeper(
+            Model, Solver, MF_params, **sweeper_args, fermi_bw=fermi_bw
+            )
 
-        sweeper.Sweep()
-        sweeper.save_results(Final_Results_Folder, Include_MFPs=True)
+        Sweeper.Sweep()
+        Sweeper.save_results(Final_Results_Folder, Include_MFPs=True)
 
-        Final_Energies = sweeper.Es_trial
+        Final_Energies = Sweeper.Es_trial
         print(np.abs(Final_Energies - Optimal_Energy))
         print(f'Initial guess sweep and final calculations are consistent:{np.allclose(Final_Energies, Optimal_Energy, atol=1e-2)}')
-        print(f'time to complete (s):{round(time()-a,3)} Converged points:{round(sweeper.Convergence_pc,3)} % \n')
+        print(f'time to complete (s):{round(time()-a,3)} Converged points:{round(Sweeper.Convergence_pc,3)} % \n')
 
         if rm_guesses:
             shutil.rmtree(os.path.join(Results_Folder, 'Guesses_Results'))

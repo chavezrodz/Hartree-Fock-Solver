@@ -67,24 +67,30 @@ class Hamiltonian:
         Id = np.identity(8)
         z2_projectors = Id[[0, 1, 4, 5]]
         x2my2_projectors = Id[[2, 3, 6, 7]]
-        spin_up = Id[:4]
-        spin_down = Id[4:]
-        site1 = (Id[[0, 2, 4, 6]] + Id[[1, 3, 5, 7]])/np.sqrt(2)
-        site2 = (Id[[0, 2, 4, 6]] - Id[[1, 3, 5, 7]])/np.sqrt(2)
+
+        hom1_up = Id[[0, 2]]
+        hom2_up = Id[[1, 3]]
+        hom1_down = Id[[4, 6]]
+        hom2_down = Id[[5, 7]]
+
+        site1_up = (hom1_up+hom2_up)/np.sqrt(2.)
+        site1_down = (hom1_down+hom2_down)/np.sqrt(2.)
+        site2_up = (hom1_up-hom2_up)/np.sqrt(2.)
+        site2_down = (hom1_down-hom2_down)/np.sqrt(2.)
 
         self.state_projectors = [
             z2_projectors,
             x2my2_projectors,
-            spin_up,
-            spin_down,
-            site1,
-            site2
-            ]
+            site1_up,
+            site1_down,
+            site2_up,
+            site2_down,
+        ]
 
         self.state_labels = [
             r'$3z^2-r^2$ orbital', r'$x^2-y^2$ orbital',
-            r'Spin $\uparrow$', r'Spin $\downarrow$',
-            r'Even Sites', r'Odd Sites'
+            r'Site 1 Spin $\uparrow$', r'Site 1 Spin $\downarrow$',
+            r'Site 2 Spin $\uparrow$', r'Site 2 Spin $\downarrow$'
           ]
 
         self.mat_dim = 8

@@ -44,7 +44,7 @@ def DOS(Model, bins='fd', results_folder=None, label=None, show=True):
 
 
 def DOS_per_state(Model, results_folder=None, label=None, show=False,
-                  orbital=True, spin=False, sites=False):
+                  orbital=True, spin=True, sites=True):
 
     Energies = Model.Energies.flatten()
     fermi_e = Model.fermi_e
@@ -96,7 +96,7 @@ def DOS_per_state(Model, results_folder=None, label=None, show=False,
         ax.text(fermi_e, 1,  r'$E_F$', ha='left', va='top', wrap=True)
         ax.set_ylim(0, top_cutoff)
 
-    axes[-1].set_xlabel(r'$Energy [E/t]$')
+    axes[-1].set_xlabel('Energy'+r'$[E/t]$')
     plt.tight_layout()
 
     if results_folder is not None:

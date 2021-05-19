@@ -2,6 +2,7 @@ from itertools import product as product
 import numpy as np
 import argparse
 import Code.Scripts.diagrams as diagrams
+
 # Command Line Arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--n_threads', type=int, default=8)
@@ -33,14 +34,14 @@ params_list = [
     (0.8, 1.0, 0.0, 0.7, 0.15),
     (1.0, 0.6, 0.0, 0.7, 0.15),
     (0.0, 0.2, 0.5, 0.0, 0.2),
-    (0.2, 0.5, 1.0, 1.0, 0.0),
-    (0.5, 0.5, 0.0, 0.5, 0.1)
+    # (0.2, 0.5, 1.0, 1.0, 0.0),
+    # (0.5, 0.5, 0.0, 0.5, 0.1)
 ]
 
 hyper_params = {
-    'eps': np.linspace(0, 1, 10),
-    'Delta_CT': np.linspace(0, 1, 10),
-    'stress': np.linspace(-1, 1, 3),
+    'eps': np.linspace(0, 0.1, 3),
+    'Delta_CT': np.linspace(0, 0.1, 3),
+    'stress': [-1, 1],
 }
 
 keys, values = zip(*hyper_params.items())
@@ -53,12 +54,12 @@ for i in range(len(combinations)):
     args.run_ind = i
 """
 model_params = dict(zip(keys, combinations[args.run_ind]))
+model_params.update({'k_res': 10})
 
-# model_params.update({'k_res': 100})
 
 print('Diagram guesses starting')
 
 diagrams.generate_diagram(batch_folder, model_params, params_list,
-                          sweeper_args, solver_args, logging=logging)
+                          sweeper_args, solver_args, bw_norm=True, logging=logging)
 
 print('Finished succesfully')

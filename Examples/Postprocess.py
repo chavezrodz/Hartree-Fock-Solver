@@ -11,9 +11,9 @@ j_values = np.linspace(0, 0.25, 30)
 bw_norm = True
 Model = Hamiltonian()
 
-make_map = True
+make_map = False
 process_guesses = False
-full_analysis = False
+full_analysis = True
 
 Batch_Folders = [
     'strain_zero',

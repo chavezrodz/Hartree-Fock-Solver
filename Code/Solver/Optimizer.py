@@ -58,8 +58,6 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
 
     E_Tower = np.stack(E_Tower, axis=-1)
     C_Tower = np.stack(C_Tower, axis=-1).astype(bool)
-    print(E_Tower.shape)
-    print(E_Tower)
 
     # Find Indices of lowest energies across stack
     ind = np.argmin(E_Tower, axis=-1)
@@ -67,8 +65,6 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
     # Lowest achievable energy
     Optimal_Energy = np.take_along_axis(E_Tower, np.expand_dims(ind, axis=-1), axis=-1)
     Optimal_Energy = np.squeeze(Optimal_Energy)
-    print(ind)
-    print(Optimal_Energy)
 
     Optimal_Convergence = np.take_along_axis(C_Tower, np.expand_dims(ind, axis=-1), axis=-1)
     Optimal_Convergence = np.squeeze(Optimal_Convergence)
@@ -79,7 +75,7 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
         Solutions = []
         States = []
         for i, folder in enumerate(folderlist):
-            print(folder)
+            print('\t', folder)
             MFPs = Utils.Read_MFPs(os.path.join(Input_Folder, folder, 'MF_Solutions'))
             Solutions.append(MFPs)
 

@@ -122,7 +122,6 @@ def vec_to_int(x):
 
 Spin_Dict = {-2: r' \Downarrow', -1: r' \downarrow', 0: r' 0', 1: r' \uparrow', 2: r' \Uparrow'}
 Orbit_Dict = {-2: r' \bar{Z}', -1: r' \bar{z}', 0: r' 0', 1: r' z', 2: r' Z', 3: 'CD', 4: ''}
-# CD_dict = {0: r' 0', 1: r' z'}
 
 All_states_pre_sym = [np.array([i, j, k, l]) for i, j, k, l in itertools.product(np.arange(-2, 3), repeat=4)]
 
@@ -229,7 +228,7 @@ custom_norm = matplotlib.colors.BoundaryNorm(norm_bins, len_lab, clip=True)
 
 
 # print(integers_of_interest)
-print(f'Total Possible States: {N_possible_states}')
+# print(f'Total Possible States: {N_possible_states}')
 # print(phase_to_label(np.array([1, -1, -1, -1])))
 # print(vec_to_int(symetries(np.array([1, -1, -1, -1]))))
 # print(state_to_pos[4222])

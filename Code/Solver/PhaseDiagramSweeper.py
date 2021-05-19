@@ -10,7 +10,8 @@ class Phase_Diagram_Sweeper():
     """
     """
 
-    def __init__(self, Model, Solver, Initial_params,  bw_norm=True, verbose=False, **kwargs):
+    def __init__(self, Model, Solver, Initial_params,
+                 fermi_bw=None, verbose=False, **kwargs):
 
         self.Model = Model
         self.Solver = Solver
@@ -21,17 +22,10 @@ class Phase_Diagram_Sweeper():
         self.j = self.variables[1]
         self.i_values, self.j_values = self.values_list
 
-        if bw_norm:
-            Sol = copy.deepcopy(self.Solver)
-            Model = Sol.Hamiltonian
-            setattr(Model, self.i, 0)
-            setattr(Model, self.j, 0)
-            setattr(Model, 'MF_params', np.zeros(len(Model.MF_params)))
-            Sol.Iterate(verbose=False)
-            calc.bandwidth(Model)
-            if verbose:
-                print(f'Fermi_bw: {Model.fermi_bw}')
-            self.i_values, self.j_values = Model.fermi_bw*self.i_values, Model.fermi_bw*self.j_values
+        if fermi_bw is not None:
+            print(f'Fermi_bw: {fermi_bw}')
+            self.i_values = fermi_bw*self.i_values
+            self.j_values = fermi_bw*self.j_values
 
         self.Diag_shape = (len(self.i_values), len(self.j_values))
 
