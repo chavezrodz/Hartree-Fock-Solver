@@ -1,8 +1,7 @@
-import Code.Nickelates.Interpreter as In
 import itertools
 import numpy as np
 import os
-import Code.Utils as Utils
+import utils as utils
 
 
 def fill_nans_nearest(arr):
@@ -40,6 +39,7 @@ def Optimizer_smoothing(mfps, sigma=[1, 1]):
 
 
 def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=False):
+    print("Starting Optimizer")
     """
     Input list of arrays of energy across phase region,
     return best guess per region
@@ -49,7 +49,10 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
 
     # Stack all energies,convergence arrays
     E_Tower, C_Tower = [], []
+    print("Loading Energies")
     for i, folder in enumerate(folderlist):
+        print('\t', folder)
+
         E_file = os.path.join(Input_Folder, folder, 'Energies.csv')
         C_file = os.path.join(Input_Folder, folder, 'Convergence.csv')
 
@@ -61,11 +64,9 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
 
     # Find Indices of lowest energies across stack
     ind = np.argmin(E_Tower, axis=-1)
-
     # Lowest achievable energy
     Optimal_Energy = np.take_along_axis(E_Tower, np.expand_dims(ind, axis=-1), axis=-1)
     Optimal_Energy = np.squeeze(Optimal_Energy)
-
     Optimal_Convergence = np.take_along_axis(C_Tower, np.expand_dims(ind, axis=-1), axis=-1)
     Optimal_Convergence = np.squeeze(Optimal_Convergence)
 
@@ -73,16 +74,10 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
         # Recover best solutions from all guesses
         print('Loading Solutions')
         Solutions = []
-        States = []
         for i, folder in enumerate(folderlist):
             print('\t', folder)
-            MFPs = Utils.Read_MFPs(os.path.join(Input_Folder, folder, 'MF_Solutions'))
+            MFPs = utils.Read_MFPs(os.path.join(Input_Folder, folder, 'MF_Solutions'))
             Solutions.append(MFPs)
-
-            # Phase = In.array_interpreter(MFPs)
-            # MF_Spin_orb = Phase[:, :, 1:]
-            # state = In.arr_to_int(MF_Spin_orb)
-            # States.append(state)
 
         # States = np.stack(States, axis=-1)
         Solutions = np.stack(Solutions, axis=-1)
@@ -116,9 +111,4 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
             Optimal_Guesses[v] = np.array(params_list[ind[v]])
             if verbose:
                 print('i ind:', v[0], 'j ind:', v[1], 'Best guess:', params_list[ind[v]])
-            # if input_MFP:
-            #     for k in range(len(params_list[:5])):
-            #         if not C_Tower[v][k]:
-            #             Unconverged_Sols[v][k] = Solutions[v][k]
-            #             Solutions[v][k] = -1
     return Optimal_Guesses, Optimal_Energy

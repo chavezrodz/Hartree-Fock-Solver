@@ -1,5 +1,5 @@
 import copy
-import Code.Solver.calculations as calc
+import solver.calculations as calc
 import numpy as np
 import itertools
 from multiprocessing import Pool

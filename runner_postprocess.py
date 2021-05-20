@@ -1,9 +1,9 @@
 import shutil
 import numpy as np
 import os
-from Code.Nickelates.Hamiltonian import Hamiltonian
-from Code.Display.two_d_map import make_2d_map
-from Code.Display.ResultsPlots import sweeper_plots
+from models.ickelates.Hamiltonian import Hamiltonian
+from display.two_d_map import make_2d_map
+from display.ResultsPlots import sweeper_plots
 
 i, j = 'U', 'J'
 i_values = np.linspace(0, 1, 30)

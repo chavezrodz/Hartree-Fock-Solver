@@ -1,5 +1,6 @@
 # Hartree Fock Solver and Itterator motivated by MIT in rare earth Nickelates
 
+
 ## Features:
 - HFA Solver: iterates MFP guesses based on multiple ansatz techniques
 - Diagram sweeper to solve for phase diagrams

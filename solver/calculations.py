@@ -1,6 +1,4 @@
 import numpy as np
-import scipy.special as sp
-from numpy import linalg as LA
 
 
 def make_grid(Model):

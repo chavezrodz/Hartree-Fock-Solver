@@ -1,7 +1,7 @@
 from itertools import product as product
 import numpy as np
 import argparse
-import Code.Scripts.diagrams as diagrams
+import scripts.script_diagrams as diagrams
 
 # Command Line Arguments
 parser = argparse.ArgumentParser()
@@ -14,8 +14,8 @@ logging = False
 
 sweeper_args = dict(
     variables=['U', 'J'],
-    values_list=[np.linspace(0, 1, 3),
-                 np.linspace(0, 0.2, 3)],
+    values_list=[np.linspace(0, 1, 30),
+                 np.linspace(0, 0.2, 30)],
     bw_norm=True,
     save_guess_mfps=True,
     verbose=True,
@@ -34,8 +34,8 @@ params_list = [
     (0.8, 1.0, 0.0, 0.7, 0.15),
     (1.0, 0.6, 0.0, 0.7, 0.15),
     (0.0, 0.2, 0.5, 0.0, 0.2),
-    # (0.2, 0.5, 1.0, 1.0, 0.0),
-    # (0.5, 0.5, 0.0, 0.5, 0.1)
+    (0.2, 0.5, 1.0, 1.0, 0.0),
+    (0.5, 0.5, 0.0, 0.5, 0.1)
 ]
 
 hyper_params = {
@@ -54,8 +54,6 @@ for i in range(len(combinations)):
     args.run_ind = i
 """
 model_params = dict(zip(keys, combinations[args.run_ind]))
-model_params.update({'k_res': 10})
-
 
 print('Diagram guesses starting')
 

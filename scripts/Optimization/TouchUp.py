@@ -33,7 +33,8 @@ if not os.path.exists(Results_Folder):
     os.makedirs(Results_Folder)
     os.makedirs(os.path.join(Results_Folder,'MF_Solutions'))
 
-########## Code
+# Code
+
 a = time()
 Model = Hamiltonian(params.Model_Params)
 Solver = HFA_Solver(Model,method=params.method,beta= params.beta, Itteration_limit=params.Itteration_limit, tol=params.tolerance)
