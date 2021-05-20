@@ -8,4 +8,4 @@
 
 cd $PBS_O_WORKDIR
 source ../.venvs/HFA/bin/activate
-python Diagrams.py --run_ind $PBS_ARRAY_INDEX --n_threads 32 
+python runner_diagram.py --run_ind $PBS_ARRAY_INDEX --n_threads 32 
