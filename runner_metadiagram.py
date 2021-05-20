@@ -1,4 +1,4 @@
-import Code.Scripts.metadiagrams as metadiagrams
+from scripts.script_metadiagram import make_meta_diag
 import numpy as np
 
 model_params = dict(
@@ -25,5 +25,5 @@ meta_args = dict(
     load=True,
     )
 
-MetaArray = metadiagrams.get_meta_array(model_params, sweeper_args, meta_args)
-metadiagrams.make_meta_fig(MetaArray, meta_args)
+
+make_meta_diag(model_params, sweeper_args, meta_args)

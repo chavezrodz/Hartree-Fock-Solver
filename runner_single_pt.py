@@ -1,5 +1,5 @@
 import numpy as np
-import Code.Scripts.single_point as sp
+import scripts.single_pt as sp
 
 
 model_params = dict(

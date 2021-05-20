@@ -1,7 +1,7 @@
 import numpy as np
 import scipy.special as sp
 from numpy import linalg as LA
-import Code.Solver.calculations as calc
+import solver.calculations as calc
 from time import time
 
 
