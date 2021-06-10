@@ -10,7 +10,7 @@ parser.add_argument('--run_ind', type=int, default=0)
 args = parser.parse_args()
 
 batch_folder = 'diagrams'
-logging = False
+logging = True
 
 sweeper_args = dict(
     variables=['U', 'J'],

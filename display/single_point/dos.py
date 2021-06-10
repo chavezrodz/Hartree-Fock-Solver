@@ -73,7 +73,7 @@ def DOS_per_state(Model, results_folder=None, label=None, show=False,
         )
 
     w_total = np.ones_like(Energies)/max_states
-    axes[0].hist(x=Energies, bins=bins, weights=w_total, alpha=0.5)
+    axes[0].hist(x=Energies, bins=bins, weights=w_total, alpha=0.5, color='black')
     axes[0].axvline(fermi_e, color='red')
     axes[0].set_ylabel('DOS')
 

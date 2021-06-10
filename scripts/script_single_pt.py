@@ -1,12 +1,12 @@
 import shutil
 import os
 import numpy as np
-from Code.Solver.HFA_Solver import HFA_Solver
-import Code.Display.Iteration_sequence as IS
-import Code.Display.DispersionRelation as DR
-import Code.Display.Density_Of_States as DOS
-import Code.Solver.calculations as calc
-from Code.Nickelates.Hamiltonian import Hamiltonian
+from solver.HFA_Solver import HFA_Solver
+import display.single_point.iteration_seq as IS
+import display.single_point.dispersion as DR
+import display.single_point.dos as DOS
+import solver.calculations as calc
+from models.Nickelates.Hamiltonian import Hamiltonian
 
 
 def point_analysis(model_params, guesses, solver_args, batch_folder, show=False, HFA=True):
@@ -31,7 +31,6 @@ def point_analysis(model_params, guesses, solver_args, batch_folder, show=False,
             DOS.DOS(Model, results_folder=results_folder, show=show)
             DOS.DOS_per_state(Model, results_folder=results_folder, show=show)
             DR.fermi_surface(Model, results_folder=results_folder, show=show)
-            print(Energies)
             if show:
                 DR.DispersionRelation(Model)
 

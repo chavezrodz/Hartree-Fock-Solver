@@ -7,8 +7,8 @@ def feature_plot(feature, i_label, i_values, j_label, j_values, results_folder, 
     # plt.title(feature)
     plt.pcolormesh(np.loadtxt(results_folder+'/'+feature+'.csv', delimiter=',').T)
 
-    plt.xlabel(r'$'+i_label+'$', fontsize=16)
-    plt.ylabel(r'$'+j_label+'$', fontsize=16)
+    plt.xlabel(i_label, fontsize=16)
+    plt.ylabel(j_label, fontsize=16)
 
     positions = np.linspace(0, len(i_values), 4)
     ticks = np.round(np.linspace(min(i_values), max(i_values), 4), 2)

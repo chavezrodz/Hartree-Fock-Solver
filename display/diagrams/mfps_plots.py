@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 
-def MFP_plots(MFPs, i_label, i_values, j_label, j_values, Dict, results_folder, show, transparent, standardize=False):
+def mfps_plots(MFPs, i_label, i_values, j_label, j_values, Dict, results_folder, show, transparent, standardize=False):
     for i in range(len(Dict)):
         arr = MFPs[:, :, i].T
         if standardize:

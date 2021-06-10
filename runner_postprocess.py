@@ -1,58 +1,38 @@
-import shutil
 import numpy as np
 import os
-from models.ickelates.Hamiltonian import Hamiltonian
-from display.two_d_map import make_2d_map
-from display.ResultsPlots import sweeper_plots
+from models.Nickelates.Hamiltonian import Hamiltonian
+from scripts.script_postprocess import postprocess
 
-i, j = 'U', 'J'
-i_values = np.linspace(0, 1, 30)
-j_values = np.linspace(0, 0.25, 30)
-bw_norm = True
-Model = Hamiltonian()
 
-make_map = False
-process_guesses = False
-full_analysis = True
+if __name__ == '__main__':
+    results_folder = 'Final_Results'
 
-Batch_Folders = [
-    'strain_zero',
-    'strain_tensile',
-    'strain_compressive'
-    ]
+    i, j = 'U', 'J'
+    i_values = np.linspace(0, 1, 30)
+    j_values = np.linspace(0, 0.25, 30)
 
-Results_Folder = 'Final_Results'
+    make_map = True
+    full = False
 
-for Batch_Folder in Batch_Folders:
-    if make_map:
-        make_2d_map(Results_Folder, Batch_Folder)
-    folder_list = sorted(os.listdir(os.path.join(Results_Folder, Batch_Folder)))
-    folder_list = folder_list[:1]
+    mfp_dict = Hamiltonian().Dict
 
-    for folder in folder_list:
-        frf = os.path.join(Results_Folder, Batch_Folder, folder, 'Final_Results')
-        if os.path.exists(frf):
-            print('Processing: ', folder)
-            if full_analysis:
-                sweeper_plots(i, i_values, j, j_values, Model.Dict,
-                              frf, BW_norm=bw_norm, show=False)
+    Batch_Folders = [
+        'strain_zero',
+        'strain_tensile',
+        'strain_compressive'
+        ]
 
-            if process_guesses:
-                guesses_folder = os.path.join(
-                    'Results', Batch_Folder, folder, 'Guesses_Results')
-                for guess in os.listdir(guesses_folder):
-                    guess = os.path.join(guesses_folder, guess)
-                    print('Processing guess:', guess)
-                    sweeper_plots(i, i_values, j, j_values, Model.Dict,
-                                  guess, BW_norm=True)
+    for batch in Batch_Folders:
+        if batch == 'strain_zero':
+            bw_norm = r'$W$'
+        elif batch == 'strain_compressive':
+            bw_norm = r'$W_{c}$'
+        elif batch == 'strain_tensile':
+            bw_norm = r'$W_{t}$'
 
-    if full_analysis:
-        Diagrams_Folder = os.path.join(Results_Folder, Batch_Folder+'_diags')
-        os.makedirs(Diagrams_Folder, exist_ok=True)
-
-        for folder in folder_list:
-            frf = os.path.join(Results_Folder, Batch_Folder, folder, 'Final_Results')
-            if os.path.exists(frf):
-                diagram = os.path.join(frf, 'Plots', 'PhaseDiagram.png')
-                out = os.path.join(Diagrams_Folder, folder+'.png')
-                shutil.copy(diagram, out)
+        folder_list = sorted(os.listdir(os.path.join(results_folder, batch)))
+        postprocess(
+            results_folder, batch, folder_list,
+            i, i_values, j, j_values,
+            mfp_dict, bw_norm,
+            full=full, make_map=make_map)

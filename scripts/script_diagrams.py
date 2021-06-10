@@ -69,7 +69,12 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
 
     u.write_settings(
         Run_ID, Results_Folder,
-        [model_params, solver_args, sweeper_args, norming_settings]
+        [
+         model_params,
+         solver_args,
+         sweeper_args,
+         norming_settings
+         ]
         )
 
     if guess_run:

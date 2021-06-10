@@ -170,6 +170,7 @@ states_of_interest = np.array([
     [0,  0,  3, 4],
     [1, -1, -1, -1],
     [1, -1,  1,  1],
+    [1,  0, -1, -1],
     [1,  0, 3,  4],
     [1,  1, -1, -1],
     [1,  1,  0,  0],
@@ -183,13 +184,13 @@ colors_of_interest = [
     'tab:gray',
     'tab:green',
     'tab:pink',
+    'tab:purple',
     'tab:blue',
     'tab:orange',
     'navajowhite',
     'tab:brown',
     'tab:olive',
 
-    'tab:purple',
     'tab:red',
     'red',
     'yellow',
@@ -235,4 +236,4 @@ custom_norm = matplotlib.colors.BoundaryNorm(norm_bins, len_lab, clip=True)
 # states = [4, 9, 13, 21, 32, 33, 34, 35, 38, 39]
 # for j in states:
     # print(pos_to_label[j])
-# print(pos_to_label[40])
+# print(pos_to_label[19])

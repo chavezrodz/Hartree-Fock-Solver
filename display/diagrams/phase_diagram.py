@@ -1,14 +1,14 @@
-import sys
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
-import Code.Utils as Utils
+import utils as Utils
 import numpy as np
 import os
-import Code.Nickelates.Interpreter as In
+import models.Nickelates.Interpreter as In
 
 
-def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, font=20):
+def phases_diagram(Phase, i_label, i_values, j_label, j_values, results_folder,
+                   font=20, contour_labels=False):
     CM = Phase[:, :, 0]
     spin_orb = Phase[:, :, 1]
     OS = Phase[:, :, 2]
@@ -22,10 +22,10 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, fon
     f, ax = plt.subplots(figsize=(8, 8))  # or 6,5 without legend
     # ax.set_xlabel(i_label)
     # ax.set_ylabel(j_label)
-    ax.set_xlabel(r'$'+i_label+'$', fontsize=font)
+    ax.set_xlabel(i_label, fontsize=font)
     ax.xaxis.set_label_coords(0.5, -0.02)
 
-    ax.set_ylabel(r'$'+j_label+'$', fontsize=font)
+    ax.set_ylabel(j_label, fontsize=font)
     ax.yaxis.set_label_coords(-0.02, 0.5)
 
     ax.set(frame_on=False)
@@ -46,18 +46,31 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, fon
 
     plt.tick_params(axis='both', which='major', labelsize=20)
 
-    countour_label_font = 20
+    contour_font = 20
+    contour_width = 2
+
+    if not contour_labels:
+        contour_font = 0
+        inline = False
+    else:
+        inline = True
 
     # Charge Contour
-    CS = ax.contour(np.abs(CM.T), colors='red', levels=[0.01, 0.1, 0.3, 0.5],
-                    linewidths=2, extent=(0, 1, 0, 0.2))
-    ax.clabel(CS, inline=True, fontsize=countour_label_font, fmt='% 1.1f')
+    CS = ax.contour(np.abs(CM.T),
+                    colors='red',
+                    levels=[0.01, 0.1, 0.3, 0.5],
+                    linewidths=contour_width, extent=(0, 1, 0, 0.2))
+    ax.clabel(CS, inline=inline, fontsize=contour_font, fmt='% 1.1f')
 
     # Orbital Contour
-    OS = ax.contour(np.abs(OS.T), colors='purple', levels=[0.01, 0.1, 0.5, 0.9],
-                    linestyles='dashed', linewidths=2, extent=(0, 1, 0, 0.2))
+    OS = ax.contour(np.abs(OS.T),
+                    colors='purple',
+                    levels=[0.01, 0.1, 0.5, 0.9],
+                    linestyles='dashed',
+                    linewidths=contour_width,
+                    extent=(0, 1, 0, 0.2))
+    ax.clabel(OS, inline=inline, fontsize=contour_font, fmt='% 1.1f')
 
-    ax.clabel(OS, inline=True, fontsize=countour_label_font, fmt='% 1.1f')
     ax.grid(linewidth=0)
 
     # spin-orbit
@@ -65,9 +78,14 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, fon
     norm = In.custom_norm
     col_dict = In.col_dict
 
-    ax.imshow(np.rot90(spin_orb), cmap=cmap, norm=norm, aspect='auto', extent=(0, 1, 0, 0.2))
+    ax.imshow(np.rot90(spin_orb),
+              cmap=cmap, norm=norm,
+              aspect='auto', extent=(0, 1, 0, 0.2))
 
-    patches = [mpatches.Patch(color=col_dict[state], label=In.pos_to_label[state]) for state in unique_states]
+    patches = [
+        mpatches.Patch(color=col_dict[state], label=In.pos_to_label[state])
+        for state in unique_states
+        ]
 
     # Plot Specific marker points
     Metallic = {'x': 0.2, 'y': 0.1,
@@ -82,7 +100,7 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, fon
           'label': 'FM',
           'marker': 's', 'color': 'black'}
 
-    CD = {'x': 0.5, 'y': 0.2,
+    CD = {'x': 0.5, 'y': 0.195,
           'label': 'CD',
           'marker': 'd', 'color': 'black'}
 
@@ -91,7 +109,7 @@ def phases_plot(Phase, i_label, i_values, j_label, j_values, results_folder, fon
     for point in points:
         ax.plot(point['x'], point['y'],
                 marker=point['marker'], color=point['color'],
-                markersize=10, label=point['label']
+                markersize=15, label=point['label']
                 )
 
         # patches.append(mlines.Line2D([], [], linestyle='None',
