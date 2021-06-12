@@ -73,7 +73,9 @@ def DOS_per_state(Model, results_folder=None, label=None, show=False,
         )
 
     w_total = np.ones_like(Energies)/max_states
-    axes[0].hist(x=Energies, bins=bins, weights=w_total, alpha=0.5, color='black')
+    axes[0].grid(color='grey')
+    axes[0].set_facecolor("white")
+    axes[0].hist(x=Energies, bins=bins, weights=w_total, alpha=0.7, color='black')
     axes[0].axvline(fermi_e, color='red')
     axes[0].set_ylabel('DOS')
 
@@ -90,6 +92,9 @@ def DOS_per_state(Model, results_folder=None, label=None, show=False,
         ax.hist(x=Energies, bins=bins, weights=sub_w_1.flatten(), label=name_1, alpha=0.5)
         ax.hist(x=Energies, bins=bins, weights=sub_w_2.flatten(), label=name_2, alpha=0.5)
         ax.set_ylabel('Partial DOS')
+        ax.grid(color='grey')
+        ax.set_facecolor("white")
+
         # count = occupied_states(Energies, Weights, fermi_e)
         ax.legend()
         ax.axvline(fermi_e, label='Fermi Energy', color='red')
