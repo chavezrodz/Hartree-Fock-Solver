@@ -9,7 +9,8 @@ import solver.calculations as calc
 from models.Nickelates.Hamiltonian import Hamiltonian
 
 
-def point_analysis(model_params, guesses, solver_args, batch_folder, show=False, HFA=True):
+def point_analysis(model_params, guesses, solver_args, batch_folder,
+                   show=False, HFA=True):
     point_Id = '_'.join("{!s}={!r}".format(key, val)
                         for (key, val) in model_params.items())
 
@@ -30,7 +31,7 @@ def point_analysis(model_params, guesses, solver_args, batch_folder, show=False,
             calc.post_calculations(Model)
             DOS.DOS(Model, results_folder=results_folder, show=show)
             DOS.DOS_per_state(Model, results_folder=results_folder, show=show,
-                              orbital=True, spin=True, sites=True)
+                              orbital=True, spin=True, sites=False)
             DR.fermi_surface(Model, results_folder=results_folder, show=show)
             if show:
                 DR.DispersionRelation(Model)

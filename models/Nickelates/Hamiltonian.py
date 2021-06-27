@@ -88,12 +88,22 @@ class Hamiltonian:
         ]
 
         self.state_labels = [
-            r'$3z^2-r^2$ orbital', r'$x^2-y^2$ orbital',
-            r'Site 1 Spin $\uparrow$', r'Site 1 Spin $\downarrow$',
-            r'Site 2 Spin $\uparrow$', r'Site 2 Spin $\downarrow$'
+            r'$3z^2-r^2$', r'$x^2-y^2$',
+            r'Site 1 $\uparrow$', r'Site 1 $\downarrow$',
+            r'Site 2 $\uparrow$', r'Site 2 $\downarrow$'
           ]
 
         self.mat_dim = 8
+
+        proj_pairs = [
+            {
+                "title": 'Orbit',
+                "proj_1": z2_projectors,
+                "proj_2": x2my2_projectors,
+                },
+
+        ]
+
 
     def func_tzz(self, Q):
         qx, qy, qz = Q

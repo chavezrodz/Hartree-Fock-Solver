@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
-import os
 import numpy as np
+import os
 
 import seaborn as sns
 sns.set_theme()
@@ -73,13 +73,17 @@ def DOS_per_state(Model, results_folder=None, label=None, show=False,
         )
 
     w_total = np.ones_like(Energies)/max_states
-    axes[0].grid(color='grey')
-    axes[0].set_facecolor("white")
-    axes[0].hist(x=Energies, bins=bins, weights=w_total, alpha=0.7, color='black')
-    axes[0].axvline(fermi_e, color='red')
-    axes[0].set_ylabel('DOS')
+    ax = axes[0]
+    ax.grid(color='grey', alpha=0.25)
+    ax.set_facecolor("white")
+    for spine in ax.spines.values():
+        spine.set_color('black')
+        spine.set_linewidth(0.5)
 
-    axes[0].text(fermi_e, 1,  r'$E_F$', ha='left', va='top', wrap=True)
+    ax.hist(x=Energies, bins=bins, weights=w_total, alpha=0.7, color='black')
+    ax.axvline(fermi_e, color='red')
+    ax.set_ylabel('DOS')
+    ax.text(fermi_e, 1,  r'$E_F$', ha='left', va='top', wrap=True)
 
     for i in range(N_plots - 1):
         ax = axes[i+1]
@@ -89,19 +93,27 @@ def DOS_per_state(Model, results_folder=None, label=None, show=False,
         sub_w_1 = weights[2*i]
         sub_w_2 = weights[2*i+1]
 
+        if i == N_plots - 2:
+            sub_w_1 = 2*weights[2*i]
+            sub_w_2 = 2*weights[2*i+1]
+
+        ax.grid(color='grey', alpha=0.25)
+        ax.set_facecolor("white")
+        for spine in ax.spines.values():
+            spine.set_color('black')
+            spine.set_linewidth(0.5)
+
         ax.hist(x=Energies, bins=bins, weights=sub_w_1.flatten(), label=name_1, alpha=0.5)
         ax.hist(x=Energies, bins=bins, weights=sub_w_2.flatten(), label=name_2, alpha=0.5)
         ax.set_ylabel('Partial DOS')
-        ax.grid(color='grey')
-        ax.set_facecolor("white")
 
         # count = occupied_states(Energies, Weights, fermi_e)
         ax.legend()
-        ax.axvline(fermi_e, label='Fermi Energy', color='red')
-        ax.text(fermi_e, 1,  r'$E_F$', ha='left', va='top', wrap=True)
+        ax.axvline(fermi_e, color='red')
+        # ax.text(fermi_e, 1,  r'$E_F$', ha='left', va='top', wrap=True)
         ax.set_ylim(0, top_cutoff)
 
-    axes[-1].set_xlabel('Energy'+r'$[E/t]$')
+    axes[-1].set_xlabel('E')
     plt.tight_layout()
 
     if results_folder is not None:
