@@ -25,7 +25,23 @@ class Hamiltonian:
     All iterations done in HFA solver.
     """
     def __init__(self, Model_params={}, MF_params=np.array([0, 0, 0, 0, 0])):
+
+        # MFPs Names
+        self.Dict = {0: 'Charge Modulation',
+                     1: 'Ferromagnetism',
+                     2: 'Orbital Disproportionation',
+                     3: 'Anti Ferromagnetism',
+                     4: 'Anti Ferroorbital'}
+
+        # K_patn for bandstructure
+        self.k_points = np.array([[0, 0, 0],
+                                  [np.pi, 0, 0],
+                                  [np.pi, np.pi/2, 0],
+                                  [0, 0, 0]])
+        self.k_labels = ['M', r'$\Gamma$', 'X', 'M']
+
         # initiates Model parameters
+        self.mat_dim = 8
         self.BZ_rot = 1
         self.b = 0
 
@@ -45,25 +61,18 @@ class Hamiltonian:
 
         for key, value in Model_params.items():
             setattr(self, key, value)
+
         # initiates Mean field parameters
         self.MF_params = MF_params
 
-        # MFPs Names
-        self.Dict = {0: 'Charge Modulation',
-                     1: 'Ferromagnetism',
-                     2: 'Orbital Disproportionation',
-                     3: 'Anti Ferromagnetism',
-                     4: 'Anti Ferroorbital'}
+        # define some numbers
+        N = np.power(self.k_res,self.n_dim) * self.mat_dim
+        N_c = 8
+        N_k = N / N_c
+        self.N_ni = 2 * N_k
+        N_s = N_k * 4
 
-        # K_patn for bandstructure
-        self.k_points = np.array([[0, 0, 0],
-                                  [np.pi, 0, 0],
-                                  [np.pi, np.pi/2, 0],
-                                  [0, 0, 0]])
-        self.k_labels = ['M', r'$\Gamma$', 'X', 'M']
-
-        # projectors foor DOS
-
+        # projectors for DOSs
         Id = np.identity(8)
         z2_projectors = Id[[0, 1, 4, 5]]
         x2my2_projectors = Id[[2, 3, 6, 7]]
@@ -78,30 +87,32 @@ class Hamiltonian:
         site2_up = (hom1_up-hom2_up)/np.sqrt(2.)
         site2_down = (hom1_down-hom2_down)/np.sqrt(2.)
 
-        self.state_projectors = [
-            z2_projectors,
-            x2my2_projectors,
-            site1_up,
-            site1_down,
-            site2_up,
-            site2_down,
-        ]
-
-        self.state_labels = [
-            r'$3z^2-r^2$', r'$x^2-y^2$',
-            r'Site 1 $\uparrow$', r'Site 1 $\downarrow$',
-            r'Site 2 $\uparrow$', r'Site 2 $\downarrow$'
-          ]
-
-        self.mat_dim = 8
-
-        proj_pairs = [
-            {
-                "title": 'Orbit',
+        self.proj_configs = [
+            {   "name": 'Orbit',
+                "title": '',
                 "proj_1": z2_projectors,
                 "proj_2": x2my2_projectors,
+                "normalizer": self.N_ni,
+                "label_1": r'$3z^2-r^2$',
+                "label_2": r'$x^2-y^2$'
                 },
-
+            {   "name": 'Site 1',
+                "title": 'Site 1',
+                "proj_1": site1_up,
+                "proj_2": site1_down,
+                "normalizer": self.N_ni,
+                "label_1": r'$\uparrow$',
+                "label_2": r'$\downarrow$'
+                },
+            {
+                "name": 'Site 2',
+                "title": 'Site 2',
+                "proj_1": site2_up,
+                "proj_2": site2_down,
+                "normalizer": self.N_ni,
+                "label_1": r'$\uparrow$',
+                "label_2": r'$\downarrow$'
+                }
         ]
 
 

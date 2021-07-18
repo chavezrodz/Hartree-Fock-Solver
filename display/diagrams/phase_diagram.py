@@ -111,7 +111,6 @@ def phases_diagram(Phase, i_label, i_values, j_label, j_values, results_folder,
                 marker=point['marker'], color=point['color'],
                 markersize=15, label=point['label']
                 )
-
         # patches.append(mlines.Line2D([], [], linestyle='None',
         #                marker=point['marker'], color=point['color'],
         #                markersize=10, label=point['label'])

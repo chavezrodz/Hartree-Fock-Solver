@@ -43,28 +43,24 @@ def DOS(Model, bins='fd', results_folder=None, label=None, show=True):
     plt.close()
 
 
-def DOS_per_state(Model, results_folder=None, label=None, show=False,
-                  orbital=True, spin=True, sites=True):
-
+def DOS_per_state(Model, results_folder=None, label=None, show=False):
     Energies = Model.Energies.flatten()
     fermi_e = Model.fermi_e
 
     heights, bins = np.histogram(Energies, bins='fd')
-    max_states = np.max(heights)
+    delta_E = bins[1] - bins[0]
 
-    weights = [projections(Model.Eigenvectors, projector)/max_states
-               for projector in Model.state_projectors
-               ]
+    # Position constants
+    top_cutoff = 2.
+    fermi_place = 1.9
+    left_off = 0.25
+    top_off = 0.15
 
-    top_cutoff = 1.1
+    panel_labels = ['(a)','(b)','(c)','(d)']
 
-    N_plots = 1
-    if orbital:
-        N_plots += 1
-    if spin:
-        N_plots += 1
-    if sites:
-        N_plots += 1
+    proj_configs = Model.proj_configs
+
+    N_plots = len(proj_configs) + 1
 
     fig, axes = plt.subplots(
         N_plots, 1,
@@ -72,30 +68,37 @@ def DOS_per_state(Model, results_folder=None, label=None, show=False,
         sharex=True, sharey=True
         )
 
-    w_total = np.ones_like(Energies)/max_states
     ax = axes[0]
-    ax.grid(color='grey', alpha=0.25)
+    w_total = np.ones_like(Energies)/Model.N_ni
+
     ax.set_facecolor("white")
+    ax.grid(b=True,color='grey',linewidth=0.3)
     for spine in ax.spines.values():
-        spine.set_color('black')
-        spine.set_linewidth(0.5)
+        spine.set_color('0.3')
+        # spine.set_color('black')
+        # spine.set_linewidth(0.5)
 
-    ax.hist(x=Energies, bins=bins, weights=w_total, alpha=0.7, color='black')
-    ax.axvline(fermi_e, color='red')
+    counts, bins, patches = axes[0].hist(
+        x=Energies, bins=bins, weights = w_total / delta_E,
+        alpha=0.7, color='black'
+        )
+
+
     ax.set_ylabel('DOS')
-    ax.text(fermi_e, 1,  r'$E_F$', ha='left', va='top', wrap=True)
+    ax.tick_params(axis='y', labelsize=10)
+    ax.axvline(fermi_e, color='red')
+    ax.text(
+        np.min(bins)-left_off, top_cutoff - top_off, panel_labels[0],
+        ha='left', va='top',wrap=True,fontsize=14)
 
-    for i in range(N_plots - 1):
+    for i, config in enumerate(proj_configs):
         ax = axes[i+1]
 
-        name_1 = Model.state_labels[2*i]
-        name_2 = Model.state_labels[2*i+1]
-        sub_w_1 = weights[2*i]
-        sub_w_2 = weights[2*i+1]
+        label_1 = config['label_1']
+        label_2 = config['label_2']
 
-        if i == N_plots - 2:
-            sub_w_1 = 2*weights[2*i]
-            sub_w_2 = 2*weights[2*i+1]
+        sub_w_1 = projections(Model.Eigenvectors, config['proj_1'])/config['normalizer']
+        sub_w_2 = projections(Model.Eigenvectors, config['proj_2'])/config['normalizer']
 
         ax.grid(color='grey', alpha=0.25)
         ax.set_facecolor("white")
@@ -103,51 +106,35 @@ def DOS_per_state(Model, results_folder=None, label=None, show=False,
             spine.set_color('black')
             spine.set_linewidth(0.5)
 
-        ax.hist(x=Energies, bins=bins, weights=sub_w_1.flatten(), label=name_1, alpha=0.5)
-        ax.hist(x=Energies, bins=bins, weights=sub_w_2.flatten(), label=name_2, alpha=0.5)
+        counts, bins, patches = ax.hist(
+            x=Energies, bins=bins,
+            weights=sub_w_1.flatten() / delta_E,
+            label=label_1, alpha=0.5
+            )
+        counts, bins, patches = ax.hist(
+            x=Energies, bins=bins,
+            weights=sub_w_2.flatten() / delta_E,
+            label=label_2, alpha=0.5
+            )
         ax.set_ylabel('Partial DOS')
-
-        # count = occupied_states(Energies, Weights, fermi_e)
-        ax.legend()
-        ax.axvline(fermi_e, color='red')
-        # ax.text(fermi_e, 1,  r'$E_F$', ha='left', va='top', wrap=True)
+        ax.tick_params(axis='both', labelsize=10)
         ax.set_ylim(0, top_cutoff)
+        # ax.spines['bottom'].set_color('0.3')
+        # ax.spines['top'].set_color('0.3')
+        # ax.spines['right'].set_color('0.3')
+        # ax.spines['left'].set_color('0.3')
+        ax.legend(loc=1, fontsize=10)
+        ax.axvline(fermi_e, label='Fermi Energy', color='red')
+        ax.set_ylim(0, top_cutoff)
+        ax.text(
+            np.min(bins)-left_off, top_cutoff - top_off, panel_labels[i+1],
+            ha='left', va='top',wrap=True,fontsize=14)
 
-    axes[-1].set_xlabel('E')
+    axes[-1].set_xlabel(r'$E$',fontsize=12)
     plt.tight_layout()
 
     if results_folder is not None:
         label = 'DOS_per_state.png'
-        plt.savefig(os.path.join(results_folder, label))
-    if show:
-        plt.show()
-    plt.close()
-
-
-def DOS_single_state(Model, ind=0, results_folder=None, label=None, show=False, top_cutoff=1000, top_text_pos=800):
-    all_DOS = np.histogram(Model.Energies, bins='fd')
-    heights, bins = all_DOS
-    energies = Model.Energies
-    fermi_e = Model.fermi_e
-    weights = projections(Model.Eigenvectors, Model.state_projectors[ind])
-    name = Model.state_labels[ind]
-
-    fig, ax = plt.subplots()
-    ax.hist(x=energies.flatten(), bins=bins)
-    ax.hist(x=energies.flatten(), bins=bins, weights=weights.flatten())
-    count = occupied_states(energies, weights, fermi_e)
-    ax.set_title(name)
-    ax.axvline(fermi_e, label='Fermi Energy', color='red')
-    # ax.set_ylim(0, top_cutoff)
-    ax.text(0., top_text_pos, f'occupied states = {count}', ha='center')
-
-    plt.tight_layout()
-
-    if results_folder is not None:
-        if label is not None:
-            label = name+'DOS_'+label+'.png'
-        else:
-            label = 'DOS_'+name+'.png'
         plt.savefig(os.path.join(results_folder, label))
     if show:
         plt.show()

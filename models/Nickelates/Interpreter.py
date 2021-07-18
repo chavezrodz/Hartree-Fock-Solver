@@ -207,24 +207,17 @@ assert len(states_of_interest) <= len(colors_of_interest)
 strings_of_interest = [phase_to_label(v, symetry=False)[0] for v in states_of_interest]
 integers_of_interest = np.unique([phase_to_label(v, symetry=False)[1] for v in states_of_interest])
 
-
-# Let's also design our color mapping: 1s should be plotted in blue, 2s in red, etc...
 col_dict = dict(zip(
     integers_of_interest, colors_of_interest[:len(integers_of_interest)]
     ))
-# We create a colormar from our list of colors
+
 custom_cmap = ListedColormap([col_dict[x] for x in col_dict.keys()])
 
-# Let's also define the description of each category : 1 (blue) is Sea; 2 (red) is burnt, etc... Order should be respected here ! Or using another dict maybe could help.
 labels = np.array(strings_of_interest)
 len_lab = len(labels)
 
-# prepare normalizer
-#  Prepare bins for the normalizer
 norm_bins = np.sort([*col_dict.keys()]) + 0.5
 norm_bins = np.insert(norm_bins, 0, np.min(norm_bins) - 1.0)
-
-# Make normalizer and formatter
 custom_norm = matplotlib.colors.BoundaryNorm(norm_bins, len_lab, clip=True)
 
 

@@ -30,8 +30,7 @@ def point_analysis(model_params, guesses, solver_args, batch_folder,
             IS.Iteration_sequence(Solver, results_folder=results_folder, show=show)
             calc.post_calculations(Model)
             DOS.DOS(Model, results_folder=results_folder, show=show)
-            DOS.DOS_per_state(Model, results_folder=results_folder, show=show,
-                              orbital=True, spin=True, sites=False)
+            DOS.DOS_per_state(Model, results_folder=results_folder, show=show)
             DR.fermi_surface(Model, results_folder=results_folder, show=show)
             if show:
                 DR.DispersionRelation(Model)
