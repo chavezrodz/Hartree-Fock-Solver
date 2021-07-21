@@ -100,7 +100,7 @@ class Hamiltonian:
                 "title": 'Site 1',
                 "proj_1": site1_up,
                 "proj_2": site1_down,
-                "normalizer": self.N_ni,
+                "normalizer": self.N_ni * 2,
                 "label_1": r'$\uparrow$',
                 "label_2": r'$\downarrow$'
                 },
@@ -109,10 +109,20 @@ class Hamiltonian:
                 "title": 'Site 2',
                 "proj_1": site2_up,
                 "proj_2": site2_down,
-                "normalizer": self.N_ni,
+                "normalizer": self.N_ni * 2,
                 "label_1": r'$\uparrow$',
                 "label_2": r'$\downarrow$'
                 }
+                ,
+            {
+                "name": 'spins',
+                "title": '',
+                "proj_1": site1_up + site2_up,
+                "proj_2": site1_down + site2_down,
+                "normalizer": self.N_ni,
+                "label_1": r'$\uparrow$',
+                "label_2": r'$\downarrow$'
+                }                
         ]
 
 
