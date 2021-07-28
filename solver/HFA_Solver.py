@@ -11,7 +11,8 @@ class HFA_Solver:
     Model_params: Hamiltonian Parameters, must include Filling(float)
     MFP_params: initial guesses for Mean Free Parameters
     """
-    def __init__(self, Ham, method='sigmoid', save_seq=False, tol=1e-3, **kwargs):
+    def __init__(self, Ham, method='sigmoid', save_seq=False,
+                 tol=1e-3, **kwargs):
         self.Hamiltonian = Ham
 
         # Iteration Method Params
@@ -90,14 +91,17 @@ class HFA_Solver:
             self.Print_step(a, dt, method='Final')
 
     def Print_step(self, a, t=0, method=None):
+        mfps = a.round(self.N_digits)
         if method is None:
-            print('Iteration:', self.count, ' Mean Field parameters:', a.round(self.N_digits))
+            print(f'Iteration:{self.count} Mean Field parameters: {mfps}')
             return
         elif method == 'Initial':
-            print('\nInitial Mean Field parameters:', a.round(self.N_digits))
+            print('\nInitial Mean Field parameters:', mfps)
             return
         elif method == 'Final':
-            print(f'Final Mean Field parameter: {a.round(self.N_digits)} Number of iteration steps: {self.count} Time taken:{round(t,3)} \n')
+            print(f'Final Mean Field parameter: {mfps}'
+                  f'Number of iteration steps: {self.count}'
+                  f'Time taken:{round(t, 3)} \n')
             return
 
     def update_guess(self, a, b):
@@ -107,18 +111,19 @@ class HFA_Solver:
         usual values are ~0.5 for exponential, ~3 for sigmoid
 
         """
+        lim = self.Iteration_limit
         if self.method == 'momentum':
             beta = self.beta
         elif self.method == 'sigmoid':
-            beta = sp.expit(-self.count*self.beta/self.Iteration_limit) 
+            beta = sp.expit(-self.count*self.beta/lim)
         else:
             print('Error: Iteration Method not found')
 
         if self.count == 0:
             beta = 0
-        elif self.count >= 0.7*self.Iteration_limit and self.count % int(self.Iteration_limit/10) == 0:
+        elif self.count >= 0.7*lim and self.count % int(lim/10) == 0:
             beta = 0.5
-        elif self.count == int(0.9*self.Iteration_limit):
+        elif self.count == int(0.9*lim):
             beta = 1
 
         return (1 - beta)*b + beta*a, beta

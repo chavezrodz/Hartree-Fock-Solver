@@ -25,5 +25,4 @@ meta_args = dict(
     load=True,
     )
 
-
 make_meta_diag(model_params, sweeper_args, meta_args)

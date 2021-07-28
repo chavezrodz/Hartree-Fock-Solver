@@ -23,9 +23,9 @@ batch_folder = 'Single_points'
 guesses = np.array([
     (0.8, 1.0, 0.0, 0.7, 0.15),
     (1.0, 0.6, 0.0, 0.7, 0.15),
-    # (0.0, 0.2, 0.5, 0.0, 0.2),
-    # (0.2, 0.5, 1.0, 1.0, 0.0),
-    # (0.5, 0.5, 0.0, 0.5, 0.1)
+    (0.0, 0.2, 0.5, 0.0, 0.2),
+    (0.2, 0.5, 1.0, 1.0, 0.0),
+    (0.5, 0.5, 0.0, 0.5, 0.1)
 ])
 
 sp.point_analysis(model_params, guesses, solver_args, batch_folder)
@@ -35,7 +35,7 @@ sp.point_analysis(model_params, guesses, solver_args, batch_folder)
 #     k_res=100,
 #     J=1.12)
 
-    # solver_args_1 = dict(
+# solver_args_1 = dict(
 #     method='momentum',
 #     beta=0.5,
 #     Iteration_limit=50,

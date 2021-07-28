@@ -58,6 +58,7 @@ model_params = dict(zip(keys, combinations[args.run_ind]))
 print('Diagram guesses starting')
 
 diagrams.generate_diagram(batch_folder, model_params, params_list,
-                          sweeper_args, solver_args, bw_norm=True, logging=logging)
+                          sweeper_args, solver_args,
+                          bw_norm=True, logging=logging)
 
 print('Finished succesfully')

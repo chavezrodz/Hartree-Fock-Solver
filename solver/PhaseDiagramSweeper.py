@@ -88,12 +88,18 @@ class Phase_Diagram_Sweeper():
         self.Convergence_pc = 100*np.mean(self.Convergence_Grid)
 
     def save_results(self, outfolder, Include_MFPs=False):
-        np.savetxt(os.path.join(outfolder, 'Energies.csv'), self.Es_trial, delimiter=',')
-        np.savetxt(os.path.join(outfolder, 'Convergence.csv'), self.Convergence_Grid, delimiter=',')
-        np.savetxt(os.path.join(outfolder, 'Conductance.csv'), self.MIT, delimiter=',')
-        np.savetxt(os.path.join(outfolder, 'Distortion.csv'), self.Distortion, delimiter=',')
+        np.savetxt(os.path.join(outfolder, 'Energies.csv'),
+                   self.Es_trial, delimiter=',')
+        np.savetxt(os.path.join(outfolder, 'Convergence.csv'),
+                   self.Convergence_Grid, delimiter=',')
+        np.savetxt(os.path.join(outfolder, 'Conductance.csv'),
+                   self.MIT, delimiter=',')
+        np.savetxt(os.path.join(outfolder, 'Distortion.csv'),
+                   self.Distortion, delimiter=',')
         if Include_MFPs:
             os.makedirs(os.path.join(outfolder, 'MF_Solutions'), exist_ok=True)
             for i in range(self.Initial_params.shape[2]):
-                outfile = os.path.join(outfolder, 'MF_Solutions', 'MF'+str(i)+'.csv')
+                outfile = os.path.join(
+                    outfolder, 'MF_Solutions', 'MF'+str(i)+'.csv'
+                    )
                 np.savetxt(outfile, self.Final_params[:, :, i], delimiter=",")
