@@ -3,11 +3,11 @@ import scripts.script_single_pt as sp
 
 
 model_params = dict(
-    U=1.2, J=0.6  # Metallic
-    # U=3.0, J=1.2  # CD
-    # U=4.8, J=0.3  # AFM
-    # U=4.8, J=0.6  # FM
-    , k_res=10
+    # U=1.2, J=0.6,  # Metallic
+    # U=3.0, J=1.2,  # CD
+    # U=4.8, J=0.3,  # AFM
+    U=4.8, J=0.6,  # FM
+    # k_res=10
     )
 
 
@@ -35,7 +35,7 @@ sp.point_analysis(model_params, guesses, solver_args, batch_folder)
 #     k_res=100,
 #     J=1.12)
 
-# solver_args_1 = dict(
+    # solver_args_1 = dict(
 #     method='momentum',
 #     beta=0.5,
 #     Iteration_limit=50,

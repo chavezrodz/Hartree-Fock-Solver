@@ -66,7 +66,7 @@ class Hamiltonian:
         self.MF_params = MF_params
 
         # define some numbers
-        N = np.power(self.k_res,self.n_dim) * self.mat_dim
+        N = np.power(self.k_res, self.n_dim) * self.mat_dim
         N_c = 8
         N_k = N / N_c
         self.N_ni = 2 * N_k
@@ -88,41 +88,45 @@ class Hamiltonian:
         site2_down = (hom1_down-hom2_down)/np.sqrt(2.)
 
         self.proj_configs = [
-            {   "name": 'Orbit',
+               {"name": 'Orbit',
                 "title": '',
                 "proj_1": z2_projectors,
                 "proj_2": x2my2_projectors,
                 "normalizer": self.N_ni,
+                "/dE": True,
                 "label_1": r'$3z^2-r^2$',
                 "label_2": r'$x^2-y^2$'
                 },
-            {   "name": 'Site 1',
+
+               {"name": 'Site 1',
                 "title": 'Site 1',
                 "proj_1": site1_up,
                 "proj_2": site1_down,
-                "normalizer": self.N_ni * 2,
+                "normalizer": 0.5*self.N_ni,
+                "/dE": True,
                 "label_1": r'$\uparrow$',
                 "label_2": r'$\downarrow$'
                 },
-            {
-                "name": 'Site 2',
+
+               {"name": 'Site 2',
                 "title": 'Site 2',
                 "proj_1": site2_up,
                 "proj_2": site2_down,
-                "normalizer": self.N_ni * 2,
+                "normalizer": 0.5*self.N_ni,
+                "/dE": True,
                 "label_1": r'$\uparrow$',
                 "label_2": r'$\downarrow$'
-                }
-                ,
-            {
-                "name": 'spins',
-                "title": '',
-                "proj_1": site1_up + site2_up,
-                "proj_2": site1_down + site2_down,
-                "normalizer": self.N_ni,
-                "label_1": r'$\uparrow$',
-                "label_2": r'$\downarrow$'
-                }                
+                },
+
+               # {"name": 'spins',
+               #  "title": '',
+               #  "proj_1": hom1_up + hom2_up,
+               #  "proj_2": hom1_down + hom2_down,
+               #  "normalizer": self.N_ni,
+               #  "/dE": True,
+               #  "label_1": r'$\uparrow$',
+               #  "label_2": r'$\downarrow$'
+               #  }
         ]
 
 
