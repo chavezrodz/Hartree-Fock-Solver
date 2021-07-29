@@ -69,7 +69,7 @@ def symetries(phase, CM=0):
     # idx = (spin[0] < spin[1]) & (orbit[0] < orbit[1])
     # orbit[idx] = np.roll(orbit, 1, axis=-1)
 
-    idx = (orbit[0] == 0) & (orbit[1] == -1) # or ((orbit[0] == -1) & (orbit[1] == 0))
+    idx = (orbit[0] == 0) & (orbit[1] == -1)  # or ((orbit[0] == -1) & (orbit[1] == 0))
     orbit[idx] = np.array([3, 4])
 
     idx = (orbit[0] == -1) & (orbit[1] == 0)
@@ -135,24 +135,18 @@ All_states_post_sym = np.unique(
 N_possible_states = len(All_states_post_sym)
 state_to_pos = {state: i for i, state in enumerate(All_states_post_sym)}
 
-# indices = np.arange(len(state_to_pos))
-# np.random.seed(42)
-# np.random.shuffle(indices)
-# state_to_pos_rand = {All_states_post_sym[v]: i for i, v in enumerate(indices)}
-# state_to_pos = state_to_pos_rand
-
 state_to_label = {
     vec_to_int(np.array([i, j, k, l])): r'$'+Spin_Dict[i]+Spin_Dict[j] + ', ' + Orbit_Dict[k]+Orbit_Dict[l]+'$'
-    for i, j, k, l in itertools.product(np.arange(-2, 3), np.arange(-2, 3), np.arange(-2, 5), np.arange(-2, 5))
+    for i, j, k, l in itertools.product(
+                                        np.arange(-2, 3),
+                                        np.arange(-2, 3),
+                                        np.arange(-2, 5),
+                                        np.arange(-2, 5))
 }
-
-# print(len(All_states_post_sym), len(state_to_pos), len(state_to_label))
-# print(All_states_post_sym)
 
 pos_to_label = {
     state_to_pos[state]: state_to_label[state] for state in All_states_post_sym
 }
-# print(pos_to_label)
 
 
 def phase_to_label(phase, symetry=True):
@@ -202,6 +196,8 @@ colors_of_interest = [
     'lime',
 ]
 
+
+# Abort code if more states than available colors
 assert len(states_of_interest) <= len(colors_of_interest)
 
 strings_of_interest = [phase_to_label(v, symetry=False)[0] for v in states_of_interest]

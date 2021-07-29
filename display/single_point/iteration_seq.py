@@ -29,7 +29,7 @@ def Iteration_sequence(Solver, results_folder=None, show=True):
     plt.close()
 
 
-def Iteration_comparison(Solver_fixed, Solver_scheduled, transparent=False):
+def Iteration_comparison(Solver_fixed, Solver_scheduled):
     title_font = 12
     leg_font = 10
     fig, axs = plt.subplots(3, sharex=True)
@@ -56,5 +56,5 @@ def Iteration_comparison(Solver_fixed, Solver_scheduled, transparent=False):
     plt.tick_params(axis='both', which='major', labelsize=12)
     plt.xlabel('Iteration', fontsize=title_font)
     plt.tight_layout()
-    plt.savefig('FixedVsScheduled.png', transparent=transparent, bbox_inches='tight')
+    plt.savefig('FixedVsScheduled.png', bbox_inches='tight')
     plt.show()

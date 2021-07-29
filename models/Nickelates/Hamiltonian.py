@@ -129,7 +129,6 @@ class Hamiltonian:
                #  }
         ]
 
-
     def func_tzz(self, Q):
         qx, qy, qz = Q
         B = self.b
