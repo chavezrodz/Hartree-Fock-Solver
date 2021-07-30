@@ -1,4 +1,4 @@
-# Hartree Fock Solver and Itterator motivated by MIT in rare earth Nickelates
+# Hartree Fock Itterator motivated by MIT in rare earth Nickelates
 
 This is the code used to produce the article ["Effects of reduced dimensionality, crystal field, electron-lattice coupling, and strain on the ground-state of a rare-earth nickelates monolayer"](https://arxiv.org/abs/2106.12644)'s results.
 
