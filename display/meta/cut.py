@@ -3,10 +3,10 @@ import sys
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
-import Code.Utils as Utils
+import utils as Utils
 import numpy as np
 import os
-import Code.Nickelates.Interpreter as In
+import models.Nickelates.Interpreter as In
 
 import seaborn as sns
 
@@ -272,7 +272,7 @@ def one_d_plots(i_label, i_values, Dict, guesses, final_results_folder=None, sho
     MFP_plots(MF, i_label, i_values, j_label, j_values, Dict, final_results_folder, show, transparent)
 
     Phase = In.array_interpreter(MF)
-    phases_plot(Phase, i_label, i_values, j_label, j_values, final_results_folder, show, transparent)
+    phases_plot(Phase, i_label, i_values, j_label, j_values, final_results_folder)
 
     # GS Energies
     sol_energies = np.loadtxt(os.path.join(final_results_folder, 'GS_Energy.csv'), delimiter=',')
