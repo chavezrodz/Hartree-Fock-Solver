@@ -8,10 +8,6 @@ from solver.HFA_Solver import HFA_Solver
 from solver.one_d_sweeper import one_d_sweeper
 from display.meta.cut import one_d_plots
 
-# Command Line Arguments
-parser = argparse.ArgumentParser()
-parser.add_argument('--n_threads', type=int, default=8)
-args = parser.parse_args()
 
 def one_d_cut(batch_folder, model_params, params_list, sweeper_args, solver_args):
     Run_ID = U.make_id(sweeper_args, model_params)

@@ -10,8 +10,8 @@ import models.Nickelates.Interpreter as In
 
 import seaborn as sns
 
-sns.set_theme()
-sns.set_context("paper")
+# sns.set_theme()
+# sns.set_context("paper")
 
 
 def MFP_plots(MFPs, i_label, i_values, j_label, j_values, Dict, results_folder, show, transparent, standardize=False):
@@ -230,6 +230,8 @@ def one_d_feature(array, feature, i_label, i_values, results_folder=None,
 
 def difference_plots(features, arrays, i_label, i_values,
                      results_folder=None, show=False, transparent=False):
+# Need to add ticks
+
     x = i_values
     x = x + np.mean(np.diff(x))/2
     x = x[:-1]
@@ -241,17 +243,25 @@ def difference_plots(features, arrays, i_label, i_values,
             array = np.expand_dims(array, -1)
         y = np.diff(array, axis=0)
         y = LA.norm(y, axis=-1)
-        plt.plot(x, y, label=label)
+
+        if i == 0:
+            plt.plot(x, y, label=label, color='black', linestyle='-')
+        elif i == 1:
+            plt.plot(x, y, label=label, color='black', linestyle='--')
+        else:
+            plt.plot(x, y, label=label)
 
     # plt.xlabel(i_label)
-    plt.xlabel('Momentum Resolution', fontsize=16)
+    plt.xlabel('N', fontsize=16)
+    plt.ylabel('Error in mean-field parameters (dimensionless)\n'+r'and Energy ($t_1^{0}$)', fontsize=16)
     # plt.yscale('log')
-    plt.tick_params(axis='both', which='major', labelsize=12)
+    plt.tick_params(axis='both', which='major', labelsize=14)
     plt.tight_layout()
-    plt.legend(prop={"size": 13})
+    plt.legend(prop={"size": 14})
 
     if results_folder is not None:
-        plt.savefig(results_folder +'/Plots/multi_differences.png', transparent=transparent, bbox_inches='tight')
+        plt.savefig(results_folder + '/Plots/multi_differences.png',
+                    transparent=transparent, bbox_inches='tight')
     if show:
         plt.show()
     plt.close()

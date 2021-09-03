@@ -20,7 +20,7 @@ def Iteration_sequence(Solver, results_folder=None, show=True):
     axs[0].legend()
 
     axs[1].scatter(np.arange(len(Solver.beta_seq)), Solver.beta_seq)
-    axs[1].set_title('Mixing Factor')
+    axs[2].set_ylabel(r'Mixing Factor $\alpha_{mix}$', fontsize=16)
     plt.xlabel('Iteration')
     if results_folder is not None:
         plt.savefig(results_folder+'/Iteration_sequence.png')
@@ -30,31 +30,38 @@ def Iteration_sequence(Solver, results_folder=None, show=True):
 
 
 def Iteration_comparison(Solver_fixed, Solver_scheduled):
-    title_font = 12
-    leg_font = 10
+    title_font = 14
+    label_font = 16
+    leg_font = 14
+    tick_size = 14
+
     fig, axs = plt.subplots(3, sharex=True)
     steps = Solver_fixed.sol_seq.shape[0]
     for i in range(Solver_fixed.sol_seq.shape[1]):
         axs[0].plot(np.arange(steps), Solver_fixed.sol_seq[:, i], label=Solver_fixed.Hamiltonian.Dict[i])
-    axs[0].set_title('Mean Field Parameters, Fixed Mixing Rate = {}, unconverged'.format(Solver_fixed.beta), fontsize=title_font)
+    axs[0].set_title('Fixed Mixing Rate = {}'.format(Solver_fixed.beta), fontsize=title_font)
     axs[0].set_xlim(0, 50)
-    axs[0].tick_params(axis='both', which='major', labelsize=12)
+    axs[0].tick_params(axis='both', which='major', labelsize=tick_size)
+    axs[0].set_ylabel('Mean Field\n Parameters', fontsize=label_font)
 
     steps = Solver_scheduled.sol_seq.shape[0]
     for i in range(Solver_fixed.sol_seq.shape[1]):
         axs[1].plot(np.arange(steps), Solver_scheduled.sol_seq[:, i], label=Solver_scheduled.Hamiltonian.Dict[i])
-    axs[1].set_title('Mean Field Parameters, scheduled mixing rate, converged in {} steps'.format(Solver_scheduled.count), fontsize=title_font)
+    axs[1].set_title('Scheduled Mixing rate', fontsize=title_font)
     axs[1].set_xlim(0, 50)
+    axs[1].set_ylabel('Mean Field\n Parameters', fontsize=label_font)
     axs[1].legend(fontsize=leg_font)
-    axs[1].tick_params(axis='both', which='major', labelsize=12)
+    axs[1].tick_params(axis='both', which='major', labelsize=tick_size)
 
     steps = len(Solver_scheduled.beta_seq)
     axs[2].scatter(np.arange(steps), Solver_scheduled.beta_seq)
     axs[2].set_xlim(0, 50)
-    axs[2].set_title('Mixing Factor', fontsize=title_font)
+    axs[2].set_ylabel('Mixing Factor\n' + r'$\alpha_{mix}$', fontsize=label_font)
+    # axs[2].set_title('Mixing Factor', fontsize=title_font)
 
-    plt.tick_params(axis='both', which='major', labelsize=12)
+    plt.tick_params(axis='both', which='major', labelsize=tick_size)
     plt.xlabel('Iteration', fontsize=title_font)
     plt.tight_layout()
     plt.savefig('FixedVsScheduled.png', bbox_inches='tight')
+    print('scheduled mixing rate, converged in {} steps'.format(Solver_scheduled.count))
     plt.show()

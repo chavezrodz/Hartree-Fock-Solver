@@ -18,7 +18,7 @@ params_list = [
 
 sweeper_args = dict(
     variables=['k_res'],
-    values_list=[np.arange(10, 20, 2)],
+    values_list=[np.arange(10, 200, 10)],
     bw_norm=False,
     verbose=True,
     save_guess_mfps=True,
