@@ -4,9 +4,9 @@ import scripts.script_single_pt as sp
 
 model_params = dict(
     # U=1.2, J=0.6,  # Metallic
-    # U=3.0, J=1.2,  # CD
+    U=3.0, J=1.2,  # CD
     # U=4.8, J=0.3,  # AFM
-    U=4.8, J=0.6,  # FM
+    # U=4.8, J=0.6,  # FM
     k_res=10
     )
 
@@ -22,17 +22,22 @@ batch_folder = 'Single_points'
 guesses = np.array([
     (0.8, 1.0, 0.0, 0.7, 0.15),
     (1.0, 0.6, 0.0, 0.7, 0.15),
-    # (0.0, 0.2, 0.5, 0.0, 0.2),
-    # (0.2, 0.5, 1.0, 1.0, 0.0),
-    # (0.5, 0.5, 0.0, 0.5, 0.1)
+    (0.0, 0.2, 0.5, 0.0, 0.2),
+    (0.2, 0.5, 1.0, 1.0, 0.0),
+    (0.5, 0.5, 0.0, 0.5, 0.1)
 ])
 
 # sp.point_analysis(model_params, guesses, solver_args, batch_folder)
 
 # Representative settings to show adaptive time steps work
 model_params = dict(
-    k_res=100,
-    J=1.12)
+    # U=1.2, J=0.6,  # Metallic
+    # U=3.0, J=1.2,  # CD
+    # U=4.8, J=0.3,  # AFM
+    # U=4.8, J=0.6,  # FM
+    J=1.2,  # static mixing failure
+    k_res=100
+    )
 
 solver_args_1 = dict(
     method='momentum',

@@ -230,11 +230,12 @@ def one_d_feature(array, feature, i_label, i_values, results_folder=None,
 
 def difference_plots(features, arrays, i_label, i_values,
                      results_folder=None, show=False, transparent=False):
-# Need to add ticks
-
     x = i_values
     x = x + np.mean(np.diff(x))/2
     x = x[:-1]
+    plt.figure(
+        # facecolor='white'
+        )
 
     for i in range(len(features)):
         label = features[i]
@@ -247,17 +248,19 @@ def difference_plots(features, arrays, i_label, i_values,
         if i == 0:
             plt.plot(x, y, label=label, color='black', linestyle='-')
         elif i == 1:
-            plt.plot(x, y, label=label, color='black', linestyle='--')
+            plt.plot(x, y, label=label, color='blue', linestyle='--')
         else:
             plt.plot(x, y, label=label)
-
     # plt.xlabel(i_label)
     plt.xlabel('N', fontsize=16)
-    plt.ylabel('Error in mean-field parameters (dimensionless)\n'+r'and Energy ($t_1^{0}$)', fontsize=16)
+    plt.ylabel('Error in Mean-Field Parameters (Dimensionless)\n'+r'and Energy ($t_1^{0}$)', fontsize=16)
     # plt.yscale('log')
-    plt.tick_params(axis='both', which='major', labelsize=14)
+    plt.tick_params(axis='both', which='both', labelsize=14)
     plt.tight_layout()
     plt.legend(prop={"size": 14})
+    plt.grid(b=True, color='black', linewidth=0.3)
+    # for spine in ax.spines.values():
+        # spine.set_color('0.3')
 
     if results_folder is not None:
         plt.savefig(results_folder + '/Plots/multi_differences.png',
@@ -290,7 +293,7 @@ def one_d_plots(i_label, i_values, Dict, guesses, final_results_folder=None, sho
     # Ground state phases
     GS_MF = np.loadtxt(os.path.join(final_results_folder, 'GS_Solutions.csv'), delimiter=',')
     difference_plots(
-        ['d|MFP|', 'd|E|'], [GS_MF, sol_energies],
+        ['d|MFP| (Dimensionless)', r'd|E| ($t_1^{0}$)'], [GS_MF, sol_energies],
         i_label, i_values, final_results_folder, show, transparent)
 
     Phase = In.array_interpreter(np.expand_dims(GS_MF, axis=0))

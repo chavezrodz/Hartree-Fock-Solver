@@ -60,13 +60,11 @@ def iteration_comp(model_params, mf_params, solver_args_1, solver_args_2):
     Model = Hamiltonian(model_params, mf_params)
     Solver = HFA_Solver(Model, **solver_args_1)
     Solver.Iterate(verbose=False)
-
     Solver_1 = Solver
 
     Model = Hamiltonian(model_params, mf_params)
     Solver = HFA_Solver(Model, **solver_args_2)
     Solver.Iterate(verbose=False)
-
     Solver_2 = Solver
 
     IS.Iteration_comparison(Solver_1, Solver_2)
