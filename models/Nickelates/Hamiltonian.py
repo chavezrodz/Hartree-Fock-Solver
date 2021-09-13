@@ -32,6 +32,12 @@ class Hamiltonian:
                      2: 'Orbital Disproportionation',
                      3: 'Anti Ferromagnetism',
                      4: 'Anti Ferroorbital'}
+        # MFP Symbols
+        self.dict_symbol = {0: r'$\delta$',
+                     1: r'$S_{FM}$',
+                     2: r'$O_{FM}$',
+                     3: r'$S_{AF}$',
+                     4: r'$O_{AF}$'}
 
         # K_patn for bandstructure
         self.k_points = np.array([[0, 0, 0],
