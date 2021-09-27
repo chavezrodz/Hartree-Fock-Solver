@@ -11,15 +11,15 @@ if __name__ == '__main__':
     i_values = np.linspace(0, 1, 30)
     j_values = np.linspace(0, 0.25, 30)
 
-    make_map = True
-    full = False
+    make_map = False
+    full = True
 
     mfp_dict = Hamiltonian().Dict
 
     Batch_Folders = [
         'strain_zero',
-        'strain_tensile',
-        'strain_compressive'
+        # 'strain_tensile',
+        # 'strain_compressive'
         ]
 
     for batch in Batch_Folders:

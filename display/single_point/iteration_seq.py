@@ -20,7 +20,7 @@ def Iteration_sequence(Solver, results_folder=None, show=True):
     axs[0].legend()
 
     axs[1].scatter(np.arange(len(Solver.beta_seq)), Solver.beta_seq)
-    axs[2].set_ylabel(r'Mixing Factor $\alpha_{mix}$', fontsize=16)
+    axs[1].set_ylabel(r'Mixing Factor $\alpha_{mix}$', fontsize=16)
     plt.xlabel('Iteration')
     if results_folder is not None:
         plt.savefig(results_folder+'/Iteration_sequence.png')

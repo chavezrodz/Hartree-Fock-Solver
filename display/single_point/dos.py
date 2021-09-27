@@ -114,15 +114,20 @@ def DOS_per_state(Model, results_folder=None, label=None, show=False):
             sub_w_1 /= delta_E
             sub_w_2 /= delta_E
 
+
+        (color_1, color_2) = ('green', 'grey') if i > 0 else (None, None)
+
         counts, bins, patches = ax.hist(
             x=Energies, bins=bins,
             weights=sub_w_1.flatten(),
-            label=label_1, alpha=0.5
+            label=label_1, alpha=0.5,
+            color=color_1
             )
         counts, bins, patches = ax.hist(
             x=Energies, bins=bins,
             weights=sub_w_2.flatten(),
-            label=label_2, alpha=0.5
+            label=label_2, alpha=0.5,
+            color=color_2
             )
 
         ax.set_ylabel('Partial DOS', fontsize=12)
