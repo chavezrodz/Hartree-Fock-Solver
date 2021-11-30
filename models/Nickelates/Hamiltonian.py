@@ -51,7 +51,7 @@ class Hamiltonian:
         self.BZ_rot = 1
         self.b = 0
 
-        self.k_res = 100
+        self.k_res = 128
         self.n_dim = 2
 
         self.Filling = 0.25
@@ -207,7 +207,6 @@ class Hamiltonian:
 
     def submatrix(self, sigma):
         # Call matrix elements
-
         if sigma == 1:
             a0 = np.full(self.Q[0].shape, self.a0p)
             a1 = np.full(self.Q[0].shape, self.a0p)

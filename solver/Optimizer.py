@@ -38,29 +38,20 @@ def Optimizer_smoothing(mfps, sigma=[1, 1]):
     return y
 
 
-def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=False):
+def Optimizer_exhaustive(input_folder, trials_list, input_MFP=False, verbose=False):
     print("Starting Optimizer")
     """
     Input list of arrays of energy across phase region,
     return best guess per region
     """
+
+    n_mfps = len(trials_list[0])
+
     folderlist = ['Guess'+str(MF_params)
-                  for MF_params in np.array(params_list)]
+                  for MF_params in np.array(trials_list)]
 
-    # Stack all energies,convergence arrays
-    E_Tower, C_Tower = [], []
-    print("Loading Energies")
-    for i, folder in enumerate(folderlist):
-        print('\t', folder)
-
-        E_file = os.path.join(Input_Folder, folder, 'Energies.csv')
-        C_file = os.path.join(Input_Folder, folder, 'Convergence.csv')
-
-        E_Tower.append(np.loadtxt(E_file, delimiter=','))
-        C_Tower.append(np.loadtxt(C_file, delimiter=','))
-
-    E_Tower = np.stack(E_Tower, axis=-1)
-    C_Tower = np.stack(C_Tower, axis=-1).astype(bool)
+    E_Tower, C_Tower = utils.load_energies_conv(input_folder, folderlist)
+    diag_shape = E_Tower.shape[:-1]
 
     # Find Indices of lowest energies across stack
     ind = np.argmin(E_Tower, axis=-1)
@@ -71,17 +62,7 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
     Optimal_Convergence = np.squeeze(Optimal_Convergence)
 
     if input_MFP:
-        # Recover best solutions from all guesses
-        print('Loading Solutions')
-        Solutions = []
-        for i, folder in enumerate(folderlist):
-            print('\t', folder)
-            MFPs = utils.Read_MFPs(os.path.join(Input_Folder, folder, 'MF_Solutions'))
-            Solutions.append(MFPs)
-
-        # States = np.stack(States, axis=-1)
-        Solutions = np.stack(Solutions, axis=-1)
-        Solutions = np.swapaxes(Solutions, -1, -2)
+        Solutions = utils.load_solutions(input_folder, folderlist)
         Unconverged_Sols = np.empty(Solutions.shape)
         Unconverged_Sols[:] = np.nan
 
@@ -89,10 +70,9 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
         # Optimal_States = np.take_along_axis(States, np.expand_dims(ind, axis=-1), axis=-1)
         # Optimal_States = np.squeeze(Optimal_States)
 
-        Diag_Shape = E_Tower.shape[:-1]
-        Optimal_Solutions = np.zeros((*Diag_Shape, len(params_list[0])))
+        Optimal_Solutions = np.zeros((*diag_shape, n_mfps))
 
-        i, j = np.indices(Diag_Shape, sparse=True)
+        i, j = np.indices(diag_shape, sparse=True)
         i, j = i.flatten(), j.flatten()
 
         for v in itertools.product(i, j):
@@ -102,13 +82,12 @@ def Optimizer_exhaustive(Input_Folder, params_list, input_MFP=False, verbose=Fal
 
     else:
         # Recover best guess across phase diagram
-        Diag_Shape = E_Tower.shape[:-1]
-        Optimal_Guesses = np.zeros((*Diag_Shape, len(params_list[0])))
-
-        i, j = np.indices(Diag_Shape, sparse=True)
+        Optimal_Guesses = np.zeros((*diag_shape, n_mfps))
+        i, j = np.indices(diag_shape, sparse=True)
         i, j = i.flatten(), j.flatten()
+
         for v in itertools.product(i, j):
-            Optimal_Guesses[v] = np.array(params_list[ind[v]])
+            Optimal_Guesses[v] = np.array(trials_list[ind[v]])
             if verbose:
-                print('i ind:', v[0], 'j ind:', v[1], 'Best guess:', params_list[ind[v]])
+                print('i ind:', v[0], 'j ind:', v[1], 'Best guess:', trials_list[ind[v]])
     return Optimal_Guesses, Optimal_Energy

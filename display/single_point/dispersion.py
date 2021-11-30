@@ -8,31 +8,32 @@ sns.set_theme()
 sns.set_context("paper")
 
 
-def Bandstructure(Model, fermi=True, results_folder=None, label=None, show=True, transparent=False):
+def Bandstructure(Model, results_folder, fermi=True, label=None):
     f = plt.figure()
     ax = f.add_subplot(111)
     ax.yaxis.set_label_position("left")
     ax.yaxis.set_ticks_position('both')
+
     if fermi:
-        ax.plot(np.arange(Model.path_energies.shape[0]), Model.path_energies - Model.fermi_e)
+        ax.plot(np.arange(Model.path_energies.shape[0]),
+                Model.path_energies - Model.fermi_e)
         ax.set_ylabel(r'($\epsilon - \mu)/ t_1 $')
     else:
         ax.plot(np.arange(Model.path_energies.shape[0]), Model.path_energies)
         ax.set_ylabel(r'$\epsilon/ t_1 $')
+
     plt.xticks(Model.indices, Model.k_labels)
     plt.tight_layout()
-    if results_folder is not None:
-        if label is not None:
-            label = label+'Bandstructure.png'
-        else:
-            label = 'Bandstructure.png'
-        plt.savefig(os.path.join(results_folder, label), transparent=transparent)
-    if show:
-        plt.show()
+
+    if label is not None:
+        label = label+'Bandstructure.png'
+    else:
+        label = 'Bandstructure.png'
+    plt.savefig(os.path.join(results_folder, label))
     plt.close()
 
 
-def DispersionRelation(Model):
+def DispersionRelation(Model, results_folder):
     mat_dim = Model.mat_dim
     Energies = Model.Energies
 
@@ -45,8 +46,9 @@ def DispersionRelation(Model):
     ax = fig.add_subplot(111, projection='3d')
 
     for b in range(mat_dim):
-        ax.plot_surface(qx, qy, Energies[:, :, z_ind, b], label='Band '+str(b+1), alpha=0.25)
-        ax.contour(qx, qy, Energies[:, :, z_ind, b], [Fermi_E], cmap="Accent", linestyles="solid", offset=-2.5)
+        ax.plot_surface(qx, qy, Energies[:, :, z_ind, b], alpha=0.25)
+        ax.contour(qx, qy, Energies[:, :, z_ind, b], [Fermi_E],
+                   cmap="Accent", linestyles="solid", offset=-2.5)
 
     z = Fermi_E*np.ones(qx.shape)
     ax.plot_surface(qx, qy, z, alpha=0.5)
@@ -54,13 +56,12 @@ def DispersionRelation(Model):
     ax.set_ylabel('$K_Y$  ($\pi/a$)')
     ax.set_zlabel('Energy')
 
-    # handles, labels = ax.get_legend_handles_labels()
-    # ax.legend(reversed(handles), reversed(labels))
-    plt.show()
+    label = 'Dispersion.png'
+    plt.savefig(os.path.join(results_folder, label))
     plt.close()
 
 
-def fermi_surface(Model, tol=0.05, transparent=False, results_folder=None, show=True):
+def fermi_surface(Model, results_folder, tol=0.05):
     mat_dim = Model.mat_dim
     Energies = Model.Energies
 
@@ -74,13 +75,13 @@ def fermi_surface(Model, tol=0.05, transparent=False, results_folder=None, show=
     ax = fig.add_subplot(111)
 
     for b in range(mat_dim):
-        ax.contour(qx, qy, Energies[:, :, z_ind, b], [Fermi_E], cmap="Accent", linestyles="solid", offset=-2.5)
+        ax.contour(qx, qy, Energies[:, :, z_ind, b], [Fermi_E],
+                   cmap="Accent", linestyles="solid"
+                   # , offset=-2.5
+                   )
 
     ax.set_xlabel('$K_x$  ($\pi/a$)')
     ax.set_ylabel('$K_Y$  ($\pi/a$)')
     plt.title('Fermi Surface')
-    if results_folder is not None:
-        plt.savefig(results_folder+'/fermi_surface.png')
-    if show:
-        plt.show()
+    plt.savefig(results_folder+'/fermi_surface.png')
     plt.close()

@@ -27,7 +27,7 @@ def occupied_states(energies, weights, fermi_e):
     return int(count)
 
 
-def DOS(Model, bins='fd', results_folder=None, label=None, show=True):
+def DOS(Model, results_folder, bins='fd', label=None):
     sns.histplot(Model.Energies.flatten(), kde=False, stat='probability')
     plt.axvline(Model.fermi_e, label='Fermi Energy', color='red')
     plt.title('Density of states')
@@ -40,12 +40,10 @@ def DOS(Model, bins='fd', results_folder=None, label=None, show=True):
         else:
             label = 'DOS.png'
         plt.savefig(os.path.join(results_folder, label))
-    if show:
-        plt.show()
     plt.close()
 
 
-def DOS_per_state(Model, results_folder=None, label=None, show=False):
+def DOS_per_state(Model, results_folder, label=None):
     Energies = Model.Energies.flatten()
     fermi_e = Model.fermi_e
 
@@ -152,9 +150,6 @@ def DOS_per_state(Model, results_folder=None, label=None, show=False):
     axes[-1].set_xlabel(r'$E$', fontsize=12)
     plt.tight_layout()
 
-    if results_folder is not None:
-        label = 'DOS_per_state.png'
-        plt.savefig(os.path.join(results_folder, label))
-    if show:
-        plt.show()
+    label = 'DOS_per_state.png'
+    plt.savefig(os.path.join(results_folder, label))
     plt.close()

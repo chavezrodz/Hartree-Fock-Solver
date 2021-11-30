@@ -11,21 +11,19 @@ sns.set_theme(font_scale=12)
 sns.set_context("paper", font_scale=12)
 
 
-def Iteration_sequence(Solver, results_folder=None, show=True):
+def Iteration_sequence(Solver, results_folder):
     fig, axs = plt.subplots(2)
     fig.suptitle('Converged: '+str(Solver.converged))
     for i in range(len(Solver.Hamiltonian.MF_params)):
-        axs[0].plot(np.arange(Solver.sol_seq.shape[0]), Solver.sol_seq[:, i], label=Solver.Hamiltonian.Dict[i])
+        axs[0].plot(np.arange(Solver.sol_seq.shape[0]), Solver.sol_seq[:, i],
+                    label=Solver.Hamiltonian.Dict[i])
     axs[0].set_title('Mean Field Parameters')
     axs[0].legend()
 
     axs[1].scatter(np.arange(len(Solver.beta_seq)), Solver.beta_seq)
     axs[1].set_ylabel(r'Mixing Factor $\alpha_{mix}$', fontsize=16)
     plt.xlabel('Iteration')
-    if results_folder is not None:
-        plt.savefig(results_folder+'/Iteration_sequence.png')
-    if show:
-        plt.show()
+    plt.savefig(results_folder+'/Iteration_sequence.png')
     plt.close()
 
 

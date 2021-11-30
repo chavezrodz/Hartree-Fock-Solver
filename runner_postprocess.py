@@ -11,15 +11,15 @@ if __name__ == '__main__':
     i_values = np.linspace(0, 1, 30)
     j_values = np.linspace(0, 0.25, 30)
 
-    make_map = False
-    full = True
+    make_map = True
+    full = False
 
     mfp_dict = Hamiltonian().Dict
 
     Batch_Folders = [
         'strain_zero',
-        # 'strain_tensile',
-        # 'strain_compressive'
+        'strain_tensile',
+        'strain_compressive'
         ]
 
     for batch in Batch_Folders:
@@ -28,7 +28,7 @@ if __name__ == '__main__':
         elif batch == 'strain_compressive':
             bw_norm = r'$W_{c}$'
         elif batch == 'strain_tensile':
-            bw_norm = r'$W_{t}$'
+            bw_norm = r'$W_{c}$'
 
         folder_list = sorted(os.listdir(os.path.join(results_folder, batch)))
         postprocess(

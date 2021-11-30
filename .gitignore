@@ -4,3 +4,4 @@ Slurm
 __pycache__
 *.pyc
 Final_Results
+profiling/Results
