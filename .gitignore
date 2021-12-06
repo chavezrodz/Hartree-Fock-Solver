@@ -5,3 +5,5 @@ __pycache__
 *.pyc
 Final_Results
 profiling/Results
+profiling/profile_results.txt
+profiling/simple_hist_timing.dat
