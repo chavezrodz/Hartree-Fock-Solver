@@ -3,8 +3,6 @@ import scipy.special as sp
 from numpy import linalg as LA
 import solver.calculations as calc
 from time import time
-import numba as nb
-
 
 class HFA_Solver:
     """

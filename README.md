@@ -20,7 +20,6 @@ Execute any of the runner_*.py files changing parameters within. Any new hamilto
 
 ### Caveats:
 - Most alternative optimizers techniques are not finished given that they are not needed to achieve ~99% convergence
-- The 1D cut is out of date since it was not used in the final publication
 - The exhaustive ansatz search is not automated since it requires node parralelization which is ressource dependent
 
 
@@ -28,16 +27,16 @@ If you use this code for your own projects, please consider citing the following
 
 ```
 @article{2021,
-title={Effects of reduced dimensionality, crystal field, electron-lattice coupling, and strain on the ground state of a rare-earth nickelate monolayer},
-volume={104},
-ISSN={2469-9969},
-url={http://dx.doi.org/10.1103/PhysRevB.104.205111},
-DOI={10.1103/physrevb.104.205111},
-number={20},
-journal={Physical Review B},
-publisher={American Physical Society (APS)},
-author={Chavez Zavaleta, Rodrigo and Fomichev, Stepan and Khaliullin, Giniyat and Berciu, Mona},
-year={2021},
-month={Nov}
+	title={Effects of reduced dimensionality, crystal field, electron-lattice coupling, and strain on the ground state of a rare-earth nickelate monolayer},
+	volume={104},
+	ISSN={2469-9969},
+	url={http://dx.doi.org/10.1103/PhysRevB.104.205111},
+	DOI={10.1103/physrevb.104.205111},
+	number={20},
+	journal={Physical Review B},
+	publisher={American Physical Society (APS)},
+	author={Chavez Zavaleta, Rodrigo and Fomichev, Stepan and Khaliullin, Giniyat and Berciu, Mona},
+	year={2021},
+	month={Nov}
 }
 ```
