@@ -17,7 +17,7 @@ def Optimizer_touchup(MFPs, Convergence_Grid):
     return best guess per region
     """
     # Indices where convergence failed
-    indices = np.where(Convergence_Grid == 0,)
+    indices = np.where(Convergence_Grid == 0)
     indices = np.transpose(np.stack(indices))
     indices = list(map(tuple, indices))
 
