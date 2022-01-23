@@ -4,24 +4,24 @@ from models.Nickelates.Hamiltonian import Hamiltonian
 from scripts.script_postprocess import postprocess
 
 
+results_folder = 'Final_Results'
+
+i, j = 'U', 'J'
+i_values = np.linspace(0, 1, 30)
+j_values = np.linspace(0, 0.25, 30)
+
+make_map = True
+full = False
+
+mfp_dict = Hamiltonian().Dict
+
+Batch_Folders = [
+    'strain_zero',
+    'strain_tensile',
+    'strain_compressive'
+    ]
+
 if __name__ == '__main__':
-    results_folder = 'Final_Results'
-
-    i, j = 'U', 'J'
-    i_values = np.linspace(0, 1, 30)
-    j_values = np.linspace(0, 0.25, 30)
-
-    make_map = True
-    full = False
-
-    mfp_dict = Hamiltonian().Dict
-
-    Batch_Folders = [
-        'strain_zero',
-        'strain_tensile',
-        'strain_compressive'
-        ]
-
     for batch in Batch_Folders:
         if batch == 'strain_zero':
             bw_norm = r'$W$'
