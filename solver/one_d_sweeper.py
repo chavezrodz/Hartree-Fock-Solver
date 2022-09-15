@@ -1,11 +1,11 @@
 import time
 import numpy as np
 import itertools
-import Code.Display.DispersionRelation as DR
-import Code.Display.Density_Of_States as DOS
-import Code.Solver.calculations as calc
+import display.single_point.dispersion as DR
+import display.single_point.dos as DOS
+import solver.calculations as calc
 from multiprocessing import Pool
-from Code.Scripts.single_point import point_analysis as point_analysis
+# from scripts.single_point import point_analysis as point_analysis
 import copy
 import os
 

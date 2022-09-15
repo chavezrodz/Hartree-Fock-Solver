@@ -32,21 +32,20 @@ def find_fermi_bw(model_params, sweeper_args, solver_args):
     setattr(Model, 'Delta_CT', 0)
     Solver.Iterate(verbose=False)
     calc.bandwidth(Model)
-    fermi_bw = Model.fermi_bw
-    print(f'Fermi_bw: {fermi_bw}')
-    return fermi_bw
+    return Model.fermi_bw
 
 
-def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
-                     solver_args, bw_norm=True,
-                     guess_run=True, final_run=True, rm_guesses=True,
-                     logging=True):
+def generate_diagram(batch_folder, model_params,
+                     trials_list, sweeper_args, solver_args,
+                     bw_norm=True, rm_guesses=True, logging=True,
+                     guess_runs=True, final_run=True):
 
     Run_ID = u.make_id(sweeper_args, model_params)
     Results_Folder = os.path.join('Results', batch_folder, Run_ID)
     os.makedirs(Results_Folder, exist_ok=True)
     standard = sys.stdout
 
+    norming_settings = {}
     if bw_norm:
         fermi_bw = find_fermi_bw(model_params, sweeper_args, solver_args)
         unnormed_x = model_params['eps']
@@ -57,15 +56,13 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
 
         normed_x = model_params['eps']
         normed_y = model_params['Delta_CT']
-        norming_settings = {
+        norming_settings.update({
             'fermi_bw': fermi_bw,
             'unnormed_x': unnormed_x,
             'normed_x': normed_x,
             'unnormed_y': unnormed_y,
             'normed_y': normed_y,
-            }
-    else:
-        norming_settings = {}
+            })
 
     u.write_settings(
         Run_ID, Results_Folder,
@@ -77,11 +74,9 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
          ]
         )
 
-    if guess_run:
-        for n in range(len(params_list)):
+    if guess_runs:
+        for n, MF_params in enumerate(trials_list):
             # Guesses Input
-
-            MF_params = np.array(params_list[n])
             Guess_Name = 'Guess'+str(MF_params)
             outfolder = os.path.join(Results_Folder, 'Guesses_Results', Guess_Name)
             os.makedirs(outfolder, exist_ok=True)
@@ -99,13 +94,13 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
                 Model, Solver, Sweeper, MF_params, outfolder,
                 Include_MFPs=sweeper_args['save_guess_mfps'], logging=logging)
 
-            print(f'Diagram iteration: {n} time to complete (s): {round(dt,3)} Converged points:{round(convergence_pc,3)} % \n')
+            print(f'Diagram trial: {n} time to complete (s): {round(dt,3)} Converged points:{round(convergence_pc,3)} % \n')
 
     if final_run:
         a = time()
         Input_Folder = os.path.join(Results_Folder, 'Guesses_Results')
-        Final_Results_Folder = os.path.join(Results_Folder, 'Final_Results')
 
+        Final_Results_Folder = os.path.join(Results_Folder, 'Final_Results')
         os.makedirs(Final_Results_Folder, exist_ok=True)
         if logging:
             sys.stdout = open(Final_Results_Folder+'/logs.txt', 'w+')
@@ -114,7 +109,7 @@ def generate_diagram(batch_folder, model_params, params_list, sweeper_args,
         Solver = HFA_Solver(Model, **solver_args)
 
         optimal_guesses, Optimal_Energy = Optimizer_exhaustive(
-            Input_Folder, params_list,
+            Input_Folder, trials_list,
             input_MFP=sweeper_args['save_guess_mfps'],
             verbose=sweeper_args['verbose'])
 

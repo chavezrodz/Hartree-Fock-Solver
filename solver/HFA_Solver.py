@@ -4,7 +4,6 @@ from numpy import linalg as LA
 import solver.calculations as calc
 from time import time
 
-
 class HFA_Solver:
     """
     Structural Parameters
@@ -99,9 +98,9 @@ class HFA_Solver:
             print('\nInitial Mean Field parameters:', mfps)
             return
         elif method == 'Final':
-            print(f'Final Mean Field parameter: {mfps}'
-                  f'Number of iteration steps: {self.count}'
-                  f'Time taken:{round(t, 3)} \n')
+            print(f'Final Mean Field parameter: {mfps}\n'
+                  f'Number of iteration steps: {self.count}\n'
+                  f'Time taken: {round(t, 3)}s \n')
             return
 
     def update_guess(self, a, b):

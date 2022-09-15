@@ -3,15 +3,15 @@ import sys
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
-import Code.Utils as Utils
+import utils as Utils
 import numpy as np
 import os
-import Code.Nickelates.Interpreter as In
+import models.Nickelates.Interpreter as In
 
 import seaborn as sns
 
-sns.set_theme()
-sns.set_context("paper")
+# sns.set_theme()
+# sns.set_context("paper")
 
 
 def MFP_plots(MFPs, i_label, i_values, j_label, j_values, Dict, results_folder, show, transparent, standardize=False):
@@ -229,11 +229,12 @@ def one_d_feature(array, feature, i_label, i_values, results_folder=None,
 
 
 def difference_plots(features, arrays, i_label, i_values,
-                     results_folder=None, show=False, transparent=False):
+                     results_folder=None, log_scaled=False):
     x = i_values
     x = x + np.mean(np.diff(x))/2
     x = x[:-1]
 
+    fig, ax = plt.subplots()
     for i in range(len(features)):
         label = features[i]
         array = (arrays[i])
@@ -241,19 +242,32 @@ def difference_plots(features, arrays, i_label, i_values,
             array = np.expand_dims(array, -1)
         y = np.diff(array, axis=0)
         y = LA.norm(y, axis=-1)
-        plt.plot(x, y, label=label)
 
+        if i == 0:
+            ax.plot(x, y, label=label, color='black', linestyle='-')
+        elif i == 1:
+            ax.plot(x, y, label=label, color='blue', linestyle='--')
+        else:
+            ax.plot(x, y, label=label)
     # plt.xlabel(i_label)
-    plt.xlabel('Momentum Resolution', fontsize=16)
-    # plt.yscale('log')
-    plt.tick_params(axis='both', which='major', labelsize=12)
-    plt.tight_layout()
-    plt.legend(prop={"size": 13})
+    plt.xlabel('N', fontsize=16)
+    plt.ylabel('Error in Mean-Field Parameters (Dimensionless)\n'+r'and Energy ($t_1^{0}$)', fontsize=16)
 
+    if log_scaled:
+        plt.yscale('log')
+
+    plt.tick_params(axis='both', which='both', labelsize=14)
+    plt.legend(prop={"size": 14})
+    ax.set_facecolor("white")
+    ax.grid(b=True, color='grey', linewidth=0.3)
+    for spine in ax.spines.values():
+        spine.set_color('0.3')
+
+
+    plt.tight_layout()
     if results_folder is not None:
-        plt.savefig(results_folder +'/Plots/multi_differences.png', transparent=transparent, bbox_inches='tight')
-    if show:
-        plt.show()
+        plt.savefig(results_folder + '/Plots/multi_differences.png', bbox_inches='tight')
+    plt.show()
     plt.close()
 
 
@@ -272,7 +286,7 @@ def one_d_plots(i_label, i_values, Dict, guesses, final_results_folder=None, sho
     MFP_plots(MF, i_label, i_values, j_label, j_values, Dict, final_results_folder, show, transparent)
 
     Phase = In.array_interpreter(MF)
-    phases_plot(Phase, i_label, i_values, j_label, j_values, final_results_folder, show, transparent)
+    phases_plot(Phase, i_label, i_values, j_label, j_values, final_results_folder)
 
     # GS Energies
     sol_energies = np.loadtxt(os.path.join(final_results_folder, 'GS_Energy.csv'), delimiter=',')
@@ -280,8 +294,8 @@ def one_d_plots(i_label, i_values, Dict, guesses, final_results_folder=None, sho
     # Ground state phases
     GS_MF = np.loadtxt(os.path.join(final_results_folder, 'GS_Solutions.csv'), delimiter=',')
     difference_plots(
-        ['d|MFP|', 'd|E|'], [GS_MF, sol_energies],
-        i_label, i_values, final_results_folder, show, transparent)
+        ['d|MFP| (Dimensionless)', r'd|E| ($t_1^{0}$)'], [GS_MF, sol_energies],
+        i_label, i_values, final_results_folder)
 
     Phase = In.array_interpreter(np.expand_dims(GS_MF, axis=0))
     one_dimensional_phases(Phase, i_label, i_values, final_results_folder, show, transparent)

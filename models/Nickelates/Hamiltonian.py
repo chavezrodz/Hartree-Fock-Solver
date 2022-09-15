@@ -32,6 +32,14 @@ class Hamiltonian:
                      2: 'Orbital Disproportionation',
                      3: 'Anti Ferromagnetism',
                      4: 'Anti Ferroorbital'}
+        # MFP Symbols
+        self.dict_symbol = {
+            0: r'$\delta$',
+            1: r'$S_{FM}$',
+            2: r'$O_{FM}$',
+            3: r'$S_{AF}$',
+            4: r'$O_{AF}$'
+            }
 
         # K_patn for bandstructure
         self.k_points = np.array([[0, 0, 0],
@@ -45,7 +53,7 @@ class Hamiltonian:
         self.BZ_rot = 1
         self.b = 0
 
-        self.k_res = 100
+        self.k_res = 128
         self.n_dim = 2
 
         self.Filling = 0.25
@@ -201,7 +209,6 @@ class Hamiltonian:
 
     def submatrix(self, sigma):
         # Call matrix elements
-
         if sigma == 1:
             a0 = np.full(self.Q[0].shape, self.a0p)
             a1 = np.full(self.Q[0].shape, self.a0p)

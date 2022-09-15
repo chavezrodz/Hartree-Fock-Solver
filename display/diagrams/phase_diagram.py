@@ -14,14 +14,8 @@ def phases_diagram(Phase, i_label, i_values, j_label, j_values, results_folder,
     OS = Phase[:, :, 2]
     unique_states = np.unique(spin_orb).astype(int)
 
-    # print(unique_states)
-    # unique_labels = [In.pos_to_label[state] for state in unique_states]
-    # for label in unique_labels:
-    #     print(label)
-
     f, ax = plt.subplots(figsize=(8, 8))  # or 6,5 without legend
-    # ax.set_xlabel(i_label)
-    # ax.set_ylabel(j_label)
+
     ax.set_xlabel(i_label, fontsize=font)
     ax.xaxis.set_label_coords(0.5, -0.02)
 

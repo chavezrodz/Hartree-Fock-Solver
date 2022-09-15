@@ -9,9 +9,8 @@ def spin_interpreter(mfps, rounding=1):
     b1 = np.ones(shape)
     b2 = np.ones(shape)
     b2[..., 1] = -1
-
-    b1 = np.einsum('ij,ijk->ijk', mfps[..., 1], b1)
-    b2 = np.einsum('ij,ijk->ijk', mfps[..., 3], b2)
+    b1 = np.einsum('...j,...jk->...jk', mfps[..., 1], b1)
+    b2 = np.einsum('...j,...jk->...jk', mfps[..., 3], b2)
     spin = b1 + b2
 
     spin[(0.1 < spin) & (spin < 0.5)] += 0.5
@@ -28,8 +27,8 @@ def orbit_interpreter(mfps, rounding=1):
     b2 = np.ones(shape)
     b2[..., 1] = -1
 
-    b1 = np.einsum('ij,ijk->ijk', mfps[..., 2], b1)
-    b2 = np.einsum('ij,ijk->ijk', mfps[..., 4], b2)
+    b1 = np.einsum('...j,...jk->...jk', mfps[..., 2], b1)
+    b2 = np.einsum('...j,...jk->...jk', mfps[..., 4], b2)
     orbit = b1 + b2
 
     lower_tresh = 0.1
@@ -90,13 +89,18 @@ def symetries(phase, CM=0):
 
 
 def array_interpreter(mfp):
+    """
+    Takes in shape: ... x trials x N_mfps
+    returns ... x 3 [CM, Spin-orbit, OS]
+    """
     phase = np.zeros(mfp.shape)
     CM = mfp[..., 0]
     OS = mfp[..., 2]
     spin = spin_interpreter(mfp)
     orbit = orbit_interpreter(mfp)
     phase[..., 0], phase[..., 1:3], phase[..., 3:] = CM, spin, orbit
-    for v in itertools.product(np.arange(mfp.shape[0]), np.arange(mfp.shape[1])):
+    idxs = [np.arange(mfp.shape[i]) for i in range(mfp.ndim - 1)]
+    for v in itertools.product(*idxs):
         phase[v][1:] = symetries(phase[v][1:], CM=CM[v])
         phase[v][1] = vec_to_int(phase[v][1:])
         phase[v][1] = state_to_pos[phase[v][1]]
